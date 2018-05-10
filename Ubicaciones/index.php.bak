@@ -1,0 +1,260 @@
+<?php
+session_start();
+
+if (!isset($_SESSION['user_info'])) {
+  header('location:/problog/');
+}
+
+ ?>
+
+ <!DOCTYPE html>
+ <html>
+   <head>
+     <meta charset="utf-8">
+     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+     <link rel="stylesheet" href="../Resources/Bootstrap/css/bootstrap.min.css">
+     <link rel="stylesheet" href="../Resources/CSS/main.css">
+     <link rel="stylesheet" href="../Resources/FontAwesome/css/font-awesome.min.css">
+     <script src="../Resources/Autobahn_Old/autobahn.min.js" charset="utf-8"></script>
+     <title></title>
+   </head>
+   <body>
+     <aside class="d-inline-block">
+       <div class="brand align-items-center">
+         <span class="badge badge-rojo badge-prolog">B</span>ProBlog!
+         <button class="btn btn-outline-success float-right" type="button" name="button" role="button" data-toggle="modal" data-target="#add-thread-modal">Nuevo Hilo</button>
+       </div>
+       <ul class="nav nav-tabs justify-content-center" id="selectTOperacion">
+         <li class="nav-item"><a class="nav-link active" role="button" tipoOperacion="I">Importación</a></li>
+         <li class="nav-item"><a class="nav-link" role="button" tipoOperacion="E">Exportación</a></li>
+       </ul>
+       <div class="office-select">
+         <span id="selectorOficina" claveAduana="">Todas las oficinas</span><span class="float-right"><i class="fa fa-sort"></i></span>
+       </div>
+       <div class="office-list">
+         <ul class="list-unstyled">
+           <li claveAduana="" oficina="Todas las oficinas">Todas las oficinas<small class="float-right"></small></li>
+           <hr>
+           <li claveAduana="240" oficina="Nuevo Laredo">Nuevo Laredo<small class="float-right">240</small></li>
+           <hr>
+           <li claveAduana="470" oficina="Aeropuerto">Aeropuerto<small class="float-right">470</small></li>
+           <hr>
+           <li claveAduana="160" oficina="Manzanillo">Manzanillo<small class="float-right">160</small></li>
+           <hr>
+           <li claveAduana="430" oficina="Veracruz">Veracruz<small class="float-right">430</small></li>
+         </ul>
+       </div>
+       <div class="invisible" id="loading-spinner-refs">
+         <i class="fa fa-spinner fa-spin"></i>
+       </div>
+       <!--select class="form-control office-select" name="selectorOficina" id="selectorOficina">
+         <option value="240">Nuevo Laredo</option>
+         <option value="470">Aeropuerto</option>
+         <option value="160">Manzanillo</option>
+         <option value="430">Veracruz</option>
+       </select-->
+       <div class="ul-container" id="reference-box">
+
+         <!--ul class="list-unstyled" id="reference-box"-->
+         <!--/ul-->
+      </div>
+     </aside>
+     <div class="content-div float-right">
+
+     <nav class="navbar navbar-toggleable-md navbar-light nav-prolog d-block float-right">
+       <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+         <span class="navbar-toggler-icon"></span>
+       </button>
+       <div class="collapse navbar-collapse" id="menuNavBar">
+         <ul class="navbar-nav mr-auto">
+           <li class="nav-item active"><a id="numRefHeader" class="nav-link" role="button">Seleccione un movimiento de tráfico</a></li>
+         </ul>
+       <ul class="navbar-nav float-right">
+          <li class="nav-item" role="button" id="clientLabel"><a class="nav-link" id="clientLabelNombre" rfc="">Haz click aquí para seleccionar un cliente</a></li>
+          <li class="nav-item w-100" id="changeClientBox" hidden>
+            <form class="form-inline" method="post">
+              <input class="form-control mr-2" style="width: 650px" type="text" name="clientName" value="" placeholder="Escribe el nombre o el RFC el cliente" autocomplete="off">
+              <input class="invisible" type="text" name="pkIdUsuario" id="pkIdUsuario" value="<?php echo $_SESSION['user_info']['pkIdUsuario']?>" hidden>
+            </form>
+            <div class="clientList" id="clientList"></div>
+          </li>
+          <li class="nav-item dropdown">
+            <button class="btn btn-outline-primary" role="button" id="opcionesMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-bars"></i></button>
+            <div class="dropdown-menu float-left" style="left: -127px; top: 40px" aria-labelledby="opcionesMenu">
+            <a href="adminUsuarios.php" class="dropdown-item btn btn-secondary nav-link" role="button">Administrar Usuarios</a>
+            <a class="dropdown-item nav-link" role="button">Opciones</a>
+            <a class="dropdown-item nav-link" id="logout" role="button">Cerrar Sesión</a>
+          </div>
+          </li>
+       </ul>
+      </div>
+     </nav>
+     <div class="message-board align-items-end" id="messageBoard" usuario="<?php echo $_SESSION['user_info']['pkIdUsuario'];?>">
+
+     </div>
+     <div class="input-container align-text-center">
+      <form class="d-inline" id="newMessage" method="post">
+       <input class="form-control input-message d-inline" type="text" name="message" value="" placeholder="Escribe tu mensaje..." autocomplete="off">
+       <!--input class="btn btn-outline-info d-inline" type="submit" name="submitMessage" value="Enviar" role="button"-->
+       <button class="btn btn-outline-info d-inline" type="submit" id="enviarMensajes" name="submitMessage" role="button"><span id="enviarMensajesValor">Enviar</span></button>
+       <input class="hidden" type="text" name="referencia" id="modifyReference" value="" hidden>
+       <input class="hidden" type="text" name="idUsuario" id="idUsuario" value="<?php echo $_SESSION['user_info']['pkIdUsuario'];?>" hidden>
+      </form>
+      <form class="d-inline" action="return false;" id="file-form">
+      <label class="btn btn-outline-info d-inline float-right" for="file-upload-chat" role="button">
+        <span class="fa fa-upload"></span>
+        <input class="form-control-input" id="file-upload-chat" type="file" name="" value="" role="button">
+      </label>
+      <input type="text" name="fileThreadId" id="fileThreadId" value="" hidden>
+      <input type="text" name="refIdNumber" id="refIdNumber" value="" hidden>
+      <input type="text" name="refIdNumber" id="fileUserId" value="<?php echo $_SESSION['user_info']['pkIdUsuario']?>" hidden>
+      </form>
+     </div>
+    </div>
+
+    <div class="invisible" id="loading-spinner">
+      <i class="fa fa-spinner fa-spin"></i>
+    </div>
+
+    <!-- START: ADD THREAD MODAL -->
+    <div class="modal fade" tabindex="-1" id="add-thread-modal" role="dialog" aria-labelledby="addNewThread" aria-hidden="true">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Aregar Nuevo Hilo</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form class="form-group" id="formNewThread" onsubmit="return false">
+              <input type="text" name="creadoPor" id="creadoPor" value="<?php echo $_SESSION['user_info']['pkIdUsuario'];?>" hidden>
+              <label for="nuevoHilo">Nombre del Hilo</label><sup>*</sup>
+              <input class="form-control" type="text" name="nuevoHilo" id="nuevoHilo" value="">
+              <label for="referenciaHilo">Referencia</label>
+              <input class="form-control" type="text" name="referenciaHilo" id="referenciaHilo" value="">
+              <label for="tipoOperacion">Tipo de Operación</label><sup>*</sup>
+              <select class="form-control" name="tipoOperacion" id="tipoOperacion">
+                <option value="I">Importación</option>
+                <option value="E">Exportación</option>
+              </select>
+              <label for="oficina">Oficina</label><sup>*</sup>
+              <select class="form-control" name="oficina" id="oficina">
+                <option value="240">Nuevo Laredo</option>
+                <option value="470">Aeropuerto</option>
+                <option value="160">Manzanillo</option>
+                <option value="430">Veracruz</option>
+              </select>
+              <label for="cliente">Cliente</label><sup>*</sup>
+              <input class="form-control" type="text" id="clienteHilo" name="clienteHilo" value="" autocomplete="off">
+              <small><input class="form-control" type="text" name="clienteRFCHilo" id="clienteRFCHilo" value="" readonly></small>
+              <div class="clientList" id="clientList" style="display: none"></div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-outline-primary" name="cancelar" id="cancelar" role="button">Cancelar</button>
+            <button type="button" class="btn btn-outline-danger" name="submit" id="submit" role="button">Agregar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- END: ADD THREAD MODAL -->
+
+
+    <!-- START: THREAD DETAILS MODAL -->
+    <div class="modal fade" tabindex="-1" id="thread-details-modal" role="dialog" aria-labelledby="threadDetails" aria-hidden="true">
+      <div class="modal-dialog modal-lg modal-thread-details">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Detalles del Hilo</h5>
+            <ul class="nav nav-pills justify-content-center" id="threadDetailsOptions">
+              <li class="nav-item">
+                <a class="nav-link active" href="#"  direction="right">Información de la referencia</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#"  direction="left">Archivos subidos</a>
+              </li>
+            </ul>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form class="" action="index.html" method="post">
+            </form>
+            <div class="tDetailsContainer">
+              <div class="movable-container">
+                <div class="float-left">
+                  <p>
+                    <h6 class="d-inline mr-1">Número de Referencia:</h6>
+                    <span id="refThreadDetails" idThread=""></span>
+                    <input class="form-control" type="text" name="" id="newReferenceValue" value="" style="display: none">
+                    <i class="fa fa-pencil-square-o ml-3 text-info" id="editReference" role="button"></i>
+                  </p>
+                  <table class="table table-hover">
+                    <thead>
+                      <th>Entrada</th>
+                      <th>Factura</th>
+                      <th>Numero de Producto</th>
+                      <th>Cantidad Producto</th>
+                      <th>Fecha de Ingreso</th>
+                      <th>Fecha de Cruce</th>
+                    </thead>
+                  </table>
+                </div>
+                <div class="float-right">
+                  <table class="table table-hover">
+                      <thead>
+                        <tr>
+                          <th>Nombre</th>
+                          <th>Subido Por</th>
+                          <th>Fecha de subida</th>
+                          <th class="text-center">Descargar</th>
+                        </tr>
+                      </thead>
+                    <tbody id="fileBody">
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!--div class="modal-footer">
+            <button type="button" class="btn btn-outline-primary" name="cancelar" id="cancelar" role="button">Cancelar</button>
+            <button type="button" class="btn btn-outline-danger" name="submit" id="submit" role="button">Agregar</button>
+          </div-->
+        </div>
+      </div>
+    </div>
+    <!-- END: THREAD DETAILS MODAL -->
+
+    <script src="../Resources/JQuery/jquery-3.1.1.min.js" charset="utf-8"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+    <script src="../Resources/Bootstrap/js/bootstrap.min.js" charset="utf-8"></script>
+    <script src="../Resources/JS/functions.js" charset="utf-8"></script>
+    <script src="../Resources/JS/clientList.js" charset="utf-8"></script>
+    <script src="../Resources/JS/officeList.js" charset="utf-8"></script>
+    <script src="../Resources/JS/refList.js" charset="utf-8"></script>
+    <script src="../Resources/JS/fileMgmnt.js" charset="utf-8"></script>
+    <script src="../Resources/JS/threadModal.js" charset="utf-8"></script>
+    <!--script src="../Resources/JS/usuarios.js" charset="utf-8"></script-->
+    <!--script type="text/javascript">
+    console.log('Establishing  connection to the server..');
+    var conn = new WebSocket('wss://plt.prolog-mex.com/wss2/');
+    conn.onopen = function(e) {
+        console.log("Connection established!");
+    };
+
+    conn.onmessage = function(e) {
+        console.log(e.data);
+        $('#messageBoard').prepend('<p class="message-nonown">'+e.data+'</p>')
+    };
+
+    </script>
+    <script src="https://autobahn.s3.amazonaws.com/js/autobahn.min.js"></script>
+    <script src="https://autobahn.s3.amazonaws.com/autobahnjs/latest/autobahn.min.js"></script-->
+
+
+   </body>
+ </html>
