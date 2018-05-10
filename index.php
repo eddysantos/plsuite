@@ -1,6 +1,8 @@
 <?php
-
+date_default_timezone_set('America/Monterrey');
 session_start();
+// $root = $_SERVER['DOCUMENT_ROOT'];
+// require $root . '/plsuite/Resources/PHP/Utilities/initialScript.php';
 
 function detectDevice(){
 	$userAgent = $_SERVER["HTTP_USER_AGENT"];
@@ -29,7 +31,7 @@ if (isset($_POST['login'])) {
     $usuario = $_POST['userName'];
     $pass = $_POST['password'];
 
-    include('Resources/PHP/loginDatabase.php');
+    // include('Resources/PHP/loginDatabase.php');
 
     $loginQry = "SELECT pkIdUsers, Nombre, Apellido, NombreUsuario, TipoUsuario, Status, NombreUsuario FROM Users WHERE NombreUsuario = ? AND Contrasena = ?";
 
