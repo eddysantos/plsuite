@@ -98,8 +98,37 @@ if ($system_callback['query']['code'] == "500") {
   exit_script($system_callback);
 }
 
-$system_callback['query']['code'] = "1";
-$system_callback['query']['message'] = "Query happened perfectly!";
+$query = "UPDATE ct_trip_linehaul SET (destination_city = ?, destination_state = ?, destination_zip = ?) WHERE pk_idlinehaul = ?";
+
+$stmt = $db->prepare($query);
+
+if (!($stmt)) {
+  $system_callback['lh_edit']['code'] = "1";
+  $system_callback['lh_edit']['message'] = "Error during INSERT TRIP_LINEHAUL_MOVEMENT query prepare [$db->errno]: $db->error";
+  exit_script($system_callback);
+}
+
+if (
+  !(
+    $stmt->bind_param('ssss',
+    $data['dcity'],
+    $data['dstate'],
+    $data['dzip'],
+    $data['lhid']
+  )
+    )
+) {
+  $system_callback['lh_edit']['code'] = "1";
+  $system_callback['lh_edit']['message'] = "Could not bind variables for LH update [$stmt->errno]: $stmt->error";
+}
+
+if (!($stmt->execute())) {
+  $system_callback['lh_edit']['code'] = "1";
+  $system_callback['lh_edit']['message'] = "Error during Linehaul Edit query execution [$stmt->errno]: $stmt->error";
+}
+
+$system_callback['lh_edit']['code'] = "1";
+$system_callback['lh_edit']['message'] = "Query happened perfectly!";
 exit_script($system_callback);
 
 
