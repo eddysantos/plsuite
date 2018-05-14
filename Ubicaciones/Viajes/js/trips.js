@@ -44,6 +44,17 @@ function validateForm(form_inputs, current_target){
   return isValid;
 }
 
+function toggle_view(element_object){
+  $.each(element_object, function(index, value){
+    value.toggle();
+  })
+  // for (var element_object in object) {
+  //   if (object.hasOwnProperty(element_object)) {
+  //     object.toggle();
+  //   }
+  // }
+}
+
 $(document).ready(function(){
 
   $('.popup-input').keyup(function(e){
@@ -173,6 +184,13 @@ $(document).ready(function(){
       }
     }
 
+    var toggle_buttons = [
+      $(this),
+      $($(this).attr('loading'))
+    ]
+
+    toggle_view(toggle_buttons);
+
     $.ajax({
       method: 'POST',
       data: data,
@@ -188,9 +206,11 @@ $(document).ready(function(){
             text: resp.query.message,
             icon: 'error'
           })
+          toggle_view(toggle_buttons);
         }
       },
       error: function(exception){
+        toggle_view(toggle_buttons);
         console.error(exception);
       }
     })
