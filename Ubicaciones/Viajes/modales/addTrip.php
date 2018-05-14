@@ -101,7 +101,8 @@
         </form>
       </div>
       <div class="modal-footer">
-        <button type="button" id="addTripButton" class="btn btn-success disabled" name="button" disabled>Add Trip</button>
+        <button type="button" id="addTripButtonLoading" style="display: none" class="btn btn-success disabled" name="button" disabled><i class="fas fa-circle-notch fa-spin"></i></button>
+        <button type="button" id="addTripButton" loading="#addTripButtonLoading" class="btn btn-success disabled" name="button" disabled>Add Trip</button>
       </div>
     </div>
   </div>
