@@ -37,6 +37,7 @@ if ($rslt->num_rows == 0) {
 
 foreach ($linehauls as $lh) {
   global $system_callback;
+  $system_callback['number']++;
   $system_callback['data'] .= "<tr role='button' db-id='$lh[linehaulid]' tripnumber='$lh[trip]' lh-number='$lh[linehaul]' tripyear='$lh[tyear]'>
   <td>
   <div class=''><i class='fa fa-circle $lh[status] mr-1'></i><span class='font-weight-bold'>" . $lh['tyear'] .  str_pad($lh['trip'], 4, 0, STR_PAD_LEFT) . $lh['linehaul'] . "</span>

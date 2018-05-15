@@ -6,9 +6,9 @@ require $root . '/plsuite/Resources/PHP/Utilities/header.php';
 <div class="container-fluid pt-3" style="margin-top: 75px;">
  <div class="row">
     <div class="col-lg-5">
-      <h5>Open Trips:<span id="amt-open-trips"></span></h5>
+      <h5>Open Trips: <span id="amt-open-trips"></span></h5>
       <table class="table table-striped main-dash-table">
-        <tbody id="tbody-open-trips">
+        <tbody id="tbody-open-trips" class="border">
           <tr><td class="text-center">Loading <i class="fas fa-circle-notch fa-spin ml-2"></i></td></tr>
         </tbody>
       </table>
