@@ -164,7 +164,7 @@ require $root . '/plsuite/Resources/PHP/Utilities/initialScript.php';
                         <a class="dropdown-item set-due-date" due-days="30">30 Days</a>
                       </div>
                     </div>
-                  <input type="date" id="payment_due" class="form-control" name="" value="">
+                  <input type="date" id="payment_due_date" class="form-control" name="" value="">
                 </div>
               </div>
             </div>

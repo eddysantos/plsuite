@@ -123,7 +123,7 @@ $(document).ready(function(){
       bank_name: $('#bank_name').val(),
       check_comments: $('#check_comments').val(),
       dbid: $('#linehaulid').val(),
-      payment_due: $('#payment_due').val()
+      payment_due: $('#payment_due_date').val()
     }
 
     var update_data = $.ajax({
