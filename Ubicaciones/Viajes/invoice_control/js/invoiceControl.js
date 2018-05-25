@@ -122,7 +122,8 @@ $(document).ready(function(){
       check_number: $('#check_number').val(),
       bank_name: $('#bank_name').val(),
       check_comments: $('#check_comments').val(),
-      dbid: $('#linehaulid').val()
+      dbid: $('#linehaulid').val(),
+      payment_due: $('#payment_due').val()
     }
 
     var update_data = $.ajax({
@@ -164,6 +165,11 @@ $(document).ready(function(){
     now.setDate(now.getDate() + Number(days_due));
 
     $('#payment_due').val(now.yyyymmdd());
+  })
+
+  $('#invoice_amount').change(function(){
+    var num = parseFloat($(this).val());
+    $(this).val(num.toFixed(2));
   })
 
 })
