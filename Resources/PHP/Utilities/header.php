@@ -7,6 +7,9 @@
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="/plsuite/Resources/Bootstrap4/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/plsuite/Resources/alertify/css/alertify.min.css">
+    <link rel="stylesheet" href="/plsuite/Resources/alertify/css/themes/default.min.css">
+    <link rel="stylesheet" href="/plsuite/Resources/alertify/css/themes/bootsrap.min.css">
     <link rel="stylesheet" media="screen and (min-device-width: 701px)" href="/plsuite/Resources/CSS/main.css">
     <!-- <link rel="stylesheet" media="screen and (min-device-width: 701px)" href="/plsuite/Resources/fontAwesome/css/font-awesome.min.css"> -->
     <link rel="stylesheet" media="screen and (max-device-width: 700px)" href="/plsuite/Resources/CSS/mainMobile.css">
@@ -37,6 +40,8 @@
             <div class="dropdown-menu" aria-lablledby="tripDropdown">
               <a class="dropdown-item" href="/plsuite/Ubicaciones/Viajes/dashboard.php">Active Trips</a>
               <a class="dropdown-item" href="/plsuite/Ubicaciones/Viajes/closedTrips.php" href="#">Closed Trips</a>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item disabled" disabled href="#" href="#">Invoice Control</a>
             </div>
           </li>
           <li class="nav-item">
