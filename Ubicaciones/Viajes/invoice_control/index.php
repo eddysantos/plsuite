@@ -153,6 +153,22 @@ require $root . '/plsuite/Resources/PHP/Utilities/initialScript.php';
               </div>
             </div>
             <div class="form-row">
+              <label for="payment_due" class="col-form-label col-lg-4">Payment Due</label>
+              <div class="form-group col-lg-8">
+                <div class="input-group">
+                  <div class="input-group-btn">
+                      <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Days due</button>
+                      <div class="dropdown-menu">
+                        <a class="dropdown-item set-due-date" due-days="10">10 Days</a>
+                        <a class="dropdown-item set-due-date" due-days="20">20 Days</a>
+                        <a class="dropdown-item set-due-date" due-days="30">30 Days</a>
+                      </div>
+                    </div>
+                  <input type="date" id="payment_due" class="form-control" name="" value="">
+                </div>
+              </div>
+            </div>
+            <div class="form-row">
               <label for="payment_date" class="col-form-label col-lg-4">Payment Date</label>
               <div class="form-group col-lg-8">
                 <input type="date" id="payment_date" class="form-control" name="" value="">
