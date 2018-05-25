@@ -33,7 +33,7 @@ if (isset($_POST['login'])) {
 
     // include('Resources/PHP/loginDatabase.php');
 
-    $loginQry = "SELECT pkIdUsers, Nombre, Apellido, NombreUsuario, TipoUsuario, Status, NombreUsuario FROM Users WHERE NombreUsuario = ? AND Contrasena = ?";
+    $loginQry = "SELECT u.pkIdUsers , u.Nombre , u.Apellido , u.NombreUsuario , u.TipoUsuario , u. STATUS , u.NombreUsuario , up.invoice_control_save ic_save FROM Users u LEFT JOIN users_permisos up ON u.pkIdUsers = up.fkid_user WHERE NombreUsuario = ? AND Contrasena = ?";
 
     $stmt = $db->prepare($loginQry) or die ('Error Login('.$login->errno.'): '.$login->error);
     $stmt->bind_param('ss',$usuario, $pass);
