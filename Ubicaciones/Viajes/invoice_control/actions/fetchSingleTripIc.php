@@ -73,7 +73,7 @@ if ($rslt->num_rows == 0) {
 
 $sc['data']['departure'] = parseDate($sc['data']['departure'], 2);
 $sc['data']['arrival'] = parseDate($sc['data']['arrival'], 2);
-$sc['data']['payment_due'] = parseDate($sc['data']['arrival'], 2);
+$sc['data']['payment_due'] = parseDate($sc['data']['payment_due'], 2);
 
 $sc['data']['departure_date'] = $sc['data']['departure']['date'];
 $sc['data']['departure_time_hour'] = $sc['data']['departure']['time']['hour'];
@@ -81,9 +81,9 @@ $sc['data']['departure_time_minute'] = $sc['data']['departure']['time']['minute'
 $sc['data']['arrival_date'] = $sc['data']['arrival']['date'];
 $sc['data']['arrival_time_hour'] = $sc['data']['arrival']['time']['hour'];
 $sc['data']['arrival_time_minute'] = $sc['data']['arrival']['time']['minute'];
-$sc['data']['payment_due_hour'] = $sc['data']['arrival']['time']['hour'];
-$sc['data']['payment_due_minute'] = $sc['data']['arrival']['time']['minute'];
-$sc['data']['payment_due'] = $sc['data']['arrival']['date'];
+$sc['data']['payment_due_date'] = $sc['data']['payment_due']['date'];
+$sc['data']['payment_due_hour'] = $sc['data']['payment_due']['time']['hour'];
+$sc['data']['payment_due_minute'] = $sc['data']['payment_due']['time']['minute'];
 
 $sc['code'] = 1;
 $sc['message'] = "Script called successfully!";
