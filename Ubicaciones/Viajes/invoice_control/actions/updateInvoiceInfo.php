@@ -6,6 +6,10 @@ require $root . '/plsuite/Resources/PHP/Utilities/initialScript.php';
 $sc = [];
 $data = $_POST;
 
+if ($data['payment_date'] == "") {
+  $data['payment_date'] = NULL;
+}
+
 function parseDate($datestamp, $option = 1){
   if ($datestamp == "") {
     return $return;
@@ -47,7 +51,7 @@ if (!($stmt)) {
 
 $stmt->bind_param('sssssss',
   $data['invoice_number'],
-  $data['invoice_amount'],
+  numberify($data['invoice_amount']),
   $data['payment_date'],
   $data['check_number'],
   $data['bank_name'],

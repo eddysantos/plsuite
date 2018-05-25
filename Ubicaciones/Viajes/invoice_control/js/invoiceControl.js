@@ -24,6 +24,16 @@ function isJson(str) {
     return true;
 }
 
+Date.prototype.yyyymmdd = function() {
+  var mm = this.getMonth() + 1; // getMonth() is zero-based
+  var dd = this.getDate();
+
+  return [this.getFullYear(),
+          (mm>9 ? '' : '0') + mm,
+          (dd>9 ? '' : '0') + dd
+        ].join('-');
+};
+
 $(document).ready(function(){
   $('#pending-invoice-trip-search').keyup(function(){
 
@@ -144,6 +154,16 @@ $(document).ready(function(){
     }
 
     $('#pending-invoice-trip-search').keyup();
+  })
+
+  $('.set-due-date').click(function(){
+    var days_due = $(this).attr('due-days');
+    var btn_label = $(this).html();
+
+    var now = new Date();
+    now.setDate(now.getDate() + Number(days_due));
+
+    $('#payment_due').val(now.yyyymmdd());
   })
 
 })
