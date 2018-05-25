@@ -81,9 +81,9 @@ $sc['data']['departure_time_minute'] = $sc['data']['departure']['time']['minute'
 $sc['data']['arrival_date'] = $sc['data']['arrival']['date'];
 $sc['data']['arrival_time_hour'] = $sc['data']['arrival']['time']['hour'];
 $sc['data']['arrival_time_minute'] = $sc['data']['arrival']['time']['minute'];
-$sc['data']['payment_due_hour'] = $sc['data']['arrival']['time']['hour'];
-$sc['data']['payment_due_minute'] = $sc['data']['arrival']['time']['minute'];
-$sc['data']['payment_due'] = $sc['data']['arrival']['date'];
+$sc['data']['payment_due_hour'] = $sc['data']['payment_due']['time']['hour'];
+$sc['data']['payment_due_minute'] = $sc['data']['payment_due']['time']['minute'];
+$sc['data']['payment_due'] = $sc['data']['payment_due']['date'];
 
 $sc['code'] = 1;
 $sc['message'] = "Script called successfully!";
