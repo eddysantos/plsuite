@@ -31,7 +31,7 @@ require $root . '/plsuite/Resources/PHP/Utilities/initialScript.php';
       <form class="form-inline justify-content-between" onsubmit="return false;">
         <div class="form-inline">
           <label class="form-control-label mr-3">To begin, type a trip or trailer number:</label>
-          <input type="text" class="form-control" autocomplete="new-password" id="pending-invoice-trip-search" name="" value="">
+          <input type="text" class="form-control" autocomplete="off" id="pending-invoice-trip-search" name="" value="">
         </div>
         <!-- <div class="form-group ml-2">
           <input type="checkbox" class="mr-2" name="" value="">
