@@ -41,7 +41,7 @@
               <a class="dropdown-item" href="/plsuite/Ubicaciones/Viajes/dashboard.php">Active Trips</a>
               <a class="dropdown-item" href="/plsuite/Ubicaciones/Viajes/closedTrips.php" href="#">Closed Trips</a>
               <div class="dropdown-divider"></div>
-              <a class="dropdown-item disabled" disabled href="#" href="#">Invoice Control</a>
+              <a class="dropdown-item" href="/plsuite/Ubicaciones/Viajes/invoice_control" href="">Invoice Control</a>
             </div>
           </li>
           <li class="nav-item">
