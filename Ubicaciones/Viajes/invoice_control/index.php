@@ -178,7 +178,9 @@ require $root . '/plsuite/Resources/PHP/Utilities/initialScript.php';
             </div>
             <div class="text-right">
               <div class="form-group ">
-                <button type="button" id="save-invoice-info" class="btn btn-outline-success" name="button">Save Info</button>
+                <?php if ($_SESSION['user_info']['ic_save'] == 1): ?>
+                  <button type="button" id="save-invoice-info" class="btn btn-outline-success" name="button">Save Info</button>
+                <?php endif; ?>
               </div>
             </div>
           </form>
