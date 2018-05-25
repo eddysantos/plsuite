@@ -73,7 +73,7 @@ if ($rslt->num_rows == 0) {
 
 $sc['data']['departure'] = parseDate($sc['data']['departure'], 2);
 $sc['data']['arrival'] = parseDate($sc['data']['arrival'], 2);
-$sc['data']['payment_due'] = parseDate($sc['data']['arrival'], 2);
+$sc['data']['payment_due'] = parseDate($sc['data']['payment_due'], 2);
 
 $sc['data']['departure_date'] = $sc['data']['departure']['date'];
 $sc['data']['departure_time_hour'] = $sc['data']['departure']['time']['hour'];
