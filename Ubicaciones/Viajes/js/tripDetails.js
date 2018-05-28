@@ -148,14 +148,12 @@ function show_lh_details(lhid = undefined){
   pullMov.done(function(r){
     r = JSON.parse(r);
     if (r.code == 1) {
-      console.log(r);
       $('#mov-dash').html(r.data);
     }
   });
 
   pullLh.done(function(r){
     r = JSON.parse(r);
-    console.log(r);
 
     for (var key in r.data) {
       if ($('.' + key).is('select')) {
@@ -254,8 +252,6 @@ function show_trip_info(){
 
   pullTrip.done(function(r){
     var r = JSON.parse(r);
-    console.log(r);
-
     for (var key in r.data.trip) {
       // console.log('Test');
       if (r.data.trip.hasOwnProperty(key)) {
@@ -358,6 +354,7 @@ $(document).ready(function(){
         $('#appt_time').val(rsp.data.appointment.date);
         $('#appt_time_hour').val(rsp.data.appointment.time.hour);
         $('#appt_time_minute').val(rsp.data.appointment.time.minute);
+        $('.lh_comment').val(rsp.data.lh_comment);
         $('.lhdRPM').val(Math.round((rsp.data.rate / rsp.data.total_miles)*100)/100);
 
         // if ( rsp.data.status == 'Cancelled') {
@@ -533,6 +530,7 @@ $(document).ready(function(){
       total_miles: $(parent_form).find('.total_miles').val(),
       rpm: $(parent_form).find('.rpm').val(),
       status: $(parent_form).find('.lh_status').val(),
+      comments: $(parent_form).find('.lh_comment').val(),
       departure: {
         date: $(parent_form).find('.departure.date').val(),
         time: {

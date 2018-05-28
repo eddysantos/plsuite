@@ -164,7 +164,7 @@ $(document).ready(function(){
     var now = new Date();
     now.setDate(now.getDate() + Number(days_due));
 
-    $('#payment_due').val(now.yyyymmdd());
+    $('#payment_due_date').val(now.yyyymmdd());
   })
 
   $('#invoice_amount').change(function(){
