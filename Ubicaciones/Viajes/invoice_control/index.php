@@ -129,6 +129,12 @@ require $root . '/plsuite/Resources/PHP/Utilities/initialScript.php';
                   <input class="form-control arrival minute" id="arrival_time_minute" name="arrival_time_minute">
                 </div>
               </div>
+              <div class="form-row">
+                <label for="" class="col-form-label col-md-2">Trip Comments</label>
+                <div class="form-group col-md-10">
+                  <textarea name="name" class="form-control" id="lh_comment" rows="8"></textarea>
+                </div>
+              </div>
 
             </fieldset>
           </form>
@@ -159,9 +165,9 @@ require $root . '/plsuite/Resources/PHP/Utilities/initialScript.php';
                   <div class="input-group-btn">
                       <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Days due</button>
                       <div class="dropdown-menu">
-                        <a class="dropdown-item set-due-date" due-days="10">10 Days</a>
-                        <a class="dropdown-item set-due-date" due-days="20">20 Days</a>
-                        <a class="dropdown-item set-due-date" due-days="30">30 Days</a>
+                        <a class="dropdown-item set-due-date" role="button" due-days="10">10 Days</a>
+                        <a class="dropdown-item set-due-date" role="button" due-days="20">20 Days</a>
+                        <a class="dropdown-item set-due-date" role="button" due-days="30">30 Days</a>
                       </div>
                     </div>
                   <input type="date" id="payment_due_date" class="form-control" name="" value="">

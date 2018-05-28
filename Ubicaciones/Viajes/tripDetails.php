@@ -555,6 +555,12 @@ $lastEl = array_values(array_slice($linehauls, -1))[0];
                  </div>
 
                </div>
+               <div class="form-row">
+                 <label for="" class="col-form-label col-md-2">Comments</label>
+                 <div class="col-md-10">
+                   <textarea name="" id="lh_comments" class="form-control lh_comment" rows="8"></textarea>
+                 </div>
+               </div>
 
              </fieldset>
            </form>
