@@ -153,6 +153,7 @@ function show_lh_details(lhid = undefined){
   });
 
   pullLh.done(function(r){
+    console.log(r);
     r = JSON.parse(r);
 
     for (var key in r.data) {
