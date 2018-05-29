@@ -31,7 +31,7 @@ if ($data['appt']['date'] != "") {
 }
 
 
-$query = "UPDATE ct_trip_linehaul SET fkid_broker = ?, trip_rate = ?, origin_zip = ?, origin_state = ?, origin_city = ?, destination_zip = ?, destination_state = ?, destination_city = ?, date_departure = ?, date_arrival = ?, date_appointment = ?, linehaul_status = ?, date_delivery = ?, broker_reference = ?, linehaul_comment = ? WHERE pk_idlinehaul = ? ";
+$query = "UPDATE ct_trip_linehaul SET fkid_broker = ?, trip_rate = ?, origin_zip = ?, origin_state = ?, origin_city = ?, destination_zip = ?, destination_state = ?, destination_city = ?, date_departure = ?, date_arrival = ?, date_appointment = ?, linehaul_status = ?, date_delivery = ?, broker_reference = ?, lh_comment = ? WHERE pk_idlinehaul = ? ";
 
 $stmt = $db->prepare($query);
 if (!($stmt)) {
