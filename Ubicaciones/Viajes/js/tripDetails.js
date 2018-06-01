@@ -28,7 +28,7 @@ function getCityStateListener(){
         el.parent().siblings().find('.stateInput').val(rsp.data.state).change();
         el.parent().siblings().find('.cityInput').val(rsp.data.city).change();
       } else {
-        console.log(rsp.message);
+        // console.log(rsp.message);
       }
       $('.overlay').remove();
     }).fail(function(jqXHR, textStatus, errorThrown){
@@ -153,7 +153,7 @@ function show_lh_details(lhid = undefined){
   });
 
   pullLh.done(function(r){
-    console.log(r);
+    // console.log(r);
     r = JSON.parse(r);
 
     for (var key in r.data) {
@@ -244,7 +244,7 @@ function show_trip_info(){
     year: $('#year-identifier').val()
   }
 
-  console.log(data);
+  // console.log(data);
   var pullTrip = $.ajax({
     method: 'POST',
     data: data,
@@ -574,7 +574,7 @@ $(document).ready(function(){
       data.status = "Pending Closure"
     }
 
-    console.log(data);
+    // console.log(data);
     var updateLinehaul = $.ajax({
       method: 'POST',
       data: data,
@@ -585,7 +585,7 @@ $(document).ready(function(){
 
     updateLinehaul.done(function(result){
       rsp = JSON.parse(result);
-      console.log(rsp);
+      // console.log(rsp);
       if (rsp.code == 1) {
         $('.linehaulSavedNotice').html('Linehaul updated successfully').addClass('alert-success').removeClass('alert-danger').fadeIn();
         show_lh_details($('#linehaulid').val());
