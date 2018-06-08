@@ -32,6 +32,10 @@ $system_callback['trip'] = $_POST['trip'];
 
 /** Fetch information on the trailer. **/
 
+$db->query('LOCK TABLES ct_trip WRITE ;');
+$db->query("SET TRANSACTION ISOLATION LEVEL READ UNCOMMITTED;");
+
+
 try {
 
   $db->begin_transaction();
@@ -118,7 +122,13 @@ try {
 
   /** Load trip information into the Database. **/
 
-  $query = "INSERT INTO ct_trip(fkid_trailer, trailer_number, trailer_plates, trip_year) VALUES(?,?,?,?)";
+    /* Calculate trip number, bases on the year, and how many trips there are. */
+    $query = "SELECT max(pkid_trip) max_trip FROM ct_trip WHERE trip_year = $thisYear";
+    $stmt = $db->query($query);
+    $trips = $stmt->fetch_assoc();
+    $tripno = $thisYear . str_pad($trips['max_trip'] + 1, 4, 0, STR_PAD_LEFT);
+
+  $query = "INSERT INTO ct_trip(fkid_trailer, trailer_number, trailer_plates, trip_year, trip_number) VALUES(?,?,?,?,?)";
 
   $stmt = $db->prepare($query);
   if (!($stmt)) {
@@ -128,11 +138,12 @@ try {
     exit_script($system_callback);
   }
 
-  $stmt->bind_param('ssss',
+  $stmt->bind_param('sssss',
   $system_callback['trailer']['data']['id'],
   $system_callback['trailer']['data']['trailerNumber'],
   $system_callback['trailer']['data']['trailerPlates'],
-  $thisYear
+  $thisYear,
+  $tripno
   );
   if (!($stmt)) {
     $system_callback['query']['code'] = "500";
@@ -167,8 +178,8 @@ try {
   $stmt = $db->prepare($query);
   if (!($stmt)) {
     $system_callback['query']['code'] = "500";
-    $system_callback['query']['query'] = $query;
-    $system_callback['query']['message'] = "Error during INSERT TRIP query prepare [$stmt->errno]: $stmt->error";
+    $system_callback['query']['db'] = $db;
+    $system_callback['query']['message'] = "Error during count TRIP LINEHAULS query prepare [$db->errno]: $db->error";
     exit_script($system_callback);
   }
 
@@ -178,14 +189,14 @@ try {
   if (!($stmt)) {
     $system_callback['query']['code'] = "500";
     $system_callback['query']['query'] = $query;
-    $system_callback['query']['message'] = "Error during INSERT TRIP variables binding [$stmt->errno]: $stmt->error";
+    $system_callback['query']['message'] = "Error during count TRIP LINEHAULS variables binding [$stmt->errno]: $stmt->error";
     exit_script($system_callback);
   }
 
   if (!($stmt->execute())) {
     $system_callback['query']['code'] = "500";
     $system_callback['query']['query'] = $query;
-    $system_callback['query']['message'] = "Error during INSERT TRIP query execution [$stmt->errno]: $stmt->error";
+    $system_callback['query']['message'] = "Error during count TRIP LINEHAULS query execution [$stmt->errno]: $stmt->error";
     exit_script($system_callback);
   }
 
@@ -199,7 +210,7 @@ try {
 
   /**************************************/
 
-  $query = "INSERT INTO ct_trip_linehaul(fk_idtrip, origin_state, origin_city, origin_zip, destination_state, destination_city, destination_zip, trip_rate, fkid_broker, fk_tripyear, pk_linehaul_number, broker_reference) VALUES(?,?,?,?,?,?,?,?,?,?,?,?)";
+  $query = "INSERT INTO ct_trip_linehaul(fk_idtrip, origin_state, origin_city, origin_zip, destination_state, destination_city, destination_zip, trip_rate, fkid_broker, fk_tripyear, pk_linehaul_number, broker_reference, lh_number) VALUES(?,?,?,?,?,?,?,?,?,?,?,?, ?)";
 
   $stmt = $db->prepare($query);
   if (!($stmt)) {
@@ -209,7 +220,7 @@ try {
     exit_script($system_callback);
   }
 
-  $stmt->bind_param('ssssssssssss',
+  $stmt->bind_param('sssssssssssss',
   $trip_insert_id,
   $system_callback['trip']['origin']['state'],
   $system_callback['trip']['origin']['city'],
@@ -221,7 +232,8 @@ try {
   $system_callback['broker']['data']['id'],
   $thisYear,
   $new_lid,
-  $system_callback['broker']['data']['reference']
+  $system_callback['broker']['data']['reference'],
+  $lh_number = $tripno.$new_lid
   );
   if (!($stmt)) {
     $system_callback['query']['code'] = "500";
@@ -338,11 +350,13 @@ try {
   $system_callback['query']['message'] = "Query executed successfully!";
   $system_callback['query']['insertid'] = $trip_insert_id;
   $system_callback['query']['tripyear'] = $thisYear;
+  $db->query('UNLOCK TABLES;');
   exit_script($system_callback);
 } catch (\Exception $e) {
   $db->rollback();
   $system_callback['query']['code'] = "2";
   $system_callback['query']['message'] = "There was a problem executing the query[$db->errno]: $db->error";
+  $db->query('UNLOCK TABLES;');
   exit_script($system_callback);
 }
 

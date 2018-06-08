@@ -274,6 +274,12 @@ $lastEl = array_values(array_slice($linehauls, -1))[0];
                <input type="text" class="linehaulid" id="linehaulid" name="" value="" hidden>
                <input type="text" class="lh_status" name="" value="" hidden>
                <div class="form-row">
+                 <label for="" class="col-form-label col-md-2">Trailer</label>
+                 <div class="form-group col-md-6">
+                   <input type="text" class="form-control trailer_number readonly" readonly name="" value="">
+                 </div>
+               </div>
+               <div class="form-row">
                  <label for="" class="col-form-label col-md-2">Broker</label>
                  <div class="form-group col-md-6">
                    <input type="text" class="form-control broker popup-input" id-display="#broker-popup-list-lh-details" db-id="" name="" value="">
@@ -554,6 +560,12 @@ $lastEl = array_values(array_slice($linehauls, -1))[0];
                    </select>
                  </div>
 
+               </div>
+               <div class="form-row">
+                 <label for="" class="col-form-label col-md-2">Comments</label>
+                 <div class="col-md-10">
+                   <textarea name="" id="lh_comments" class="form-control lh_comment" rows="8"></textarea>
+                 </div>
                </div>
 
              </fieldset>

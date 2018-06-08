@@ -28,7 +28,7 @@ function getCityStateListener(){
         el.parent().siblings().find('.stateInput').val(rsp.data.state).change();
         el.parent().siblings().find('.cityInput').val(rsp.data.city).change();
       } else {
-        console.log(rsp.message);
+        // console.log(rsp.message);
       }
       $('.overlay').remove();
     }).fail(function(jqXHR, textStatus, errorThrown){
@@ -148,14 +148,13 @@ function show_lh_details(lhid = undefined){
   pullMov.done(function(r){
     r = JSON.parse(r);
     if (r.code == 1) {
-      console.log(r);
       $('#mov-dash').html(r.data);
     }
   });
 
   pullLh.done(function(r){
+    // console.log(r);
     r = JSON.parse(r);
-    console.log(r);
 
     for (var key in r.data) {
       if ($('.' + key).is('select')) {
@@ -245,7 +244,7 @@ function show_trip_info(){
     year: $('#year-identifier').val()
   }
 
-  console.log(data);
+  // console.log(data);
   var pullTrip = $.ajax({
     method: 'POST',
     data: data,
@@ -254,8 +253,6 @@ function show_trip_info(){
 
   pullTrip.done(function(r){
     var r = JSON.parse(r);
-    console.log(r);
-
     for (var key in r.data.trip) {
       // console.log('Test');
       if (r.data.trip.hasOwnProperty(key)) {
@@ -358,6 +355,7 @@ $(document).ready(function(){
         $('#appt_time').val(rsp.data.appointment.date);
         $('#appt_time_hour').val(rsp.data.appointment.time.hour);
         $('#appt_time_minute').val(rsp.data.appointment.time.minute);
+        $('.lh_comment').val(rsp.data.lh_comment);
         $('.lhdRPM').val(Math.round((rsp.data.rate / rsp.data.total_miles)*100)/100);
 
         // if ( rsp.data.status == 'Cancelled') {
@@ -533,6 +531,7 @@ $(document).ready(function(){
       total_miles: $(parent_form).find('.total_miles').val(),
       rpm: $(parent_form).find('.rpm').val(),
       status: $(parent_form).find('.lh_status').val(),
+      comments: $(parent_form).find('.lh_comment').val(),
       departure: {
         date: $(parent_form).find('.departure.date').val(),
         time: {
@@ -575,7 +574,7 @@ $(document).ready(function(){
       data.status = "Pending Closure"
     }
 
-    console.log(data);
+    // console.log(data);
     var updateLinehaul = $.ajax({
       method: 'POST',
       data: data,
@@ -586,7 +585,7 @@ $(document).ready(function(){
 
     updateLinehaul.done(function(result){
       rsp = JSON.parse(result);
-      console.log(rsp);
+      // console.log(rsp);
       if (rsp.code == 1) {
         $('.linehaulSavedNotice').html('Linehaul updated successfully').addClass('alert-success').removeClass('alert-danger').fadeIn();
         show_lh_details($('#linehaulid').val());
