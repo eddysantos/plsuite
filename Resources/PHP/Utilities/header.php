@@ -39,7 +39,7 @@
             <a class="nav-link dropdown-toggle <?php echo $viajes_active?>" href="#" id="tripDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded='false'>Trips</a>
             <div class="dropdown-menu" aria-lablledby="tripDropdown">
               <a class="dropdown-item" href="/plsuite/Ubicaciones/Viajes/dashboard.php">Active Trips</a>
-              <a class="dropdown-item" href="/plsuite/Ubicaciones/Viajes/closedTrips.php" href="#">Closed Trips</a>
+              <a class="dropdown-item" href="/plsuite/Ubicaciones/Viajes/tripSearch.php" href="#">Trip Search</a>
               <div class="dropdown-divider"></div>
               <a class="dropdown-item" href="/plsuite/Ubicaciones/Viajes/invoice_control" href="">Invoice Control</a>
             </div>

@@ -14,21 +14,6 @@ $data = array(
   'txt' => ""
 );
 
-if (isset($_GET['submit'])) {
-  $data['from'] = $_GET['cTripsFrom'] == "" ? "2017-01-01" : $_GET['cTripsFrom'];
-  $data['to'] = $_GET['cTripsTo'] == "" ? date('Y-m-d') : $_GET['cTripsTo'];
-  $data['txt'] = "%$_GET[cTripsTxt]%";
-}
-
-// if (!(empty($_GET)) && !(isset($_GET['clear']))) {
-//   $data['from'] = $_GET['cTripsFrom'];
-//   $data['to'] = $_GET['cTripsTo'];
-//   $data['txt'] = "%$_GET[cTripsTxt]%";
-// }
-
-// if (!isset('submit')) {
-// }
-
 
 echo "<link rel='stylesheet' href='/plsuite/Resources/CSS/trips.css'>";
 require $root . '/plsuite/Resources/PHP/Utilities/header.php';
@@ -172,4 +157,4 @@ error_log(json_encode($system_callback));
 require 'modales/addTrip.php';
 require $root . '/plsuite/Resources/PHP/Utilities/footer.php';
  ?>
-<script src="/plsuite/Ubicaciones/Viajes/js/trips.js" charset="utf-8"></script>
+<script src="/plsuite/Ubicaciones/Viajes/js/tripSearch.js" charset="utf-8"></script>
