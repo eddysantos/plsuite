@@ -9,7 +9,7 @@ $usr = 'prolog';
 $pwd = 'f4Tnps.03';
 
 /** TEST DATABASE **/
-// $datab = 'plt';
+// $datab = 'plsuite';
 // $host = 'localhost';
 // $port = 8889;
 // $usr = 'root';

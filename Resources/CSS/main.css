@@ -236,3 +236,8 @@ table-layout: fixed;
   width: 95%;
   position: absolute;
 }
+
+.sub-section-header{
+  height: 30px;
+  font-size: 1.5rem;
+}

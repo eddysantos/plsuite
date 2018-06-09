@@ -10,6 +10,7 @@ $(document).ready(function(){
       var r = JSON.parse(r);
       if (r.query.code == 1) {
         $('#tbody-open-trips').html(r.data);
+        $('#amt-open-trips').html(r.number)
       } else {
         $('#tbody-open-trips').html("<tr><td>No trips found.</td></tr>");
         console.log(r);
