@@ -41,7 +41,7 @@ if (!($stmt->execute())) {
 $rslt = $stmt->get_result();
 // $result = $rslt->fetch_assoc();
 $result = array();
-while ($row = $rslt->fetch_assoc();) {
+while ($row = $rslt->fetch_assoc()) {
   $result['trip_rate_total'] += $row['trip_rate_total'];
   $result['total_miles']+= $row['total_miles'];
 }
@@ -86,7 +86,7 @@ if (!($stmt->execute())) {
 $rslt = $stmt->get_result();
 // $result = $rslt->fetch_assoc();
 $result = array();
-while ($row = $rslt->fetch_assoc();) {
+while ($row = $rslt->fetch_assoc()) {
   $result['trip_rate_total'] += $row['trip_rate_total'];
   $result['total_miles']+= $row['total_miles'];
 }
