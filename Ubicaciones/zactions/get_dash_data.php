@@ -14,7 +14,7 @@ $data = $_POST;
 $b_date = date('Y-m-d H:i:s', strtotime($data['date'] . " 00:00"));
 $e_date = date('Y-m-d H:i:s', strtotime($data['date'] . " 23:59"));
 
-$query = "SELECT sum(tl.trip_rate) trip_rate_total , sum(tlm.miles_google) miles_total FROM ct_trip_linehaul tl LEFT JOIN ct_trip_linehaul_movement tlm ON tl.pk_idlinehaul = tlm.fkid_linehaul WHERE tl.date_begin BETWEEN ? AND ?";
+$query = "SELECT tl.trip_rate trip_rate_total ,( SELECT sum(tlm.miles_google) FROM ct_trip_linehaul_movement tlm WHERE tlm.fkid_linehaul = tl.pk_idlinehaul) total_miles FROM ct_trip_linehaul tl WHERE tl.date_begin BETWEEN ? AND ?";
 
 $stmt = $db->prepare($query);
 if (!($stmt)) {
@@ -54,7 +54,7 @@ if ($result['miles_total'] == 0) {
 }
 
 
-$query = "SELECT sum(tl.trip_rate) trip_rate_total , sum(tlm.miles_google) miles_total FROM ct_trip_linehaul tl LEFT JOIN ct_trip_linehaul_movement tlm ON tl.pk_idlinehaul = tlm.fkid_linehaul WHERE tl.date_begin BETWEEN ? AND ? AND tl.origin_zip <> '78041'";
+$query = "SELECT tl.trip_rate trip_rate_total ,( SELECT sum(tlm.miles_google) FROM ct_trip_linehaul_movement tlm WHERE tlm.fkid_linehaul = tl.pk_idlinehaul) total_miles FROM ct_trip_linehaul tl WHERE tl.date_begin BETWEEN ? AND ? AND tl.origin_zip <> '78041'";
 
 $stmt = $db->prepare($query);
 if (!($stmt)) {
