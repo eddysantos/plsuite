@@ -39,7 +39,13 @@ if (!($stmt->execute())) {
 }
 
 $rslt = $stmt->get_result();
-$result = $rslt->fetch_assoc();
+// $result = $rslt->fetch_assoc();
+$result = array();
+while ($row = $rslt->fetch_assoc();) {
+  $result['trip_rate_total'] += $row['trip_rate_total'];
+  $result['total_miles']+= $row['total_miles'];
+}
+
 if ($result['miles_total'] == 0) {
   $system_callback['data']['all_trips']['miles'] = "0";
   $system_callback['data']['all_trips']['rate'] = "$0.00";
@@ -78,7 +84,12 @@ if (!($stmt->execute())) {
   exit_script($system_callback);
 }
 $rslt = $stmt->get_result();
-$result = $rslt->fetch_assoc();
+// $result = $rslt->fetch_assoc();
+$result = array();
+while ($row = $rslt->fetch_assoc();) {
+  $result['trip_rate_total'] += $row['trip_rate_total'];
+  $result['total_miles']+= $row['total_miles'];
+}
 if ($result['miles_total'] == 0) {
   $system_callback['data']['sb_trips']['miles'] = "0";
   $system_callback['data']['sb_trips']['rate'] = "$0.00";
