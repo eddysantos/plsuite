@@ -226,6 +226,8 @@ $(document).ready(function(){
     window.location.href = "tripDetails.php?tripid=" + tripid + "&tripyear=" + tripyear
   });
 
+  $('')
+
   // $('#newTripForm').find('input').on('blur', function(e){
   //   // console.log(e);
   //   var current_target = $(this);
@@ -325,37 +327,39 @@ $(document).ready(function(){
   //  })
 
 
+
+
 });
 
-$(document).keydown(function(e){
-  if (e.keyCode == 38 || e.keyCode == 40){
-    if ($(document.activeElement).attr('id-display') !== undefined) {
-      var target = $(document.activeElement).attr('id-display') + " p";
-      var targetFocus = $(document.activeElement).attr('id-display') + " p" + ".hovered";
-
-      if ($(targetFocus).length == 0) {
-        $(target).first().addClass('hovered');
-      } else {
-        if (e.keyCode == 40) {
-          $(targetFocus).removeClass('hovered').next().addClass('hovered');
-        }
-
-        if (e.keyCode == 38) {
-          $(targetFocus).removeClass('hovered').prev().addClass('hovered');
-        }
-      }
-
-    }
-  }
-
-  if (e.keyCode === 13 || e.keyCode === 9) {
-    var targetFocus = $(document.activeElement).attr('id-display') + " p" + ".hovered";
-
-    var dbid = $(targetFocus).attr('db-id');
-    var inputTarget = $(targetFocus).parent().attr('id');
-    $("[id-display='#" + inputTarget+ "']").attr("value", $(targetFocus).html()).attr('db-id', $(targetFocus).attr('db-id'));
-    $("[id-display='#" + inputTarget+ "']").prop("value", $(targetFocus).html());
-    $('.popup-list').slideUp();
-
-  }
-});
+// $(document).keydown(function(e){
+//   if (e.keyCode == 38 || e.keyCode == 40){
+//     if ($(document.activeElement).attr('id-display') !== undefined) {
+//       var target = $(document.activeElement).attr('id-display') + " p";
+//       var targetFocus = $(document.activeElement).attr('id-display') + " p" + ".hovered";
+//
+//       if ($(targetFocus).length == 0) {
+//         $(target).first().addClass('hovered');
+//       } else {
+//         if (e.keyCode == 40) {
+//           $(targetFocus).removeClass('hovered').next().addClass('hovered');
+//         }
+//
+//         if (e.keyCode == 38) {
+//           $(targetFocus).removeClass('hovered').prev().addClass('hovered');
+//         }
+//       }
+//
+//     }
+//   }
+//
+//   if (e.keyCode === 13 || e.keyCode === 9) {
+//     var targetFocus = $(document.activeElement).attr('id-display') + " p" + ".hovered";
+//
+//     var dbid = $(targetFocus).attr('db-id');
+//     var inputTarget = $(targetFocus).parent().attr('id');
+//     $("[id-display='#" + inputTarget+ "']").attr("value", $(targetFocus).html()).attr('db-id', $(targetFocus).attr('db-id'));
+//     $("[id-display='#" + inputTarget+ "']").prop("value", $(targetFocus).html());
+//     $('.popup-list').slideUp();
+//
+//   }
+// });
