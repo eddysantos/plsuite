@@ -120,7 +120,7 @@ if ($rslt->num_rows == 0) {
 
  ?>
 <div class="container-fluid align-items-right justify-content-between d-flex mb-3 position-sticky" style="margin-top: 30px">
-  <h1 class="nb-id d-inline text-secondary">Closed Trips</h1>
+  <h1 class="nb-id d-inline text-secondary">Trip Search</h1>
   <form class="form-inline m-0" method="GET">
     <label for="cTripsFrom" class="mr-2">From</label>
     <input type="date" class="form-control mr-2" name="cTripsFrom" id="cTripsFrom" value="<?php echo $data['input_f']?>">
