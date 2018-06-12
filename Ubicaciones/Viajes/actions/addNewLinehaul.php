@@ -11,6 +11,7 @@ $thisYear = date('y', strtotime('today'));
 // $system_callback['truck']['data']['id'] = $_POST['truckid'];
 $system_callback['data'] = $_POST;
 $system_callback['session'] = $_SESSION['current_linehaul'];
+$user_name = $_SESSION['user_info']['NombreUsuario'];
 
 function fuel_surcharge($rpm){
   if ($rpm < 1.30) {
@@ -69,7 +70,7 @@ try {
 
     /** add new Line Haul on the trip**/
 
-    $query = "INSERT INTO ct_trip_linehaul(fk_idtrip, origin_state, origin_city, origin_zip, destination_state, destination_city, destination_zip, trip_rate, fkid_broker, fk_tripyear, rpm, fuel_surcharge, pk_linehaul_number, broker_reference) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+    $query = "INSERT INTO ct_trip_linehaul(fk_idtrip, origin_state, origin_city, origin_zip, destination_state, destination_city, destination_zip, trip_rate, fkid_broker, fk_tripyear, rpm, fuel_surcharge, pk_linehaul_number, broker_reference, added_by) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
     $stmt = $db->prepare($query);
     if (!($stmt)) {
@@ -81,7 +82,7 @@ try {
 
     $fuel_surcharge = fuel_surcharge($system_callback['data']['linehaul']['rpm']);
 
-    $stmt->bind_param('ssssssssssssss',
+    $stmt->bind_param('sssssssssssssss',
     $system_callback['data']['linehaul']['tripid'],
     $system_callback['data']['linehaul']['origin']['state'],
     $system_callback['data']['linehaul']['origin']['city'],
@@ -95,7 +96,8 @@ try {
     $system_callback['data']['linehaul']['rpm'],
     $fuel_surcharge,
     $new_lid,
-    $system_callback['data']['linehaul']['broker_reference']
+    $system_callback['data']['linehaul']['broker_reference'],
+    $user_name
   );
 
   if (!($stmt)) {
@@ -161,7 +163,7 @@ try {
 
   /* Add linehaul movements to database. */
 
-  $query = "INSERT INTO ct_trip_linehaul_movement(fkid_linehaul, origin_city, origin_state, origin_zip, destination_city, destination_state, destination_zip, miles_google, movement_type, fkid_tractor, fkid_driver, fkid_driver_team, pk_movement_number) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)";
+  $query = "INSERT INTO ct_trip_linehaul_movement(fkid_linehaul, origin_city, origin_state, origin_zip, destination_city, destination_state, destination_zip, miles_google, movement_type, fkid_tractor, fkid_driver, fkid_driver_team, pk_movement_number, added_by) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
   $stmt = $db->prepare($query);
 
@@ -175,7 +177,7 @@ try {
   for ($i=0; $i < count($system_callback['data']['movements']) - 1; $i++) {
     if (
       !(
-        $stmt->bind_param('sssssssssssss',
+        $stmt->bind_param('ssssssssssssss',
         $system_callback['query']['insertid'],
         $system_callback['data']['movements'][$i]['city'],
         $system_callback['data']['movements'][$i]['state'],
@@ -188,7 +190,8 @@ try {
         $system_callback['data']['conveyance']['tractorid'],
         $system_callback['data']['conveyance']['driver']['id'],
         $system_callback['data']['conveyance']['team']['id'],
-        $new_mid
+        $new_mid,
+        $user_name
       )
         )
     ) {
