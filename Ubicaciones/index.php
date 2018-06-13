@@ -37,15 +37,15 @@ $today = date('m/d/Y', strtotime('today'));
   </table>
   <div class="border p-2">
     <form class="form-inline" onsubmit="return false;">
-      Select date range: <input type="text" class="date-selector ml-1 mr-1 form-control text-center" id="" name="" value="">
-      - <input type="text" class="date-selector ml-1 mr-1 form-control" id="" name="" value="">
+      Select date range: <input type="text" class="date-selector ml-1 mr-1 form-control form-control-sm text-center" id="ts_chart_date_from" name="" value="">
+      - <input type="text" class="date-selector ml-1 mr-1 form-control form-control-sm" id="ts_chart_date_to" name="" value="">
       And periodicity:
-      <select class="form-control ml-1 mr-5" name="">
-        <option value="">Daily</option>
-        <option value="">Weekly</option>
-        <option value="">Monthly</option>
+      <select class="form-control form-control-sm ml-1 mr-5" id="ts_chart_period" name="">
+        <option value="0">Daily</option>
+        <option value="1">Weekly</option>
+        <option value="2">Monthly</option>
       </select>
-      <button type="button" class="btn btn-outline-success" id="load_trip_summary_chart" name="button">Load</button>
+      <button type="button" class="btn btn-outline-success btn-sm" id="load_trip_summary_chart" name="button">Load</button>
     </form>
     <div class="" id="test_chart"></div>
   </div>

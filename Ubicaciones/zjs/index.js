@@ -38,15 +38,53 @@ $(document).ready(function(){
     })
 
     $('#load_trip_summary_chart').click(function(){
-      var chart = c3.generate({
-        bindto: '#test_chart',
-        data:{
-          columns:[
-            ['data1', 30, 200, 100, 400, 150, 250],
-            ['data2', 50, 20, 10, 40, 15, 25]
-          ]
-        }
+
+      data = {
+        date_from: $('#ts_chart_date_from').val(),
+        date_to: $('#ts_chart_date_to').val(),
+        period: $('#ts_chart_period').val()
+      }
+
+      if (data.date_from == "" || data.date_to == "") {
+        swal('Oops', "You must type date from and to before loading the chart!", "error");
+        return false;
+      }
+
+      var get_data = $.ajax({
+        method: 'POST',
+        data: data,
+        url: 'zactions/get_trip_summary_chart.php'
       });
+
+      get_data.done(function(r){
+        // console.log(r);
+
+        r = JSON.parse(r);
+        console.log(r.to_chart);
+
+        if (r.code == 1) {
+          c3.generate({
+            bindto: '#test_chart',
+            data:{
+              x: "x",
+              // rows: r.to_chart
+              columns: r.to_chart
+            },
+            axis: {
+                x: {
+                    type: 'timeseries',
+                    tick: {
+                        format: '%Y-%m-%d'
+                    }
+                }
+            }
+          });
+        }
+
+
+      }).fail(function(x){
+          console.error(x);
+        })
 
     })
 
