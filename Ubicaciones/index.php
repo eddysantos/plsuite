@@ -1,4 +1,5 @@
 <link rel="stylesheet" href="/plsuite/Resources/jquery_ui_1_12_1/jquery-ui.min.css">
+<link rel="stylesheet" href="/plsuite/Resources/c3_charts/c3.min.css">
 <?php
 $root = $_SERVER['DOCUMENT_ROOT'];
 require $root . '/plsuite/Resources/PHP/Utilities/session.php';
@@ -11,7 +12,7 @@ $today = date('m/d/Y', strtotime('today'));
   <table class="table border">
     <thead>
       <th style="width: 140px" class="text-secondary">
-        <input type="text" style="padding: 0; line-height: 0" readonly class="form-control-plaintext text-secondary" role="button" name="" value="<?php echo $today?>" id="dash-date">
+        <input type="text" style="padding: 0; line-height: 0" readonly class="form-control-plaintext date-selector text-secondary" role="button" name="" value="<?php echo $today?>" id="dash-date">
       </th>
       <th scope="col">Total Trips</th>
       <th scope="col">Southbound Trips</th>
@@ -34,6 +35,20 @@ $today = date('m/d/Y', strtotime('today'));
       </tr>
     </tbody>
   </table>
+  <div class="border p-2">
+    <form class="form-inline" onsubmit="return false;">
+      Select date range: <input type="text" class="date-selector ml-1 mr-1 form-control text-center" id="" name="" value="">
+      - <input type="text" class="date-selector ml-1 mr-1 form-control" id="" name="" value="">
+      And periodicity:
+      <select class="form-control ml-1 mr-5" name="">
+        <option value="">Daily</option>
+        <option value="">Weekly</option>
+        <option value="">Monthly</option>
+      </select>
+      <button type="button" class="btn btn-outline-success" id="load_trip_summary_chart" name="button">Load</button>
+    </form>
+    <div class="" id="test_chart"></div>
+  </div>
  <!-- <div class="row">
     <div class="col-lg-5">
       <h5>Open Trips: <span id="amt-open-trips"></span></h5>
@@ -61,4 +76,6 @@ require $root . '/plsuite/Resources/PHP/Utilities/footer.php';
  ?>
 
 <script src="/plsuite/Resources/jquery_ui_1_12_1/jquery-ui.min.js" charset="utf-8"></script>
+<script src="/plsuite/Resources/c3_charts/c3.min.js" charset="utf-8"></script>
+<script src="/plsuite/Resources/c3_charts/d3.v5.min.js" charset="utf-8"></script>
 <script src="zjs/index.js" charset="utf-8"></script>

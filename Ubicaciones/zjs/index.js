@@ -10,7 +10,6 @@ function get_dashboard_data(date){
   });
 
   pull_data.done(function(r){
-    console.log(r);
     r = JSON.parse(r);
 
     if (r.code == 1) {
@@ -32,10 +31,23 @@ function get_dashboard_data(date){
 
 $(document).ready(function(){
 
-    $('#dash-date').datepicker();
+    $('.date-selector').datepicker();
     $('#dash-date').change(function(){
       var date = $(this).val();
       get_dashboard_data(date);
+    })
+
+    $('#load_trip_summary_chart').click(function(){
+      var chart = c3.generate({
+        bindto: '#test_chart',
+        data:{
+          columns:[
+            ['data1', 30, 200, 100, 400, 150, 250],
+            ['data2', 50, 20, 10, 40, 15, 25]
+          ]
+        }
+      });
+
     })
 
     get_dashboard_data($('#dash-date').val());
@@ -54,8 +66,8 @@ $(document).ready(function(){
         $('#tbody-open-trips').html("<tr><td>No trips found.</td></tr>");
         console.log(r);
       }
-    }).fail(function(x){
-      console.error(x);
-      $('#tbody-open-trips').html("<tr><td>There was an error, if problem persists call IT</td></tr>");
+      }).fail(function(x){
+        console.error(x);
+        $('#tbody-open-trips').html("<tr><td>There was an error, if problem persists call IT</td></tr>");
     });
 });
