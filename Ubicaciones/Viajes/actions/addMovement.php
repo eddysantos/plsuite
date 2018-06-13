@@ -5,6 +5,8 @@ require $root . '/plsuite/Resources/PHP/Utilities/initialScript.php';
 
 $system_callback['data'] = $_POST;
 
+$user_name = $_SESSION['user_info']['NombreUsuario'];
+
 /* Calculate next movement id number */
 
 $query = "SELECT count(pkid_movement) count FROM ct_trip_linehaul_movement WHERE fkid_linehaul = ?";
@@ -44,7 +46,7 @@ $new_mid += 1;
 
 
 
-$query = "INSERT INTO ct_trip_linehaul_movement(fkid_linehaul, origin_city, origin_state, origin_zip, destination_city, destination_state, destination_zip, miles_google, movement_type, extra_stop, eal, fkid_tractor, fkid_driver, fkid_driver_team, pk_movement_number) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+$query = "INSERT INTO ct_trip_linehaul_movement(fkid_linehaul, origin_city, origin_state, origin_zip, destination_city, destination_state, destination_zip, miles_google, movement_type, extra_stop, eal, fkid_tractor, fkid_driver, fkid_driver_team, pk_movement_number, added_by) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
 $stmt = $db->prepare($query);
 $data = $_POST;
@@ -58,7 +60,7 @@ if (!($stmt)) {
 
 if (
   !(
-    $stmt->bind_param('sssssssssssssss',
+    $stmt->bind_param('ssssssssssssssss',
     $data['lhid'],
     $data['ocity'],
     $data['ostate'],
@@ -73,7 +75,8 @@ if (
     $data['truck'],
     $data['driver'],
     $data['team'],
-    $new_mid
+    $new_mid,
+    $user_name
   )
     )
 ) {
