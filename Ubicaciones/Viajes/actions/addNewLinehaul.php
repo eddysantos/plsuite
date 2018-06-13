@@ -70,7 +70,9 @@ try {
 
     /** add new Line Haul on the trip**/
 
-    $query = "INSERT INTO ct_trip_linehaul(fk_idtrip, origin_state, origin_city, origin_zip, destination_state, destination_city, destination_zip, trip_rate, fkid_broker, fk_tripyear, rpm, fuel_surcharge, pk_linehaul_number, broker_reference, added_by) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+    $query = "INSERT INTO ct_trip_linehaul(fk_idtrip, origin_state, origin_city, origin_zip, destination_state, destination_city, destination_zip, trip_rate, fkid_broker, fk_tripyear, rpm, fuel_surcharge, pk_linehaul_number, broker_reference, added_by, lh_number) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+
+    $lh_number = $tripno = $system_callback['data']['linehaul']['tripyear'] . str_pad($system_callback['data']['linehaul']['tripid'], 4, 0, STR_PAD_LEFT) . $new_lid;
 
     $stmt = $db->prepare($query);
     if (!($stmt)) {
@@ -82,7 +84,7 @@ try {
 
     $fuel_surcharge = fuel_surcharge($system_callback['data']['linehaul']['rpm']);
 
-    $stmt->bind_param('sssssssssssssss',
+    $stmt->bind_param('ssssssssssssssss',
     $system_callback['data']['linehaul']['tripid'],
     $system_callback['data']['linehaul']['origin']['state'],
     $system_callback['data']['linehaul']['origin']['city'],
@@ -97,7 +99,8 @@ try {
     $fuel_surcharge,
     $new_lid,
     $system_callback['data']['linehaul']['broker_reference'],
-    $user_name
+    $user_name,
+    $lh_number
   );
 
   if (!($stmt)) {
