@@ -212,7 +212,9 @@ try {
 
   /**************************************/
 
-  $query = "INSERT INTO ct_trip_linehaul(fk_idtrip, origin_state, origin_city, origin_zip, destination_state, destination_city, destination_zip, trip_rate, fkid_broker, fk_tripyear, pk_linehaul_number, broker_reference, lh_number, added_by) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+  $query = "INSERT INTO ct_trip_linehaul(fk_idtrip, origin_state, origin_city, origin_zip, destination_state, destination_city, destination_zip, trip_rate, fkid_broker, fk_tripyear, pk_linehaul_number, broker_reference, lh_number, added_by, date_appointment) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+
+  $appt = date('Y-m-d H:i', strtotime($system_callback['trip']['appt']['date'] . " " . $system_callback['trip']['appt']['hour'] . ":" . $system_callback['trip']['appt']['min']));
 
   $stmt = $db->prepare($query);
   if (!($stmt)) {
@@ -222,7 +224,7 @@ try {
     exit_script($system_callback);
   }
 
-  $stmt->bind_param('ssssssssssssss',
+  $stmt->bind_param('sssssssssssssss',
   $trip_insert_id,
   $system_callback['trip']['origin']['state'],
   $system_callback['trip']['origin']['city'],
@@ -236,7 +238,8 @@ try {
   $new_lid,
   $system_callback['broker']['data']['reference'],
   $lh_number = $tripno.$new_lid,
-  $user_name
+  $user_name,
+  $appt
   );
   if (!($stmt)) {
     $system_callback['query']['code'] = "500";
