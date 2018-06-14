@@ -866,6 +866,11 @@ $(document).ready(function(){
         city: $('.destination').find('.cityInput').val(),
         state: $('.destination').find('.stateInput').val()
       },
+      appt: {
+        date: $('#appointment_date_add').val(),
+        hour: $('#appointment_time_hour_add').val(),
+        min: $('#appointment_time_minute_add').val()
+      },
       broker: $('.brokerid').attr('db-id'),
       broker_reference: $('#broker-reference').val(),
       tripid: $('#tripid').val(),
