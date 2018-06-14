@@ -12,7 +12,13 @@
           <div class="form-group row">
             <label for="" class="col-form-label col-3">Broker</label>
             <div class="form-group col-6">
-              <input class="form-control mb-3 popup-input brokerid" id-display="#broker-popup-list" type="text" autocomplete="new-password" db-id="" name="" value="" placeholder="Broker Name">
+              <div class="input-group mb-3">
+                <div class="input-group-addon" id="btnQuickAddBroker" role="button" data-container="body" data-toggle="popover">
+                  <span class="input-group-text" id="addBrokerotf" ><i class="fas fa-plus"></i></span>
+                </div>
+                <input class="form-control popup-input brokerid" id-display="#broker-popup-list" type="text" autocomplete="new-password" db-id="" name="" value="" placeholder="Broker Name">
+              </div>
+              <!-- <input class="form-control mb-3 popup-input brokerid" id-display="#broker-popup-list" type="text" autocomplete="new-password" db-id="" name="" value="" placeholder="Broker Name"> -->
               <div class="invalid-feedback font-italic"></div>
               <div id="broker-popup-list" class="popup-list" style="display: none; z-index: 9999">
               </div>
@@ -206,3 +212,14 @@
     </div>
   </div>
 </div>
+<form class="" id="addBrokerQuick" onsubmit="return false;" hidden>
+  <div class="form-group">
+    <input type="text" class="form-control qa-broker-name" name="Brokername" placeholder="Name" value="">
+  </div>
+  <div class="form-group">
+    <input type="text" class="form-control qa-broker-contact" name="brokerMainContact" placeholder="Main Contact" value="">
+  </div>
+  <div class="form-group text-right">
+    <button type="button" class="btn btn-outline-success qa-broker-submit" name="button">Add</button>
+  </div>
+</form>
