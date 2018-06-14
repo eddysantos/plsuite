@@ -31,7 +31,7 @@ $data['to'] = $data['to'] . " 23:59";
 //   'to'=>'2018-02-28'
 // );
 
-$query = "SELECT t.pkid_trip trip , t.trip_year trip_year , tl.pk_idlinehaul linehaul , tl.linehaul_status lh_status , tl.pk_linehaul_number lh_number , tr.trailerNumber trailer , tl.origin_city linehaul_ocity , tl.origin_state linehaul_ostate , tl.destination_city linehaul_dcity , tl.destination_state linehaul_dstate , tl.date_departure departure , tl.date_arrival arrival , tl.date_delivery delivery , tlm.pk_movement_number mov_number , tlm.origin_city movement_ocity , tlm.origin_state movement_ostate , tlm.destination_city movement_dcity , tlm.destination_state movement_dstate , d.nameFirst driver_firstn , d.nameLast driver_lastn , con.truckNumber truck_number , b.brokerName broker , tl.broker_reference reference_number , tl.trip_rate trip_rate , tlm.miles_google miles , tlm.movement_type mov_type FROM ct_trip t LEFT JOIN ct_trailer tr ON t.fkid_trailer = tr.pkid_trailer LEFT JOIN ct_trip_linehaul tl ON t.trip_year = tl.fk_tripyear AND t.pkid_trip = tl.fk_idtrip LEFT JOIN ct_trip_linehaul_movement tlm ON tl.pk_idlinehaul = tlm.fkid_linehaul LEFT JOIN ct_drivers d ON tlm.fkid_driver = d.pkid_driver LEFT JOIN ct_truck con ON tlm.fkid_tractor = con.pkid_truck LEFT JOIN ct_brokers b ON tl.fkid_broker = b.pkid_broker WHERE( tl.linehaul_status <> 'Cancelled' AND(tl.date_arrival IS NULL)) OR( tl.date_arrival >= ? AND tl.date_arrival <= ?) $grouping ORDER BY trip DESC , lh_number ASC , departure DESC , arrival DESC , delivery DESC , mov_number ASC";
+$query = "SELECT t.pkid_trip trip , t.trip_year trip_year , tl.pk_idlinehaul linehaul , tl.linehaul_status lh_status , tl.pk_linehaul_number lh_number , tr.trailerNumber trailer , tl.origin_city linehaul_ocity , tl.origin_state linehaul_ostate , tl.destination_city linehaul_dcity , tl.destination_state linehaul_dstate , tl.date_departure departure , tl.date_arrival arrival , tl.date_delivery delivery , tlm.pk_movement_number mov_number , tlm.origin_city movement_ocity , tlm.origin_state movement_ostate , tlm.destination_city movement_dcity , tlm.destination_state movement_dstate , d.nameFirst driver_firstn , d.nameLast driver_lastn , con.truckNumber truck_number , b.brokerName broker , tl.broker_reference reference_number , tl.trip_rate trip_rate , tlm.miles_google miles , tlm.movement_type mov_type FROM ct_trip t LEFT JOIN ct_trailer tr ON t.fkid_trailer = tr.pkid_trailer LEFT JOIN ct_trip_linehaul tl ON t.trip_year = tl.fk_tripyear AND t.pkid_trip = tl.fk_idtrip LEFT JOIN ct_trip_linehaul_movement tlm ON tl.pk_idlinehaul = tlm.fkid_linehaul LEFT JOIN ct_drivers d ON tlm.fkid_driver = d.pkid_driver LEFT JOIN ct_truck con ON tlm.fkid_tractor = con.pkid_truck LEFT JOIN ct_brokers b ON tl.fkid_broker = b.pkid_broker WHERE( tl.linehaul_status <> 'Cancelled' AND(tl.date_arrival IS NULL)) OR( tl.date_arrival >= ? AND tl.date_arrival <= ? AND tl.linehaul_status <> 'Cancelled') $grouping ORDER BY trip DESC , lh_number ASC , departure DESC , arrival DESC , delivery DESC , mov_number ASC";
 
 $stmt = $db->prepare($query);
 if (!($stmt)) {
@@ -80,6 +80,7 @@ while ($row = $rslt->fetch_assoc()) {
       $records[$row['trip']][$row['linehaul']]['client'] = $row['broker'];
       $records[$row['trip']][$row['linehaul']]['client_reference'] = $row['reference_number'];
       $records[$row['trip']][$row['linehaul']]['amount'] = $row['trip_rate'];
+      $records[$row['trip']][$row['linehaul']]['lh_status'] = $row['lh_status'];
 
       if ($row['mov_type'] == 'E') {
         $records[$row['trip']][$row['linehaul']]['empty_miles'] += $row['miles'];
@@ -247,6 +248,7 @@ foreach ($records AS $linehauls) {
       $xlsActive->setCellValue("O".$x, round($lh_data['amount'] / ($lh_data['loaded_miles'] + $lh_data['empty_miles']), 2));
     }
     $xlsActive->getStyle("O".$x)->getNumberFormat()->setFormatCode("$#,##0.00");
+    $xlsActive->setCellValue("P".$x, $lh_data['lh_status']);
     foreach ($lh_data['movements'] as $movement => $mov_data) {
       $x += 1;
       $xlsActive->setCellValue("C".$x, $mov_data['origin']);
@@ -266,14 +268,13 @@ foreach ($records AS $linehauls) {
           break;
       }
     }
-    $end = "O" . $x;
+    $end = "P" . $x;
     if ($isEven) {
       $xlsActive->getStyle($start.":".$end)->applyFromArray($evenCell);
     } else {
       $xlsActive->getStyle($start.":".$end)->applyFromArray($givenCell);
     }
 
-    $xlsActive->setCellValue("P".$x, $lh_data['lh_status']);
   }
 }
 
@@ -293,6 +294,7 @@ $xlsActive->getColumnDimension('L')->setWidth(10.67 + .84);
 $xlsActive->getColumnDimension('M')->setWidth(10.67 + .84);
 $xlsActive->getColumnDimension('N')->setWidth(10.67 + .84);
 $xlsActive->getColumnDimension('N')->setWidth(10.67 + .84);
+$xlsActive->getColumnDimension('P')->setWidth(12.67 + .84);
 $xlsActive->getStyle('A1')->getAlignment()->setWrapText(true);
 $xlsActive->getStyle('B1')->getAlignment()->setWrapText(true);
 $xlsActive->getStyle('C1')->getAlignment()->setWrapText(true);
