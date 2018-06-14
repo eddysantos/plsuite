@@ -7,7 +7,7 @@ require $root . '/plsuite/Resources/PHP/Utilities/header.php';
 
 $today = date('m/d/Y', strtotime('today'));
  ?>
-<div class="container-fluid pt-3" style="margin-top: 75px;">
+<div class="container-fluid pt-3" style="margin-top: 75px; overflow: scroll; height: calc(100vh - 140px)">
 
   <table class="table border">
     <thead>
@@ -36,6 +36,7 @@ $today = date('m/d/Y', strtotime('today'));
     </tbody>
   </table>
   <div class="border p-2">
+    <h6>RPM Summary</h6>
     <form class="form-inline" onsubmit="return false;">
       Select date range: <input type="text" class="date-selector ml-1 mr-1 form-control form-control-sm text-center" id="ts_chart_date_from" name="" value="">
       - <input type="text" class="date-selector ml-1 mr-1 form-control form-control-sm" id="ts_chart_date_to" name="" value="">

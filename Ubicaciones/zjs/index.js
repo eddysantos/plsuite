@@ -32,6 +32,7 @@ function get_dashboard_data(date){
 $(document).ready(function(){
 
     $('.date-selector').datepicker();
+
     $('#dash-date').change(function(){
       var date = $(this).val();
       get_dashboard_data(date);
@@ -60,7 +61,7 @@ $(document).ready(function(){
         // console.log(r);
 
         r = JSON.parse(r);
-        console.log(r.to_chart);
+        console.log(r);
 
         if (r.code == 1) {
           c3.generate({
@@ -72,7 +73,7 @@ $(document).ready(function(){
             },
             axis: {
                 x: {
-                    type: 'timeseries',
+                    type: 'category',
                     tick: {
                         format: '%Y-%m-%d'
                     }
@@ -90,22 +91,22 @@ $(document).ready(function(){
 
     get_dashboard_data($('#dash-date').val());
 
-    var fetch_trips = $.ajax({
-      method: 'POST',
-      url: 'zactions/load_active.php',
-    });
-
-    fetch_trips.done(function(r){
-      var r = JSON.parse(r);
-      if (r.query.code == 1) {
-        $('#tbody-open-trips').html(r.data);
-        $('#amt-open-trips').html(r.number)
-      } else {
-        $('#tbody-open-trips').html("<tr><td>No trips found.</td></tr>");
-        console.log(r);
-      }
-      }).fail(function(x){
-        console.error(x);
-        $('#tbody-open-trips').html("<tr><td>There was an error, if problem persists call IT</td></tr>");
-    });
+    // var fetch_trips = $.ajax({
+    //   method: 'POST',
+    //   url: 'zactions/load_active.php',
+    // });
+    //
+    // fetch_trips.done(function(r){
+    //   var r = JSON.parse(r);
+    //   if (r.query.code == 1) {
+    //     $('#tbody-open-trips').html(r.data);
+    //     $('#amt-open-trips').html(r.number)
+    //   } else {
+    //     $('#tbody-open-trips').html("<tr><td>No trips found.</td></tr>");
+    //     console.log(r);
+    //   }
+    //   }).fail(function(x){
+    //     console.error(x);
+    //     $('#tbody-open-trips').html("<tr><td>There was an error, if problem persists call IT</td></tr>");
+    // });
 });

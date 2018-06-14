@@ -16,7 +16,7 @@ $b_date = date('Y-m-d H:i:s', strtotime($data['date_from'] . " 00:00"));
 $e_date = date('Y-m-d H:i:s', strtotime($data['date_to'] . " 23:59"));
 $date_group = "";
 
-switch ($_POST['date_group']) {
+switch ($_POST['period']) {
   case 0:
     $date_group = 'DATE';
     break;
@@ -64,17 +64,42 @@ if ($rslt->num_rows == 0) {
 }
 
 while ($row = $rslt->fetch_assoc()) {
+  $results[$row['date_group']]['date'] = $row['date'];
   $results[$row['date_group']]['rate'] += $row['trip_rate'];
   $results[$row['date_group']]['miles'] += $row['miles'];
   $results[$row['date_group']]['rpm'] = $results[$row['date_group']]['rate'] / $results[$row['date_group']]['miles'];
 }
 
-foreach ($results as $date_group => $result) {
-  array_push($chart_data[0], $date_group);
-  array_push($chart_data[1], $result['rpm']);
+switch ($_POST['period']) {
+  case 0:
+    foreach ($results as $date_group => $result) {
+      array_push($chart_data[0], $date_group);
+      array_push($chart_data[1], $result['rpm']);
+    }
+    break;
+
+  case 1:
+    foreach ($results as $date_grouping => $result) {
+      $year = date('Y', strtotime($result['date']));
+      $week_day = date('Y-m-d', strtotime(sprintf("%d-W%02d-%d", $year, $date_grouping, 1)));
+      array_push($chart_data[0], $week_day);
+      array_push($chart_data[1], $result['rpm']);
+    }
+    break;
+
+  case 2:
+  foreach ($results as $date_grouping => $result) {
+    $month = date('M', strtotime($result['date']));
+    array_push($chart_data[0], $month);
+    array_push($chart_data[1], $result['rpm']);
+  }
+    break;
 }
 
+
+
 $system_callback['code'] = 1;
+$system_callback['query_results'] = $results;
 $system_callback['data'] = $results;
 $system_callback['to_chart'] = $chart_data;
 exit_script($system_callback);
