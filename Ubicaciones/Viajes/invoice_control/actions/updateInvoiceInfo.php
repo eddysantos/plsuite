@@ -14,6 +14,10 @@ if ($data['payment_due'] == "") {
   $data['payment_due'] = NULL;
 }
 
+if ($data['invoice_amount'] == "") {
+  $data['invoice_amount'] = NULL;
+}
+
 function parseDate($datestamp, $option = 1){
   if ($datestamp == "") {
     return $return;
