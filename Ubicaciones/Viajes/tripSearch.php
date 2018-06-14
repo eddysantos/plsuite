@@ -27,10 +27,10 @@ if (isset($_GET['submit'])) {
       'to' => "",
       'txt' => "%" . $_GET['cTripsTxt'] . "%"
     );
-    $where = '(b.brokerName LIKE ? OR t.trailer_number LIKE ? OR tl.pk_linehaul_number LIKE ? OR t.pkid_trip LIKE ?)';
-    $params = "ssss";
+    $where = '(b.brokerName LIKE ? OR t.trailer_number LIKE ? OR tl.pk_linehaul_number LIKE ? OR t.pkid_trip LIKE ? OR tl.broker_reference LIKE ? OR tr.truckNumber LIKE ?)';
+    $params = "ssssss";
     $bind_values[] =& $params;
-    for ($i=0; $i <= 3; $i++) {
+    for ($i=0; $i <= 5; $i++) {
       $bind_values[] =& $data['txt'];
     }
   } else {
@@ -55,13 +55,12 @@ if (isset($_GET['submit'])) {
   $bind_values[] =& $data['to'];
 }
 
-var_dump($data);
 
 echo "<link rel='stylesheet' href='/plsuite/Resources/CSS/trips.css'>";
 require $root . '/plsuite/Resources/PHP/Utilities/header.php';
 require $root . '/plsuite/Resources/PHP/Utilities/initialScript.php';
 
-$query = "SELECT t.trip_year AS TripYear , t.pkid_trip AS idTrip , t.trip_status AS status , t.date_open AS DateOpen , t.trailer_number AS TrailerNumber , tl.pk_linehaul_number AS linehaul_number , tl.origin_city AS OriginCity , tl.origin_state AS OriginState , tl.destination_city AS DestinationCity , tl.destination_state AS DestinationState , b.brokerName AS broker , tl.linehaul_status AS lh_status , tl.trip_rate trip_rate, t.pkid_trip AS tripid , tl.pk_idlinehaul AS linehaulid , max(tlm.pkid_movement) AS idMovement , tl.date_departure date_departure , tl.date_arrival date_arrival , tl.date_delivery date_delivery , SUM( CASE tlm.movement_type WHEN 'E' THEN tlm.miles_google ELSE 0 END) AS empty_miles , SUM( CASE tlm.movement_type WHEN 'L' THEN tlm.miles_google ELSE 0 END) AS loaded_miles ,( SELECT CONCAT(d.nameFirst , ' ' , d.nameLast) FROM ct_trip_linehaul_movement tlm LEFT JOIN ct_drivers d ON tlm.fkid_driver = d.pkid_driver WHERE tlm.fkid_linehaul = tl.pk_idlinehaul ORDER BY tlm.pkid_movement DESC LIMIT 1) last_driver FROM ct_trip t LEFT JOIN ct_trip_linehaul tl ON t.pkid_trip = tl.fk_idtrip LEFT JOIN ct_trip_linehaul_movement tlm ON tlm.fkid_linehaul = tl.pk_idlinehaul LEFT JOIN ct_brokers b ON tl.fkid_broker = b.pkid_broker WHERE $where GROUP BY t.trip_year , t.pkid_trip , tl.pk_idlinehaul";
+$query = "SELECT t.trip_year AS TripYear , t.pkid_trip AS idTrip , t.trip_status AS status , t.date_open AS DateOpen , t.trailer_number AS TrailerNumber , tl.pk_linehaul_number AS linehaul_number , tl.origin_city AS OriginCity , tl.origin_state AS OriginState , tl.destination_city AS DestinationCity , tl.destination_state AS DestinationState , b.brokerName AS broker , tl.linehaul_status AS lh_status , t.pkid_trip AS tripid , tl.pk_idlinehaul AS linehaulid , max(tlm.pkid_movement) AS idMovement , tl.date_departure date_departure , tl.date_arrival date_arrival , tl.date_delivery date_delivery , SUM( CASE tlm.movement_type WHEN 'E' THEN tlm.miles_google ELSE 0 END) AS empty_miles , SUM( CASE tlm.movement_type WHEN 'L' THEN tlm.miles_google ELSE 0 END) AS loaded_miles ,( SELECT CONCAT(d.nameFirst , ' ' , d.nameLast) FROM ct_trip_linehaul_movement tlm LEFT JOIN ct_drivers d ON tlm.fkid_driver = d.pkid_driver WHERE tlm.fkid_linehaul = tl.pk_idlinehaul ORDER BY tlm.pkid_movement DESC LIMIT 1) last_driver FROM ct_trip t LEFT JOIN ct_trip_linehaul tl ON t.pkid_trip = tl.fk_idtrip LEFT JOIN ct_trip_linehaul_movement tlm ON tlm.fkid_linehaul = tl.pk_idlinehaul LEFT JOIN ct_brokers b ON tl.fkid_broker = b.pkid_broker LEFT JOIN ct_truck tr ON tr.pkid_truck = tlm.fkid_tractor WHERE $where GROUP BY t.trip_year , t.pkid_trip , tl.pk_idlinehaul";
 
 $stmt = $db->prepare($query);
 if (!($stmt)) {
@@ -119,85 +118,38 @@ if ($rslt->num_rows == 0) {
 }
 
  ?>
-<div class="container-fluid align-items-right justify-content-between d-flex mb-3 position-sticky" style="margin-top: 30px">
-  <h1 class="nb-id d-inline text-secondary">Trip Search</h1>
-  <form class="form-inline m-0" method="GET">
-    <label for="cTripsFrom" class="mr-2">From</label>
-    <input type="date" class="form-control mr-2" name="cTripsFrom" id="cTripsFrom" value="<?php echo $data['input_f']?>">
-    <label for="cTripsTo" class="mr-2">To</label>
-    <input type="date" class="form-control mr-5" name="cTripsTo" id="cTripsTo" value="<?php echo $data['input_t']?>">
-    <label for="cTripsTxt" class="mr-2 sr-only">Custom Text to Search</label>
-    <input type="text" class="form-control mr-5" name="cTripsTxt" id="cTripsTxt" value="<?php echo str_replace('%', '', $data['txt'])?>" placeholder="Linehaul, Trip or Trailer Number">
-    <button type="submit" class="btn btn-outline-success" name="submit">Search</button>
-    <?php if (!(empty($_GET)) && !(isset($_GET['clear']))): ?>
-      <button type="submit" class="btn btn-outline-secondary ml-1" id="clearSearch" name="clear">Clear</button>
-    <?php endif; ?>
+<div class="container-fluid align-items-right justify-content-between d-flex mb-3 position-sticky" style="margin-top: 60px">
+  <h1 class="nb-id d-inline text-secondary">Search Trips</h1>
+  <form class="form-inline m-0" onsubmit="return false;">
+    <div class="form-inline" id="search-inputs">
+      <label for="cTripsFrom" class="mr-2">From</label>
+      <input type="date" class="form-control form-control-sm mr-2" name="cTripsFrom" id="cTripsFrom" value="<?php echo $data['input_f']?>">
+      <label for="cTripsTo" class="mr-2">To</label>
+      <input type="date" class="form-control form-control-sm mr-4" name="cTripsTo" id="cTripsTo" value="<?php echo $data['input_t']?>">
+      <label for="cTripsTxt" class="mr-2 sr-only">Custom Text to Search</label>
+      <input type="text" class="form-control form-control-sm mr-4" name="cTripsTxt" id="cTripsTxt" value="<?php echo str_replace('%', '', $data['txt'])?>" placeholder="Type search term">
+      <button type="submit" class="btn btn-outline-success btn-sm" name="submit" id="execute-search">Search</button>
+      <button type="button" class="btn btn-outline-secondary btn-sm ml-1" style="display: none" id="open-filter" name="button">Filter Search</button>
+    </div>
+    <div class="form-inline" id="filter-search" style="display: none">
+      <label for="trip-search-filter">Filter</label>
+      <input type="text" class="form-control form-control-sm ml-1" id="filter-term" name="" value="">
+      <button type="button" class="btn btn-outline-secondary btn-sm ml-1" id="search-again" name="button">Search Again</button>
+    </div>
   </form>
+  <!-- <button type="submit" class="btn btn-outline-primary m-2" data-toggle="modal" data-target="#trip-filter-modal" name="button"><i class="fas fa-filter"></i></button> -->
 </div>
 
 <div class="container-fluid" style="overflow-y: scroll; height: calc(100% - 200px)">
-  <table class="table table-striped">
-    <tbody id="tripDashTable">
-      <?php if ($system_callback['query']['code'] == 2): ?>
-        <tr class="inline-table-row">
-        <td style="width: 40px"></td>
-        <td>No active trips found</td>
-        <td class="text-right"></td>
-      </tr>
-      <?php endif; ?>
-        <?php foreach ($system_callback['rows'] as $trip): ?>
-          <tr class="inline-table-row" role="button" ty="<?php echo $trip['TripYear']?>" db-id="<?php echo $trip['idTrip']?>">
-            <td style="width: 40px"><p class="text-right <?php echo $trip['status']?> trip"> <i class="fa fa-circle"></i> </p></td>
-            <td>
-              <p class="font-weight-bold"><?php echo "$trip[TripYear]" . str_pad($trip['idTrip'], 4, 0, STR_PAD_LEFT) . "<span class='font-weight-light'> | $trip[trailer_number]</span>" ?></p>
-              <?php foreach ($trip as $t_key => $t_value): ?>
-                <?php if ($t_key == 'trailer_number'||$t_key == 'TripYear'||$t_key == 'idTrip'||$t_key == 'status'): ?>
-                  <?php continue; ?>
-                <?php endif; ?>
-                <div class="mb-1">
-                  <div class="row">
-                    <div class="col-6">
-                      <?php if ($t_value['lh_status'] == "Cancelled"): ?>
-                        <span style="font-size: 70%"><i class="mr-1 far fa-circle <?php echo $t_value['lh_status']?>"></i></span>
-                      <?php else: ?>
-                        <span style="font-size: 70%"><i class="mr-1 fas fa-circle <?php echo $t_value['lh_status']?>"></i></span>
-                      <?php endif; ?>
-                      <?php echo $t_value['linehaul_number'] . " | $t_value[OriginCity], $t_value[OriginState] - $t_value[DestinationCity], $t_value[DestinationState] <span class='small maroon-font'>($t_value[broker])</span>" ?>
-                    </div>
-                    <div class="col-6 text-right">
-                      <?php echo $t_value['last_driver'] ?>
-                    </div>
-                  </div>
-                  <!-- <div class="row">
-                    <div class="col-6">
-                      <span class="ml-5 grey-font">[<?php echo $t_value['loaded_miles'] ?> Loaded Miles | <?php echo $t_value['empty_miles'] ?> Empty Miles]</span>
-                    </div>
-                    <div class="col-6 text-right">
-                      <?php echo ($t_value['date_arrival'] === NULL ? "" : ("<span class=''></span><span class='pl-2 grey-font'>" . date('Y-m-d', strtotime($t_value['date_arrival'])) . "</span>")) ?>
-                      <!-- <div class="row">
-                      </div>
-                    </div>
-                  </div> -->
-                  <!-- <div class="row">
-                      <div class="col-6 offset-6">
-                        <div class="row">
-                          <?php echo ($t_value['date_arrival'] === NULL ? "" : ("<div class='col-3 offset-2'>Arrival:</div><div class='col-5 grey-font'>" . date('Y-m-d', strtotime($t_value['date_arrival'])) . "</div>")) ?>
-                        </div>
-
-                      </div>
-
-                  </div> -->
-                </div>
-
-              <?php endforeach; ?>
-            </td>
-        <?php endforeach; ?>
-    </tbody>
+  <table class="table table-striped" id="search-table">
+    <tbody id="tripDashTable"></tbody>
   </table>
 </div>
 
 <?php
-require 'modales/addTrip.php';
+// require 'modales/addTrip.php';
+require 'modales/tripFilterModal.php';
 require $root . '/plsuite/Resources/PHP/Utilities/footer.php';
  ?>
+ <script src="/plsuite/Resources/JQuery/jquery.table-filterable-min.js" charset="utf-8"></script>
 <script src="/plsuite/Ubicaciones/Viajes/js/tripSearch.js" charset="utf-8"></script>

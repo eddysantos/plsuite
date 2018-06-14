@@ -57,75 +57,132 @@ function toggle_view(element_object){
 
 $(document).ready(function(){
 
-  // $('.popup-input').keyup(function(e){
-  //   if (e.keyCode === 38 || e.keyCode === 40 || e.keyCode === 13 || e.keyCode === 9){return false;}
-  //   data = {}
-  //   pop = $(this).attr('id-display');
-  //   data.txt = $(this).val();
+
+  $('.popup-input').keyup(function(e){
+    if (e.keyCode === 38 || e.keyCode === 40 || e.keyCode === 13 || e.keyCode === 9){return false;}
+    data = {}
+    pop = $(this).attr('id-display');
+    data.txt = $(this).val();
+
+
+    if (data.txt == "") {
+      $('.popup-list').slideUp();
+      return false;
+    } else {
+
+      if (pop.indexOf('trailer') >= 0){
+        url = "actions/fetchTrailersPopup.php"
+      }
+      if (pop.indexOf('truck') >= 0){
+        url = "actions/fetchTrucksPopup.php"
+      }
+      if (pop.indexOf('driver') >= 0){
+        url = "actions/fetchDriversPopup.php"
+      }
+      if (pop.indexOf('broker') >= 0) {
+        url = "actions/fetchBrokersPopup.php"
+      }
+
+      $.ajax({
+        method: 'POST',
+        data: data,
+        url: url,
+        success: function(result){
+          resp = JSON.parse(result);
+
+          switch (resp.code) {
+            case 1:
+              $(pop).html(resp.data).slideDown();
+              break;
+            case 2:
+            $(pop).html("<p>No se encontraron resulados...</p>").slideDown();
+              break;
+            default:
+            console.error(resp.message);
+            $(pop).html("").slideUp();
+
+          }
+        },
+        error: function(exception){
+          console.error(exception);
+        }
+      })
+    }
+  })
   //
+  $('.popup-list').delegate('p', 'click', function(){
+    var dbid = $(this).attr('db-id');
+    var inputTarget = $(this).parent().attr('id');
+    $("[id-display='#" + inputTarget+ "']").attr("value", $(this).html()).attr('db-id', $(this).attr('db-id')).change();
+    $("[id-display='#" + inputTarget+ "']").prop("value", $(this).html()).change();
+    $('.popup-list').slideUp();
+
+  });
   //
-  //   if (data.txt == "") {
-  //     $('.popup-list').slideUp();
-  //     return false;
-  //   } else {
+  $('.popup-list').on('mouseenter', 'p', function(){
+    $('.hovered').attr('class', '');
+    $(this).attr('class', 'hovered');
+  });
   //
-  //     if (pop.indexOf('trailer') >= 0){
-  //       url = "actions/fetchTrailersPopup.php"
-  //     }
-  //     if (pop.indexOf('truck') >= 0){
-  //       url = "actions/fetchTrucksPopup.php"
-  //     }
-  //     if (pop.indexOf('driver') >= 0){
-  //       url = "actions/fetchDriversPopup.php"
-  //     }
-  //     if (pop.indexOf('broker') >= 0) {
-  //       url = "actions/fetchBrokersPopup.php"
-  //     }
-  //
-  //     $.ajax({
-  //       method: 'POST',
-  //       data: data,
-  //       url: url,
-  //       success: function(result){
-  //         resp = JSON.parse(result);
-  //
-  //         switch (resp.code) {
-  //           case 1:
-  //             $(pop).html(resp.data).slideDown();
-  //             break;
-  //           case 2:
-  //           $(pop).html("<p>No se encontraron resulados...</p>").slideDown();
-  //             break;
-  //           default:
-  //           console.error(resp.message);
-  //           $(pop).html("").slideUp();
-  //
-  //         }
-  //       },
-  //       error: function(exception){
-  //         console.error(exception);
-  //       }
-  //     })
-  //   }
-  // })
-  //
-  // $('.popup-list').delegate('p', 'click', function(){
-  //   var dbid = $(this).attr('db-id');
-  //   var inputTarget = $(this).parent().attr('id');
-  //   $("[id-display='#" + inputTarget+ "']").attr("value", $(this).html()).attr('db-id', $(this).attr('db-id')).change();
-  //   $("[id-display='#" + inputTarget+ "']").prop("value", $(this).html()).change();
-  //   $('.popup-list').slideUp();
-  //
-  // });
-  //
-  // $('.popup-list').on('mouseenter', 'p', function(){
-  //   $('.hovered').attr('class', '');
-  //   $(this).attr('class', 'hovered');
-  // });
-  //
-  // $('.popup-list').on('mouseleave', 'p', function(){
-  //   $(this).attr('class', '')
-  // });
+  $('.popup-list').on('mouseleave', 'p', function(){
+    $(this).attr('class', '')
+  });
+
+  $('#execute-search').click(function(){
+    var data = {
+      cTripsTxt: $('#cTripsTxt').val(),
+      cTripsTo: $('#cTripsTo').val(),
+      cTripsFrom: $('#cTripsFrom').val()
+    }
+
+
+
+    var pull_data = $.ajax({
+      method: 'POST',
+      data: data,
+      url: 'actions/fetchTripSearch.php'
+    });
+
+    pull_data.done(function(r){
+      r = JSON.parse(r);
+      console.log(r);
+      if (r.code == 1 || r.code == 2) {
+        $('#tripDashTable').html(r.data);
+        $('#search-inputs').fadeOut(function(){
+          $('#filter-search').fadeIn();
+          $('#open-filter').show();
+        });
+      } else {
+        swal('Error', 'Please report the issue to IT: ' + r.message, 'error');
+      }
+      }).fail(function(x){
+        swal ('Error', 'There was a fatal error, please report it to IT', 'error');
+        console.error(x);
+      })
+
+  });
+
+  $('#open-filter').click(function(){
+    $('#search-inputs').fadeOut(function(){
+      $('#filter-search').fadeIn();
+    });
+  })
+
+  $('#filter-term').keyup(function(){
+    var $rows = $('#tripDashTable tr');
+    var val = $.trim($(this).val()).replace(/ +/g, ' ').toLowerCase();
+
+    $rows.show().filter(function() {
+      var text = $(this).text().replace(/\s+/g, ' ').toLowerCase();
+      return !~text.indexOf(val);
+    }).hide();
+  })
+
+  $('#search-again').click(function(){
+    $('#filter-search').fadeOut(function(){
+      $('#search-inputs').fadeIn();
+    });
+  })
   //
   // $('.zipInput').blur(function(){
   //
