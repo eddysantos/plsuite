@@ -62,26 +62,27 @@ $(document).ready(function(){
 
         r = JSON.parse(r);
         console.log(r);
-
         if (r.code == 1) {
           c3.generate({
             bindto: '#test_chart',
             data:{
               x: "x",
-              // rows: r.to_chart
-              columns: r.to_chart
+              columns: r.to_chart,
+              labels: true
             },
             axis: {
                 x: {
                     type: 'category',
                     tick: {
-                        format: '%Y-%m-%d'
+                        format: '%Y-%m-%d',
                     }
                 }
             }
           });
         }
-
+        // console.log(r['to_chart'][1].shift());
+        // console.log(r['to_chart'][1].splice(1));
+        // console.log(r);
 
       }).fail(function(x){
           console.error(x);

@@ -67,7 +67,7 @@ while ($row = $rslt->fetch_assoc()) {
   $results[$row['date_group']]['date'] = $row['date'];
   $results[$row['date_group']]['rate'] += $row['trip_rate'];
   $results[$row['date_group']]['miles'] += $row['miles'];
-  $results[$row['date_group']]['rpm'] = $results[$row['date_group']]['rate'] / $results[$row['date_group']]['miles'];
+  $results[$row['date_group']]['rpm'] = round($results[$row['date_group']]['rate'] / $results[$row['date_group']]['miles'], 2);
 }
 
 switch ($_POST['period']) {

@@ -39,7 +39,7 @@ $today = date('m/d/Y', strtotime('today'));
     <h6>RPM Summary</h6>
     <form class="form-inline" onsubmit="return false;">
       Select date range: <input type="text" class="date-selector ml-1 mr-1 form-control form-control-sm text-center" id="ts_chart_date_from" name="" value="">
-      - <input type="text" class="date-selector ml-1 mr-1 form-control form-control-sm" id="ts_chart_date_to" name="" value="">
+      - <input type="text" class="date-selector ml-1 mr-1 form-control text-center form-control-sm" id="ts_chart_date_to" name="" value="">
       And periodicity:
       <select class="form-control form-control-sm ml-1 mr-5" id="ts_chart_period" name="">
         <option value="0">Daily</option>
