@@ -1,0 +1,37 @@
+.dropdown-menu form {
+	padding:10px;
+}
+
+.popup-list{
+  position: absolute;
+  width: -webkit-fill-available;
+  border-radius: 5px;
+  border: 1px solid rgb(020, 020, 020);
+  background-color: white;
+  margin-right: 30px;
+  margin-top: -10px;
+  padding: 10px;
+}
+
+.popup-list p{
+  padding: 10px;
+  margin-bottom: 0px;
+}
+
+.popup-list p.hovered{
+  background-color: rgba(0, 0, 0, .2);
+  cursor: pointer;
+}
+
+.popup-list p.hovered{
+  background-color: rgba(0, 0, 0, .2);
+  cursor: pointer;
+}
+
+.popup-list p:not(:last-child){
+  border-bottom: 1px solid rgb(1,1,1);
+}
+
+.popup-list p:last-child{
+  margin-bottom: 0px;
+}
