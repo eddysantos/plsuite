@@ -35,3 +35,11 @@
 .popup-list p:last-child{
   margin-bottom: 0px;
 }
+
+.c3-target-goal .c3-text{
+  display: none;
+}
+
+.c3-target-goal .c3-circles{
+  display: none;
+}

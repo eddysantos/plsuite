@@ -307,9 +307,17 @@ $(document).ready(function(){
             data:{
               x: 'x',
               columns: r.to_chart,
+              type: 'bar',
+              types: {
+                Goal: 'line'
+              },
               labels: true,
               type: 'bar',
-              groups: [['Loaded', 'Empty']]
+              groups: [['Loaded', 'Empty']],
+              colors:{
+                Goal:'#EC3737'
+              },
+              onclick: function(d, element){console.log(this);}
             },
             grid: {
               y: {
@@ -324,9 +332,6 @@ $(document).ready(function(){
                 // }
               }
             },
-            zoom:{
-              enabled: true
-            }
           });
 
           // tms_chart.load({

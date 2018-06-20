@@ -163,7 +163,7 @@ require $root . '/plsuite/Resources/PHP/Utilities/initialScript.php';
               <div class="form-group col-lg-8">
                 <div class="input-group">
                   <div class="input-group-btn">
-                      <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Days due</button>
+                      <button class="btn btn-outline-secondary dropdown-toggle" id="due-date-button" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Days due</button>
                       <div class="dropdown-menu">
                         <a class="dropdown-item set-due-date" role="button" due-days="10">10 Days</a>
                         <a class="dropdown-item set-due-date" role="button" due-days="20">20 Days</a>
