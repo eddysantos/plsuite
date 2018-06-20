@@ -21,7 +21,7 @@ $later = new DateTime(date('Y-m-d', strtotime($data['date_to'])));
 
 $diff = $later->diff($earlier)->format("%a");
 
-$goal = $diff * $goal_factor;
+$goal = ($diff + 1) * $goal_factor;
 
 $query = "SELECT trk.truckNumber tractor , tlm.movement_type mov_type , sum(tlm.miles_google) miles FROM ct_trip t LEFT JOIN ct_trip_linehaul tl ON t.pkid_trip = tl.fk_idtrip LEFT JOIN ct_trip_linehaul_movement tlm ON tl.pk_idlinehaul = tlm.fkid_linehaul LEFT JOIN ct_truck trk ON tlm.fkid_tractor = trk.pkid_truck WHERE tl.date_arrival BETWEEN ? AND ? AND tl.linehaul_status <> 'Cancelled' GROUP BY mov_type , tractor ORDER BY tractor , mov_type";
 
