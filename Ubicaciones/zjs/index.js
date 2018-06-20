@@ -11,7 +11,6 @@ function get_dashboard_data(date){
 
   pull_data.done(function(r){
     r = JSON.parse(r);
-
     if (r.code == 1) {
       $('#tt_miles').html(r.data.all_trips.miles);
       $('#tt_rate').html(r.data.all_trips.rate);
