@@ -20,6 +20,7 @@ function GetDrivingDistance($o, $d){
     return array('distance' => $dist, 'time' => $time);
 }
 
+$user_name = $_SESSION['user_info']['NombreUsuario'];
 
 $thisYear = date('y', strtotime('today'));
 
@@ -128,7 +129,7 @@ try {
     $trips = $stmt->fetch_assoc();
     $tripno = $thisYear . str_pad($trips['max_trip'] + 1, 4, 0, STR_PAD_LEFT);
 
-  $query = "INSERT INTO ct_trip(fkid_trailer, trailer_number, trailer_plates, trip_year, trip_number) VALUES(?,?,?,?,?)";
+  $query = "INSERT INTO ct_trip(fkid_trailer, trailer_number, trailer_plates, trip_year, trip_number, added_by) VALUES(?,?,?,?,?,?)";
 
   $stmt = $db->prepare($query);
   if (!($stmt)) {
@@ -138,12 +139,13 @@ try {
     exit_script($system_callback);
   }
 
-  $stmt->bind_param('sssss',
+  $stmt->bind_param('ssssss',
   $system_callback['trailer']['data']['id'],
   $system_callback['trailer']['data']['trailerNumber'],
   $system_callback['trailer']['data']['trailerPlates'],
   $thisYear,
-  $tripno
+  $tripno,
+  $user_name
   );
   if (!($stmt)) {
     $system_callback['query']['code'] = "500";
@@ -210,7 +212,9 @@ try {
 
   /**************************************/
 
-  $query = "INSERT INTO ct_trip_linehaul(fk_idtrip, origin_state, origin_city, origin_zip, destination_state, destination_city, destination_zip, trip_rate, fkid_broker, fk_tripyear, pk_linehaul_number, broker_reference, lh_number) VALUES(?,?,?,?,?,?,?,?,?,?,?,?, ?)";
+  $query = "INSERT INTO ct_trip_linehaul(fk_idtrip, origin_state, origin_city, origin_zip, destination_state, destination_city, destination_zip, trip_rate, fkid_broker, fk_tripyear, pk_linehaul_number, broker_reference, lh_number, added_by, date_appointment) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+
+  $appt = date('Y-m-d H:i', strtotime($system_callback['trip']['appt']['date'] . " " . $system_callback['trip']['appt']['hour'] . ":" . $system_callback['trip']['appt']['min']));
 
   $stmt = $db->prepare($query);
   if (!($stmt)) {
@@ -220,7 +224,7 @@ try {
     exit_script($system_callback);
   }
 
-  $stmt->bind_param('sssssssssssss',
+  $stmt->bind_param('sssssssssssssss',
   $trip_insert_id,
   $system_callback['trip']['origin']['state'],
   $system_callback['trip']['origin']['city'],
@@ -233,7 +237,9 @@ try {
   $thisYear,
   $new_lid,
   $system_callback['broker']['data']['reference'],
-  $lh_number = $tripno.$new_lid
+  $lh_number = $tripno.$new_lid,
+  $user_name,
+  $appt
   );
   if (!($stmt)) {
     $system_callback['query']['code'] = "500";
@@ -300,7 +306,7 @@ try {
 
   /**************************************/
 
-  $query = "INSERT INTO ct_trip_linehaul_movement(fkid_linehaul, origin_city, origin_state, origin_zip, destination_city, destination_state, destination_zip, miles_google, movement_type, fkid_tractor, fkid_driver, fkid_driver_team, pk_movement_number) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)";
+  $query = "INSERT INTO ct_trip_linehaul_movement(fkid_linehaul, origin_city, origin_state, origin_zip, destination_city, destination_state, destination_zip, miles_google, movement_type, fkid_tractor, fkid_driver, fkid_driver_team, pk_movement_number, added_by) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
   $stmt = $db->prepare($query);
 
@@ -313,7 +319,7 @@ try {
 
   if (
     !(
-      $stmt->bind_param('sssssssssssss',
+      $stmt->bind_param('ssssssssssssss',
       $linehaul_id,
       $system_callback['trip']['origin']['city'],
       $system_callback['trip']['origin']['state'],
@@ -326,7 +332,8 @@ try {
       $system_callback['trip']['conveyance']['truck'],
       $system_callback['trip']['conveyance']['driver'],
       $system_callback['trip']['conveyance']['team'],
-      $new_mid
+      $new_mid,
+      $user_name
     )
       )
   ) {

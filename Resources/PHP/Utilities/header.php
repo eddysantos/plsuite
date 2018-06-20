@@ -22,7 +22,7 @@
   </head>
   <header class="">
     <nav class="navbar navbar-expand-lg fixed-top navbar-light bg-light">
-      <a class="navbar-brand" href="/plsuite/Ubicaciones/">
+      <a class="navbar-brand" disabled href="#">
         <i style="font-size: 160%" class="fa fa-home"></i>
         <!-- <img src="/plsuite/Resources/images/Logo.png" style="max-height: 50px" alt="PLTI"> -->
       </a>
@@ -33,13 +33,13 @@
       <div class="collapse navbar-collapse" id="contenidoenblanco">
         <ul class="navbar-nav mr-auto">
           <li class="nav-item">
-            <a class="nav-link disabled <?php echo $dash_active?>" disabled href="#">Dashboard</a>
+            <a class="nav-link <?php echo $dash_active?>" href="/plsuite/Ubicaciones/dashboard.php">Dashboard</a>
           </li>
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle <?php echo $viajes_active?>" href="#" id="tripDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded='false'>Trips</a>
             <div class="dropdown-menu" aria-lablledby="tripDropdown">
               <a class="dropdown-item" href="/plsuite/Ubicaciones/Viajes/dashboard.php">Active Trips</a>
-              <a class="dropdown-item" href="/plsuite/Ubicaciones/Viajes/closedTrips.php" href="#">Closed Trips</a>
+              <a class="dropdown-item" href="/plsuite/Ubicaciones/Viajes/tripSearch.php" href="#">Trip Search</a>
               <div class="dropdown-divider"></div>
               <a class="dropdown-item" href="/plsuite/Ubicaciones/Viajes/invoice_control" href="">Invoice Control</a>
             </div>

@@ -28,7 +28,7 @@ function getCityStateListener(){
         el.parent().siblings().find('.stateInput').val(rsp.data.state).change();
         el.parent().siblings().find('.cityInput').val(rsp.data.city).change();
       } else {
-        console.log(rsp.message);
+        // console.log(rsp.message);
       }
       $('.overlay').remove();
     }).fail(function(jqXHR, textStatus, errorThrown){
@@ -153,6 +153,7 @@ function show_lh_details(lhid = undefined){
   });
 
   pullLh.done(function(r){
+    // console.log(r);
     r = JSON.parse(r);
 
     for (var key in r.data) {
@@ -243,7 +244,7 @@ function show_trip_info(){
     year: $('#year-identifier').val()
   }
 
-  console.log(data);
+  // console.log(data);
   var pullTrip = $.ajax({
     method: 'POST',
     data: data,
@@ -573,7 +574,7 @@ $(document).ready(function(){
       data.status = "Pending Closure"
     }
 
-    console.log(data);
+    // console.log(data);
     var updateLinehaul = $.ajax({
       method: 'POST',
       data: data,
@@ -584,7 +585,7 @@ $(document).ready(function(){
 
     updateLinehaul.done(function(result){
       rsp = JSON.parse(result);
-      console.log(rsp);
+      // console.log(rsp);
       if (rsp.code == 1) {
         $('.linehaulSavedNotice').html('Linehaul updated successfully').addClass('alert-success').removeClass('alert-danger').fadeIn();
         show_lh_details($('#linehaulid').val());
@@ -864,6 +865,11 @@ $(document).ready(function(){
         zip: $('.destination').find('.zipInput').val(),
         city: $('.destination').find('.cityInput').val(),
         state: $('.destination').find('.stateInput').val()
+      },
+      appt: {
+        date: $('#appointment_date_add').val(),
+        hour: $('#appointment_time_hour_add').val(),
+        min: $('#appointment_time_minute_add').val()
       },
       broker: $('.brokerid').attr('db-id'),
       broker_reference: $('#broker-reference').val(),
@@ -1361,6 +1367,57 @@ $(document).ready(function(){
 
 
   });
+
+  $('[data-toggle="popover"]').popover({
+     trigger: 'click',
+     container: 'body',
+     title: 'Quick Broker Add',
+     placement: 'bottom',
+     html: true,
+     content: function(){
+       return $('#addBrokerQuick').html()
+     },
+     template: '<div class="popover" role="tooltip"><div class="arrow"></div><h3 class="popover-header"></h3><div class="popover-body"></div></div>'
+   }).on('shown.bs.popover', function(){
+
+     $('.qa-broker-submit').click(function(){
+       var data = {
+         name: $('.popover').find('.qa-broker-name').val(),
+         contact: $('.popover').find('.qa-broker-contact').val()
+       }
+
+       if (data.name == "" || data.contact == "") {
+         swal({
+           title: "Oops! Name and contact must be specified!",
+           text: "Please verify information and try again. If the problem persists, please contact support.",
+           icon: 'error'
+         });
+         return false;
+       }
+
+       console.log(data);
+       var quick_add_broker = $.ajax({
+         method: 'POST',
+         url: 'actions/quickAddBroker.php',
+         data: data
+       });
+
+       quick_add_broker.done(function(result){
+         console.log(result);
+         rsp = JSON.parse(result);
+         if (rsp.code == 1) {
+           $('.popover').popover('hide');
+           $('#brokerName').attr('db-id', rsp.data).val(data.name);
+         } else {
+           swal({
+             title: "Oops! There was an issue adding the broker. :(",
+             text: rsp.message,
+             icon: 'error'
+           });
+         }
+       });
+     });
+   })
 
   getCityStateListener();
 

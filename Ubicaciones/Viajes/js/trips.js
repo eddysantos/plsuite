@@ -177,6 +177,11 @@ $(document).ready(function(){
         zip: $('#dZip').val()
       },
       rate: $('#tRate').val(),
+      appt: {
+        date: $('#appointment_date_add').val(),
+        hour: $('#appointment_time_hour_add').val(),
+        min: $('#appointment_time_minute_add').val()
+      },
       conveyance: {
         driver: $('.driverid').attr('db-id'),
         truck: $('.truckid').attr('db-id'),
