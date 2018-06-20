@@ -1368,6 +1368,57 @@ $(document).ready(function(){
 
   });
 
+  $('[data-toggle="popover"]').popover({
+     trigger: 'click',
+     container: 'body',
+     title: 'Quick Broker Add',
+     placement: 'bottom',
+     html: true,
+     content: function(){
+       return $('#addBrokerQuick').html()
+     },
+     template: '<div class="popover" role="tooltip"><div class="arrow"></div><h3 class="popover-header"></h3><div class="popover-body"></div></div>'
+   }).on('shown.bs.popover', function(){
+
+     $('.qa-broker-submit').click(function(){
+       var data = {
+         name: $('.popover').find('.qa-broker-name').val(),
+         contact: $('.popover').find('.qa-broker-contact').val()
+       }
+
+       if (data.name == "" || data.contact == "") {
+         swal({
+           title: "Oops! Name and contact must be specified!",
+           text: "Please verify information and try again. If the problem persists, please contact support.",
+           icon: 'error'
+         });
+         return false;
+       }
+
+       console.log(data);
+       var quick_add_broker = $.ajax({
+         method: 'POST',
+         url: 'actions/quickAddBroker.php',
+         data: data
+       });
+
+       quick_add_broker.done(function(result){
+         console.log(result);
+         rsp = JSON.parse(result);
+         if (rsp.code == 1) {
+           $('.popover').popover('hide');
+           $('#brokerName').attr('db-id', rsp.data).val(data.name);
+         } else {
+           swal({
+             title: "Oops! There was an issue adding the broker. :(",
+             text: rsp.message,
+             icon: 'error'
+           });
+         }
+       });
+     });
+   })
+
   getCityStateListener();
 
 })
