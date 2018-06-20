@@ -57,27 +57,69 @@ function start_graphs(graph_name = "", cont = true){
     }
   }
 
-  // if (graph_name == 'tms_chart' || graph_name == "") {
-  //
-  //   tms_chart = c3.generate({
-  //     bindto: '#tms-summary-chart',
-  //     data:{
-  //       x: 'x',
-  //       columns: [],
-  //       labels: true,
-  //       type: 'bar',
-  //       groups: [['Loaded', 'Empty']]
-  //     },
-  //     grid: {
-  //       y: {
-  //           lines: [{value:0}]
-  //       }
-  //     }
-  //   });
-  //   if (!cont) {
-  //     return false;
-  //   }
-  // }
+  if (graph_name == 'tms_chart' || graph_name == "") {
+    var data = {
+      date_from: $('#tms_chart_date_from').val(),
+      date_to: $('#tms_chart_date_to').val()
+    }
+
+    if (data.date_from == "" || data.date_to == "") {
+      swal('Oops', "You must type date from and to before loading the chart!", "error");
+      return false;
+    }
+
+    var get_data = $.ajax({
+      method: 'POST',
+      data: data,
+      url: 'zactions/get_tms_summary_chart.php'
+    });
+
+    get_data.done(function(r){
+      r = JSON.parse(r);
+      console.log(r);
+
+      if (r.code == 1) {
+        tms_chart = c3.generate({
+          bindto: '#tms-summary-chart',
+          data:{
+            x: 'x',
+            columns: r.to_chart,
+            type: 'bar',
+            types: {
+              Goal: 'line'
+            },
+            labels: true,
+            type: 'bar',
+            groups: [['Loaded', 'Empty']],
+            colors:{
+              Goal:'#EC3737'
+            },
+            onclick: function(d, element){console.log(this);}
+          },
+          grid: {
+            y: {
+                lines: [{value:0}]
+            }
+          },
+          axis: {
+            x: {
+              type: 'category'
+              // tick: {
+              //   format: '%Y-%m-%d',
+              // }
+            }
+          },
+        });
+
+        // tms_chart.load({
+        //   columns: r.to_chart
+        // })
+      }
+
+      }).fail(function(x){
+      console.error(x);
+    });
+  }
 
 }
 
@@ -302,41 +344,10 @@ $(document).ready(function(){
         console.log(r);
 
         if (r.code == 1) {
-          tms_chart = c3.generate({
-            bindto: '#tms-summary-chart',
-            data:{
-              x: 'x',
-              columns: r.to_chart,
-              type: 'bar',
-              types: {
-                Goal: 'line'
-              },
-              labels: true,
-              type: 'bar',
-              groups: [['Loaded', 'Empty']],
-              colors:{
-                Goal:'#EC3737'
-              },
-              onclick: function(d, element){console.log(this);}
-            },
-            grid: {
-              y: {
-                  lines: [{value:0}]
-              }
-            },
-            axis: {
-              x: {
-                type: 'category'
-                // tick: {
-                //   format: '%Y-%m-%d',
-                // }
-              }
-            },
-          });
 
-          // tms_chart.load({
-          //   columns: r.to_chart
-          // })
+          tms_chart.load({
+            columns: r.to_chart
+          })
         }
 
         }).fail(function(x){

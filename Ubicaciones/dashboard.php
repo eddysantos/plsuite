@@ -12,10 +12,23 @@ $root = $_SERVER['DOCUMENT_ROOT'];
 require $root . '/plsuite/Resources/PHP/Utilities/session.php';
 require $root . '/plsuite/Resources/PHP/Utilities/header.php';
 
+$sunday = date('m/d/Y', strtotime('last sunday'));
+// $today = date('Y-m-d', strtotime('today'));
 $today = date('m/d/Y', strtotime('today'));
  ?>
 <div class="container-fluid pt-3" style="margin-top: 75px; overflow: scroll; height: calc(100vh - 140px)">
 
+  <div class="border p-2 mb-2">
+    <h6>Truck Mileage Summary</h6>
+    <form class="form-inline justify-content-between" onsubmit="return false;">
+      <div class="date-inputs">
+        Select date range: <input type="text" class="date-selector ml-1 mr-1 form-control form-control-sm text-center" id="tms_chart_date_from" name="" value="<?php echo $sunday?>">
+        - <input type="text" class="date-selector ml-1 mr-1 form-control text-center form-control-sm" id="tms_chart_date_to" name="" value="<?php echo $today?>">
+      </div>
+      <button type="button" class="btn btn-outline-success btn-sm float-right" id="load_tms_chart" name="button">Load</button>
+    </form>
+    <div class="" id="tms-summary-chart"></div>
+  </div>
   <table class="table border">
     <thead>
       <th style="width: 140px" class="text-secondary">
@@ -103,17 +116,6 @@ $today = date('m/d/Y', strtotime('today'));
       </div>
     </div>
     <div class="" id="miles-summary-chart" style="display: none"></div>
-  </div>
-  <div class="border p-2 mb-2">
-    <h6>Truck Mileage Summary</h6>
-    <form class="form-inline justify-content-between" onsubmit="return false;">
-      <div class="date-inputs">
-        Select date range: <input type="text" class="date-selector ml-1 mr-1 form-control form-control-sm text-center" id="tms_chart_date_from" name="" value="">
-        - <input type="text" class="date-selector ml-1 mr-1 form-control text-center form-control-sm" id="tms_chart_date_to" name="" value="">
-      </div>
-      <button type="button" class="btn btn-outline-success btn-sm float-right" id="load_tms_chart" name="button">Load</button>
-    </form>
-    <div class="" id="tms-summary-chart"></div>
   </div>
 
 
