@@ -162,7 +162,7 @@ $lastEl = array_values(array_slice($linehauls, -1))[0];
                <button class="btn btn-outline-primary form-control mr-3 finalizeRecord" type-of-record="trip" action="Closed" tripyear="<?php echo $trip['tripyear']?>" recordid="<?php echo $trip['pkidtrip']?>" type="button" id="btnCloseTrip" name="button">
                  <i class="fa fa-check"></i> Close Trip
                </button>
-               <button class="btn btn-outline-success form-control mr-3" name="button" data-toggle="modal" data-target="#addLinehaulModal">
+               <button class="btn btn-outline-success form-control mr-3" name="button" data-toggle="modal" data-focus="false" data-target="#addLinehaulModal">
                  <i class="fa fa-plus"></i> Add Linehaul
                </button>
              </div>
