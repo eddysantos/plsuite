@@ -62,7 +62,7 @@ $sunday_5weeks = date('m/d/Y', strtotime('sunday 5 weeks ago'));
     <form class="form-inline justify-content-between" onsubmit="return false;">
       <div class="date-inputs">
         Select date range: <input type="text" class="date-selector ml-1 mr-1 form-control form-control-sm text-center" id="ts_chart_date_from" name="" value="<?php echo $sunday_5weeks?>">
-        - <input type="text" class="date-selector ml-1 mr-1 form-control text-center form-control-sm" id="ts_chart_date_to" name="" value="<? echo $today?>">
+        - <input type="text" class="date-selector ml-1 mr-1 form-control text-center form-control-sm" id="ts_chart_date_to" name="" value="<?php echo $today?>">
         And periodicity:
         <select class="form-control form-control-sm ml-1 mr-5" id="ts_chart_period" name="">
           <option value="0">Daily</option>
@@ -81,7 +81,7 @@ $sunday_5weeks = date('m/d/Y', strtotime('sunday 5 weeks ago'));
     <div class="d-flex justify-content-between">
       <form class="form-inline " onsubmit="return false;">
         Select date range: <input type="text" class="date-selector ml-1 mr-1 form-control form-control-sm text-center" id="ms_chart_date_from" name="" value="<?php echo $sunday_5weeks?>">
-        - <input type="text" class="date-selector ml-1 mr-1 form-control text-center form-control-sm" id="ms_chart_date_to" name="" value="<?echo $today?>">
+        - <input type="text" class="date-selector ml-1 mr-1 form-control text-center form-control-sm" id="ms_chart_date_to" name="" value="<?php echo $today?>">
         And periodicity:
         <select class="form-control form-control-sm ml-1 mr-5" id="ms_chart_period" name="">
           <option value="0">Daily</option>
