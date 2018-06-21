@@ -80,8 +80,8 @@ if ($data['dbid'] == "" && $params == "sss") {
   array_pop($bind_params);
 }
 
-
 $query = "SELECT tl.date_begin lh_date , $period(tl.date_begin) date_grouping , CONCAT(d.nameFirst, ' ', d.nameLast) driver_name, trk.truckNumber tractor , trl.trailerNumber trailer , b.brokerName broker , tlm.movement_type mov_type , sum(tlm.miles_google) miles FROM ct_trip t LEFT JOIN ct_trip_linehaul tl ON t.pkid_trip = tl.fk_idtrip LEFT JOIN ct_trip_linehaul_movement tlm ON tl.pk_idlinehaul = tlm.fkid_linehaul LEFT JOIN ct_trailer trl ON t.fkid_trailer = trl.pkid_trailer LEFT JOIN ct_drivers d ON tlm.fkid_driver = d.pkid_driver LEFT JOIN ct_brokers b ON tl.fkid_broker = b.pkid_broker LEFT JOIN ct_truck trk ON tlm.fkid_tractor = trk.pkid_truck WHERE tl.date_arrival BETWEEN ? AND ? AND tl.linehaul_status <> 'Cancelled' $and_where GROUP BY date_grouping $group_by";
+
 
 $stmt = $db->prepare($query);
 if (!($stmt)) {
@@ -110,9 +110,12 @@ if (!($stmt->execute())) {
 $rslt = $stmt->get_result();
 $result = array();
 
+$num_rows = $rslt->num_rows;
+
 if ($rslt->num_rows == 0) {
   $system_callback['code'] = "2";
   $system_callback['message'] = "There was no rows to display!";
+  exit_script($system_callback);
 }
 
 while ($row = $rslt->fetch_assoc()) {
@@ -152,8 +155,8 @@ switch ($data['period']) {
 
 
 $system_callback['code'] = 1;
-$system_callback['query_results'] = $results;
-$system_callback['data'] = $results;
+$system_callback['query'] = $query;
+$system_callback['data'] = $data;
 $system_callback['to_chart'] = $chart_data;
 exit_script($system_callback);
 
