@@ -12,10 +12,25 @@ $root = $_SERVER['DOCUMENT_ROOT'];
 require $root . '/plsuite/Resources/PHP/Utilities/session.php';
 require $root . '/plsuite/Resources/PHP/Utilities/header.php';
 
+$sunday = date('m/d/Y', strtotime('last sunday'));
+// $today = date('Y-m-d', strtotime('today'));
 $today = date('m/d/Y', strtotime('today'));
+
+$sunday_5weeks = date('m/d/Y', strtotime('sunday 5 weeks ago'));
  ?>
 <div class="container-fluid pt-3" style="margin-top: 75px; overflow: scroll; height: calc(100vh - 140px)">
 
+  <div class="border p-2 mb-2">
+    <h6>Truck Mileage Summary</h6>
+    <form class="form-inline justify-content-between" onsubmit="return false;">
+      <div class="date-inputs">
+        Select date range: <input type="text" class="date-selector ml-1 mr-1 form-control form-control-sm text-center" id="tms_chart_date_from" name="" value="<?php echo $sunday?>">
+        - <input type="text" class="date-selector ml-1 mr-1 form-control text-center form-control-sm" id="tms_chart_date_to" name="" value="<?php echo $today?>">
+      </div>
+      <button type="button" class="btn btn-outline-success btn-sm float-right" id="load_tms_chart" name="button">Load</button>
+    </form>
+    <div class="" id="tms-summary-chart"></div>
+  </div>
   <table class="table border">
     <thead>
       <th style="width: 140px" class="text-secondary">
@@ -46,12 +61,12 @@ $today = date('m/d/Y', strtotime('today'));
     <h6>RPM Summary</h6>
     <form class="form-inline justify-content-between" onsubmit="return false;">
       <div class="date-inputs">
-        Select date range: <input type="text" class="date-selector ml-1 mr-1 form-control form-control-sm text-center" id="ts_chart_date_from" name="" value="">
-        - <input type="text" class="date-selector ml-1 mr-1 form-control text-center form-control-sm" id="ts_chart_date_to" name="" value="">
+        Select date range: <input type="text" class="date-selector ml-1 mr-1 form-control form-control-sm text-center" id="ts_chart_date_from" name="" value="<?php echo $sunday_5weeks?>">
+        - <input type="text" class="date-selector ml-1 mr-1 form-control text-center form-control-sm" id="ts_chart_date_to" name="" value="<?php echo $today?>">
         And periodicity:
         <select class="form-control form-control-sm ml-1 mr-5" id="ts_chart_period" name="">
           <option value="0">Daily</option>
-          <option value="1">Weekly</option>
+          <option value="1" selected>Weekly</option>
           <option value="2">Monthly</option>
         </select>
       </div>
@@ -65,12 +80,12 @@ $today = date('m/d/Y', strtotime('today'));
     </div>
     <div class="d-flex justify-content-between">
       <form class="form-inline " onsubmit="return false;">
-        Select date range: <input type="text" class="date-selector ml-1 mr-1 form-control form-control-sm text-center" id="ms_chart_date_from" name="" value="">
-        - <input type="text" class="date-selector ml-1 mr-1 form-control text-center form-control-sm" id="ms_chart_date_to" name="" value="">
+        Select date range: <input type="text" class="date-selector ml-1 mr-1 form-control form-control-sm text-center" id="ms_chart_date_from" name="" value="<?php echo $sunday_5weeks?>">
+        - <input type="text" class="date-selector ml-1 mr-1 form-control text-center form-control-sm" id="ms_chart_date_to" name="" value="<?php echo $today?>">
         And periodicity:
         <select class="form-control form-control-sm ml-1 mr-5" id="ms_chart_period" name="">
           <option value="0">Daily</option>
-          <option value="1">Weekly</option>
+          <option value="1" selected>Weekly</option>
           <option value="2">Monthly</option>
         </select>
       </form>
@@ -85,13 +100,13 @@ $today = date('m/d/Y', strtotime('today'));
                 <select class="form-control" id="dash-cat-select" name="">
                   <option value="">Select category</option>
                   <option value="driver">Driver</option>
-                  <option value="truck">Truck</option>
+                  <option value="truck" selected>Truck</option>
                   <option value="trailer">Trailer</option>
                   <option value="broker">Broker</option>
                 </select>
               </div>
               <div class="form-group" id="dash-cat-input" style="display: none">
-                <input type="text" class="form-control popup-input" id-display="#display-popup" category="" autocomplete="new-password" aria-describedy="#assist-ms-chart-loader">
+                <input type="text" class="form-control popup-input" id-display="#display-popup" category="truck" autocomplete="new-password" aria-describedy="#assist-ms-chart-loader">
                 <div id="display-popup" class="popup-list mt-3" style="display: none; z-index: 9999"></div>
                 <small id="assist-ms-chart-loader" class="form-text text-muted">Leave blank to graph the entire category.</small>
                 <button type="button" class="btn btn-outline-success btn-sm mt-2 float-right" id="ms-add-graph-item" name="button">Add</button>
@@ -99,21 +114,10 @@ $today = date('m/d/Y', strtotime('today'));
             </form>
           </ul>
         </div>
-        <button type="button" class="btn btn-outline-secondary btn-sm reset-chart" target="ms_chart" name="button" style="display: none">Reset</button>
+        <button type="button" class="btn btn-outline-secondary btn-sm reset-chart" target="ms_chart" name="button">Reset</button>
       </div>
     </div>
     <div class="" id="miles-summary-chart" style="display: none"></div>
-  </div>
-  <div class="border p-2 mb-2">
-    <h6>Truck Mileage Summary</h6>
-    <form class="form-inline justify-content-between" onsubmit="return false;">
-      <div class="date-inputs">
-        Select date range: <input type="text" class="date-selector ml-1 mr-1 form-control form-control-sm text-center" id="tms_chart_date_from" name="" value="">
-        - <input type="text" class="date-selector ml-1 mr-1 form-control text-center form-control-sm" id="tms_chart_date_to" name="" value="">
-      </div>
-      <button type="button" class="btn btn-outline-success btn-sm float-right" id="load_tms_chart" name="button">Load</button>
-    </form>
-    <div class="" id="tms-summary-chart"></div>
   </div>
 
 

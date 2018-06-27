@@ -241,3 +241,7 @@ table-layout: fixed;
   height: 30px;
   font-size: 1.5rem;
 }
+
+.ui-datepicker{
+  z-index: 99999 !important;
+}

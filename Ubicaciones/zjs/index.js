@@ -10,8 +10,7 @@ function get_dashboard_data(date){
   });
 
   pull_data.done(function(r){
-    r = JSON.parse(r);
-
+    var r = JSON.parse(r);
     if (r.code == 1) {
       $('#tt_miles').html(r.data.all_trips.miles);
       $('#tt_rate').html(r.data.all_trips.rate);
@@ -30,54 +29,261 @@ function get_dashboard_data(date){
 }
 
 function start_graphs(graph_name = "", cont = true){
+
+  //Truck Miles Summary Chart:
+  if (graph_name == 'tms_chart' || graph_name == "") {
+    var data = {
+      date_from: $('#tms_chart_date_from').val(),
+      date_to: $('#tms_chart_date_to').val()
+    }
+
+    if (data.date_from == "" || data.date_to == "") {
+      swal('Oops', "You must type date from and to before loading the chart!", "error");
+      return false;
+    }
+
+    var get_data = $.ajax({
+      method: 'POST',
+      data: data,
+      url: 'zactions/get_tms_summary_chart.php'
+    });
+
+    get_data.done(function(r){
+      var r = JSON.parse(r);
+
+      if (r.code == 1) {
+        tms_chart = c3.generate({
+          bindto: '#tms-summary-chart',
+          data:{
+            x: 'x',
+            columns: r.to_chart,
+            type: 'bar',
+            types: {
+              Goal: 'line'
+            },
+            labels: true,
+            type: 'bar',
+            groups: [['Loaded', 'Empty']],
+            colors:{
+              Goal:'#EC3737'
+            },
+            onclick: function(d, element){console.log(this);}
+          },
+          grid: {
+            y: {
+                lines: [{value:0}]
+            }
+          },
+          axis: {
+            x: {
+              type: 'category'
+              // tick: {
+              //   format: '%Y-%m-%d',
+              // }
+            }
+          },
+        });
+
+        // tms_chart.load({
+        //   columns: r.to_chart
+        // })
+      }
+
+      }).fail(function(x){
+      console.error(x);
+    });
+  }
+
   //Miles summary chart:
   if (graph_name == 'ms_chart' || graph_name == "") {
-    ms_chart = c3.generate({
-      bindto: '#miles-summary-chart',
-      data:{
-        x: "x",
-        columns: [],
-        labels: true
-      },
-      axis: {
-        x: {
-          type: 'timeseries',
-          tick: {
-            format: '%Y-%m-%d',
+
+    $('#dash-cat-select').addClass('disabled').attr('disabled', true);
+    $('#miles-summary-chart').fadeIn();
+    $('[target=ms_chart]').fadeIn();
+    $('.dropdown-menu.show').removeClass('show');
+    $('#dash-cat-input').fadeIn();
+
+    var data = {
+      dbid: '10',
+      category: 'truck',
+      date_from: $('#ms_chart_date_from').val(),
+      date_to: $('#ms_chart_date_to').val(),
+      period: $('#ms_chart_period').val(),
+      pull: 'first pull'
+    }
+
+    var pull_data = $.ajax({
+      method: 'POST',
+      data: data,
+      url: 'zactions/get_miles_summary_chart.php'
+    })
+
+    pull_data.done(function(r){
+      var r = JSON.parse(r);
+      if (r.code == 1) {
+        ms_chart = c3.generate({
+          bindto: '#miles-summary-chart',
+          data:{
+            x: "x",
+            columns: r.to_chart,
+            labels: true
+          },
+          axis: {
+            x: {
+              type: 'timeseries',
+              tick: {
+                format: '%Y-%m-%d',
+              }
+            }
           }
-        }
-      },
-      zoom:{
-        enabled: true
+        });
       }
+
+      }).fail(function(x){
+        console.error(x);
     });
+
+    pull_data_2 = pull_data.then(function(x){
+      // console.log(x);
+      datos = {
+        dbid: '23',
+        category: 'truck',
+        date_from: $('#ms_chart_date_from').val(),
+        date_to: $('#ms_chart_date_to').val(),
+        period: $('#ms_chart_period').val(),
+        pull: 'second pull'
+      }
+
+      return $.ajax({
+        method: 'POST',
+        data: datos,
+        url: 'zactions/get_miles_summary_chart.php'
+      });
+    });
+
+    pull_data_2.done(function(s){
+      var s = JSON.parse(s);
+      console.log(s);
+      if (s.code == 1) {
+        ms_chart.load({
+          columns: s.to_chart
+        });
+      }
+
+      }).fail(function(x){
+      console.error(x);
+    });
+
+    pull_data_3 = pull_data_2.then(function(){
+      datos = {
+        dbid: '24',
+        category: 'truck',
+        date_from: $('#ms_chart_date_from').val(),
+        date_to: $('#ms_chart_date_to').val(),
+        period: $('#ms_chart_period').val(),
+        pull: 'third pull'
+      }
+
+      return $.ajax({
+        method: 'POST',
+        data: datos,
+        url: 'zactions/get_miles_summary_chart.php'
+      });
+    });
+
+    pull_data_3.done(function(s){
+      var s = JSON.parse(s);
+      console.log(s);
+      if (s.code == 1) {
+        ms_chart.load({
+          columns: s.to_chart
+        });
+      }
+
+      }).fail(function(x){
+      console.error(x);
+    });
+
+
+
+
+
+    // ms_chart = c3.generate({
+    //   bindto: '#miles-summary-chart',
+    //   data:{
+    //     x: "x",
+    //     columns: [],
+    //     labels: true
+    //   },
+    //   axis: {
+    //     x: {
+    //       type: 'timeseries',
+    //       tick: {
+    //         format: '%Y-%m-%d',
+    //       }
+    //     }
+    //   },
+    //   zoom:{
+    //     enabled: true
+    //   }
+    // });
 
     if (!cont) {
       return false;
     }
   }
 
-  // if (graph_name == 'tms_chart' || graph_name == "") {
-  //
-  //   tms_chart = c3.generate({
-  //     bindto: '#tms-summary-chart',
-  //     data:{
-  //       x: 'x',
-  //       columns: [],
-  //       labels: true,
-  //       type: 'bar',
-  //       groups: [['Loaded', 'Empty']]
-  //     },
-  //     grid: {
-  //       y: {
-  //           lines: [{value:0}]
-  //       }
-  //     }
-  //   });
-  //   if (!cont) {
-  //     return false;
-  //   }
-  // }
+  //RPM Summary Chart:
+  if (graph_name == 'rpm_chart' || graph_name == "") {
+    data = {
+      date_from: $('#ts_chart_date_from').val(),
+      date_to: $('#ts_chart_date_to').val(),
+      period: $('#ts_chart_period').val()
+    }
+
+    var get_data = $.ajax({
+      method: 'POST',
+      data: data,
+      url: 'zactions/get_trip_summary_chart.php'
+    });
+
+    get_data.done(function(r){
+      // console.log(r);
+
+      var r = JSON.parse(r);
+      if (r.code == 1) {
+        rpm_chart = c3.generate({
+          bindto: '#rpm-summary-chart',
+          data:{
+            x: "x",
+            columns: r.to_chart,
+            labels: true,
+            colors:{
+              Goal:'#EC3737'
+            },
+          },
+          axis: {
+              x: {
+                  type: 'category',
+                  tick: {
+                      format: '%Y-%m-%d',
+                  }
+              }
+          },
+        });
+      }
+      // console.log(r['to_chart'][1].shift());
+      // console.log(r['to_chart'][1].splice(1));
+      // console.log(r);
+
+    }).fail(function(x){
+        console.error(x);
+      });
+
+    if (!cont) {
+      return false;
+    }
+  }
 
 }
 
@@ -96,7 +302,6 @@ $(document).ready(function(){
       var url = "";
       data.txt = $(this).val();
 
-      console.log(cat);
 
       if (data.txt == "") {
         $('.popup-list').slideUp();
@@ -119,13 +324,12 @@ $(document).ready(function(){
           default:
             swal('Error', 'There was an error processing the request.', 'error');
         }
-
         $.ajax({
           method: 'POST',
           data: data,
           url: url,
           success: function(result){
-            resp = JSON.parse(result);
+            var resp = JSON.parse(result);
 
             switch (resp.code) {
               case 1:
@@ -206,25 +410,11 @@ $(document).ready(function(){
       get_data.done(function(r){
         // console.log(r);
 
-        r = JSON.parse(r);
-        console.log(r);
+        var r = JSON.parse(r);
         if (r.code == 1) {
-          c3.generate({
-            bindto: '#rpm-summary-chart',
-            data:{
-              x: "x",
-              columns: r.to_chart,
-              labels: true
-            },
-            axis: {
-                x: {
-                    type: 'category',
-                    tick: {
-                        format: '%Y-%m-%d',
-                    }
-                }
-            }
-          });
+          rpm_chart.load({
+            columns: r.to_chart,
+          })
         }
         // console.log(r['to_chart'][1].shift());
         // console.log(r['to_chart'][1].splice(1));
@@ -238,6 +428,7 @@ $(document).ready(function(){
 
     $('#ms-add-graph-item').click(function(){
       var data = {
+        query_type: 'not_on_load',
         dbid: $(this).siblings('input').attr('db-id'),
         category: $(this).siblings('input').attr('category'),
         date_from: $('#ms_chart_date_from').val(),
@@ -262,12 +453,13 @@ $(document).ready(function(){
       });
 
       pull_data.done(function(r){
-        r = JSON.parse(r);
-        console.log(r);
+        var r = JSON.parse(r);
 
-        ms_chart.load({
-          columns: r.to_chart
-        });
+        if (r.code == 1) {
+          ms_chart.load({
+            columns: r.to_chart
+          });
+        }
 
         $('#dash-cat-select').addClass('disabled').attr('disabled', true);
         $('#miles-summary-chart').fadeIn();
@@ -298,45 +490,13 @@ $(document).ready(function(){
       });
 
       get_data.done(function(r){
-        r = JSON.parse(r);
-        console.log(r);
+        var r = JSON.parse(r);
 
         if (r.code == 1) {
-          tms_chart = c3.generate({
-            bindto: '#tms-summary-chart',
-            data:{
-              x: 'x',
-              columns: r.to_chart,
-              type: 'bar',
-              types: {
-                Goal: 'line'
-              },
-              labels: true,
-              type: 'bar',
-              groups: [['Loaded', 'Empty']],
-              colors:{
-                Goal:'#EC3737'
-              },
-              onclick: function(d, element){console.log(this);}
-            },
-            grid: {
-              y: {
-                  lines: [{value:0}]
-              }
-            },
-            axis: {
-              x: {
-                type: 'category'
-                // tick: {
-                //   format: '%Y-%m-%d',
-                // }
-              }
-            },
-          });
 
-          // tms_chart.load({
-          //   columns: r.to_chart
-          // })
+          tms_chart.load({
+            columns: r.to_chart
+          })
         }
 
         }).fail(function(x){

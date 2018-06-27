@@ -10,7 +10,7 @@ function numberify($number){
 
 $system_callback = [];
 $data = $_POST;
-$chart_data = array(['x'],['RPM']);
+$chart_data = array(['x'],['RPM'], ['Goal']);
 
 $b_date = date('Y-m-d H:i:s', strtotime($data['date_from'] . " 00:00"));
 $e_date = date('Y-m-d H:i:s', strtotime($data['date_to'] . " 23:59"));
@@ -75,15 +75,17 @@ switch ($_POST['period']) {
     foreach ($results as $date_group => $result) {
       array_push($chart_data[0], $date_group);
       array_push($chart_data[1], $result['rpm']);
+      array_push($chart_data[2], '1.9');
     }
     break;
 
   case 1:
     foreach ($results as $date_grouping => $result) {
       $year = date('Y', strtotime($result['date']));
-      $week_day = date('Y-m-d', strtotime(sprintf("%d-W%02d-%d", $year, $date_grouping, 1)));
+      $week_day = date('Y-m-d', strtotime(sprintf("%d-W%02d-%d", $year, $date_grouping, 7)));
       array_push($chart_data[0], $week_day);
       array_push($chart_data[1], $result['rpm']);
+      array_push($chart_data[2], '1.9');
     }
     break;
 
@@ -92,6 +94,7 @@ switch ($_POST['period']) {
     $month = date('M', strtotime($result['date']));
     array_push($chart_data[0], $month);
     array_push($chart_data[1], $result['rpm']);
+    array_push($chart_data[2], '1.9');
   }
     break;
 }
