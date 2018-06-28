@@ -54,7 +54,7 @@ if (isset($_POST['login'])) {
       if (detectDevice() == "Mobile") {
         header('location:Ubicaciones/registroHoras.php');
       } else {
-        header('location:Ubicaciones/Viajes/Dashboard.php');
+        header('location:Ubicaciones/');
       }
 
       exit();

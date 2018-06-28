@@ -1,0 +1,24 @@
+.dash-table{
+  max-height: 250px;
+  overflow: scroll;
+	position: relative;
+}
+
+.dash-table tr {
+width: 100%;
+display: inline-table;
+table-layout: fixed;
+}
+
+.dash-table tbody{
+  overflow-y: scroll;
+  height: 225px;
+  /* width: 95%; */
+  position: absolute;
+}
+
+.table td.fit,
+.table th.fit {
+    white-space: nowrap;
+    width: 25%;
+}

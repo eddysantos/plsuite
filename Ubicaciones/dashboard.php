@@ -7,15 +7,12 @@ $viajes_active = "";
 $operadores_active = "";
 $tractores_active = "";
 $cajas_active = "";
-
 $root = $_SERVER['DOCUMENT_ROOT'];
 require $root . '/plsuite/Resources/PHP/Utilities/session.php';
 require $root . '/plsuite/Resources/PHP/Utilities/header.php';
-
 $sunday = date('m/d/Y', strtotime('last sunday'));
 // $today = date('Y-m-d', strtotime('today'));
 $today = date('m/d/Y', strtotime('today'));
-
 $sunday_5weeks = date('m/d/Y', strtotime('sunday 5 weeks ago'));
  ?>
 <div class="container-fluid pt-3" style="margin-top: 75px; overflow: scroll; height: calc(100vh - 140px)">
@@ -130,4 +127,4 @@ require $root . '/plsuite/Resources/PHP/Utilities/footer.php';
 <script src="/plsuite/Resources/jquery_ui_1_12_1/jquery-ui.min.js" charset="utf-8"></script>
 <script src="/plsuite/Resources/c3_charts/c3.min.js" charset="utf-8"></script>
 <script src="/plsuite/Resources/c3_charts/d3.v5.min.js" charset="utf-8"></script>
-<script src="zjs/index.js" charset="utf-8"></script>
+<script src="zjs/main_dash.js" charset="utf-8"></script>
