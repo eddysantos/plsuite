@@ -300,6 +300,7 @@ function start_graphs(graph_name = "", cont = true){
     }
   }
 
+
 }
 
 $(document).ready(function(){

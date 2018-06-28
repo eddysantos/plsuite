@@ -29,7 +29,7 @@ $sunday_5weeks = date('m/d/Y', strtotime('sunday 5 weeks ago'));
     <div class="" id="tms-summary-chart"></div>
   </div>
   <div class="d-flex justify-content-between mb-2">
-    <table class="table border w-50 mr-1">
+    <table class="table border">
       <thead>
         <th style="width: 140px" class="text-secondary">
           <input type="text" style="padding: 0; line-height: 0" readonly class="form-control-plaintext date-selector text-secondary" role="button" name="" value="<?php echo $today?>" id="dash-date">
@@ -55,7 +55,7 @@ $sunday_5weeks = date('m/d/Y', strtotime('sunday 5 weeks ago'));
         </tr>
       </tbody>
     </table>
-    <div class="border p-2 w-50 ml-1">
+    <!-- <div class="border p-2 w-50 ml-1">
       <form class="form-inline justify-content-between" onsubmit="return false;">
         <div class="date-inputs">
           Select date range: <input type="text" class="date-selector ml-1 mr-1 form-control form-control-sm text-center" id="tr_chart_date_from" name="" value="<?php echo $sunday?>">
@@ -63,7 +63,7 @@ $sunday_5weeks = date('m/d/Y', strtotime('sunday 5 weeks ago'));
         </div>
         <button type="button" class="btn btn-outline-success btn-sm float-right" id="load_tr_chart" name="button">Load</button>
       </form>
-    </div>
+    </div> -->
 
   </div>
   <div class="border p-2 mb-2">
