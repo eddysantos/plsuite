@@ -52,17 +52,25 @@ while ($row = $rslt->fetch_assoc()) {
   } else {
     $owner = "$row[FirstName] $row[LastName]";
   }
+
+  if ($row['truckStatus'] == 'Active') {
+    $color = 'btn-outline-success';
+  } else {
+    $color = 'btn-outline-danger';
+  }
+
   $system_callback['data'] .=
   "<tr role='button' truckid='$row[pkid_truck]'>
     <td>$row[truckNumber]</td>
     <td>$row[TruckVIN]</td>
     <td>$owner</td>
-    <td>$row[truckStatus]</td>
+    <td class='truck-status-label'>$row[truckStatus]</td>
     <td>" . date('Y-m-d', strtotime($row['date_added'])) . "</td>
     <td>$row[truckPlates]</td>
     <td class='text-right'>
-      <button type='button' class='btn btn-outline-secondary' z-index=9999 name='button' driverid='$row[pkid_truck]'> <i class='fas fa-pencil-alt'></i> </button>
-      <button type='button' class='btn btn-outline-danger deleteTruck' z-index=9999 name='button' truckid='$row[pkid_truck]'> <i class='far fa-trash-alt'></i> </button>
+      <button type='button' class='btn btn-outline-secondary editTruck' z-index=9999 name='button' truckid='$row[pkid_truck]'> <i class='fas fa-pencil-alt'></i> </button>
+      <button type='button' class='btn btn-outline-danger' z-index=9999 name='button' truckid='$row[pkid_truck]' hidden> <i class='far fa-trash-alt'></i> </button>
+      <button type='button' class='btn $color truckStatus' z-index=9999 name='button' current-status='$row[truckStatus]' truckid='$row[pkid_truck]'> <i class='fas fa-truck'></i> </button>
     </td>
   </tr>";
 }

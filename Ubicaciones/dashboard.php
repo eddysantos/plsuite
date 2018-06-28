@@ -28,39 +28,51 @@ $sunday_5weeks = date('m/d/Y', strtotime('sunday 5 weeks ago'));
     </form>
     <div class="" id="tms-summary-chart"></div>
   </div>
-  <table class="table border">
-    <thead>
-      <th style="width: 140px" class="text-secondary">
-        <input type="text" style="padding: 0; line-height: 0" readonly class="form-control-plaintext date-selector text-secondary" role="button" name="" value="<?php echo $today?>" id="dash-date">
-      </th>
-      <th scope="col">Total Trips</th>
-      <th scope="col">Southbound Trips</th>
-    </thead>
-    <tbody>
-      <tr>
-        <th scope="row">Total Miles</th>
-        <td id="tt_miles"></td>
-        <td id="sb_miles"></td>
-      </tr>
-      <tr>
-        <th scope="row">Total Rate</th>
-        <td id="tt_rate"></td>
-        <td id="sb_rate"></td>
-      </tr>
-      <tr>
-        <th scope="row">RPM</th>
-        <td id="tt_rpm"></td>
-        <td id="sb_rpm"></td>
-      </tr>
-    </tbody>
-  </table>
+  <div class="d-flex justify-content-between mb-2">
+    <table class="table border w-50 mr-1">
+      <thead>
+        <th style="width: 140px" class="text-secondary">
+          <input type="text" style="padding: 0; line-height: 0" readonly class="form-control-plaintext date-selector text-secondary" role="button" name="" value="<?php echo $today?>" id="dash-date">
+        </th>
+        <th scope="col">Total Trips</th>
+        <th scope="col">Southbound Trips</th>
+      </thead>
+      <tbody>
+        <tr>
+          <th scope="row">Total Miles</th>
+          <td id="tt_miles"></td>
+          <td id="sb_miles"></td>
+        </tr>
+        <tr>
+          <th scope="row">Total Rate</th>
+          <td id="tt_rate"></td>
+          <td id="sb_rate"></td>
+        </tr>
+        <tr>
+          <th scope="row">RPM</th>
+          <td id="tt_rpm"></td>
+          <td id="sb_rpm"></td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="border p-2 w-50 ml-1">
+      <form class="form-inline justify-content-between" onsubmit="return false;">
+        <div class="date-inputs">
+          Select date range: <input type="text" class="date-selector ml-1 mr-1 form-control form-control-sm text-center" id="tr_chart_date_from" name="" value="<?php echo $sunday?>">
+          - <input type="text" class="date-selector ml-1 mr-1 form-control text-center form-control-sm" id="tr_chart_date_to" name="" value="<?php echo $today?>">
+        </div>
+        <button type="button" class="btn btn-outline-success btn-sm float-right" id="load_tr_chart" name="button">Load</button>
+      </form>
+    </div>
+
+  </div>
   <div class="border p-2 mb-2">
     <h6>RPM Summary</h6>
     <form class="form-inline justify-content-between" onsubmit="return false;">
       <div class="date-inputs">
         Select date range: <input type="text" class="date-selector ml-1 mr-1 form-control form-control-sm text-center" id="ts_chart_date_from" name="" value="<?php echo $sunday_5weeks?>">
         - <input type="text" class="date-selector ml-1 mr-1 form-control text-center form-control-sm" id="ts_chart_date_to" name="" value="<?php echo $today?>">
-        And periodicity:
+        And cycle:
         <select class="form-control form-control-sm ml-1 mr-5" id="ts_chart_period" name="">
           <option value="0">Daily</option>
           <option value="1" selected>Weekly</option>
@@ -79,7 +91,7 @@ $sunday_5weeks = date('m/d/Y', strtotime('sunday 5 weeks ago'));
       <form class="form-inline " onsubmit="return false;">
         Select date range: <input type="text" class="date-selector ml-1 mr-1 form-control form-control-sm text-center" id="ms_chart_date_from" name="" value="<?php echo $sunday_5weeks?>">
         - <input type="text" class="date-selector ml-1 mr-1 form-control text-center form-control-sm" id="ms_chart_date_to" name="" value="<?php echo $today?>">
-        And periodicity:
+        And cycle:
         <select class="form-control form-control-sm ml-1 mr-5" id="ms_chart_period" name="">
           <option value="0">Daily</option>
           <option value="1" selected>Weekly</option>
