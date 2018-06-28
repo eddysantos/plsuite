@@ -50,7 +50,8 @@ function start_graphs(graph_name = "", cont = true){
 
     get_data.done(function(r){
       var r = JSON.parse(r);
-
+      console.log(r);
+      // return false;
       if (r.code == 1) {
         tms_chart = c3.generate({
           bindto: '#tms-summary-chart',
@@ -61,11 +62,25 @@ function start_graphs(graph_name = "", cont = true){
             types: {
               Goal: 'line'
             },
-            labels: true,
+            labels: {
+              format: function(v, id, i, j){
+                if (v != 0) {
+                  return v;
+                }
+                // console.log("V: " + v);
+                // console.log("id: " + id);
+                // console.log("i: " + i);
+                // console.log("j: " + j);
+              }
+            },
             type: 'bar',
-            groups: [['Loaded', 'Empty']],
+            groups: [['Loaded', 'Empty', 'Incomplete Loaded', 'Incomplete Empty']],
             colors:{
-              Goal:'#EC3737'
+              Goal:'#EC3737',
+              Loaded: '#1B62A5',
+              Empty: '#F86D16',
+              'Incomplete Loaded': '#B2C5D7',
+              'Incomplete Empty': '#F7B68E'
             },
             onclick: function(d, element){console.log(this);}
           },
@@ -284,6 +299,7 @@ function start_graphs(graph_name = "", cont = true){
       return false;
     }
   }
+
 
 }
 
