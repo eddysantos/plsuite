@@ -22,7 +22,7 @@
   </head>
   <header class="">
     <nav class="navbar navbar-expand-lg fixed-top navbar-light bg-light">
-      <a class="navbar-brand" disabled href="#">
+      <a class="navbar-brand" href="/plsuite/Ubicaciones/">
         <i style="font-size: 160%" class="fa fa-home"></i>
         <!-- <img src="/plsuite/Resources/images/Logo.png" style="max-height: 50px" alt="PLTI"> -->
       </a>
