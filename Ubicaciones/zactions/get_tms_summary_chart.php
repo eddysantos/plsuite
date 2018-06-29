@@ -24,7 +24,7 @@ $diff = $later->diff($earlier)->format("%a");
 $goal = ($diff + 1) * $goal_factor;
 $grouping = "";
 
-$query = "SELECT trk.truckNumber tractor , tlm.movement_type mov_type , sum(tlm.miles_google) miles, tl.date_arrival date_arrival FROM ct_trip t LEFT JOIN ct_trip_linehaul tl ON t.pkid_trip = tl.fk_idtrip LEFT JOIN ct_trip_linehaul_movement tlm ON tl.pk_idlinehaul = tlm.fkid_linehaul LEFT JOIN ct_truck trk ON tlm.fkid_tractor = trk.pkid_truck WHERE (tl.date_arrival BETWEEN ? AND ? OR tl.date_arrival IS NULL) AND tl.linehaul_status <> 'Cancelled' GROUP BY tl.pk_idlinehaul, mov_type , tractor ORDER BY tractor , mov_type";
+$query = "SELECT trk.truckNumber tractor , tlm.movement_type mov_type , sum(tlm.miles_google) miles, tl.date_arrival date_arrival FROM ct_trip t LEFT JOIN ct_trip_linehaul tl ON t.pkid_trip = tl.fk_idtrip LEFT JOIN ct_trip_linehaul_movement tlm ON tl.pk_idlinehaul = tlm.fkid_linehaul LEFT JOIN ct_truck trk ON tlm.fkid_tractor = trk.pkid_truck WHERE (tl.date_arrival BETWEEN ? AND ? OR tl.date_arrival IS NULL) AND tl.linehaul_status <> 'Cancelled' AND tl.fk_idtrip <> '' GROUP BY tl.pk_idlinehaul, mov_type , tractor ORDER BY tractor , mov_type";
 
 
 $stmt = $db->prepare($query);
