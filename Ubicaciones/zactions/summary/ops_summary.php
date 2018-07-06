@@ -85,7 +85,7 @@ if ($rows == 0) {
 $sc['data']['pi_trips']['amount'] = number_format($sc['data']['pi_trips']['amount'], 2);
 
 
-$query = "SELECT tl.lh_number linehaul , t.trailer_number trailer , tl.trip_rate rate , tl.invoice_payment_due payment_due , datediff( date(curdate()) , tl.invoice_payment_due) days FROM ct_trip_linehaul tl LEFT JOIN ct_trip t ON t.pkid_trip = tl.fk_idtrip WHERE tl.fk_idtrip <> '' AND tl.linehaul_status = 'Closed' AND tl.invoice_payment_due < curdate()";
+$query = "SELECT tl.lh_number linehaul , t.trailer_number trailer , tl.trip_rate rate , tl.invoice_payment_due payment_due , datediff( date(curdate()) , tl.invoice_payment_due) days FROM ct_trip_linehaul tl LEFT JOIN ct_trip t ON t.pkid_trip = tl.fk_idtrip WHERE tl.fk_idtrip <> '' AND tl.linehaul_status = 'Closed' AND tl.invoice_payment_due < curdate() AND tl.invoice_payment_date IS NULL";
 
 $stmt = $db->prepare($query);
 $stmt->execute();
@@ -106,7 +106,7 @@ if ($rows == 0) {
 }
 
 
-$sc['data']['pp_trips']['amount'] = number_format($sc['data']['pi_trips']['amount'], 2);
+$sc['data']['pp_trips']['amount'] = number_format($sc['data']['pp_trips']['amount'], 2);
 
 
 
