@@ -14,6 +14,10 @@ if ($data['payment_due'] == "") {
   $data['payment_due'] = NULL;
 }
 
+if ($data['invoice_date'] == "") {
+  $data['invoice_date'] = NULL;
+}
+
 if ($data['invoice_amount'] == "") {
   $data['invoice_amount'] = NULL;
 }
@@ -48,7 +52,7 @@ function numberify($number){
 }
 
 
-$query = "UPDATE ct_trip_linehaul SET invoice_number = ?, invoice_amount = ?, invoice_payment_date = ?, invoice_check_number = ?, invoice_bank_name = ?, invoice_comments = ?, invoice_payment_due = ? WHERE pk_idlinehaul = ?";
+$query = "UPDATE ct_trip_linehaul SET invoice_number = ?, invoice_amount = ?, invoice_payment_date = ?, invoice_check_number = ?, invoice_bank_name = ?, invoice_comments = ?, invoice_payment_due = ?, invoice_date = ? WHERE pk_idlinehaul = ?";
 
 $stmt = $db->prepare($query);
 if (!($stmt)) {
@@ -57,7 +61,7 @@ if (!($stmt)) {
   exit_script($sc);
 }
 
-$stmt->bind_param('ssssssss',
+$stmt->bind_param('sssssssss',
   $data['invoice_number'],
   $data['invoice_amount'],
   $data['payment_date'],
@@ -65,6 +69,7 @@ $stmt->bind_param('ssssssss',
   $data['bank_name'],
   $data['check_comments'],
   $data['payment_due'],
+  $data['invoice_date'],
   $data['dbid']
 );
 

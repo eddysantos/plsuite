@@ -127,7 +127,8 @@ $(document).ready(function(){
       bank_name: $('#bank_name').val(),
       check_comments: $('#check_comments').val(),
       dbid: $('#linehaulid').val(),
-      payment_due: $('#payment_due_date').val()
+      payment_due: $('#payment_due_date').val(),
+      invoice_date: $('#invoice_date').val()
     }
 
     var update_data = $.ajax({
@@ -174,6 +175,20 @@ $(document).ready(function(){
   $('#invoice_amount').change(function(){
     var num = parseFloat($(this).val());
     $(this).val(num.toFixed(2));
+  })
+
+  $('#invoice_number').change(function(){
+    if ($(this).val() == "") {
+      return false;
+    }
+
+    if ($('#invoice_date').val() == "") {
+      var today = new Date();
+      var today_f = today.yyyymmdd();
+      $('#invoice_date').val(today_f);
+    }
+
+
   })
 
 })
