@@ -10,7 +10,7 @@ $root = $_SERVER['DOCUMENT_ROOT'];
 require $root . '/plsuite/Resources/PHP/Utilities/initialScript.php';
 require $root . '/plsuite/Resources/PHP/Utilities/header.php';
  ?>
-<div class="container-fluid align-items-center justify-content-between d-flex mb-3" style="margin-top: 65px">
+<div class="container-fluid align-items-center justify-content-between d-flex mb-3" style="margin-top: 70px">
   <h1 class="nb-id d-inline">Trucks</h1>
   <!-- <div class="btn-group" role="group" aria-label="trip-filter-byweek">
     <button class="btn btn-outline-success nb-id" type="button" name="lastWeek" role="button">Last Week</button>
@@ -29,7 +29,7 @@ require $root . '/plsuite/Resources/PHP/Utilities/header.php';
   <button class="btn btn-outline-secondary" type="button" data-toggle="modal" data-target="#addTruckModal" name="button">Add Truck</button>
 </div>
 
-<div class="container-fluid" style="overflow-y: scroll; max-height: 750px">
+<div class="container-fluid" style="overflow-y: scroll; height: calc(100vh - 190px)">
   <table class="table table-hover">
     <thead class="nb-id">
       <th>Truck #</th>

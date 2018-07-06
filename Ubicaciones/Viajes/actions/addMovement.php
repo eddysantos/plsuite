@@ -101,6 +101,38 @@ if ($system_callback['query']['code'] == "500") {
   exit_script($system_callback);
 }
 
+$query = "UPDATE ct_trip_linehaul SET current_tractor = ? WHERE pk_idlinehaul = ?";
+
+$stmt = $db->prepare($query);
+if (!($stmt)) {
+  $system_callback['query']['code'] = "500";
+  $system_callback['query']['query'] = $query;
+  $system_callback['query']['message'] = "Error during MODIFY CURRENT TRACTOR query prepare [$db->errno]: $db->error";
+  exit_script($system_callback);
+}
+
+if (
+  !(
+    $stmt->bind_param('ss',
+    $data['truck'],
+    $data['lhid']
+  )
+    )
+) {
+  $system_callback['query']['code'] = "500";
+  $system_callback['query']['data'] = $system_callback;
+  $system_callback['query']['message'] = "Error during MODIFY CURRENT TRACTOR variables binding [$stmt->errno]: $stmt->error";
+}
+
+if (!($stmt->execute())) {
+  $system_callback['query']['code'] = "500";
+  $system_callback['query']['query'] = $query;
+  $system_callback['query']['message'] = "Error during INSERT TRIP_LINEHAUL_MOVEMENT query execution [$stmt->errno]: $stmt->error";
+}
+if ($system_callback['query']['code'] == "500") {
+  exit_script($system_callback);
+}
+
 $system_callback['query']['code'] = "1";
 $system_callback['query']['message'] = "Query happened perfectly!";
 exit_script($system_callback);

@@ -103,6 +103,10 @@ $(document).ready(function(){
           $('#trip-number').html("Trip: " + tripno);
           $(target).fadeIn();
         })
+
+        if (data.payment_due_date == undefined) {
+          $('[due-days=30]').click();
+        }
       } else {
         swal('Oops', 'There was an error pulling the trip. Please inform IT', 'error');
         console.error(r.message);
@@ -163,7 +167,7 @@ $(document).ready(function(){
 
     var now = new Date();
     now.setDate(now.getDate() + Number(days_due));
-
+    $('#due-date-button').html(btn_label);
     $('#payment_due_date').val(now.yyyymmdd());
   })
 

@@ -1,0 +1,48 @@
+
+.dash-table{
+  max-height: 250px;
+  overflow: scroll;
+	position: relative;
+}
+
+.new-rows{
+}
+
+.dash-table tr {
+width: 100%;
+display: inline-table;
+table-layout: fixed;
+}
+
+.dash-table tbody{
+  overflow-y: scroll;
+  height: 225px;
+  /* width: 95%; */
+  position: absolute;
+}
+
+.table td.fit,
+.table th.fit {
+    white-space: nowrap;
+    width: 28%;
+}
+
+.homemade-col-10{
+  flex: 0 0 80%;
+  max-width: 80%;
+  position: relative;
+  width: 100%;
+  min-height: 1px;
+  padding-right: 15px;
+  padding-left: 15px;
+}
+
+.homemade-col-1{
+  flex: 0 0 20%;
+  max-width: 20%;
+  position: relative;
+  width: 100%;
+  min-height: 1px;
+  padding-right: 15px;
+  padding-left: 15px;
+}

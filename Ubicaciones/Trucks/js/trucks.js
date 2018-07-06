@@ -7,8 +7,8 @@ function fetch_trucks(){
 
       if (response.code == 1) {
         $('#truckDash').html(response.data);
-        delete_truck_handler();
-        edit_truck_handler();
+        // delete_truck_handler();
+        // edit_truck_handler();
 
       }
     },
@@ -19,54 +19,56 @@ function fetch_trucks(){
 }
 
 
-function delete_truck_handler(){
-  $('.deleteTruck').click(function(e){
-    e.stopPropagation();
-    var truckid = $(this).attr('truckid');
+// function delete_truck_handler(){
+//   $('.deleteTruck').click(function(e){
+//     e.stopPropagation();
+//     var truckid = $(this).attr('truckid');
+//
+//     $('#actionToConfirm').html("delete the truck")
+//     $('#confirmationModal').modal('show');
+//
+//
+//     $('#confirmNo').unbind().click(function(){
+//       $('.modal').modal('hide');
+//       return false;
+//     })
+//
+//     $('#confirmYes').unbind().click(function(){
+//       $.ajax({
+//         method: 'POST',
+//         data: {truckid: truckid},
+//         url: 'actions/deleteTruck.php',
+//         success: function(result){
+//           response = JSON.parse(result);
+//           if (response.code == 1) {
+//             fetch_trucks();
+//             alert("Truck deleted successfully");
+//           } else {
+//             alert("Driver was not deleted, please contact support.");
+//             console.error(response.message);
+//           }
+//         },
+//         error: function(exception){
+//           alert("Something went terribly wrong, please call support.")
+//           console.error(exception);
+//         }
+//       });
+//       $('.modal').modal('hide');
+//     });
+//
+//   })
+//
+// }
 
-    $('#actionToConfirm').html("delete the truck")
-    $('#confirmationModal').modal('show');
-
-
-    $('#confirmNo').unbind().click(function(){
-      $('.modal').modal('hide');
-      return false;
-    })
-
-    $('#confirmYes').unbind().click(function(){
-      $.ajax({
-        method: 'POST',
-        data: {truckid: truckid},
-        url: 'actions/deleteTruck.php',
-        success: function(result){
-          response = JSON.parse(result);
-          if (response.code == 1) {
-            fetch_trucks();
-            alert("Truck deleted successfully");
-          } else {
-            alert("Driver was not deleted, please contact support.");
-            console.error(response.message);
-          }
-        },
-        error: function(exception){
-          alert("Something went terribly wrong, please call support.")
-          console.error(exception);
-        }
-      });
-      $('.modal').modal('hide');
-    });
-
-  })
-
-}
-
-function edit_truck_handler(){
-  $('tr').click(function(e){
-    e.stopPropagation();
-    var truckid = $(this).attr('truckid');
-    window.location.href = 'truckDetails.php?truckid=' + truckid;
-  })
-}
+// function edit_truck_handler(){
+//   $('tr').click(function(e){
+//     e.stopPropagation();
+//     console.log(e);
+//     return false;
+//     var truckid = $(this).attr('truckid');
+//     window.location.href = 'truckDetails.php?truckid=' + truckid;
+//   })
+// }
 
 $(document).ready(function(){
 
@@ -119,6 +121,51 @@ $(document).ready(function(){
       $('#truckNumberLabel').fadeIn();
     })
   });
+
+  $('#truckDash').on('click', '.truckStatus', function(e){
+    e.stopPropagation();
+
+    var button = $(this);
+
+    var data = {
+      truck_id: $(this).attr('truckid'),
+      current_status: $(this).attr('current-status')
+    }
+
+    var toggle_status = $.ajax({
+      method: 'POST',
+      data: data,
+      url: 'actions/toggleTruckStatus.php',
+      beforeSend: function(){button.attr('disable', true).addClass('disable')}
+    });
+
+    toggle_status.done(function(r){
+      r = JSON.parse(r);
+      console.log(r);
+      if (r.code == 1) {
+        button
+          .attr('disable', false)
+          .removeClass('disable')
+          .toggleClass('btn-outline-danger btn-outline-success')
+          .attr('current-status', r.new_status)
+          .parent().siblings('.truck-status-label').html(r.new_status);
+
+      } else {
+        swal('Oops!', 'There was an error processing the request. Please inform IT.', 'error');
+        console.error(r.message);
+      }
+      }).fail(function(x){
+      console.error(x);
+    })
+
+  })
+
+  $('#truckDash').on('click', '.editTruck', function(e){
+    e.stopPropagation();
+    console.log(e);
+    var truckid = $(this).attr('truckid');
+    window.location.href = 'truckDetails.php?truckid=' + truckid;
+  })
 
 
   $('#saveTruckDetails').click(function(){
