@@ -65,7 +65,12 @@ $sunday_5weeks = date('m/d/Y', strtotime('sunday 5 weeks ago'));
 </div>
 <div class="d-flex justify-content-around">
   <div class="border p-2 mb-2 border mr-1 w-50" style="height: 325px">
-    <h6>Pending Invoice: <span class="text-secondary" id="pi-count"></span></h6>
+    <div class="">
+      <button type="button" class="btn btn-outline-secondary float-right this-week-toggle" action="pi" name="button">
+        [<span>+</span>] This Week
+      </button>
+      <h6>Pending Invoice: <span class="text-secondary" id="pi-count"></span></h6>
+    </div>
     <table class="table table-striped table-sm dash-table" id="pending-invoice-trips">
       <thead>
         <tr>
@@ -85,6 +90,7 @@ $sunday_5weeks = date('m/d/Y', strtotime('sunday 5 weeks ago'));
           <th class="fit">Trip</th>
           <th class="fit">Trailer</th>
           <th>Payment Due Date</th>
+          <th>Invoice</th>
         </tr>
       </thead>
       <tbody></tbody>
