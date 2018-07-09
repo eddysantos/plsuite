@@ -67,7 +67,7 @@ $sunday_5weeks = date('m/d/Y', strtotime('sunday 5 weeks ago'));
   <div class="border p-2 mb-2 border mr-1 w-50" style="height: 325px">
     <div class="">
       <button type="button" class="btn btn-outline-secondary float-right this-week-toggle" action="pi" name="button">
-        [<span>+</span>] This Week
+        [<span>-</span>] This Week
       </button>
       <h6>Pending Invoice: <span class="text-secondary" id="pi-count"></span></h6>
     </div>
