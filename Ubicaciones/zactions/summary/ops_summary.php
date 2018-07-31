@@ -62,7 +62,7 @@ if ($rows == 0) {
 
 
 
-$query = "SELECT tl.lh_number linehaul , t.trailer_number trailer, tl.trip_rate rate , tl.date_end , datediff(date(curdate()) , tl.date_end) days FROM ct_trip_linehaul tl LEFT JOIN ct_trip t ON t.pkid_trip = tl.fk_idtrip WHERE tl.fk_idtrip <> '' AND tl.linehaul_status = 'Closed' AND tl.invoice_number IS NULL ORDER BY days DESC, linehaul ASC";
+$query = "SELECT tl.lh_number linehaul , t.trailer_number trailer, tl.trip_rate rate , tl.date_end date_end , datediff(date(curdate()) , tl.date_end) days, b.brokerName broker FROM ct_trip_linehaul tl LEFT JOIN ct_trip t ON t.pkid_trip = tl.fk_idtrip LEFT JOIN ct_brokers b ON tl.fkid_broker = b.pkid_broker WHERE tl.fk_idtrip <> '' AND tl.linehaul_status = 'Closed' AND tl.invoice_number IS NULL ORDER BY days DESC, linehaul ASC";
 
 $stmt = $db->prepare($query);
 $stmt->execute();
@@ -77,7 +77,7 @@ if ($rows == 0) {
   while ($row = $rslt->fetch_assoc()) {
     $sc['data']['pi_trips']['count']++;
     $sc['data']['pi_trips']['amount'] += $row['rate'];
-    $sc['data']['pi_trips']['table'] .= "<tr><td class='fit'>$row[linehaul]</td><td class='fit'>$row[trailer]</td><td>$row[date_end] ($row[days])</td></tr>";
+    $sc['data']['pi_trips']['table'] .= "<tr><td>$row[linehaul]</td><td>$row[trailer]</td><td>$row[date_end] ($row[days])</td><td>$$row[rate]</td><td>$row[broker]</td></tr>";
   }
 }
 
@@ -85,7 +85,7 @@ if ($rows == 0) {
 $sc['data']['pi_trips']['amount'] = number_format($sc['data']['pi_trips']['amount'], 2);
 
 
-$query = "SELECT tl.lh_number linehaul , t.trailer_number trailer , tl.trip_rate rate , tl.invoice_payment_due payment_due , datediff( date(curdate()) , tl.invoice_payment_due) days, tl.invoice_number invoice_number FROM ct_trip_linehaul tl LEFT JOIN ct_trip t ON t.pkid_trip = tl.fk_idtrip WHERE tl.fk_idtrip <> '' AND tl.linehaul_status = 'Closed' AND tl.invoice_payment_due < curdate() AND tl.invoice_payment_date IS NULL ORDER BY days DESC, linehaul ASC";
+$query = "SELECT tl.lh_number linehaul , t.trailer_number trailer , tl.trip_rate rate , tl.invoice_payment_due payment_due , datediff( date(curdate()) , tl.invoice_payment_due) days, tl.invoice_number invoice_number, b.brokerName broker FROM ct_trip_linehaul tl LEFT JOIN ct_trip t ON t.pkid_trip = tl.fk_idtrip LEFT JOIN ct_brokers b ON tl.fkid_broker = b.pkid_broker WHERE tl.fk_idtrip <> '' AND tl.linehaul_status = 'Closed' AND tl.invoice_payment_due < curdate() AND tl.invoice_payment_date IS NULL ORDER BY days DESC, linehaul ASC";
 
 $stmt = $db->prepare($query);
 $stmt->execute();
@@ -95,13 +95,13 @@ $rows = $rslt->num_rows;
 if ($rows == 0) {
   $sc['data']['pp_trips']['count'] = 0;
   $sc['data']['pp_trips']['amount'] = 0;
-  $sc['data']['pp_trips']['table'] = "<tr><td colspan='3'>No trips found</td></tr>";
+  $sc['data']['pp_trips']['table'] = "<tr><td colspan='3'>No trips found</td><td></td><td></td></tr>";
 } else {
   while ($row = $rslt->fetch_assoc()) {
     $due = date('Y-m-d', strtotime($row['payment_due']));
     $sc['data']['pp_trips']['count']++;
     $sc['data']['pp_trips']['amount'] += $row['rate'];
-    $sc['data']['pp_trips']['table'] .= "<tr><td class='fit'>$row[linehaul]</td><td class='fit'>$row[trailer]</td><td>$due ($row[days])</td><td>$row[invoice_number]</td></tr>";
+    $sc['data']['pp_trips']['table'] .= "<tr><td>$row[linehaul]</td><td>$row[broker]</td><td>$due ($row[days])</td><td>$$row[rate]</td><td>$row[trailer]</td></tr>";
   }
 }
 

@@ -12,7 +12,7 @@ if ($_POST['this_week'] == 'true') {
   $and_where = "AND tl.date_end < '$day'";
 }
 
-$query = "SELECT tl.lh_number linehaul , t.trailer_number trailer, tl.trip_rate rate , tl.date_end , datediff(date(curdate()) , tl.date_end) days FROM ct_trip_linehaul tl LEFT JOIN ct_trip t ON t.pkid_trip = tl.fk_idtrip WHERE tl.fk_idtrip <> '' AND tl.linehaul_status = 'Closed' AND tl.invoice_number IS NULL $and_where ORDER BY days DESC, linehaul ASC";
+$query = "SELECT tl.lh_number linehaul , t.trailer_number trailer, tl.trip_rate rate , tl.date_end date_end , datediff(date(curdate()) , tl.date_end) days, b.brokerName broker FROM ct_trip_linehaul tl LEFT JOIN ct_trip t ON t.pkid_trip = tl.fk_idtrip LEFT JOIN ct_brokers b ON tl.fkid_broker = b.pkid_broker WHERE tl.fk_idtrip <> '' AND tl.linehaul_status = 'Closed' AND tl.invoice_number IS NULL $and_where ORDER BY days DESC, linehaul ASC";
 
 $stmt = $db->prepare($query);
 $stmt->execute();
@@ -27,7 +27,7 @@ if ($rows == 0) {
   while ($row = $rslt->fetch_assoc()) {
     $sc['data']['pi_trips']['count']++;
     $sc['data']['pi_trips']['amount'] += $row['rate'];
-    $sc['data']['pi_trips']['table'] .= "<tr><td class='fit'>$row[linehaul]</td><td class='fit'>$row[trailer]</td><td>$row[date_end] ($row[days])</td></tr>";
+    $sc['data']['pi_trips']['table'] .= "<tr><td>$row[linehaul]</td><td>$row[trailer]</td><td>$row[date_end] ($row[days])</td><td>$$row[rate]</td><td>$row[broker]</td></tr>";
   }
 }
 
