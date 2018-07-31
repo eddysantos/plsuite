@@ -8,7 +8,7 @@ require $root . '/plsuite/Resources/PHP/Utilities/header.php';
 require $root . '/plsuite/Resources/PHP/Utilities/initialScript.php';
 
 
-
+$today = date('Y-m-d', strtotime('today'));
 
  ?>
 <div class="container-fluid align-items-right d-flex align-content-center mb-3 position-sticky" style="margin-top: 65px">
@@ -159,11 +159,17 @@ require $root . '/plsuite/Resources/PHP/Utilities/initialScript.php';
               </div>
             </div>
             <div class="form-row">
+              <label for="invoice_date" class="col-form-label col-lg-4">Invoice Date</label>
+              <div class="form-group col-lg-8">
+                <input type="date" id="invoice_date" class="form-control" name="" value="<?php echo $today?>">
+              </div>
+            </div>
+            <div class="form-row">
               <label for="payment_due" class="col-form-label col-lg-4">Payment Due</label>
               <div class="form-group col-lg-8">
                 <div class="input-group">
                   <div class="input-group-btn">
-                      <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Days due</button>
+                      <button class="btn btn-outline-secondary dropdown-toggle" id="due-date-button" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Days due</button>
                       <div class="dropdown-menu">
                         <a class="dropdown-item set-due-date" role="button" due-days="10">10 Days</a>
                         <a class="dropdown-item set-due-date" role="button" due-days="20">20 Days</a>
@@ -181,17 +187,20 @@ require $root . '/plsuite/Resources/PHP/Utilities/initialScript.php';
               </div>
             </div>
             <div class="form-row">
-              <label for="check_number" class="col-form-label col-lg-4">Check Number</label>
+              <label for="check_number" class="col-form-label col-lg-4">Check</label>
               <div class="form-group col-lg-8">
-                <input type="text" id="check_number" class="form-control" name="" value="">
+                <div class="input-group">
+                  <input type="text" id="check_number" class="form-control" name="" placeholder="Check Number" value="">
+                  <input type="text" id="bank_name" class="form-control" name="" placeholder="Bank Name" value="">
+                </div>
               </div>
             </div>
-            <div class="form-row">
+            <!-- <div class="form-row">
               <label for="bank_name" class="col-form-label col-lg-4">Bank Name</label>
               <div class="form-group col-lg-8">
                 <input type="text" id="bank_name" class="form-control" name="" value="">
               </div>
-            </div>
+            </div> -->
             <div class="form-row">
               <label for="check_comments" class="col-form-label col-lg-4">Comments</label>
               <div class="form-group col-lg-8">

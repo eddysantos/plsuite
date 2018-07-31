@@ -14,7 +14,7 @@ $data = $_POST;
 $b_date = date('Y-m-d H:i:s', strtotime($data['date'] . " 00:00"));
 $e_date = date('Y-m-d H:i:s', strtotime($data['date'] . " 23:59"));
 
-$query = "SELECT tl.trip_rate trip_rate_total ,( SELECT sum(tlm.miles_google) FROM ct_trip_linehaul_movement tlm WHERE tlm.fkid_linehaul = tl.pk_idlinehaul) total_miles FROM ct_trip_linehaul tl WHERE tl.date_begin BETWEEN ? AND ? AND tl.linehaul_status <> 'Cancelled'";
+$query = "SELECT tl.trip_rate trip_rate_total ,( SELECT sum(tlm.miles_google) FROM ct_trip_linehaul_movement tlm WHERE tlm.fkid_linehaul = tl.pk_idlinehaul) total_miles FROM ct_trip_linehaul tl WHERE tl.date_begin BETWEEN ? AND ? AND tl.linehaul_status <> 'Cancelled' AND tl.fk_idtrip <> ''";
 
 $stmt = $db->prepare($query);
 if (!($stmt)) {
@@ -43,7 +43,7 @@ $rslt = $stmt->get_result();
 $result = array();
 while ($row = $rslt->fetch_assoc()) {
   $result['trip_rate_total'] += $row['trip_rate_total'];
-  $result['miles_total']+= $row['total_miles'];
+  $result['miles_total'] += $row['total_miles'];
 }
 
 if ($result['miles_total'] == 0) {
@@ -60,7 +60,7 @@ if ($result['miles_total'] == 0) {
 }
 
 
-$query = "SELECT tl.trip_rate trip_rate_total ,( SELECT sum(tlm.miles_google) FROM ct_trip_linehaul_movement tlm WHERE tlm.fkid_linehaul = tl.pk_idlinehaul) total_miles FROM ct_trip_linehaul tl WHERE tl.date_begin BETWEEN ? AND ? AND tl.origin_zip <> '78041' AND tl.linehaul_status <> 'Cancelled'";
+$query = "SELECT tl.trip_rate trip_rate_total ,( SELECT sum(tlm.miles_google) FROM ct_trip_linehaul_movement tlm WHERE tlm.fkid_linehaul = tl.pk_idlinehaul) total_miles FROM ct_trip_linehaul tl WHERE tl.date_begin BETWEEN ? AND ? AND tl.origin_zip <> '78041' AND tl.linehaul_status <> 'Cancelled' AND tl.fk_idtrip <> ''";
 
 $stmt = $db->prepare($query);
 if (!($stmt)) {
@@ -87,6 +87,7 @@ $rslt = $stmt->get_result();
 // $result = $rslt->fetch_assoc();
 $result = array();
 while ($row = $rslt->fetch_assoc()) {
+  $system_callback['rows'] = $rslt->num_rows;
   $result['trip_rate_total'] += $row['trip_rate_total'];
   $result['miles_total']+= $row['total_miles'];
 }

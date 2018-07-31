@@ -70,7 +70,7 @@ try {
 
     /** add new Line Haul on the trip**/
 
-    $query = "INSERT INTO ct_trip_linehaul(fk_idtrip, origin_state, origin_city, origin_zip, destination_state, destination_city, destination_zip, trip_rate, fkid_broker, fk_tripyear, rpm, fuel_surcharge, pk_linehaul_number, broker_reference, added_by, lh_number, date_appointment) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+    $query = "INSERT INTO ct_trip_linehaul(fk_idtrip, origin_state, origin_city, origin_zip, destination_state, destination_city, destination_zip, trip_rate, fkid_broker, fk_tripyear, rpm, fuel_surcharge, pk_linehaul_number, broker_reference, added_by, lh_number, date_appointment, current_tractor) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
     $lh_number = $tripno = $system_callback['data']['linehaul']['tripyear'] . str_pad($system_callback['data']['linehaul']['tripid'], 4, 0, STR_PAD_LEFT) . $new_lid;
     $appt = date('Y-m-d H:i', strtotime($system_callback['data']['linehaul']['appt']['date'] . " " . $system_callback['data']['linehaul']['appt']['hour'] . ":" . $system_callback['data']['linehaul']['appt']['min']));
@@ -85,7 +85,7 @@ try {
 
     $fuel_surcharge = fuel_surcharge($system_callback['data']['linehaul']['rpm']);
 
-    $stmt->bind_param('sssssssssssssssss',
+    $stmt->bind_param('ssssssssssssssssss',
     $system_callback['data']['linehaul']['tripid'],
     $system_callback['data']['linehaul']['origin']['state'],
     $system_callback['data']['linehaul']['origin']['city'],
@@ -102,7 +102,8 @@ try {
     $system_callback['data']['linehaul']['broker_reference'],
     $user_name,
     $lh_number,
-    $appt
+    $appt,
+    $system_callback['data']['conveyance']['tractorid']
   );
 
   if (!($stmt)) {

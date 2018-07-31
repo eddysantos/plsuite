@@ -35,3 +35,36 @@
 .popup-list p:last-child{
   margin-bottom: 0px;
 }
+
+.c3-target-goal .c3-text{
+  display: none;
+}
+
+.c3-target-goal .c3-circles{
+  display: none;
+}
+
+.dash-table{
+  max-height: 250px;
+  overflow: scroll;
+	position: relative;
+}
+
+.dash-table tr {
+width: 100%;
+display: inline-table;
+table-layout: fixed;
+}
+
+.dash-table tbody{
+  overflow-y: scroll;
+  height: 225px;
+  /* width: 95%; */
+  position: absolute;
+}
+
+.table td.fit,
+.table th.fit {
+    white-space: nowrap;
+    width: 20%;
+}

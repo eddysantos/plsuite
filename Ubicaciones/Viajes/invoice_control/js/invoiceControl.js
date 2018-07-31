@@ -103,6 +103,10 @@ $(document).ready(function(){
           $('#trip-number').html("Trip: " + tripno);
           $(target).fadeIn();
         })
+
+        if (data.payment_due_date == undefined) {
+          $('[due-days=30]').click();
+        }
       } else {
         swal('Oops', 'There was an error pulling the trip. Please inform IT', 'error');
         console.error(r.message);
@@ -123,7 +127,8 @@ $(document).ready(function(){
       bank_name: $('#bank_name').val(),
       check_comments: $('#check_comments').val(),
       dbid: $('#linehaulid').val(),
-      payment_due: $('#payment_due_date').val()
+      payment_due: $('#payment_due_date').val(),
+      invoice_date: $('#invoice_date').val()
     }
 
     var update_data = $.ajax({
@@ -163,13 +168,27 @@ $(document).ready(function(){
 
     var now = new Date();
     now.setDate(now.getDate() + Number(days_due));
-
+    $('#due-date-button').html(btn_label);
     $('#payment_due_date').val(now.yyyymmdd());
   })
 
   $('#invoice_amount').change(function(){
     var num = parseFloat($(this).val());
     $(this).val(num.toFixed(2));
+  })
+
+  $('#invoice_number').change(function(){
+    if ($(this).val() == "") {
+      return false;
+    }
+
+    if ($('#invoice_date').val() == "") {
+      var today = new Date();
+      var today_f = today.yyyymmdd();
+      $('#invoice_date').val(today_f);
+    }
+
+
   })
 
 })
