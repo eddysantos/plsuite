@@ -93,7 +93,7 @@ $sunday_5weeks = date('m/d/Y', strtotime('sunday 5 weeks ago'));
           <th>Client</th>
           <th>Payment Due</th>
           <th>Amount</th>
-          <th>Trailer</th>
+          <th>Client Reference</th>
         </tr>
       </thead>
       <tbody></tbody>
