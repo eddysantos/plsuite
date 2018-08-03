@@ -144,7 +144,7 @@ $sunday_5weeks = date('m/d/Y', strtotime('sunday 5 weeks ago'));
         </select>
       </form>
       <div class="">
-        <div class="btn-group" style="z-index: 99999">
+        <div class="btn-group" style="z-index: 99999" display="none" hidden>
           <button type="button" class="btn btn-outline-success btn-sm dropdown-toggle float-right" data-toggle="dropdown">
             Add Graph Item <span class="caret"></span>
           </button>
@@ -168,6 +168,7 @@ $sunday_5weeks = date('m/d/Y', strtotime('sunday 5 weeks ago'));
             </form>
           </ul>
         </div>
+        <button type="button" class="btn btn-outline-success btn-sm" id="load_sales_summary_chart" name="button">Load</button>
         <button type="button" class="btn btn-outline-secondary btn-sm reset-chart" target="ss_chart" name="button">Reset</button>
       </div>
     </div>
