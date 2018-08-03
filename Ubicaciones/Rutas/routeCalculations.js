@@ -311,7 +311,7 @@ var myLatLng = {lat:39.8282, lng:-98.5795};
       }
     }
 
-    function initialize_calculations(el){
+    fialize_calculations(el){
       // depTime.setMinutes(depTime.getMinutes() + 20);
       // stateMiles = {};
       depTime.setMinutes(depTime.getMinutes() + 20);
