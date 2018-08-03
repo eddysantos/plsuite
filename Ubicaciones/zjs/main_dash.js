@@ -50,7 +50,7 @@ function start_graphs(graph_name = "", cont = true){
 
     get_data.done(function(r){
       var r = JSON.parse(r);
-      console.log(r);
+      //console.log(r);
       // return false;
       if (r.code == 1) {
         tms_chart = c3.generate({
@@ -178,7 +178,7 @@ function start_graphs(graph_name = "", cont = true){
 
     pull_data_2.done(function(s){
       var s = JSON.parse(s);
-      console.log(s);
+      //console.log(s);
       if (s.code == 1) {
         ms_chart.load({
           columns: s.to_chart
@@ -208,7 +208,7 @@ function start_graphs(graph_name = "", cont = true){
 
     pull_data_3.done(function(s){
       var s = JSON.parse(s);
-      console.log(s);
+      //console.log(s);
       if (s.code == 1) {
         ms_chart.load({
           columns: s.to_chart
@@ -242,6 +242,65 @@ function start_graphs(graph_name = "", cont = true){
     //     enabled: true
     //   }
     // });
+
+    if (!cont) {
+      return false;
+    }
+  }
+
+  //Sales summary chart:
+  if (graph_name == 'ss_chart' || graph_name == "") {
+
+    $('#dash-cat-select-ss').addClass('disabled').attr('disabled', true);
+    $('#sales-summary-chart').fadeIn();
+    $('[target=ss_chart]').fadeIn();
+    $('.dropdown-menu.show.sales-summary').removeClass('show');
+    $('#dash-cat-input-ss').fadeIn();
+
+    data = {
+      date_from: $('#ss_chart_date_from').val(),
+      date_to: $('#ss_chart_date_to').val(),
+      period: $('#ss_chart_period').val()
+    }
+
+    var get_data = $.ajax({
+      method: 'POST',
+      data: data,
+      url: 'zactions/get_sales_summary_chart.php'
+    });
+
+    get_data.done(function(r){
+      console.log(r);
+
+      var r = JSON.parse(r);
+      if (r.code == 1) {
+        ss_chart = c3.generate({
+          bindto: '#sales-summary-chart',
+          data:{
+            x: "x",
+            columns: r.to_chart,
+            labels: true
+          },
+          axis: {
+            x: {
+              type: 'timeseries',
+              tick: {
+                format: '%Y-%m-%d',
+              }
+            }
+          },
+          zoom:{
+            enabled: false
+          }
+        });
+      }
+      // console.log(r['to_chart'][1].shift());
+      // console.log(r['to_chart'][1].splice(1));
+      // console.log(r);
+
+    }).fail(function(x){
+        console.error(x);
+      });
 
     if (!cont) {
       return false;
@@ -397,6 +456,18 @@ $(document).ready(function(){
       $('#dash-cat-input').fadeIn();
     });
 
+    $('#dash-cat-select-ss').change(function(){
+      var cat = $(this).val();
+
+      if (cat == "") {
+        $('#dash-cat-input-ss').fadeOut();
+        return false;
+      }
+
+      $('#dash-cat-input input').attr('category', cat).attr('placeholder', 'Enter which ' + cat);
+      $('#dash-cat-input').fadeIn();
+    });
+
     $('.date-selector').datepicker();
 
     $('#dash-date').change(function(){
@@ -480,7 +551,53 @@ $(document).ready(function(){
         $('#dash-cat-select').addClass('disabled').attr('disabled', true);
         $('#miles-summary-chart').fadeIn();
         $('[target=ms_chart]').fadeIn();
-        $('.dropdown-menu.show').removeClass('show');
+        $('.dropdown-menu.show.miles-summary').removeClass('show');
+        }).fail(function(x){
+          console.error(x);
+        });
+
+
+    })
+
+    $('#load_sales_summary_chart').click(function(){
+      var data = {
+        // query_type: 'not_on_load',
+        // dbid: $(this).siblings('input').attr('db-id'),
+        // category: $(this).siblings('input').attr('category'),
+        date_from: $('#ss_chart_date_from').val(),
+        date_to: $('#ss_chart_date_to').val(),
+        period: $('#ss_chart_period').val()
+      }
+
+      if (data.date_from == "" || data.date_to == "" || data.period == "") {
+        swal('Oops', 'You need to enter date and periodicity before continuing.', 'error');
+        return false;
+      }
+
+      // if (data.cat == "") {
+      //   swal('Oops', 'You need to enter a category before continuing.', 'error');
+      //   return false;
+      // }
+
+      var pull_data = $.ajax({
+        method: 'POST',
+        data: data,
+        url: 'zactions/get_sales_summary_chart.php'
+      });
+
+      pull_data.done(function(r){
+        var r = JSON.parse(r);
+
+        if (r.code == 1) {
+          ss_chart.load({
+            columns: r.to_chart
+          });
+        }
+
+        $('#dash-cat-select-ss').addClass('disabled').attr('disabled', true);
+        $('#sales-summary-chart').fadeIn();
+        $('[target=ss_chart]').fadeIn();
+        $('.dropdown-menu.show.sales-summary').removeClass('show');
         }).fail(function(x){
           console.error(x);
         });
@@ -529,6 +646,11 @@ $(document).ready(function(){
           $('#miles-summary-chart').fadeOut();
           $('#dash-cat-select').removeClass('disabled').attr('disabled', false);
           break;
+
+        case 'ss_chart':
+          ss_chart.unload();
+          $('#sales-summary-chart').fadeOut();
+          $('#dash-cat-select-ss').removeClass('disabled').attr('disabled', false);
         default:
 
       }
