@@ -103,7 +103,7 @@ $sunday_5weeks = date('m/d/Y', strtotime('sunday 5 weeks ago'));
           <button type="button" class="btn btn-outline-success btn-sm dropdown-toggle float-right" data-toggle="dropdown">
             Add Graph Item <span class="caret"></span>
           </button>
-          <ul class="dropdown-menu" style="width: 200%">
+          <ul class="dropdown-menu miles-summary" style="width: 200%">
             <form>
               <div class="form-group">
                 <select class="form-control" id="dash-cat-select" name="">
@@ -130,14 +130,14 @@ $sunday_5weeks = date('m/d/Y', strtotime('sunday 5 weeks ago'));
   </div>
   <div class="border p-2 mb-2">
     <div class="">
-      <h6>Miles Summary</h6>
+      <h6>Sales Summary</h6>
     </div>
     <div class="d-flex justify-content-between">
       <form class="form-inline " onsubmit="return false;">
-        Select date range: <input type="text" class="date-selector ml-1 mr-1 form-control form-control-sm text-center" id="ms_chart_date_from" name="" value="<?php echo $sunday_5weeks?>">
-        - <input type="text" class="date-selector ml-1 mr-1 form-control text-center form-control-sm" id="ms_chart_date_to" name="" value="<?php echo $today?>">
+        Select date range: <input type="text" class="date-selector ml-1 mr-1 form-control form-control-sm text-center" id="ss_chart_date_from" name="" value="<?php echo $sunday_5weeks?>">
+        - <input type="text" class="date-selector ml-1 mr-1 form-control text-center form-control-sm" id="ss_chart_date_to" name="" value="<?php echo $today?>">
         And cycle:
-        <select class="form-control form-control-sm ml-1 mr-5" id="ms_chart_period" name="">
+        <select class="form-control form-control-sm ml-1 mr-5" id="ss_chart_period" name="">
           <option value="0">Daily</option>
           <option value="1" selected>Weekly</option>
           <option value="2">Monthly</option>
@@ -148,10 +148,10 @@ $sunday_5weeks = date('m/d/Y', strtotime('sunday 5 weeks ago'));
           <button type="button" class="btn btn-outline-success btn-sm dropdown-toggle float-right" data-toggle="dropdown">
             Add Graph Item <span class="caret"></span>
           </button>
-          <ul class="dropdown-menu" style="width: 200%">
+          <ul class="dropdown-menu sales-summary" style="width: 200%">
             <form>
               <div class="form-group">
-                <select class="form-control" id="dash-cat-select" name="">
+                <select class="form-control" id="dash-cat-select-ss" name="">
                   <option value="">Select category</option>
                   <option value="driver">Driver</option>
                   <option value="truck" selected>Truck</option>
@@ -159,19 +159,19 @@ $sunday_5weeks = date('m/d/Y', strtotime('sunday 5 weeks ago'));
                   <option value="broker">Broker</option>
                 </select>
               </div>
-              <div class="form-group" id="dash-cat-input" style="display: none">
-                <input type="text" class="form-control popup-input" id-display="#display-popup" category="truck" autocomplete="new-password" aria-describedy="#assist-ms-chart-loader">
+              <div class="form-group" id="dash-cat-input-ss" style="display: none">
+                <input type="text" class="form-control popup-input" id-display="#display-popup" category="truck" autocomplete="new-password" aria-describedy="#assist-ss-chart-loader">
                 <div id="display-popup" class="popup-list mt-3" style="display: none; z-index: 9999"></div>
-                <small id="assist-ms-chart-loader" class="form-text text-muted">Leave blank to graph the entire category.</small>
-                <button type="button" class="btn btn-outline-success btn-sm mt-2 float-right" id="ms-add-graph-item" name="button">Add</button>
+                <small id="assist-ss-chart-loader" class="form-text text-muted">Leave blank to graph the entire category.</small>
+                <button type="button" class="btn btn-outline-success btn-sm mt-2 float-right" id="ss-add-graph-item" name="button">Add</button>
               </div>
             </form>
           </ul>
         </div>
-        <button type="button" class="btn btn-outline-secondary btn-sm reset-chart" target="ms_chart" name="button">Reset</button>
+        <button type="button" class="btn btn-outline-secondary btn-sm reset-chart" target="ss_chart" name="button">Reset</button>
       </div>
     </div>
-    <div class="" id="miles-summary-chart" style="display: none"></div>
+    <div class="" id="sales-summary-chart" style="display: none"></div>
   </div>
 
 
