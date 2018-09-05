@@ -58,7 +58,7 @@ $row = $rslt->fetch_assoc();
      <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
      <!-- Bootstrap CSS -->
-     <link rel="stylesheet" href="/plsuite/Resources/Bootstrap4/css/bootstrap.min.css">
+     <link rel="stylesheet" href="/plsuite/Resources/Bootstrap_4_1_1/css/bootstrap.min.css">
      <link rel="stylesheet" media="screen and (min-device-width: 701px)" href="/plsuite/Resources/CSS/main.css">
      <link rel="stylesheet" media="screen and (min-device-width: 701px)" href="/plsuite/Resources/CSS/trucks.css">
      <link rel="stylesheet" media="screen and (min-device-width: 701px)" href="/plsuite/Resources/fontAwesome/css/font-awesome.min.css">
@@ -111,6 +111,26 @@ $row = $rslt->fetch_assoc();
                  <option value="<?php echo $owner['pkid_driver']?>" <?php echo $owner['pkid_driver'] == $row['truckOwnedBy'] ? "selected" : ""?>><?php echo "$owner[nameFirst] $owner[nameLast]" ?></option>
                <?php endforeach; ?>
              </select>
+           </div>
+         </div>
+         <div class="form-group row">
+           <label for="tPayPerMile" class="col-2 col-form-label">PPM</label>
+           <div class="col-4">
+             <div class="input-group">
+               <div class="input-group-addon input-group-prepend">
+                 <span class="input-group-text">$</span>
+               </div>
+               <input type="number" class="form-control" name="tPayPerMile" id="tPayPerMile" name="" value="<?php echo $row['pay_per_mile']?>">
+             </div>
+           </div>
+           <label for="tApplySurcharge" class="col-2 col-form-label">Apply Surcharge</label>
+           <div class="col-4">
+             <div class="input-group">
+               <select class="form-control" id="tApplySurcharge" name="tApplySurcharge">
+                 <option value="1" <?php echo $row['apply_surcharge'] == "1" ? 'selected' : ''?>>Yes</option>
+                 <option value="0" <?php echo $row['apply_surcharge'] != "1" ? 'selected' : ''?>>No</option>
+               </select>
+             </div>
            </div>
          </div>
          <input type="text" id="truck_id" name="" value="<?php echo $row['pkid_truck']?>" hidden>

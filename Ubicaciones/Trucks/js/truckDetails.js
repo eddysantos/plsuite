@@ -38,6 +38,8 @@ $(document).ready(function(){
     inputs.number = $('#newTruckNumber');
     inputs.owner = $('#tOwnedBy');
     inputs.truck_id = $('#truck_id');
+    inputs.ppm = $('#tPayPerMile');
+    inputs.apply_surcharge = $('#tApplySurcharge');
 
     var cont = true;
 
@@ -76,7 +78,9 @@ $(document).ready(function(){
         plates: inputs.plates.val(),
         number: inputs.number.val(),
         owner: inputs.owner.val(),
-        truck_id: inputs.truck_id.val()
+        truck_id: inputs.truck_id.val(),
+        ppm: inputs.ppm.val(),
+        as: inputs.apply_surcharge.val()
     }
 
 
