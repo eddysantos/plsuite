@@ -15,7 +15,7 @@
 // $usr = 'root';
 // $pwd = 'root';
 
-/** TEST DATABASE **/
+/** PRODUCTION LOCAL DATABASE **/
 $datab = 'plsuite';
 $host = '12.34.236.230';
 $port = 3306;
