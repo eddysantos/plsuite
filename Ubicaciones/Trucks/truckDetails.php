@@ -71,96 +71,59 @@ $row = $rslt->fetch_assoc();
    <header>
      <div class="custom-header">
        <div class="custom-header-bar">&nbsp;</div>
-       <div id="truckNumberLabel"><a class="ml-3 mr-5" role="button" href="dashboard.php"> <i class="fa fa-chevron-left"></i> </a> <?php echo $row['truckNumber']?> <a class="ml-3" id="editTruckNumberButton" role="button"> <i class="fa fa-pencil-square-o"></i> </a> </div>
-       <div id="truckNumberEditLabel" style="display: none"><!--a class="ml-3 mr-5" role="button" href="dashboard.php"> <i class="fa fa-chevron-left"></i> </a-->
-         <input type="text" class="form-control w-25 ml-3" name="newTruckNumber" id="newTruckNumber" value="<?php echo $row['truckNumber']?>">  <a class="ml-3" id="saveTruckNumberButton" role="button"> <i class="fa fa-floppy-o"></i> </a> </div>
+       <div id="truckNumberLabel"><a class="ml-3 mr-5" role="button" href="dashboard.php"> <i class="fa fa-chevron-left"></i> </a> <?php echo $row['truckNumber']?> </div>
      </div>
    </header>
-   <div class="container mt-5 driver-details pb-4">
-     <div class="container float-left driver-details-child right-side-border">
-       <h5 class="grey-font">Truck General Information</h5>
-       <form>
-         <div class="form-group row">
-           <label class="col-2 col-form-label" for="tBrand">Brand</label>
-           <div class="col-10">
-             <input class="form-control" type="text" name="tBrand" id="tBrand" value="<?php echo $row['truckBrand'] ?>">
-           </div>
+   <div class="main-details-container">
+     <!-- <div class="container-fluid"> -->
+       <div class="row">
+         <div class="col-lg-2 ml-0 pl-0 border border-bottom-0 border-left-0 border-top-0 ml-0 pl-0 pr-0">
+           <nav class="nav flex-column" id="truck-details-nav-pane" role="tablist">
+             <a class="nav-link active" id="general-info-tab" data-toggle="tab" role="tab" aria-selected="true" aria-controls="general-info" href="#general-info">General Information</a>
+             <a class="nav-link" id="settlements-tab" data-toggle="tab" role="tab" aria-selected="false" aria-controls="settlements" href="#settlements-info">Settlements</a>
+             <a class="nav-link" id="loans-tab" data-toggle="tab" role="tab" aria-selected="false" aria-controls="loans" href="#loans-info">Loans</a>
+           </nav>
          </div>
-         <div class="form-group row">
-           <label class="col-2 col-form-label" for="tVIN">VIN</label>
-           <div class="col-10">
-             <input class="form-control" type="text" name="tVIN" id="tVIN" value="<?php echo $row['truckVIN'] ?>">
-           </div>
-         </div>
-         <div class="form-group row">
-           <label class="col-2 col-form-label" for="tYear">Year</label>
-           <div class="col-4">
-             <input class="form-control" type="text" name="tYear" id="tYear" value="<?php echo $row['truckYear'] ?>">
-           </div>
-           <label class="col-2 col-form-label" for="tPlates">Plates</label>
-           <div class="col-4">
-             <input class="form-control" type="text" name="tVIN" id="tPlates" value="<?php echo $row['truckPlates'] ?>">
-           </div>
-         </div>
-         <div class="form-group row">
-           <label class="col-3 col-form-label" for="tOwnedBy">Owned By</label>
-           <div class="col-9">
-             <select class="form-control" name="tOwnedBy" id="tOwnedBy">
-               <option value="0" <?php echo $row['truckOwnedBy'] == 0 ? "Selected" : ""?> >Prolog Transportation</option>
-               <?php foreach ($system_callback['owners'] as $owner): ?>
-                 <option value="<?php echo $owner['pkid_driver']?>" <?php echo $owner['pkid_driver'] == $row['truckOwnedBy'] ? "selected" : ""?>><?php echo "$owner[nameFirst] $owner[nameLast]" ?></option>
-               <?php endforeach; ?>
-             </select>
-           </div>
-         </div>
-         <div class="form-group row">
-           <label for="tPayPerMile" class="col-2 col-form-label">PPM</label>
-           <div class="col-4">
-             <div class="input-group">
-               <div class="input-group-addon input-group-prepend">
-                 <span class="input-group-text">$</span>
+         <div class="col-lg-10 tab-info">
+           <div class="row">
+             <div class="col-lg-6 offset-1 pt-5">
+               <div class="tab-content" id="truck-details-tab-content">
+                 <div class="tab-pane fade show active" id="general-info" role="tabpanel" aria-labelledby="general-info-tab">
+                   <form class="form-group" onsubmit="return false">
+                     <label for="">Truck Number</label>
+                     <input type="text" class="form-control" name="" value="">
+                     <div class="form-row">
+                       <label for="" class="col-lg-3">Truck Number</label>
+                       <div class="col-lg-9">
+                         <input type="text" class="form-control" name="" value="">
+                       </div>
+                     </div>
+                     <label for="">Owner</label>
+                     <input type="text" class="form-control" name="" value="">
+                     <label for="">Serial</label>
+                     <input type="text" class="form-control" name="" value="">
+                     <label for="">Make</label>
+                     <input type="text" class="form-control" name="" value="">
+                     <label for="">Model</label>
+                     <input type="text" class="form-control" name="" value="">
+                     <label for="">Year</label>
+                     <input type="text" class="form-control" name="" value="">
+                   </form>
+                 </div>
+                 <div class="tab-pane fade" id="settlements-info" role="tabpanel" aria-labelledby="general-info-tab">
+                   Aquí la información de los settlements
+                 </div>
+                 <div class="tab-pane fade" id="loans-info" role="tabpanel" aria-labelledby="general-info-tab">
+                   Aqui la información de los loans.
+                 </div>
                </div>
-               <input type="number" class="form-control" name="tPayPerMile" id="tPayPerMile" name="" value="<?php echo $row['pay_per_mile']?>">
-             </div>
-           </div>
-           <label for="tApplySurcharge" class="col-2 col-form-label">Apply Surcharge</label>
-           <div class="col-4">
-             <div class="input-group">
-               <select class="form-control" id="tApplySurcharge" name="tApplySurcharge">
-                 <option value="1" <?php echo $row['apply_surcharge'] == "1" ? 'selected' : ''?>>Yes</option>
-                 <option value="0" <?php echo $row['apply_surcharge'] != "1" ? 'selected' : ''?>>No</option>
-               </select>
              </div>
            </div>
          </div>
-         <input type="text" id="truck_id" name="" value="<?php echo $row['pkid_truck']?>" hidden>
-       </form>
-     </div>
-     <div class="container float-right driver-details-child">
-       <div class="d-flex justify-content-between">
-         <h5 class="grey-font d-inline">Documentation</h5>
-         <p class="d-inline float-right">+ New Document</p>
        </div>
-       <div class="row no-gutters">
-         <h6 class="col-6">Document</h6>
-         <h6 class="col-6">Expiration</h6>
-       </div>
-     </div>
+     <!-- </div> -->
    </div>
 
-   <div class="container text-center bottom-side-border pb-3">
-     <button class="btn btn-success w-25" type="button" name="button" id="saveTruckDetails">Save Info</button>
-   </div>
-
-
-   <!-- <div class="container mt-5 driver-details">
-     <div class="container float-left driver-details-child right-side-border" hidden>
-       Aquí va la información de los camiones. Solo si es Owner-op.
-     </div>
-     <div class="container float-right driver-details-child">
-       Aquí va la información de los e-documents. Aplica para todos los elementos.
-     </div>
-   </div> -->
 
 
 
