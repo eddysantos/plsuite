@@ -74,9 +74,11 @@ $sunday_5weeks = date('m/d/Y', strtotime('sunday 5 weeks ago'));
     <table class="table table-striped table-sm dash-table" id="pending-invoice-trips">
       <thead>
         <tr>
-          <th class="fit">Linehaul</th>
-          <th class="fit">Trailer</th>
-          <th>Closed Date (Days)</th>
+          <th>Linehaul</th>
+          <th>Trailer</th>
+          <th>Closed Date</th>
+          <th>Amount</th>
+          <th>Client</th>
         </tr>
       </thead>
       <tbody></tbody>
@@ -87,10 +89,11 @@ $sunday_5weeks = date('m/d/Y', strtotime('sunday 5 weeks ago'));
     <table class="table table-striped table-sm dash-table" id="pending-payment-trips">
       <thead>
         <tr>
-          <th class="fit">Trip</th>
-          <th class="fit">Trailer</th>
-          <th>Payment Due Date</th>
           <th>Invoice</th>
+          <th>Client</th>
+          <th>Payment Due</th>
+          <th>Amount</th>
+          <th>Reference</th>
         </tr>
       </thead>
       <tbody></tbody>
