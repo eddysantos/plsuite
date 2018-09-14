@@ -135,7 +135,7 @@ h1{
   cursor: pointer;
 }
 
-.active{
+.custom.active{
   color: rgb(74, 139, 15) !important;
 }
 

@@ -8,13 +8,6 @@ function numberify($number){
   return number_format($number, 2);
 }
 
-function findMonday($d="",$format="Y-m-d") {
-    if($d=="") $d=date("Y-m-d");
-    $delta = date("w",strtotime($d)) - 1;
-    if ($delta <0) $delta = 6;
-    return date($format, mktime(0,0,0,date('m'), date('d')-$delta, date('Y') ));
-}
-
 $system_callback = [];
 $data = $_POST;
 // $chart_data = array(['x'],['RPM']);
@@ -47,47 +40,52 @@ switch ($data['period']) {
     break;
 }
 
-switch ($data['category']) {
-  case 'driver':
-    $and_where = "AND d.pkid_driver = ?";
-    $group_by = ",d.pkid_driver";
-    $params .= "s";
-    $bind_params[] =& $data['dbid'];
-    $x_tag_index = 'driver_name';
-    break;
+// switch ($data['category']) {
+//   case 'driver':
+//     $and_where = "AND d.pkid_driver = ?";
+//     $group_by = ",d.pkid_driver";
+//     $params .= "s";
+//     $bind_params[] =& $data['dbid'];
+//     $x_tag_index = 'driver_name';
+//     break;
+//
+//   case 'truck':
+//     $and_where = "AND trk.pkid_truck = ?";
+//     $group_by = ",trk.pkid_truck";
+//     $params .= "s";
+//     $bind_params[] =& $data['dbid'];
+//     $x_tag_index = 'tractor';
+//     break;
+//
+//   case 'trailer':
+//     $and_where = "AND trl.pkid_trailer = ?";
+//     $group_by = ",trl.pkid_trailer";
+//     $params .= "s";
+//     $bind_params[] =& $data['dbid'];
+//     $x_tag_index = 'trailer';
+//     break;
+//
+//   case 'broker':
+//     $and_where = "AND b.pkid_broker = ?";
+//     $group_by = ",b.pkid_broker";
+//     $params .= "s";
+//     $bind_params[] =& $data['dbid'];
+//     $x_tag_index = "broker";
+//     break;
+// }
 
-  case 'truck':
-    $and_where = "AND trk.pkid_truck = ?";
-    $group_by = ",trk.pkid_truck";
-    $params .= "s";
-    $bind_params[] =& $data['dbid'];
-    $x_tag_index = 'tractor';
-    break;
-
-  case 'trailer':
-    $and_where = "AND trl.pkid_trailer = ?";
-    $group_by = ",trl.pkid_trailer";
-    $params .= "s";
-    $bind_params[] =& $data['dbid'];
-    $x_tag_index = 'trailer';
-    break;
-
-  case 'broker':
-    $and_where = "AND b.pkid_broker = ?";
-    $group_by = ",b.pkid_broker";
-    $params .= "s";
-    $bind_params[] =& $data['dbid'];
-    $x_tag_index = "broker";
-    break;
-}
 
 
-if ($data['dbid'] == "" && $params == "sss") {
-  $params = "ss";
-  array_pop($bind_params);
-}
+// if (($data['dbid'] == "" && $params == "sss") OR true) {
+//   $params = "ss";
+//   array_pop($bind_params);
+// }
 
-$query = "SELECT tl.date_arrival lh_date , $period(tl.date_arrival) date_grouping , CONCAT(d.nameFirst, ' ', d.nameLast) driver_name, trk.truckNumber tractor , trl.trailerNumber trailer , b.brokerName broker , tlm.movement_type mov_type , sum(tlm.miles_google) miles FROM ct_trip t LEFT JOIN ct_trip_linehaul tl ON t.pkid_trip = tl.fk_idtrip LEFT JOIN ct_trip_linehaul_movement tlm ON tl.pk_idlinehaul = tlm.fkid_linehaul LEFT JOIN ct_trailer trl ON t.fkid_trailer = trl.pkid_trailer LEFT JOIN ct_drivers d ON tlm.fkid_driver = d.pkid_driver LEFT JOIN ct_brokers b ON tl.fkid_broker = b.pkid_broker LEFT JOIN ct_truck trk ON tlm.fkid_tractor = trk.pkid_truck WHERE tl.date_arrival BETWEEN ? AND ? AND tl.linehaul_status <> 'Cancelled' $and_where GROUP BY date_grouping $group_by";
+$and_where = '';
+$group_by = '';
+$x_tag_index = 'fecha';
+
+$query = "SELECT tl.invoice_date lh_date, $period(tl.invoice_payment_due) payment_due, $period(tl.invoice_date) date_grouping, sum(tl.invoice_amount) rate FROM ct_trip t LEFT JOIN ct_trip_linehaul tl ON t.pkid_trip = tl.fk_idtrip WHERE tl.invoice_date BETWEEN ? AND ? AND tl.linehaul_status <> 'Cancelled' $and_where GROUP BY date_grouping $group_by";
 
 
 $stmt = $db->prepare($query);
@@ -126,32 +124,37 @@ if ($rslt->num_rows == 0) {
 }
 
 while ($row = $rslt->fetch_assoc()) {
-  $x_tag = $row[$x_tag_index];
   $results[$row['date_grouping']]['date'] = $row['lh_date'];
-  $results[$row['date_grouping']]['miles'] += $row['miles'];
+  $results[$row['date_grouping']]['rate'] += $row['rate'];
 }
 
-$chart_data = array(['x'],[$x_tag]);
-$test_date = new DateTime();
+
+
+// foreach ($results as $id => $result) {
+//   $results[$id]['rate'] = "$" . number_format($result['rate'], 2);
+// }
+
+$chart_data = array(['x'],['Invoiced']);
+
+// foreach ($results as $date_group => $result) {
+//   array_push($chart_data[0], $date_group);
+//   array_push($chart_data[1], $result['rate']);
+// }
 
 switch ($data['period']) {
   case 0:
     foreach ($results as $date_group => $result) {
       array_push($chart_data[0], $date_group);
-      array_push($chart_data[1], $result['miles']);
+      array_push($chart_data[1], $result['rate']);
     }
     break;
-
 
   case 1:
     foreach ($results as $date_grouping => $result) {
       $year = date('Y', strtotime($result['date']));
-      // $test_date->setISODate($year, $date_grouping);
-      // $week_present = $test_date->format('Y-m-d');
-      // error_log($week_present);
       $week_day = date('Y-m-d', strtotime(sprintf("%d-W%02d-%d", $year, $date_grouping, 7)));
       array_push($chart_data[0], $week_day);
-      array_push($chart_data[1], $result['miles']);
+      array_push($chart_data[1], $result['rate']);
     }
     break;
 
@@ -159,7 +162,7 @@ switch ($data['period']) {
   foreach ($results as $date_grouping => $result) {
     $month = date('Y-m-01', strtotime($result['date']));
     array_push($chart_data[0], $month);
-    array_push($chart_data[1], $result['miles']);
+    array_push($chart_data[1], $result['rate']);
   }
     break;
 }

@@ -100,7 +100,7 @@ foreach ($sort_results as $tractor => $data) {
 
 $system_callback['code'] = 1;
 // $system_callback['query_results'] = $results;
-// $system_callback['ordered_results'] = $sort_results;
+$system_callback['ordered_results'] = $sort_results;
 $system_callback['to_chart'] = $chart_data;
 // $system_callback['goal'] = round($diff * $goal_factor);
 exit_script($system_callback);
