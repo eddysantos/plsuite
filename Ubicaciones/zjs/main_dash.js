@@ -1,4 +1,5 @@
 function get_dashboard_data(date){
+
   var data = {
     date: date
   }
@@ -29,7 +30,7 @@ function get_dashboard_data(date){
 }
 
 function start_graphs(graph_name = "", cont = true){
-
+  // return false;
   //Truck Miles Summary Chart:
   if (graph_name == 'tms_chart' || graph_name == "") {
     var data = {
@@ -67,10 +68,6 @@ function start_graphs(graph_name = "", cont = true){
                 if (v != 0) {
                   return v;
                 }
-                // console.log("V: " + v);
-                // console.log("id: " + id);
-                // console.log("i: " + i);
-                // console.log("j: " + j);
               }
             },
             type: 'bar',
@@ -270,8 +267,7 @@ function start_graphs(graph_name = "", cont = true){
     });
 
     get_data.done(function(r){
-      console.log(r);
-
+      //console.log(r);
       var r = JSON.parse(r);
       if (r.code == 1) {
         ss_chart = c3.generate({
@@ -279,7 +275,144 @@ function start_graphs(graph_name = "", cont = true){
           data:{
             x: "x",
             columns: r.to_chart,
-            labels: true
+            labels: {
+              format:function(v, id, i, j){
+                var num = v.toFixed(2).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,");
+                var output = "$" + num;
+                return output;
+              }
+            }
+          },
+          axis: {
+            x: {
+              type: 'timeseries',
+              tick: {
+                format: '%Y-%m-%d',
+              }
+            }
+          },
+          zoom:{
+            enabled: false
+          }
+        });
+      }
+      // console.log(r['to_chart'][1].shift());
+      // console.log(r['to_chart'][1].splice(1));
+      // console.log(r);
+
+    }).fail(function(x){
+        console.error(x);
+      });
+
+    if (!cont) {
+      return false;
+    }
+  }
+
+
+  //Invoice summary chart:
+  if (graph_name == 'is_chart' || graph_name == "") {
+
+    $('#invoice-summary-chart').fadeIn();
+    // $('.dropdown-menu.show.sales-summary').removeClass('show');
+    // $('#dash-cat-input-ss').fadeIn();
+
+    data = {
+      date_from: $('#is_chart_date_from').val(),
+      date_to: $('#is_chart_date_to').val(),
+      period: $('#is_chart_period').val()
+    }
+
+    var get_data = $.ajax({
+      method: 'POST',
+      data: data,
+      url: 'zactions/get_invoice_summary_chart.php'
+    });
+
+    get_data.done(function(r){
+      // console.log(r);
+
+      var r = JSON.parse(r);
+      if (r.code == 1) {
+        is_chart = c3.generate({
+          bindto: '#invoice-summary-chart',
+          data:{
+            x: "x",
+            columns: r.to_chart,
+            labels: {
+              format:function(v, id, i, j){
+                var num = v.toFixed(2).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,");
+                var output = "$" + num;
+                return output;
+              }
+            }
+          },
+          axis: {
+            x: {
+              type: 'timeseries',
+              tick: {
+                format: '%Y-%m-%d',
+              }
+            }
+          },
+          zoom:{
+            enabled: false
+          }
+        });
+      }
+      // console.log(r['to_chart'][1].shift());
+      // console.log(r['to_chart'][1].splice(1));
+      // console.log(r);
+
+    }).fail(function(x){
+        console.error(x);
+      });
+
+    if (!cont) {
+      return false;
+    }
+  }
+
+
+  //Paid - Collected summary chart:
+  if (graph_name == 'cs_chart' || graph_name == "") {
+
+    $('#collected-summary-chart').fadeIn();
+    // $('.dropdown-menu.show.sales-summary').removeClass('show');
+    // $('#dash-cat-input-ss').fadeIn();
+
+    data = {
+      date_from: $('#cs_chart_date_from').val(),
+      date_to: $('#cs_chart_date_to').val(),
+      period: $('#cs_chart_period').val()
+    }
+
+    var get_data = $.ajax({
+      method: 'POST',
+      data: data,
+      url: 'zactions/get_paid_summary_chart.php'
+    });
+
+    get_data.done(function(r){
+
+      var r = JSON.parse(r);
+      console.log(r);
+      if (r.code == 1) {
+        is_chart = c3.generate({
+          bindto: '#collected-summary-chart',
+          data:{
+            x: "x",
+            columns: r.to_chart,
+            labels: {
+              format:function(v, id, i, j){
+                var num = v.toFixed(2).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,");
+                var output = "$" + num;
+                return output;
+              }
+            },
+            colors:{
+              Goal:'#EC3737'
+            },
           },
           axis: {
             x: {
@@ -322,7 +455,7 @@ function start_graphs(graph_name = "", cont = true){
     });
 
     get_data.done(function(r){
-      // console.log(r);
+      // console.log(JSON.parse(r));
 
       var r = JSON.parse(r);
       if (r.code == 1) {
@@ -475,7 +608,7 @@ $(document).ready(function(){
       get_dashboard_data(date);
     })
 
-    $('#load_trip_summary_chart').click(function(){
+    $('#load_trip_summary_chart').click(function(){ //This is the RPM Summary chart re-load button.
 
       data = {
         date_from: $('#ts_chart_date_from').val(),
@@ -603,6 +736,49 @@ $(document).ready(function(){
         });
 
 
+    });
+
+    $('#load_collected_summary_chart').click(function(){
+      var data = {
+        // query_type: 'not_on_load',
+        // dbid: $(this).siblings('input').attr('db-id'),
+        // category: $(this).siblings('input').attr('category'),
+        date_from: $('#cs_chart_date_from').val(),
+        date_to: $('#cs_chart_date_to').val(),
+        period: $('#cs_chart_period').val()
+      }
+
+      if (data.date_from == "" || data.date_to == "" || data.period == "") {
+        swal('Oops', 'You need to enter date and periodicity before continuing.', 'error');
+        return false;
+      }
+
+      // if (data.cat == "") {
+      //   swal('Oops', 'You need to enter a category before continuing.', 'error');
+      //   return false;
+      // }
+
+      var pull_data = $.ajax({
+        method: 'POST',
+        data: data,
+        url: 'zactions/get_paid_summary_chart.php'
+      });
+
+      pull_data.done(function(r){
+        var r = JSON.parse(r);
+
+        if (r.code == 1) {
+          cs_chart.load({
+            columns: r.to_chart
+          });
+        }
+
+        $('#collected-summary-chart').fadeIn();
+        }).fail(function(x){
+          console.error(x);
+        });
+
+
     })
 
     $('#load_tms_chart').click(function(){
@@ -625,10 +801,14 @@ $(document).ready(function(){
       get_data.done(function(r){
         var r = JSON.parse(r);
 
+        //console.log(r);
+
         if (r.code == 1) {
 
+          // tms_chart.unload();
           tms_chart.load({
-            columns: r.to_chart
+            columns: r.to_chart,
+            unload: ['Loaded', 'Empty', 'Incomplete Loaded', 'Incomplete Empty', 'Goal']
           })
         }
 
