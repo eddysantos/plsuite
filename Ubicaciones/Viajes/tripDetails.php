@@ -636,10 +636,10 @@ $lastEl = array_values(array_slice($linehauls, -1))[0];
 
          </div>
          <div class="col-lg-5">
-           <div class="nav nav-tabs" id="linehaul-tabs" role="tablist">
+           <!-- <div class="nav nav-tabs" id="linehaul-tabs" role="tablist">
              <a class="nav-item nav-link active" id="linehaul-tabs-movements" data-toggle="tab" role="tab" href="#lh-movements">Movements</a>
              <a class="nav-item nav-link" id="linehaul-tabs-deductions" data-toggle="tab" role="tab" href="#lh-deductions">Deductions</a>
-           </div>
+           </div> -->
            <div class="tab-content">
              <div class="tab-pane fade show active" id="lh-movements">
                <div class="clearfix mt-1 mb-1">
