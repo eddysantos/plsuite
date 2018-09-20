@@ -33,7 +33,7 @@ switch ($_POST['period']) {
     break;
 }
 
-$query = "SELECT tl.lh_number linehaul , date(tl.date_begin) date , $date_group(tl.date_begin) date_group , tl.trip_rate trip_rate ,( SELECT SUM(tlm.miles_google) FROM ct_trip_linehaul_movement tlm WHERE tlm.fkid_linehaul = tl.pk_idlinehaul) miles FROM ct_trip_linehaul tl WHERE tl.date_begin BETWEEN ? AND ? AND tl.linehaul_status <> 'Cancelled' ORDER BY tl.date_begin ASC";
+$query = "SELECT tl.lh_number linehaul , date(tl.date_arrival) date , $date_group(tl.date_arrival) date_group , tl.trip_rate trip_rate ,( SELECT SUM(tlm.miles_google) FROM ct_trip_linehaul_movement tlm WHERE tlm.fkid_linehaul = tl.pk_idlinehaul) miles FROM ct_trip_linehaul tl WHERE tl.date_arrival BETWEEN ? AND ? AND tl.linehaul_status <> 'Cancelled' ORDER BY tl.date_arrival ASC";
 
 $stmt = $db->prepare($query);
 if (!($stmt)) {

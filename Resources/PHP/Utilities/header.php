@@ -33,10 +33,10 @@
       <div class="collapse navbar-collapse" id="contenidoenblanco">
         <ul class="navbar-nav mr-auto">
           <li class="nav-item">
-            <a class="nav-link <?php echo $dash_active?>" href="/plsuite/Ubicaciones/dashboard.php">Dashboard</a>
+            <a class="nav-link custom <?php echo $dash_active?>" href="/plsuite/Ubicaciones/dashboard.php">Dashboard</a>
           </li>
           <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle <?php echo $viajes_active?>" href="#" id="tripDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded='false'>Trips</a>
+            <a class="nav-link custom dropdown-toggle <?php echo $viajes_active?>" href="#" id="tripDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded='false'>Trips</a>
             <div class="dropdown-menu" aria-lablledby="tripDropdown">
               <a class="dropdown-item" href="/plsuite/Ubicaciones/Viajes/dashboard.php">Active Trips</a>
               <a class="dropdown-item" href="/plsuite/Ubicaciones/Viajes/tripSearch.php" href="#">Trip Search</a>
@@ -45,16 +45,16 @@
             </div>
           </li>
           <li class="nav-item">
-            <a class="nav-link <?php echo $operadores_active?>" href="/plsuite/Ubicaciones/Drivers/dashboard.php">Drivers</a>
+            <a class="nav-link custom <?php echo $operadores_active?>" href="/plsuite/Ubicaciones/Drivers/dashboard.php">Drivers</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link <?php echo $tractores_active?>" href="/plsuite/Ubicaciones/Trucks/dashboard.php">Trucks</a>
+            <a class="nav-link custom <?php echo $tractores_active?>" href="/plsuite/Ubicaciones/Trucks/dashboard.php">Trucks</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link <?php echo $cajas_active?>" href="/plsuite/Ubicaciones/Trailers/dashboard.php">Trailers</a>
+            <a class="nav-link custom <?php echo $cajas_active?>" href="/plsuite/Ubicaciones/Trailers/dashboard.php">Trailers</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link <?php echo $brokers_active?>" href="/plsuite/Ubicaciones/Brokers/dashboard.php">Brokers</a>
+            <a class="nav-link custom <?php echo $brokers_active?>" href="/plsuite/Ubicaciones/Brokers/dashboard.php">Brokers</a>
           </li>
           <!--li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
