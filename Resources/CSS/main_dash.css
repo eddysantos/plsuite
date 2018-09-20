@@ -68,3 +68,14 @@ table-layout: fixed;
     white-space: nowrap;
     width: 20%;
 }
+
+.nav-pills .nav-link.active{
+		border: 1px solid;
+		color: green;
+		background-color: green !important;
+		/* background-color: #c2f4cd !important; */
+}
+
+.nav-pills .nav-link{
+	color: grey;
+}
