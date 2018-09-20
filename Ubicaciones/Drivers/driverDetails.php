@@ -4,6 +4,18 @@ require $root . '/plsuite/Resources/PHP/Utilities/session.php';
 // require $root . '/plsuite/Resources/PHP/Utilities/header.php';
 require $root . '/plsuite/Resources/PHP/Utilities/initialScript.php';
 
+function telephonize($number){
+  $number = preg_replace("/^1?(\d{3})(\d{3})(\d{4})$/", "$1-$2-$3", $number)
+  return $number;
+
+  // if(  preg_match( '/^\+\d(\d{3})(\d{3})(\d{4})$/', $number,  $matches ) ){
+  //     $result = "($matches[1]) $matches[2] - $matches[3]";
+  //     echo "<script>console.log(".json_encode($matches).")</script>";
+  //     return $result;
+  // }
+}
+
+
 $query = "SELECT * FROM ct_drivers WHERE pkid_driver = ? AND deletedDriver IS NULL";
 
 $driver = $_GET['driverid'];
@@ -53,115 +65,150 @@ while ($row = $rslt->fetch_assoc()) {
        <div><a class="ml-3 mr-5" role="button" href="dashboard.php"> <i class="fa fa-chevron-left"></i> </a> <?php echo $driver['nameFirst'] . " " . $driver['nameLast']?></div>
      </div>
    </header>
-   <div class="container mt-5 driver-details bottom-side-border pb-4">
-     <div class="container float-left driver-details-child right-side-border">
-       <h5 class="grey-font">Driver General Information</h5>
-       <form>
-         <div class="form-group row">
-           <label class="col-2 col-form-label" for="dFirstName">First</label>
-           <div class="col-4">
-             <input class="form-control" type="text" name="dFirstName" id="dFirstName" value="<?php echo $driver['nameFirst'] ?>">
-           </div>
-           <label class="col-2 col-form-label" for="dLastName">Last</label>
-           <div class="col-4">
-             <input class="form-control" type="text" name="dLastName" id="dLastName" value="<?php echo $driver['nameLast'] ?>">
-           </div>
-         </div>
-         <div class="form-group row">
-           <label class="col-2 col-form-label" for="dPhone">Phone</label>
-           <div class="col-10">
-             <input class="form-control" type="text" name="dPhone" id="dPhone" value="<?php echo $driver['phoneNumber'] ?>">
-           </div>
-         </div>
-         <div class="form-group row">
-           <label class="col-2 col-form-label" for="dEmail">E-Mail</label>
-           <div class="col-10">
-             <input class="form-control" type="text" name="dEmail" id="dEmail" value="<?php echo $driver['email'] ?>">
-           </div>
-         </div>
-         <div class="form-group row">
-           <label class="col-2 col-form-label" for="dIsDriver">Driver?</label>
-           <div class="col-4">
-             <select class="form-control" name="dIsDriver" id="dIsDriver">
-               <option value="Yes" <?php echo $driver['isDriver'] == "Yes" ? "Selected" : ""?> >Yes</option>
-               <option value="No" <?php echo $driver['isDriver'] == "No" ? "Selected" : ""?> >No</option>
-             </select>
-           </div>
-           <label class="col-2 col-form-label" for="dIsOwner">Owner?</label>
-           <div class="col-4">
-             <select class="form-control" name="dIsOwner" id="dIsOwner">
-               <option value="Yes" <?php echo $driver['isOwner'] == "Yes" ? "Selected" : ""?> >Yes</option>
-               <option value="No" <?php echo $driver['isOwner'] == "No" ? "Selected" : ""?> >No</option>
-             </select>
-           </div>
-         </div>
-         <div class="form-group row">
-           <label class="col-2 col-form-label" for="defaultTruck">Default Truck</label>
-             <div class="form-group col-4">
-               <select class="form-control" id="defaultTruck" name="defaultTruck">
-                 <option value="">None</option>
-                 <?php foreach ($trucks as $truck): ?>
-                   <option value="<?php echo $truck['pkid_truck']?>" <?php echo $truck['pkid_truck'] == $driver['default_truck'] ? 'selected' : ''; ?>><?php echo $truck['truckNumber'] ?></option>
-                 <?php endforeach; ?>
-               </select>
+   <div class="main-details-container">
+     <div class="row">
+       <div class="col-sm-2 ml-0 pl-0 border border-bottom-0 border-left-0 border-top-0 ml-0 pl-0 pr-0">
+         <nav class="nav flex-column" id="driver-details-nav-pane" role="tablist">
+           <a class="nav-link active" id="general-info-tab" data-toggle="tab" role="tab" aria-selected="true" aria-controls="general-info" href="#general-info">General Information</a>
+           <a class="nav-link disabled" id="settlements-tab" data-toggle="tab" role="tab" aria-selected="false" aria-controls="documentation" href="#documentation-info">Trucks</a>
+           <a class="nav-link disabled" id="settlements-tab" data-toggle="tab" role="tab" aria-selected="false" aria-controls="maintenance_logs" href="#settlements-info">Trainings</a>
+           <a class="nav-link disabled" id="settlements-tab" data-toggle="tab" role="tab" aria-selected="false" aria-controls="settlements" href="#settlements-info">Settlements</a>
+           <a class="nav-link disabled" id="loans-tab" data-toggle="tab" role="tab" aria-selected="false" aria-controls="loans" href="#loans-info">Loans</a>
+         </nav>
+       </div>
+       <div class="col-sm-10 tab-info">
+         <div class="tab-content" id="driver-details-tab-content">
+           <div class="tab-pane fade show active" id="general-info" role="tabpanel" aria-labelledby="general-info-tab">
+             <div class="row pt-5">
+               <div class="col-lg-6 offset-1">
+                 <form class="" onsubmit="return false">
+
+                   <div class="form-group row">
+                     <label for="" class="col-lg-3 col-form-label">Driver ID</label>
+                     <div class="col-lg-9">
+                       <input type="text" id="tNumber" class="form-control-plaintext" name="" value="<?php echo $driver['pkid_driver'] ?>" readonly>
+                     </div>
+                   </div>
+                   <div class="form-group row">
+                     <label for="" class="col-lg-3 col-form-label">Driver Status</label>
+                     <div class="col-lg-4">
+                       <select class="form-control" id="tStatus" name="">
+                         <option value="Active" <?php echo $driver['status'] == 'Active' ? 'selected' : '' ?>>Active</option>
+                         <option value="Suspended" <?php echo $driver['status'] == 'OOS' ? 'selected' : '' ?>>OOS</option>
+                         <option value="Inactive" <?php echo $driver['status'] == 'Inactive' || $row['status'] == '' ? 'selected' : '' ?>>Inactive</option>
+                       </select>
+                     </div>
+                   </div>
+                   <div class="form-group row">
+                     <label for="" class="col-lg-3 col-form-label">First Name</label>
+                     <div class="col-lg-4">
+                       <input type="text" class="form-control" name="" value="<?php echo $driver['nameFirst'] ?>">
+                     </div>
+                   </div>
+                   <div class="form-group row">
+                     <label for="" class="col-lg-3 col-form-label">Last Name</label>
+                     <div class="col-lg-4">
+                       <input type="text" class="form-control" name="" value="<?php echo $driver['nameLast'] ?>">
+                     </div>
+                   </div>
+                   <div class="form-group row">
+                     <label for="" class="col-lg-3 col-form-label">Mobile Phone</label>
+                     <div class="col-lg-9">
+                       <input type="text" id="tVIN" class="form-control" name="" value="<?php echo telephonize($driver['phoneNumber'])?>">
+                     </div>
+                   </div>
+                   <div class="form-group row">
+                     <label for="" class="col-lg-3 col-form-label">Make</label>
+                     <div class="col-lg-9">
+                       <input type="text" id="tBrand" class="form-control" name="" value="<?php echo $row['truckBrand'] ?>">
+                     </div>
+                   </div>
+                   <!-- <div class="form-group row">
+                   <label for="" class="col-lg-3 col-form-label">Model</label>
+                   <div class="col-lg-9">
+                   <input type="text" class="form-control" name="" value="">
+                 </div>
+               </div> -->
+               <div class="form-group row">
+                 <label for="" class="col-lg-3 col-form-label">Year</label>
+                 <div class="col-lg-3">
+                   <input type="text" id="tYear" class="form-control text-center" name="" value="<?php echo $row['truckYear'] ?>">
+                 </div>
+               </div>
+               <div class="form-group row">
+                 <label for="" class="col-lg-3 col-form-label">Plates</label>
+                 <div class="col-lg-3">
+                   <input type="text" id="tPlates" class="form-control text-center" name="" value="<?php echo $row['truckPlates'] ?>">
+                 </div>
+               </div>
+               <div class="form-group row">
+                 <label for="" class="col-lg-3 col-form-label">PPM</label>
+                 <div class="col-lg-3">
+                   <input type="number" id="tPayPerMile" class="form-control text-center" name="" value="<?php echo $row['pay_per_mile'] ?>">
+                 </div>
+               </div>
+               <input type="text" id="truck_id" name="" value="<?php echo $row['pkid_truck'] ?>" hidden>
+             </form>
+
+           </div> <!-- DIV LG 6 -->
+           <div class="col-lg-2 offset-2">
+             <div class="flex-columns">
+               <button type="button" class="btn btn-outline-success mb-1 w-100" id="saveTruckDetails" name="button">Save Changes</button>
              </div>
+           </div>
          </div>
-         <input type="text" id="dIdDriver" name="dIdDriver" value="<?php echo $driver['pkid_driver'] ?>" hidden>
-       </form>
-     </div>
-     <div class="container float-right driver-details-child">
-       <h5 class="grey-font">Address</h5>
-       <form>
-         <div class="form-group row">
-           <label class="col-3 col-form-label" for="dStNumber">Number / St</label>
-           <div class="col-5">
-             <input class="form-control" type="text" name="dStNumber" id="dStNumber" placeholder="stNumber">
-           </div>
-           <div class="col-4">
-             <input class="form-control" type="text" name="dStName" id="dStName" placeholder="stName">
-           </div>
+       </div>
 
+       <div class="tab-pane fade" id="documentation-info" role="tabpanel" aria-labelledby="general-info-tab">
+         <div class="row pt-5">
+           <div class="col-lg-10 offset-1 ">
+             <div class="">
+
+               <ul class="nav mb-3">
+                 <li class="nav-item">
+                   <a href="#" class="nav-link active trucks">Current Docs</a>
+                 </li>
+                 <li class="nav-item">
+                   <a href="#" class="nav-link trucks">Archive</a>
+                 </li>
+               </ul>
+
+               <form class="form-inline justify-content-between" onsubmit="return false;">
+                 <div class="">
+                   <label for="" class="sr-only">Document Type</label>
+                   <select class="form-control mr-sm-2" name="">
+                     <option value="">Select Document Type</option>
+                   </select>
+                   <label for="" class="sr-only">Uploaded File</label>
+                   <input type="file" class="mr-sm-2" name="" value="">
+                 </div>
+                 <button type="button" class="btn btn-outline-success" name="button">Add File</button>
+               </form>
+
+               <table class="table table-striped table-sm">
+                 <thead class="border-top-0">
+                   <th class="border-top-0"></th>
+                   <th class="border-top-0">Document Type</th>
+                   <th class="border-top-0">Actions</th>
+                 </thead>
+               </table>
+             </div>
+
+           </div> <!-- DIV LG 6 -->
          </div>
-         <div class="form-group row">
-           <label class="col-3 col-form-label" for="dAddrLine2">Addr Line 2</label>
-           <div class="col-9">
-             <input class="form-control" type="text" name="dAddrLine2" id="dAddrLine2" placeholder="Line 2">
-           </div>
-         </div>
-         <div class="form-group row">
-           <label class="col-3 col-form-label" for="dCity">City</label>
-           <div class="col-4">
-             <input class="form-control" type="text" name="dCity" id="dCity" value="" placeholder="City">
-           </div>
-           <label class="col-2 col-form-label text-right" for="dState">State</label>
-           <div class="col-3">
-             <input class="form-control" type="text" name="dState" id="dState" value="" placeholder="State">
-           </div>
-         </div>
-         <div class="form-group row">
-           <label class="col-3 col-form-label" for="dZipCode">Zip</label>
-           <div class="col-3">
-             <input class="form-control" type="text" name="dZipCode" id="dZipCode" value="" placeholder="Zip Code">
-           </div>
-           <label class="col-3 col-form-label" for="dCountry">Country</label>
-           <div class="col-3">
-             <input class="form-control" type="text" name="dCountry" id="dCountry" value="" placeholder="Country">
-           </div>
-         </div>
-       </form>
+       </div>
+       <div class="tab-pane fade" id="settlements-info" role="tabpanel" aria-labelledby="general-info-tab">
+         Aquí la información de los settlements
+       </div>
+       <div class="tab-pane fade" id="loans-info" role="tabpanel" aria-labelledby="general-info-tab">
+         Aqui la información de los loans.
+       </div>
      </div>
-     <button class="btn btn-success float-right" id="saveDriverDetails" type="button" name="button">Save Info</button>
+
    </div>
+ </div>
 
-   <div class="container mt-5 driver-details">
-     <div class="container float-left driver-details-child right-side-border" hidden>
-       Aquí va la información de los camiones. Solo si es Owner-op.
-     </div>
-     <div class="container float-right driver-details-child">
-       Aquí va la información de los e-documents. Aplica para todos los elementos.
-     </div>
    </div>
-
 
 
   </body>
