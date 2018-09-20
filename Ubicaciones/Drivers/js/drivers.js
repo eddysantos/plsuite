@@ -107,12 +107,22 @@ $(document).ready(function(){
 
   });
 
+  $('#dPhone').keypress(function(e){
+    var check_code = e.keyCode;
+
+    if (!(check_code >= 48 && check_code <= 57)) {
+      e.preventDefault();
+    }
+  })
+
+  $('#dPhone').mask('(000) 000-0000');
+
   $('#saveDriverDetails').click(function(){
     var driver = {};
     driver.id = $('#dIdDriver').val();
     driver.nameF = $('#dFirstName').val();
     driver.nameL = $('#dLastName').val();
-    driver.phone = $('#dPhone').val();
+    driver.phone = $('#dPhone').cleanVal();
     driver.email = $('#dEmail').val();
     driver.driver = $('#dIsDriver').val();
     driver.owner = $('#dIsOwner').val();
@@ -125,35 +135,7 @@ $(document).ready(function(){
     driver.country = $('#dCountry').val();
     driver.default_truck = $('#defaultTruck').val();
 
-    $('#actionToConfirm').html("modify the data for " + $('#dFirstName').attr('value') + " " + $('#dLastName').attr('value'));
-    $('#confirmationModal').modal('show');
 
-    $('#confirmNo').unbind().click(function(){
-      $('.modal').modal('hide');
-      return false;
-    })
-
-    $('#confirmYes').unbind().click(function(){
-      $.ajax({
-        method: 'POST',
-        data: driver,
-        url: 'actions/editDriver.php',
-        success: function(result){
-          response = JSON.parse(result);
-          if (response.code == "1") {
-            location.reload(true);
-          } else {
-            alert("Hubo un error al modificar los datos, porfavor notíficar a soporte técnico.");
-            $('.modal').modal('hide');
-            console.log(response.message);
-          }
-        },
-        error: function(exception){
-          Alert("Something went wrong while editing the driver, please contact support.");
-          console.error(exception);
-        }
-      });
-    });
 
   });
 

@@ -5,14 +5,8 @@ require $root . '/plsuite/Resources/PHP/Utilities/session.php';
 require $root . '/plsuite/Resources/PHP/Utilities/initialScript.php';
 
 function telephonize($number){
-  $number = preg_replace("/^1?(\d{3})(\d{3})(\d{4})$/", "$1-$2-$3", $number)
+  $number = preg_replace("/^1?(\d{3})(\d{3})(\d{4})$/", "($1) $2-$3", $number);
   return $number;
-
-  // if(  preg_match( '/^\+\d(\d{3})(\d{3})(\d{4})$/', $number,  $matches ) ){
-  //     $result = "($matches[1]) $matches[2] - $matches[3]";
-  //     echo "<script>console.log(".json_encode($matches).")</script>";
-  //     return $result;
-  // }
 }
 
 
@@ -113,26 +107,27 @@ while ($row = $rslt->fetch_assoc()) {
                    </div>
                    <div class="form-group row">
                      <label for="" class="col-lg-3 col-form-label">Mobile Phone</label>
-                     <div class="col-lg-9">
-                       <input type="text" id="tVIN" class="form-control" name="" value="<?php echo telephonize($driver['phoneNumber'])?>">
+                     <div class="col-lg-4">
+                       <input type="text" id="dPhone" class="form-control" name="" value="<?php echo telephonize($driver['phoneNumber'])?>">
                      </div>
                    </div>
                    <div class="form-group row">
-                     <label for="" class="col-lg-3 col-form-label">Make</label>
+                     <label for="" class="col-lg-3 col-form-label">E-Mail</label>
                      <div class="col-lg-9">
-                       <input type="text" id="tBrand" class="form-control" name="" value="<?php echo $row['truckBrand'] ?>">
+                       <input type="email" id="dEmail" class="form-control" autocomplete="new-password" name="" value="<?php echo $row['truckBrand'] ?>">
                      </div>
                    </div>
-                   <!-- <div class="form-group row">
-                   <label for="" class="col-lg-3 col-form-label">Model</label>
-                   <div class="col-lg-9">
-                   <input type="text" class="form-control" name="" value="">
-                 </div>
-               </div> -->
-               <div class="form-group row">
-                 <label for="" class="col-lg-3 col-form-label">Year</label>
+               <div class="form-group row align-items-center">
+                 <label for="" class="col-lg-3 col-form-label">Driver</label>
                  <div class="col-lg-3">
-                   <input type="text" id="tYear" class="form-control text-center" name="" value="<?php echo $row['truckYear'] ?>">
+                   <div class="form-check form-check-inline">
+                     <input class="form-check-input" type="radio" name="isDriver" id="isDriverYes" value="Yes">
+                     <label class="form-check-label" for="isDriverYes">Yes</label>
+                   </div>
+                   <div class="form-check form-check-inline">
+                     <input class="form-check-input" type="radio" name="isDriver" id="isDriverNo" value="No">
+                     <label class="form-check-label" for="isDriverNo">No</label>
+                   </div>
                  </div>
                </div>
                <div class="form-group row">
