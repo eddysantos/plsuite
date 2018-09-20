@@ -132,6 +132,26 @@ aside:after{
   color:black;
 }
 
+.nav-link.trucks{
+  border: none;
+  background: transparent;
+}
+
+.nav-link.trucks:hover{
+  color: green;
+}
+
+.nav-link.disabled:hover{
+  cursor: not-allowed;
+  background: inherit;
+  color: #6c757d;
+}
+
+.nav-link.active.trucks{
+  background-color: transparent;
+  border-bottom: 1px solid rgb(75,139, 15);
+}
+
 /*.driver-details-last{
   width: 50;
   height: 100%

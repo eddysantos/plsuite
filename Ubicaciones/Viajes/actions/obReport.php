@@ -70,7 +70,7 @@ if ($rslt->num_rows == 0) {
 
 $pages = ceil($amount / 7);
 
-error_log("Pages: " . $pages);
+// error_log("Pages: " . $pages);
 
 // create new PDF document
 $pdf = new MYPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
