@@ -85,7 +85,7 @@ $and_where = '';
 $group_by = '';
 $x_tag_index = 'fecha';
 
-$query = "SELECT tl.date_arrival lh_date , $period(tl.date_arrival) date_grouping, sum(tl.trip_rate) rate FROM ct_trip t LEFT JOIN ct_trip_linehaul tl ON t.pkid_trip = tl.fk_idtrip  WHERE tl.date_arrival BETWEEN ? AND ? AND tl.linehaul_status <> 'Cancelled' $and_where GROUP BY date_grouping $group_by";
+$query = "SELECT tl.date_begin lh_date , $period(tl.date_begin) date_grouping, sum(tl.trip_rate) rate FROM ct_trip t LEFT JOIN ct_trip_linehaul tl ON t.pkid_trip = tl.fk_idtrip  WHERE tl.date_begin BETWEEN ? AND ? AND tl.linehaul_status <> 'Cancelled' $and_where GROUP BY date_grouping $group_by";
 
 
 $stmt = $db->prepare($query);
