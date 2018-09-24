@@ -11,28 +11,30 @@ $phone = $_POST['phone'];
 $email = $_POST['email'];
 $owner = $_POST['owner'];
 $driver = $_POST['driver'];
-$stNumber = $_POST['stNumber'];
-$stName = $_POST['stName'];
-$addrLine2 = $_POST['addrLine2'];
-$city = $_POST['city'];
-$state = $_POST['state'];
-$zip = $_POST['zip'];
-$country = $_POST['country'];
+// $stNumber = $_POST['stNumber'];
+// $stName = $_POST['stName'];
+// $addrLine2 = $_POST['addrLine2'];
+// $city = $_POST['city'];
+// $state = $_POST['state'];
+// $zip = $_POST['zip'];
+// $country = $_POST['country'];
 $id = $_POST['id'];
 $default_truck = $_POST['default_truck'];
+$ppm = $_POST['ppm'];
+$status = $_POST['status'];
 
-$query = "UPDATE ct_drivers SET nameFirst = ?, namelast = ?, phoneNumber = ?, email = ?, isOwner = ?, isDriver = ?, addrStNumber = ?, addrStName = ?, addrLine2 = ?, addrCity = ?, addrState = ?, addrZipCode = ?, addrCountry = ?, default_truck = ? WHERE pkid_driver = ?";
+$query = "UPDATE ct_drivers SET nameFirst = ?, namelast = ?, phoneNumber = ?, email = ?, isOwner = ?, isDriver = ?, default_truck = ?, pay_per_mile = ?, status = ? WHERE pkid_driver = ?";
 
 $stmt = $db->prepare($query);
 if (!($stmt)) {
   $system_callback['code'] = "500";
   $system_callback['query'] = $query;
-  $system_callback['message'] = "Error during query prepare [$stmt->errno]: $stmt->error";
+  $system_callback['message'] = "Error during query prepare [$db->errno]: $db->error";
   exit_script($system_callback);
 }
 
 
-$stmt->bind_param('sssssssssssssss', $fName, $lName, $phone, $email, $owner, $driver, $stNumber, $stName, $addrLine2, $city, $state, $zip, $country, $default_truck, $id);
+$stmt->bind_param('ssssssssss', $fName, $lName, $phone, $email, $owner, $driver, $default_truck, $ppm, $status, $id);
 if (!($stmt)) {
   $system_callback['code'] = "500";
   $system_callback['query'] = $query;

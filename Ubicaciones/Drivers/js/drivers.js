@@ -116,27 +116,46 @@ $(document).ready(function(){
   })
 
   $('#dPhone').mask('(000) 000-0000');
+  $('#dPayPerMile').mask("#.##0.00", {reverse: true})
 
   $('#saveDriverDetails').click(function(){
     var driver = {};
     driver.id = $('#dIdDriver').val();
+    driver.status = $('#dStatus').val();
     driver.nameF = $('#dFirstName').val();
     driver.nameL = $('#dLastName').val();
     driver.phone = $('#dPhone').cleanVal();
     driver.email = $('#dEmail').val();
-    driver.driver = $('#dIsDriver').val();
-    driver.owner = $('#dIsOwner').val();
-    driver.stNumber = $('#dStNumber').val();
-    driver.stName = $('#dStName').val();
-    driver.addrLine2 = $('#dAddrLine2').val();
-    driver.city = $('#dCity').val();
-    driver.state = $('#dState').val();
-    driver.zip = $('#dZipCode').val();
-    driver.country = $('#dCountry').val();
+    driver.driver = $('input[name=isDriver]:checked').val();;
+    driver.owner = $('input[name=isOwner]:checked').val();
+    // driver.stNumber = $('#dStNumber').val();
+    // driver.stName = $('#dStName').val();
+    // driver.addrLine2 = $('#dAddrLine2').val();
+    // driver.city = $('#dCity').val();
+    // driver.state = $('#dState').val();
+    // driver.zip = $('#dZipCode').val();
+    // driver.country = $('#dCountry').val();
     driver.default_truck = $('#defaultTruck').val();
+    driver.ppm = $('#dPayPerMile').val();
 
+    var edit_driver = $.ajax({
+      method: 'POST',
+      url: 'actions/editDriver.php',
+      data: driver
+    });
 
+    edit_driver.done(function(r){
+      r = JSON.parse(r);
+      console.log(r);
 
+      if (r.code == 1) {
+        alertify.success("Record updated correctly");
+      }
+
+    })
+
+    console.log(driver);
+    return false;
   });
 
   $('.popup-input').keyup(function(e){

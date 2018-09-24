@@ -1,9 +1,9 @@
-ALTER TABLE `plsuite`.`ct_drivers` ADD COLUMN `pay_per_mile` decimal(5,2) NOT NULL DEFAULT 0.4 AFTER `default_truck`;
-ALTER TABLE `plsuite`.`ct_truck`
-  ADD COLUMN `pay_per_mile` decimal(5,2) NOT NULL DEFAULT 1.05 AFTER `deletedTruck`,
-  ADD COLUMN `apply_surcharge` tinyint NOT NULL DEFAULT 0 AFTER `pay_per_mile`;
-ALTER TABLE `plsuite`.`ct_truck` ADD COLUMN `create_settlement` tinyint AFTER `apply_surcharge`;
-ALTER TABLE `plsuite`.`ct_trip_linehaul_movement` ADD COLUMN `mov_settled` tinyint AFTER `added_by`;
+-- ALTER TABLE `plsuite`.`ct_drivers` ADD COLUMN `pay_per_mile` decimal(5,2) NOT NULL DEFAULT 0.4 AFTER `default_truck`;
+-- ALTER TABLE `plsuite`.`ct_truck`
+--   ADD COLUMN `pay_per_mile` decimal(5,2) NOT NULL DEFAULT 1.05 AFTER `deletedTruck`,
+--   ADD COLUMN `apply_surcharge` tinyint NOT NULL DEFAULT 0 AFTER `pay_per_mile`;
+-- ALTER TABLE `plsuite`.`ct_truck` ADD COLUMN `create_settlement` tinyint AFTER `apply_surcharge`;
+-- ALTER TABLE `plsuite`.`ct_trip_linehaul_movement` ADD COLUMN `mov_settled` tinyint AFTER `added_by`;
 
 
 /******** QUERY TO GET SETTLEMENT TRUCK LIST**********/

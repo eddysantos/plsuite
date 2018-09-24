@@ -16,7 +16,7 @@ function check_date($date){
 
 $system_callback = [];
 
-$query = "SELECT truckNumber"
+// $query = "SELECT truckNumber"
 
 $stmt = $db->prepare($query);
 if (!($stmt)) {

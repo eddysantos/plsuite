@@ -44,6 +44,8 @@ while ($row = $rslt->fetch_assoc()) {
 
      <!-- Bootstrap CSS -->
      <link rel="stylesheet" href="/plsuite/Resources/Bootstrap_4_1_1/css/bootstrap.min.css">
+     <link rel="stylesheet" href="/plsuite/Resources/alertify/css/alertify.min.css">
+     <link rel="stylesheet" href="/plsuite/Resources/alertify/css/themes/bootstrap.min.css">
      <link rel="stylesheet" media="screen and (min-device-width: 701px)" href="/plsuite/Resources/CSS/main.css">
      <link rel="stylesheet" media="screen and (min-device-width: 701px)" href="/plsuite/Resources/CSS/drivers.css">
      <link rel="stylesheet" media="screen and (min-device-width: 701px)" href="/plsuite/Resources/fontAwesome/css/font-awesome.min.css">
@@ -74,81 +76,100 @@ while ($row = $rslt->fetch_assoc()) {
          <div class="tab-content" id="driver-details-tab-content">
            <div class="tab-pane fade show active" id="general-info" role="tabpanel" aria-labelledby="general-info-tab">
              <div class="row pt-5">
-               <div class="col-lg-6 offset-1">
+               <div class="col-lg-7 offset-1">
                  <form class="" onsubmit="return false">
 
                    <div class="form-group row">
                      <label for="" class="col-lg-3 col-form-label">Driver ID</label>
                      <div class="col-lg-9">
-                       <input type="text" id="tNumber" class="form-control-plaintext" name="" value="<?php echo $driver['pkid_driver'] ?>" readonly>
+                       <input type="text" id="dIdDriver" class="form-control-plaintext" name="" value="<?php echo $driver['pkid_driver'] ?>" readonly>
                      </div>
                    </div>
                    <div class="form-group row">
                      <label for="" class="col-lg-3 col-form-label">Driver Status</label>
                      <div class="col-lg-4">
-                       <select class="form-control" id="tStatus" name="">
+                       <select class="form-control" id="dStatus" name="">
                          <option value="Active" <?php echo $driver['status'] == 'Active' ? 'selected' : '' ?>>Active</option>
                          <option value="Suspended" <?php echo $driver['status'] == 'OOS' ? 'selected' : '' ?>>OOS</option>
                          <option value="Inactive" <?php echo $driver['status'] == 'Inactive' || $row['status'] == '' ? 'selected' : '' ?>>Inactive</option>
                        </select>
                      </div>
                    </div>
+                   <h5 class="mb-0">Contact Information</h5>
+                   <hr class="mt-0">
                    <div class="form-group row">
-                     <label for="" class="col-lg-3 col-form-label">First Name</label>
+                     <label for="" class="col-lg-2 col-form-label">First Name</label>
                      <div class="col-lg-4">
-                       <input type="text" class="form-control" name="" value="<?php echo $driver['nameFirst'] ?>">
+                       <input type="text" class="form-control" id="dFirstName" name="" value="<?php echo $driver['nameFirst'] ?>">
                      </div>
-                   </div>
-                   <div class="form-group row">
-                     <label for="" class="col-lg-3 col-form-label">Last Name</label>
+                     <label for="" class="col-lg-2 col-form-label">Last Name</label>
                      <div class="col-lg-4">
-                       <input type="text" class="form-control" name="" value="<?php echo $driver['nameLast'] ?>">
+                       <input type="text" class="form-control" id="dLastName" name="" value="<?php echo $driver['nameLast'] ?>">
                      </div>
                    </div>
                    <div class="form-group row">
-                     <label for="" class="col-lg-3 col-form-label">Mobile Phone</label>
+                     <label for="" class="col-lg-2 col-form-label">Mobile</label>
                      <div class="col-lg-4">
-                       <input type="text" id="dPhone" class="form-control" name="" value="<?php echo telephonize($driver['phoneNumber'])?>">
+                       <input type="text" id="dPhone" autocomplete="new-password" class="form-control" name="" value="<?php echo telephonize($driver['phoneNumber'])?>">
                      </div>
                    </div>
                    <div class="form-group row">
-                     <label for="" class="col-lg-3 col-form-label">E-Mail</label>
-                     <div class="col-lg-9">
-                       <input type="email" id="dEmail" class="form-control" autocomplete="new-password" name="" value="<?php echo $row['truckBrand'] ?>">
+                     <label for="" class="col-lg-2 col-form-label">E-Mail</label>
+                     <div class="col-lg-7">
+                       <input type="email" id="dEmail" class="form-control" autocomplete="new-password" name="" value="<?php echo $row['email'] ?>">
                      </div>
                    </div>
-               <div class="form-group row align-items-center">
-                 <label for="" class="col-lg-3 col-form-label">Driver</label>
-                 <div class="col-lg-3">
-                   <div class="form-check form-check-inline">
-                     <input class="form-check-input" type="radio" name="isDriver" id="isDriverYes" value="Yes">
-                     <label class="form-check-label" for="isDriverYes">Yes</label>
+                   <h5 class="mt-5">Agreement Details</h5>
+                   <hr class="mt-0">
+                   <div class="form-group row align-items-center">
+                     <label for="" class="col-lg-3 col-form-label">Driver</label>
+                     <div class="col-lg-3">
+                       <div class="form-check form-check-inline">
+                         <input class="form-check-input" type="radio" name="isDriver" id="isDriverYes" value="Yes" <?php echo $driver['isDriver'] == 'Yes' ? 'checked' : "" ?>>
+                         <label class="form-check-label" for="isDriverYes">Yes</label>
+                       </div>
+                       <div class="form-check form-check-inline">
+                         <input class="form-check-input" type="radio" name="isDriver" id="isDriverNo" value="No"<?php echo $driver['isDriver'] == 'No' ? 'checked' : "" ?>>
+                         <label class="form-check-label" for="isDriverNo">No</label>
+                       </div>
+                     </div>
                    </div>
-                   <div class="form-check form-check-inline">
-                     <input class="form-check-input" type="radio" name="isDriver" id="isDriverNo" value="No">
-                     <label class="form-check-label" for="isDriverNo">No</label>
+                   <div class="form-group row align-items-center">
+                     <label for="" class="col-lg-3 col-form-label">Owner</label>
+                     <div class="col-lg-3">
+                       <div class="form-check form-check-inline">
+                         <input class="form-check-input" type="radio" name="isOwner" id="isOwnerYes" value="Yes" <?php echo $driver['isOwner'] == 'Yes' ? 'checked' : "" ?>>
+                         <label class="form-check-label" for="isOwnerYes">Yes</label>
+                       </div>
+                       <div class="form-check form-check-inline">
+                         <input class="form-check-input" type="radio" name="isOwner" id="isOwnerNo" value="No" <?php echo $driver['isOwner'] == 'No' ? 'checked' : "" ?>>
+                         <label class="form-check-label" for="isOwnerNo">No</label>
+                       </div>
+                     </div>
                    </div>
-                 </div>
-               </div>
-               <div class="form-group row">
-                 <label for="" class="col-lg-3 col-form-label">Plates</label>
-                 <div class="col-lg-3">
-                   <input type="text" id="tPlates" class="form-control text-center" name="" value="<?php echo $row['truckPlates'] ?>">
-                 </div>
-               </div>
-               <div class="form-group row">
-                 <label for="" class="col-lg-3 col-form-label">PPM</label>
-                 <div class="col-lg-3">
-                   <input type="number" id="tPayPerMile" class="form-control text-center" name="" value="<?php echo $row['pay_per_mile'] ?>">
-                 </div>
-               </div>
-               <input type="text" id="truck_id" name="" value="<?php echo $row['pkid_truck'] ?>" hidden>
+                   <div class="form-group row">
+                     <label for="" class="col-lg-3 col-form-label">Default Truck</label>
+                     <div class="col-lg-3">
+                       <select class="form-control" id="defaultTruck" name="defaultTruck">
+                         <option value="">None</option>
+                         <?php foreach ($trucks as $truck): ?>
+                           <option value="<?php echo $truck['pkid_truck']?>" <?php echo $truck['pkid_truck'] == $driver['default_truck'] ? 'selected' : ''; ?>><?php echo $truck['truckNumber'] ?></option>
+                         <?php endforeach; ?>
+                       </select>
+                     </div>
+                   </div>
+                   <div class="form-group row">
+                     <label for="" class="col-lg-3 col-form-label">PPM</label>
+                     <div class="col-lg-3">
+                       <input type="number" id="dPayPerMile" class="form-control text-center" name="" value="<?php echo $driver['pay_per_mile'] ?>">
+                     </div>
+                   </div>
              </form>
 
            </div> <!-- DIV LG 6 -->
-           <div class="col-lg-2 offset-2">
+           <div class="col-lg-2 offset-1">
              <div class="flex-columns">
-               <button type="button" class="btn btn-outline-success mb-1 w-100" id="saveTruckDetails" name="button">Save Changes</button>
+               <button type="button" class="btn btn-outline-success mb-1 w-100" id="saveDriverDetails" name="button">Save Changes</button>
              </div>
            </div>
          </div>
