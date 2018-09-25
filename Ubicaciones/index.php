@@ -33,13 +33,20 @@ $sunday_5weeks = date('m/d/Y', strtotime('sunday 5 weeks ago'));
         <div class="tab pane show active" id="division3-pane" role="tabpanel" aria-labelledby="div3-tab">
           <div class="d-flex justify-content-around">
             <div class="border p-2 mb-2 border mr-1 w-50" style="height: 325px">
-              <h6>Pending Invoice: <span class="text-secondary" id="pi-count"></span></h6>
+              <section class="">
+                <button type="button" class="btn btn-outline-secondary float-right this-week-toggle" action="pi" name="button">
+                  [<span>-</span>] This Week
+                </button>
+                <h6>Pending Invoice: <span class="text-secondary" id="pi-count"></span></h6>
+              </section>
               <table class="table table-striped table-sm dash-table" id="pending-invoice-trips">
                 <thead>
                   <tr>
-                    <th class="fit">Linehaul</th>
-                    <th class="fit">Trailer</th>
-                    <th>Closed Date (Days)</th>
+                    <th>Linehaul</th>
+                    <th>Trailer</th>
+                    <th>Closed Date</th>
+                    <th>Amount</th>
+                    <th>Client</th>
                   </tr>
                 </thead>
                 <tbody></tbody>
@@ -50,102 +57,23 @@ $sunday_5weeks = date('m/d/Y', strtotime('sunday 5 weeks ago'));
               <table class="table table-striped table-sm dash-table" id="pending-payment-trips">
                 <thead>
                   <tr>
-                    <th class="fit">Trip</th>
-                    <th class="fit">Trailer</th>
-                    <th>Payment Due Date</th>
+                    <th>Invoice</th>
+                    <th>Client</th>
+                    <th>Payment Due</th>
+                    <th>Amount</th>
+                    <th>Reference</th>
                   </tr>
                 </thead>
                 <tbody></tbody>
               </table>
             </div>
+          </div>
         </div>
       </div>
     </div>
   </div>
 </div>
-<!-- <div class="container-fluid pt-3" style="margin-top: 50px; height: calc(100vh - 100px)">
-  <div class="row">
-    <div class="col">
-      <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-        <a class="nav-link active" id="v-pills-home-tab" data-toggle="pill" href="#v-pills-home" role="tab" aria-controls="v-pills-home" aria-selected="true">Division 3</a>
-        <a class="nav-link" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-profile" role="tab" aria-controls="v-pills-profile" aria-selected="false">Division 4</a>
-      </div>
-    </div>
-    <div class="col-10">
-      <div class="d-flex justify-content-around">
-        <div class="border p-2 mb-2 border mr-1 w-50" style="height: 325px">
-          <h6>Northbound En Route: <span class="text-secondary" id="nb-count"></span></h6>
-          <table class="table table-striped table-sm dash-table" id="northbound-trips">
-            <thead>
-              <tr>
-                <th class="fit">Linehaul</th>
-                <th class="fit">Unit</th>
-                <th>Destination</th>
-              </tr>
-            </thead>
-            <tbody>
-            </tbody>
-          </table>
-        </div>
-        <div class="border p-2 mb-2 border ml-1 w-50">
-          <h6>Southbound En Route: <span class="text-secondary" id="sb-count"></span></h6>
-          <table class="table table-striped table-sm dash-table" id="southbound-trips">
-            <thead>
-              <tr>
-                <th class="fit">Linehaul</th>
-                <th class="fit">Unit</th>
-                <th>Origin</th>
-              </tr>
-            </thead>
-            <tbody></tbody>
-          </table>
-        </div>
-        <div class="border p-2 mb-2 border ml-1 w-50">
-          <h6>Pending Return Trip: <span class="text-secondary" id="pr-count"></span></h6>
-          <table class="table table-striped table-sm dash-table" id="pending-return-trips">
-            <thead>
-              <tr>
-                <th class="fit">Trip</th>
-                <th class="fit">Trailer</th>
-                <th>Appointment Date</th>
-              </tr>
-            </thead>
-            <tbody></tbody>
-          </table>
-        </div>
-      </div>
-      <div class="d-flex justify-content-around">
-        <div class="border p-2 mb-2 border mr-1 w-50" style="height: 325px">
-          <h6>Pending Invoice: <span class="text-secondary" id="pi-count"></span></h6>
-          <table class="table table-striped table-sm dash-table" id="pending-invoice-trips">
-            <thead>
-              <tr>
-                <th class="fit">Linehaul</th>
-                <th class="fit">Trailer</th>
-                <th>Closed Date (Days)</th>
-              </tr>
-            </thead>
-            <tbody></tbody>
-          </table>
-        </div>
-        <div class="border p-2 mb-2 border ml-1 w-50">
-          <h6>Pending Payment: <span class="text-secondary" id="pp-count"></span></h6>
-          <table class="table table-striped table-sm dash-table" id="pending-payment-trips">
-            <thead>
-              <tr>
-                <th class="fit">Trip</th>
-                <th class="fit">Trailer</th>
-                <th>Payment Due Date</th>
-              </tr>
-            </thead>
-            <tbody></tbody>
-          </table>
-        </div>
-      </div>
 
-    </div>
-  </div>
-</div> -->
 
 <?php
 require $root . '/plsuite/Resources/PHP/Utilities/footer.php';
