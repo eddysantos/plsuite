@@ -4,7 +4,9 @@ $root = $_SERVER['DOCUMENT_ROOT'];
 require $root . '/plsuite/Resources/PHP/Utilities/initialScript.php';
 
 function GetDrivingDistance($o, $d){
-    $url = "https://maps.googleapis.com/maps/api/distancematrix/json?origins=$o&destinations=$d&language=en";
+    global $system_callback;
+
+    $url = "https://maps.googleapis.com/maps/api/distancematrix/json?origins=$o&destinations=$d&language=en&key=AIzaSyCyESDBd2xdkwed-L8ndjifpBlJX9Dpf7w";
     $ch = curl_init();
     curl_setopt($ch, CURLOPT_URL, $url);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
@@ -13,6 +15,7 @@ function GetDrivingDistance($o, $d){
     curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
     $response = curl_exec($ch);
     curl_close($ch);
+    $system_callback['api_response'] = $response;
     $response_a = json_decode($response, true);
     $dist = $response_a['rows'][0]['elements'][0]['distance']['value'];
     $time = $response_a['rows'][0]['elements'][0]['duration']['text'];
@@ -52,7 +55,8 @@ for ($i=1; $i < count($zips) ; $i++) {
 
   $rslt = $stmt->get_result();
 
-  if ($rslt->num_rows == 0) {
+  // if ($rslt->num_rows == 0) {
+  if (true) {
     $routes[] = array(
       'origin'=>$zips[$i - 1],
       'destination'=>$zips[$i],

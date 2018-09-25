@@ -34,4 +34,44 @@ $(document).ready(function(){
 
   load_tables();
 
+  $('.this-week-toggle').click(function(){
+    var $this = $(this);
+    var $span = $this.find('span');
+    var data = {
+      this_week: true
+    }
+
+    if ($this.attr('disabled') == true) {
+      return false;
+    }
+
+    $this.attr('disabled', true).addClass('disabled');
+
+    if ($span.html() == "-") {
+      $span.html('+');
+    } else {
+      $span.html('-');
+      data.this_week = false;
+    }
+
+    var get_data = $.ajax({
+      method: 'POST',
+      url: 'zactions/summary/ops_summary_pi_only.php',
+      data: data
+    });
+
+    get_data.done(function(r){
+      r = JSON.parse(r);
+      if (r.code == 1) {
+        $('#pending-invoice-trips tbody').html(r.data.pi_trips.table);
+        $('#pi-count').html(r.data.pi_trips.count + " ($" + r.data.pi_trips.amount + ")");
+      }
+      $this.attr('disabled', false).removeClass('disabled')
+    }).fail(function(x){
+      console.error(x);
+      $this.attr('disabled', false).removeClass('disabled')
+    });
+
+  });
+
 });

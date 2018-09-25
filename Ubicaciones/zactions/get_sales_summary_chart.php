@@ -85,7 +85,7 @@ $and_where = '';
 $group_by = '';
 $x_tag_index = 'fecha';
 
-$query = "SELECT tl.date_arrival lh_date , $period(tl.date_arrival) date_grouping , CONCAT(d.nameFirst, ' ', d.nameLast) driver_name, trk.truckNumber tractor , trl.trailerNumber trailer , b.brokerName broker , tlm.movement_type mov_type , sum(tlm.miles_google) miles, sum(tl.trip_rate) rate FROM ct_trip t LEFT JOIN ct_trip_linehaul tl ON t.pkid_trip = tl.fk_idtrip LEFT JOIN ct_trip_linehaul_movement tlm ON tl.pk_idlinehaul = tlm.fkid_linehaul LEFT JOIN ct_trailer trl ON t.fkid_trailer = trl.pkid_trailer LEFT JOIN ct_drivers d ON tlm.fkid_driver = d.pkid_driver LEFT JOIN ct_brokers b ON tl.fkid_broker = b.pkid_broker LEFT JOIN ct_truck trk ON tlm.fkid_tractor = trk.pkid_truck WHERE tl.date_arrival BETWEEN ? AND ? AND tl.linehaul_status <> 'Cancelled' $and_where GROUP BY date_grouping $group_by";
+$query = "SELECT tl.date_appointment lh_date , $period(tl.date_appointment) date_grouping, sum(tl.trip_rate) rate FROM ct_trip t LEFT JOIN ct_trip_linehaul tl ON t.pkid_trip = tl.fk_idtrip  WHERE tl.date_appointment BETWEEN ? AND ? AND tl.linehaul_status <> 'Cancelled' $and_where GROUP BY date_grouping $group_by";
 
 
 $stmt = $db->prepare($query);

@@ -2,7 +2,7 @@
 <link rel="stylesheet" href="/plsuite/Resources/c3_charts/c3.min.css">
 <link rel="stylesheet" href="/plsuite/Resources/CSS/main_dash.css">
 <?php
-$dash_active = "active";
+$dash_active = "active custom";
 $viajes_active = "";
 $operadores_active = "";
 $tractores_active = "";
