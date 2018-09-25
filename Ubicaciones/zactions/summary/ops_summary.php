@@ -29,7 +29,7 @@ while ($row = $rslt->fetch_assoc()) {
 }
 
 
-$query = "SELECT t.trip_number trip , t.trailer_number trailer , max(tl.date_departure) departure , max(tl.date_appointment) appointment FROM ct_trip t LEFT JOIN ct_trip_linehaul tl ON t.pkid_trip = tl.fk_idtrip WHERE tl.linehaul_status NOT IN('Closed' , 'Cancelled') GROUP BY t.trip_number HAVING count(tl.fk_idtrip) = 1";
+$query = "SELECT t.trip_number trip , t.trailer_number trailer , max(tl.date_departure) departure , max(tl.date_appointment) appointment FROM ct_trip t LEFT JOIN ct_trip_linehaul tl ON t.pkid_trip = tl.fk_idtrip WHERE tl.linehaul_status <> 'Cancelled' AND t.trip_status = 'Open' GROUP BY t.trip_number HAVING count(tl.fk_idtrip) = 1";
 
 $stmt = $db->prepare($query);
 $stmt->execute();
