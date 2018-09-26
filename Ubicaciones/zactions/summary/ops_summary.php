@@ -24,7 +24,7 @@ if ($rows == 0) {
 
 
 
-$query = "SELECT tl.lh_number linehaul , tl.origin_city o_city , tl.origin_state o_state , tl.destination_city d_city , tl.destination_state d_state , trk.truckNumber truck FROM ct_trip_linehaul tl LEFT JOIN ct_truck trk ON trk.pkid_truck = tl.current_tractor WHERE tl.date_arrival IS NULL AND tl.fk_idtrip <> '' AND tl.linehaul_status NOT IN('Closed' , 'Cancelled') AND tl.origin_zip <> '78041'";
+$query = "SELECT tl.lh_number linehaul , tl.origin_city o_city , tl.origin_state o_state , tl.destination_city d_city , tl.destination_state d_state , trk.truckNumber truck FROM ct_trip_linehaul tl LEFT JOIN ct_truck trk ON trk.pkid_truck = tl.current_tractor WHERE tl.date_arrival IS NULL AND tl.fk_idtrip <> '' AND tl.linehaul_status NOT IN('Closed' , 'Cancelled') AND (tl.origin_zip <> '78041' AND tl.origin_zip <> '78045')";
 
 $stmt = $db->prepare($query);
 $stmt->execute();
@@ -107,6 +107,29 @@ if ($rows == 0) {
 
 
 $sc['data']['pp_trips']['amount'] = number_format($sc['data']['pp_trips']['amount'], 2);
+
+
+$query = "SELECT tl.lh_number linehaul , t.trailer_number trailer , trk.truckNumber tractor , tl.date_appointment appointment , b.brokerName broker , tl.broker_reference br_reference FROM ct_trip_linehaul tl LEFT JOIN ct_trip t ON t.pkid_trip = tl.fk_idtrip LEFT JOIN ct_brokers b ON tl.fkid_broker = b.pkid_broker LEFT JOIN ct_truck trk ON trk.pkid_truck = tl.current_tractor WHERE tl.date_delivery IS NULL AND tl.fk_idtrip <> '' AND tl.linehaul_status NOT IN('Closed' , 'Cancelled') AND( tl.origin_zip <> '78041' AND tl.origin_zip <> '78045')";
+
+$stmt = $db->prepare($query);
+$stmt->execute();
+$rslt = $stmt->get_result();
+$rows = $rslt->num_rows;
+
+if ($rows == 0) {
+  $sc['data']['pd_trips']['count'] = 0;
+  $sc['data']['pd_trips']['amount'] = 0;
+  $sc['data']['pd_trips']['table'] = "<tr><td colspan='6'>No trips found</td><td></td><td></td></tr>";
+} else {
+  while ($row = $rslt->fetch_assoc()) {
+    $sc['data']['pd_trips']['count']++;
+    $sc['data']['pd_trips']['amount'] += $row['rate'];
+    $sc['data']['pd_trips']['table'] .= "<tr><td>$row[linehaul]</td><td>$row[trailer]</td><td>$row[tractor]</td><td>$row[broker]</td><td>$row[appointment]</td></tr>";
+  }
+}
+
+
+$sc['data']['pd_trips']['count'] = $sc['data']['pp_trips']['count'];
 
 
 

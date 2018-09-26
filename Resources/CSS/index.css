@@ -21,6 +21,17 @@ table-layout: fixed;
   position: absolute;
 }
 
+.nav-pills .nav-link.active{
+		border: 1px solid;
+		color: green;
+		background-color: green !important;
+		/* background-color: #c2f4cd !important; */
+}
+
+.nav-pills .nav-link{
+	color: grey;
+}
+
 .table td.fit,
 .table th.fit {
     white-space: nowrap;
@@ -45,4 +56,70 @@ table-layout: fixed;
   min-height: 1px;
   padding-right: 15px;
   padding-left: 15px;
+}
+
+.nav-link.dash{
+  border-bottom: #E7E7E7 solid 1px;
+}
+
+/* .main-details-container{
+  height: calc(100vh - 135px);
+  margin: 10px 10px 10px 10px;
+  padding-right: 0 !important;
+} */
+
+.main-details-container{
+  height: calc(100vh - 110px);
+  margin-left: 15px;
+  margin-right: 15px;
+	margin-top: 58px;
+  /* margin: 10px 10px 10px 10px;
+  padding-right: 0 !important; */
+}
+
+/* .main-details-container div{
+  height: 100%;
+} */
+
+.nav-pills.dash{
+  border-radius: 0;
+}
+
+.nav-link.dash{
+  color: black;
+
+}
+
+.tab-info{
+  overflow-x: scroll;
+}
+
+.nav-link.dash:hover{
+  background-color: #444;
+  color: white;
+}
+
+.nav-link.dash.active{
+  background-color: #E7E7E7;
+  color:black;
+}
+
+.nav-link.dash.trucks{
+  border: none;
+  background: transparent;
+}
+
+.nav-link.dash.trucks:hover{
+  color: green;
+}
+
+.nav-link.dash.disabled:hover{
+  cursor: not-allowed;
+  background: inherit;
+  color: #6c757d;
+}
+
+.nav-link.dash.active.trucks{
+  background-color: transparent;
+  border-bottom: 1px solid rgb(75,139, 15);
 }
