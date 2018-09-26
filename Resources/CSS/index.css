@@ -21,6 +21,17 @@ table-layout: fixed;
   position: absolute;
 }
 
+.nav-pills .nav-link.active{
+		border: 1px solid;
+		color: green;
+		background-color: green !important;
+		/* background-color: #c2f4cd !important; */
+}
+
+.nav-pills .nav-link{
+	color: grey;
+}
+
 .table td.fit,
 .table th.fit {
     white-space: nowrap;
@@ -66,9 +77,9 @@ table-layout: fixed;
   padding-right: 0 !important; */
 }
 
-.main-details-container div{
+/* .main-details-container div{
   height: 100%;
-}
+} */
 
 .nav-pills.dash{
   border-radius: 0;

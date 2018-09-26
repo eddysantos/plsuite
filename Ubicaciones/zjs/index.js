@@ -23,6 +23,9 @@ function load_tables(){
 
       $('#pending-payment-trips tbody').html(r.data.pp_trips.table);
       $('#pp-count').html(r.data.pp_trips.count + " ($" + r.data.pp_trips.amount + ")");
+
+      $('#pending-delivery-trips tbody').html(r.data.pd_trips.table);
+      $('#pp-count').html(r.data.pd_trips.count + " ($" + r.data.pd_trips.amount + ")");
     }
 
     }).fail(function(x){
