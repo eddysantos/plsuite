@@ -125,7 +125,7 @@ $sunday_5weeks = date('m/d/Y', strtotime('sunday 5 weeks ago'));
       </div>
       <div class="d-flex">
         <div class="border p-2">
-          <h6 class="mb-0">Pending Delivery: <span class="text-secondary"></span></h6>
+          <h6 class="mb-0">Pending Delivery: <span class="text-secondary" id="pd-count"></span></h6>
           <table class="table table-striped table-sm dash-table" id="pending-delivery-trips" style="height: 235px">
             <thead>
               <tr>
