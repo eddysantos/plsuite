@@ -129,7 +129,7 @@ if ($rows == 0) {
 }
 
 
-$sc['data']['pd_trips']['count'] = $sc['data']['pp_trips']['count'];
+// $sc['data']['pd_trips']['count'] = $sc['data']['pd_trips']['count'];
 
 
 
