@@ -23,42 +23,44 @@ $sunday_5weeks = date('m/d/Y', strtotime('sunday 5 weeks ago'));
 <div class="main-details-container">
   <div class="row div-100h">
     <div class="col-sm-2 ml-0 pl-0 border border-bottom-0 border-left-0 border-top-0 ml-0 pl-0 pr-0">
-      <nav class="nav flex-column" id="truck-details-nav-pane" role="tablist">
+      <nav class="nav flex-column nav-30-px" id="truck-details-nav-pane" role="tablist">
         <div class="p-1">
-          <h4>Division 3</h4>
+          <h4>Operations</h4>
         </div>
-        <a class="nav-link dash side-panel active" id="pending-invoice-tab" data-toggle="tab" role="tab" aria-selected="true" aria-controls="pending-invoice-dash" href="#pending-invoice-pane">
+        <a class="nav-link dash side-panel active" id="nb-en-route-tab" data-toggle="tab" role="tab" aria-selected="true" aria-controls="nb-en-route" href="#nb-en-route-pane">
+          <span class="badge badge-danger nb-count float-right"></span>
+          Northbound En Route
+        </a>
+        <a class="nav-link dash side-panel" id="pending-return-trip-tab" data-toggle="tab" role="tab" aria-selected="false" aria-controls="pending-return-trip-dash" href="#pending-return-trip-pane">
+          <span class="badge badge-danger pr-count float-right"></span>
+          Pending Return Trip
+        </a>
+        <a class="nav-link dash side-panel" id="sb-en-route-tab" data-toggle="tab" role="tab" aria-selected="false" aria-controls="sb-en-route-dash" href="#sb-en-route-pane">
+          <span class="badge badge-danger sb-count float-right"></span>
+          Soutbound En Route
+        </a>
+        <a class="nav-link dash side-panel" id="pending-delivery-tab" data-toggle="tab" role="tab" aria-selected="false" aria-controls="pending-delivery-tab" href="#pending-delivery-pane">
+          <span class="badge badge-danger pd-count float-right"></span>
+          Pending Delivery
+        </a>
+        <div class="p-1">
+          <h4>Administration</h4>
+        </div>
+        <a class="nav-link dash side-panel" id="pending-invoice-tab" data-toggle="tab" role="tab" aria-selected="true" aria-controls="pending-invoice-dash" href="#pending-invoice-pane">
           Pending Invoice
-          <span class="badge badge-pill badge-danger pi-count"></span>
+          <span class="badge badge-danger pi-count float-right"></span>
+          <span class="pi-amount"></span>
         </a>
         <a class="nav-link dash side-panel" id="pending-payment-tab" data-toggle="tab" role="tab" aria-selected="false" aria-controls="pending-payment-dash" href="#pending-payment-pane">
           Pending Payment
-          <span class="badge badge-danger pp-count"></span>
-        </a>
-        <div class="p-1">
-          <h4>Division 4</h4>
-        </div>
-        <a class="nav-link dash side-panel" id="nb-en-route-tab" data-toggle="tab" role="tab" aria-selected="true" aria-controls="nb-en-route" href="#nb-en-route-pane">
-          <span class="badge badge-pill badge-danger nb-count"></span>
-          Northbound En Route
-        </a>
-        <a class="nav-link dash side-panel" id="sb-en-route-tab" data-toggle="tab" role="tab" aria-selected="false" aria-controls="sb-en-route-dash" href="#sb-en-route-pane">
-          <span class="badge badge-pill badge-danger sb-count"></span>
-          Soutbound En Route
-        </a>
-        <a class="nav-link dash side-panel" id="pending-return-trip-tab" data-toggle="tab" role="tab" aria-selected="false" aria-controls="pending-return-trip-dash" href="#pending-return-trip-pane">
-          <span class="badge badge-pill badge-danger pr-count"></span>
-          Pending Return Trip
-        </a>
-        <a class="nav-link dash side-panel" id="pending-delivery-tab" data-toggle="tab" role="tab" aria-selected="false" aria-controls="pending-delivery-tab" href="#pending-delivery-pane">
-          <span class="badge badge-pill badge-danger pd-count"></span>
-          Pending Delivery
+          <span class="badge badge-danger pp-count float-right"></span>
+          <span class="pp-amount"></span>
         </a>
       </nav>
     </div>
     <div class="col-sm-10 tab-info" style="overflow: hidden">
       <div class="tab-content p-2" id="dashboard-content">
-        <div class="tab-pane fade show active" id="pending-invoice-pane" role="tabpanel" aria-labelledby="pending-invoice-tab">
+        <div class="tab-pane fade" id="pending-invoice-pane" role="tabpanel" aria-labelledby="pending-invoice-tab">
           <section class="">
             <button type="button" class="btn btn-outline-secondary float-right this-week-toggle" action="pi" name="button">
               [<span>-</span>] This Week
@@ -69,8 +71,8 @@ $sunday_5weeks = date('m/d/Y', strtotime('sunday 5 weeks ago'));
             <table class="table table-striped table-sm dash-table" id="pending-invoice-trips">
               <thead>
                 <tr>
-                  <th>Linehaul</th>
-                  <th>Trailer</th>
+                  <th style="width: 80px">Linehaul</th>
+                  <th style="width: 160px">Trailer</th>
                   <th>Closed Date</th>
                   <th>Amount</th>
                   <th>Client</th>
@@ -87,10 +89,10 @@ $sunday_5weeks = date('m/d/Y', strtotime('sunday 5 weeks ago'));
               <table class="table table-striped table-sm dash-table" id="pending-payment-trips">
                 <thead>
                   <tr>
-                    <th>Invoice</th>
+                    <th style="width: 80px">Invoice</th>
                     <th>Client</th>
                     <th>Payment Due</th>
-                    <th>Amount</th>
+                    <th style="width: 80px">Amount</th>
                     <th>Reference</th>
                   </tr>
                 </thead>
@@ -99,16 +101,18 @@ $sunday_5weeks = date('m/d/Y', strtotime('sunday 5 weeks ago'));
             </div>
           </section>
         </div>
-        <div class="tab-pane fade" id="nb-en-route-pane">
+        <div class="tab-pane fade show active" id="nb-en-route-pane">
           <section class="">
             <h6 class="mb-0">Northbound En Route: <span class="text-secondary nb-count"></span></h6>
             <div class="table-container">
               <table class="table table-striped table-sm dash-table" id="northbound-trips">
                 <thead>
                   <tr>
-                    <th class="fit">Linehaul</th>
-                    <th class="fit">Unit</th>
+                    <th style="width: 80px">Linehaul</th>
+                    <th style="width: 80px">Unit</th>
                     <th>Destination</th>
+                    <th>Broker</th>
+                    <th>Appointment</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -124,9 +128,11 @@ $sunday_5weeks = date('m/d/Y', strtotime('sunday 5 weeks ago'));
               <table class="table table-striped table-sm dash-table" id="southbound-trips">
                 <thead>
                   <tr>
-                    <th class="fit">Linehaul</th>
-                    <th class="fit">Unit</th>
+                    <th style="width: 80px">Linehaul</th>
+                    <th style="width: 80px">Unit</th>
                     <th>Origin</th>
+                    <th>Broker</th>
+                    <th>Start Date</th>
                   </tr>
                 </thead>
                 <tbody></tbody>
@@ -141,8 +147,8 @@ $sunday_5weeks = date('m/d/Y', strtotime('sunday 5 weeks ago'));
               <table class="table table-striped table-sm dash-table" id="pending-return-trips">
                 <thead>
                   <tr>
-                    <th class="fit">Trip</th>
-                    <th class="fit">Trailer</th>
+                    <th style="width: 80px">Trip</th>
+                    <th style="width: 160px">Trailer</th>
                     <th>Appointment Date</th>
                   </tr>
                 </thead>

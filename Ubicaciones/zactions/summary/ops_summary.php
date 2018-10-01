@@ -5,7 +5,7 @@ require $root . '/plsuite/Resources/PHP/Utilities/initialScript.php';
 
 $sc = array();
 
-$query = "SELECT tl.lh_number linehaul , tl.origin_city o_city , tl.origin_state o_state , tl.destination_city d_city , tl.destination_state d_state , trk.truckNumber truck FROM ct_trip_linehaul tl LEFT JOIN ct_truck trk ON trk.pkid_truck = tl.current_tractor WHERE tl.date_arrival IS NULL AND tl.fk_idtrip <> '' AND tl.linehaul_status NOT IN('Closed' , 'Cancelled') AND tl.origin_zip = '78041'";
+$query = "SELECT tl.lh_number linehaul , tl.origin_city o_city , tl.origin_state o_state , tl.destination_city d_city , tl.destination_state d_state , trk.truckNumber truck, b.brokerName broker, tl.date_appointment appt FROM ct_trip_linehaul tl LEFT JOIN ct_truck trk ON trk.pkid_truck = tl.current_tractor LEFT JOIN ct_brokers b ON b.pkid_broker = tl.fkid_broker WHERE tl.date_arrival IS NULL AND tl.fk_idtrip <> '' AND tl.linehaul_status NOT IN('Closed' , 'Cancelled') AND tl.origin_zip = '78041'";
 
 $stmt = $db->prepare($query);
 $stmt->execute();
@@ -18,13 +18,19 @@ if ($rows == 0) {
 } else {
   while ($row = $rslt->fetch_assoc()) {
     $sc['data']['nb_trips']['count']++;
-    $sc['data']['nb_trips']['table'] .= "<tr><td class='fit'>$row[linehaul]</td><td class='fit'>$row[truck]</td><td>$row[d_city], $row[d_state]</td></tr>";
+    $sc['data']['nb_trips']['table'] .= "<tr>
+    <td style='width: 80px'>$row[linehaul]</td>
+    <td style='width: 80px'>$row[truck]</td>
+    <td>$row[d_city], $row[d_state]</td>
+    <td>$row[broker]</td>
+    <td>$row[appt]</td>
+    </tr>";
   }
 }
 
 
 
-$query = "SELECT tl.lh_number linehaul , tl.origin_city o_city , tl.origin_state o_state , tl.destination_city d_city , tl.destination_state d_state , trk.truckNumber truck FROM ct_trip_linehaul tl LEFT JOIN ct_truck trk ON trk.pkid_truck = tl.current_tractor WHERE tl.date_arrival IS NULL AND tl.fk_idtrip <> '' AND tl.linehaul_status NOT IN('Closed' , 'Cancelled') AND (tl.origin_zip <> '78041' AND tl.origin_zip <> '78045')";
+$query = "SELECT tl.lh_number linehaul , tl.origin_city o_city , tl.origin_state o_state , tl.destination_city d_city , tl.destination_state d_state , trk.truckNumber truck, tl.date_begin start_date, b.brokerName broker FROM ct_trip_linehaul tl LEFT JOIN ct_truck trk ON trk.pkid_truck = tl.current_tractor LEFT JOIN ct_brokers b ON tl.fkid_broker = b.pkid_broker WHERE tl.date_arrival IS NULL AND tl.fk_idtrip <> '' AND tl.linehaul_status NOT IN('Closed' , 'Cancelled') AND (tl.origin_zip <> '78041' AND tl.origin_zip <> '78045')";
 
 $stmt = $db->prepare($query);
 $stmt->execute();
@@ -37,13 +43,20 @@ if ($rows == 0) {
 } else {
   while ($row = $rslt->fetch_assoc()) {
     $sc['data']['sb_trips']['count']++;
-    $sc['data']['sb_trips']['table'] .= "<tr><td class='fit'>$row[linehaul]</td><td class='fit'>$row[truck]</td><td>$row[o_city], $row[o_state]</td></tr>";
+    $sc['data']['sb_trips']['table'] .= "
+    <tr>
+    <td style='width: 80px'>$row[linehaul]</td>
+    <td style='width: 80px'>$row[truck]</td>
+    <td>$row[o_city], $row[o_state]</td>
+    <td>$row[broker]</td>
+    <td>$row[start_date]</td>
+    </tr>";
   }
 }
 
 
 
-$query = "SELECT t.trip_number trip , t.trailer_number trailer , max(tl.date_departure) departure , max(tl.date_appointment) appointment FROM ct_trip t LEFT JOIN ct_trip_linehaul tl ON t.pkid_trip = tl.fk_idtrip WHERE t.trip_status NOT IN ('Cancelled', 'Closed') AND tl.linehaul_status NOT IN('Cancelled') GROUP BY t.trip_number HAVING count(tl.fk_idtrip) = 1";
+$query = "SELECT t.trip_number trip , t.trailer_number trailer , max(tl.date_departure) departure , max(tl.date_appointment) appointment, datediff(date(CURDATE()), tl.date_appointment) days FROM ct_trip t LEFT JOIN ct_trip_linehaul tl ON t.pkid_trip = tl.fk_idtrip WHERE t.trip_status NOT IN ('Cancelled', 'Closed') AND tl.linehaul_status NOT IN('Cancelled') GROUP BY t.trip_number HAVING count(tl.fk_idtrip) = 1";
 
 $stmt = $db->prepare($query);
 $stmt->execute();
@@ -56,7 +69,7 @@ if ($rows == 0) {
 } else {
   while ($row = $rslt->fetch_assoc()) {
     $sc['data']['pr_trips']['count']++;
-    $sc['data']['pr_trips']['table'] .= "<tr><td class='fit'>$row[trip]</td><td class='fit'>$row[trailer]</td><td>$row[appointment]</td></tr>";
+    $sc['data']['pr_trips']['table'] .= "<tr><td style='width: 80px'>$row[trip]</td><td style='width: 160px'>$row[trailer]</td><td>$row[appointment] ($row[days])</td></tr>";
   }
 }
 
@@ -77,7 +90,7 @@ if ($rows == 0) {
   while ($row = $rslt->fetch_assoc()) {
     $sc['data']['pi_trips']['count']++;
     $sc['data']['pi_trips']['amount'] += $row['rate'];
-    $sc['data']['pi_trips']['table'] .= "<tr><td>$row[linehaul]</td><td>$row[trailer]</td><td>$row[date_end] ($row[days])</td><td>$$row[rate]</td><td>$row[broker]</td></tr>";
+    $sc['data']['pi_trips']['table'] .= "<tr><td style='width: 80px'>$row[linehaul]</td><td style='width: 160px'>$row[trailer]</td><td>$row[date_end] ($row[days])</td><td>$$row[rate]</td><td>$row[broker]</td></tr>";
   }
 }
 
@@ -101,7 +114,7 @@ if ($rows == 0) {
     $due = date('Y-m-d', strtotime($row['payment_due']));
     $sc['data']['pp_trips']['count']++;
     $sc['data']['pp_trips']['amount'] += $row['rate'];
-    $sc['data']['pp_trips']['table'] .= "<tr><td>$row[invoice]</td><td>$row[broker]</td><td>$due ($row[days])</td><td>$$row[rate]</td><td>$row[br_reference]</td></tr>";
+    $sc['data']['pp_trips']['table'] .= "<tr><td style='width: 80px'>$row[invoice]</td><td>$row[broker]</td><td>$due ($row[days])</td><td style='width: 80px'>$$row[rate]</td><td>$row[br_reference]</td></tr>";
   }
 }
 
@@ -122,6 +135,10 @@ if ($rows == 0) {
   $sc['data']['pd_trips']['table'] = "<tr><td colspan='6'>No trips found</td><td></td><td></td></tr>";
 } else {
   while ($row = $rslt->fetch_assoc()) {
+    if ($row['days'] < 0) {
+      continue;
+    }
+
     $appt = date('Y-m-d H:i',strtotime($row['appointment']));
 
 
