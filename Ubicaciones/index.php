@@ -158,12 +158,13 @@ $sunday_5weeks = date('m/d/Y', strtotime('sunday 5 weeks ago'));
               <table class="table table-striped table-sm dash-table" id="pending-delivery-trips">
                 <thead>
                   <tr>
-                    <th class="">Linehaul</th>
-                    <th class="">Trailer</th>
-                    <th class="">Truck</th>
+                    <th class="" style="width: 80px">Linehaul</th>
+                    <th class="" style="width: 160px">Trailer</th>
+                    <th class="" style="width: 80px">Truck</th>
                     <th class="">Broker</th>
                     <th>Origin</th>
-                    <th>Appointment</th>
+                    <th>Appointment (Days)</th>
+                    <th style="width: 80px"></th>
                   </tr>
                 </thead>
                 <tbody>
