@@ -164,7 +164,7 @@ $sunday_5weeks = date('m/d/Y', strtotime('sunday 5 weeks ago'));
                     <th class="">Broker</th>
                     <th>Origin</th>
                     <th>Appointment (Days)</th>
-                    <!-- <th></th> -->
+                    <th style="width: 80px"></th>
                   </tr>
                 </thead>
                 <tbody>

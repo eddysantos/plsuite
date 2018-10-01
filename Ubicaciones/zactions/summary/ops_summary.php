@@ -133,8 +133,8 @@ if ($rows == 0) {
     <td style='width: 80px'>$row[tractor]</td>
     <td>$row[broker]</td><td>$row[o_city], $row[o_state]</td>
     <td>$appt ($row[days])</td>
+    <td style='width: 80px'><button class='btn btn-sm btn-outline-success disabled' disabled>Deliver</button></td>
     </tr>";
-    // <td><button class='btn btn-outline-success'>Deliver</button></td>
   }
 }
 
