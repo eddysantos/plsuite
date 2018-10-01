@@ -135,15 +135,11 @@ if ($rows == 0) {
   $sc['data']['pd_trips']['table'] = "<tr><td colspan='6'>No trips found</td><td></td><td></td></tr>";
 } else {
   while ($row = $rslt->fetch_assoc()) {
-    if ($row['days'] < 0) {
-      continue;
+    if ($row['days'] >= 0) {
+      $sc['data']['pd_trips']['count']++;
     }
 
     $appt = date('Y-m-d H:i',strtotime($row['appointment']));
-
-
-    $sc['data']['pd_trips']['count']++;
-    $sc['data']['pd_trips']['amount'] += $row['rate'];
     $sc['data']['pd_trips']['table'] .= "<tr>
     <td style='width: 80px'>$row[linehaul]</td>
     <td style='width: 160px'>$row[trailer]</td>
