@@ -1,6 +1,11 @@
 
+.table-container{
+  height: 100%;
+  padding-bottom: 80px;
+}
+
 .dash-table{
-  max-height: 250px;
+  max-height: -webkit-fill-available;
   overflow: scroll;
 	position: relative;
 }
@@ -16,7 +21,7 @@ table-layout: fixed;
 
 .dash-table tbody{
   overflow-y: scroll;
-  height: 225px;
+  height: -webkit-fill-available;
   /* width: 95%; */
   position: absolute;
 }
@@ -77,9 +82,9 @@ table-layout: fixed;
   padding-right: 0 !important; */
 }
 
-/* .main-details-container div{
+.main-details-container .div-100h{
   height: 100%;
-} */
+}
 
 .nav-pills.dash{
   border-radius: 0;
@@ -87,39 +92,25 @@ table-layout: fixed;
 
 .nav-link.dash{
   color: black;
-
 }
 
 .tab-info{
   overflow-x: scroll;
 }
 
-.nav-link.dash:hover{
+.nav-link.side-panel:hover{
   background-color: #444;
   color: white;
 }
 
-.nav-link.dash.active{
+.nav-link.active, .nav-link.active:hover{
   background-color: #E7E7E7;
   color:black;
 }
 
-.nav-link.dash.trucks{
-  border: none;
-  background: transparent;
-}
 
-.nav-link.dash.trucks:hover{
-  color: green;
-}
-
-.nav-link.dash.disabled:hover{
+.nav-link.disabled:hover{
   cursor: not-allowed;
   background: inherit;
   color: #6c757d;
-}
-
-.nav-link.dash.active.trucks{
-  background-color: transparent;
-  border-bottom: 1px solid rgb(75,139, 15);
 }
