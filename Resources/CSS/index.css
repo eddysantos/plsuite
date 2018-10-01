@@ -13,6 +13,10 @@
 .new-rows{
 }
 
+.nav-30-px span{
+  min-width: 30px;
+}
+
 .dash-table tr {
 width: 100%;
 display: inline-table;
