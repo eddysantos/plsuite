@@ -109,7 +109,7 @@ if ($rows == 0) {
 $sc['data']['pp_trips']['amount'] = number_format($sc['data']['pp_trips']['amount'], 2);
 
 
-$query = "SELECT tl.lh_number linehaul , t.trailer_number trailer , trk.truckNumber tractor , tl.date_appointment appointment , b.brokerName broker , tl.broker_reference br_reference FROM ct_trip_linehaul tl LEFT JOIN ct_trip t ON t.pkid_trip = tl.fk_idtrip LEFT JOIN ct_brokers b ON tl.fkid_broker = b.pkid_broker LEFT JOIN ct_truck trk ON trk.pkid_truck = tl.current_tractor WHERE tl.date_delivery IS NULL AND tl.fk_idtrip <> '' AND tl.linehaul_status NOT IN('Closed' , 'Cancelled') AND( tl.origin_zip <> '78041' AND tl.origin_zip <> '78045')";
+$query = "SELECT tl.lh_number linehaul , t.trailer_number trailer , trk.truckNumber tractor , tl.date_appointment appointment , b.brokerName broker , tl.broker_reference br_reference, tl.origin_city o_city, tl.origin_state o_state FROM ct_trip_linehaul tl LEFT JOIN ct_trip t ON t.pkid_trip = tl.fk_idtrip LEFT JOIN ct_brokers b ON tl.fkid_broker = b.pkid_broker LEFT JOIN ct_truck trk ON trk.pkid_truck = tl.current_tractor WHERE tl.date_delivery IS NULL AND tl.fk_idtrip <> '' AND tl.linehaul_status NOT IN('Closed' , 'Cancelled') AND( tl.origin_zip <> '78041' AND tl.origin_zip <> '78045')";
 
 $stmt = $db->prepare($query);
 $stmt->execute();
@@ -124,7 +124,7 @@ if ($rows == 0) {
   while ($row = $rslt->fetch_assoc()) {
     $sc['data']['pd_trips']['count']++;
     $sc['data']['pd_trips']['amount'] += $row['rate'];
-    $sc['data']['pd_trips']['table'] .= "<tr><td>$row[linehaul]</td><td>$row[trailer]</td><td>$row[tractor]</td><td>$row[broker]</td><td>$row[appointment]</td></tr>";
+    $sc['data']['pd_trips']['table'] .= "<tr><td>$row[linehaul]</td><td>$row[trailer]</td><td>$row[tractor]</td><td>$row[broker]</td><td>$row[o_city], $row[o_state]</td><td>$row[appointment]</td></tr>";
   }
 }
 
