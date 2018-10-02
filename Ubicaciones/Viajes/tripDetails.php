@@ -146,8 +146,86 @@ $lastEl = array_values(array_slice($linehauls, -1))[0];
   <body style="min-height:100%">
   <input type="text" name="" id="trip-identifier" value="<?php echo $trip_id?>" hidden>
   <input type="text" name="" id="year-identifier" value="<?php echo $tripyear?>" hidden>
+  <!-- <header id="trip-header"> <!-- This header appears for the trip information
+     <div class="custom-header">
+       <div class="custom-header-bar">&nbsp;</div>
+       <div class="">
+         <a class="ml-3 mr-5" role="button" id="backToDash" href="javascript:history.back()"><i class="fa fa-chevron-left"></i></a>
+         <div class="w-100 d-flex align-items-center justify-content-between">
+           <div class="pr-5">
+             Trip Status - <span class="trip-status" id="trip_status"></span>
+           </div>
+           <div class="">
+             <i class="fa fa-circle mr-2 trip" id="set-trip-status-button"></i> <!-- Agregar clase para status.
+             <button class="btn btn-outline-primary form-control mr-3 finalizeRecord" type-of-record="trip" action="Closed" tripyear="<?php echo $trip['tripyear']?>" recordid="<?php echo $trip['pkidtrip']?>" type="button" id="btnCloseTrip" name="button">
+               <i class="fa fa-check"></i> Close Trip
+             </button>
+             <button class="btn btn-outline-success form-control mr-3" name="button" data-toggle="modal" data-focus="false" data-target="#addLinehaulModal">
+               <i class="fa fa-plus"></i> Add Linehaul
+             </button>
+           </div>
+         </div>
+       </div>
+     </div>
+  </header> -->
 
-  <div class="" id="trip-information" >
+  <!-- <div class="main-details-container">
+    <div class="row div-100h">
+      <div class="col-sm-2 border border-top-0 border-bottom-0 border-left-0 grey-font">
+        <div class="row">
+          <div class="col-lg-4">
+            <p class="text-dark" >Trailer:</p>
+          </div>
+          <div class="col-lg-6">
+            <p id="trailer_number"></p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-4">
+            <p class="text-dark mb-0">Opened:</p>
+          </div>
+          <div class="col-lg-6">
+            <p class="mb-0" id="date_open"></p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-4">
+            <p class="text-dark">Closed:</p>
+          </div>
+          <div class="col-lg-6">
+            <p class="" id="date_close"></p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-6">
+            <p class="text-dark mb-0">Total Miles:</p>
+          </div>
+          <div class="col-lg-6 pl-0">
+            <p class="mb-0" id="total_miles"></p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-6">
+            <p class="text-dark mb-0">Total Rate:</p>
+          </div>
+          <div class="col-lg-6 pl-0">
+            $ <p class="mb-0 d-inline" id="total_rate"></p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-6">
+            <p class="text-dark mb-0">RPM:</p>
+          </div>
+          <div class="col-lg-6 pl-0">
+            $ <p class="mb-0 d-inline" id="rpm"></p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div> -->
+
+   <div class="" id="trip-information" >
     <header id="trip-header"> <!-- This header appears for the trip information -->
        <div class="custom-header">
          <div class="custom-header-bar">&nbsp;</div>
@@ -158,7 +236,7 @@ $lastEl = array_values(array_slice($linehauls, -1))[0];
                Trip Status - <span class="trip-status" id="trip_status"></span>
              </div>
              <div class="">
-               <i class="fa fa-circle mr-2 trip" id="set-trip-status-button"></i> <!-- Agregar clase para status. -->
+               <i class="fa fa-circle mr-2 trip" id="set-trip-status-button"></i> <!-- Agregar clase para status.-->
                <button class="btn btn-outline-primary form-control mr-3 finalizeRecord" type-of-record="trip" action="Closed" tripyear="<?php echo $trip['tripyear']?>" recordid="<?php echo $trip['pkidtrip']?>" type="button" id="btnCloseTrip" name="button">
                  <i class="fa fa-check"></i> Close Trip
                </button>
@@ -170,7 +248,7 @@ $lastEl = array_values(array_slice($linehauls, -1))[0];
          </div>
        </div>
     </header>
-    <div class="container-fluid grey-font mt-3" id="trip-summary"> <!-- This content appears to show the trip information. -->
+    <div class="container-fluid grey-font mt-3" id="trip-summary"> <!-- This content appears to show the trip information.-->
      <div class="row">
        <div class="col-lg-3">
          <div class="row">
@@ -230,21 +308,11 @@ $lastEl = array_values(array_slice($linehauls, -1))[0];
          </table>
        </div>
      </div>
-     <!-- <div class="grey-font mt-5">
-       <div class="">
-         <h3>Comments</h3>
-       </div>
-       <div class="card">
-         <div class="card-body">
-
-         </div>
-       </div>
-     </div> -->
    </div>
   </div>
 
   <div class="" id="linehaul-information" style="display: none">
-     <header id="lh-header"> <!-- This header appears for the linehaul header -->
+     <header id="lh-header">
        <div class="custom-header">
          <div class="custom-header-bar">&nbsp;</div>
          <div class="">
@@ -266,7 +334,7 @@ $lastEl = array_values(array_slice($linehauls, -1))[0];
      <div class="container-fluid">
        <div class="alert linehaulSavedNotice text-center mt-3" role="alert" style="display: none"></div>
      </div>
-     <div class="container-fluid grey-font mt-3" id="lh-summary"> <!-- This content appears to show the linehaul information. -->
+     <div class="container-fluid grey-font mt-3" id="lh-summary"> <!-- This content appears to show the linehaul information.-->
        <div class="row">
          <div class="col-lg-6">
            <form class="form-group" id="lh-details-form">
@@ -598,14 +666,6 @@ $lastEl = array_values(array_slice($linehauls, -1))[0];
                  </div>
                </div>
              </div>
-
-             <!-- <div class="row">
-               <div class="col-12">
-                 <div class="form-group">
-                   <button type="button" class="btn btn-outline-primary finalizeRecord linehaul closelh" name="button" data-toggle="tooltip" data-placement="top" title="Close Trip" type-of-record="linehaul" action="Closed" tripyear="<?php echo $trip['tripyear']?>"><i class="far fa-check-circle"></i></button>
-                 </div>
-               </div>
-             </div> -->
            </div>
 
            <div class="" id="lh-edit-disabled" style="display: none">
@@ -616,30 +676,10 @@ $lastEl = array_values(array_slice($linehauls, -1))[0];
                  </div>
                </div>
              </div>
-
-             <!-- <div class="row">
-               <div class="col-12">
-                 <div class="form-group">
-                   <button type="button" class="btn btn-outline-success saveLhChanges" tripid="<?php echo $trip['pkidtrip']?>" tripyear="<?php echo $trip['tripyear']?>" form-parent="#lh-details-form" name="button" data-toggle="tooltip" data-placement="top" title="Save Changes"><i class="far fa-save"></i></button>
-                 </div>
-               </div>
-             </div> -->
-
-             <!-- <div class="row">
-               <div class="col-12">
-                 <div class="form-group">
-                   <button type="button" class="btn btn-outline-primary finalizeRecord linehaul closelh" name="button" data-toggle="tooltip" data-placement="top" title="Close Trip" type-of-record="linehaul" action="Closed" tripyear="<?php echo $trip['tripyear']?>"><i class="far fa-check-circle"></i></button>
-                 </div>
-               </div>
-             </div> -->
            </div>
 
          </div>
          <div class="col-lg-5">
-           <!-- <div class="nav nav-tabs" id="linehaul-tabs" role="tablist">
-             <a class="nav-item nav-link active" id="linehaul-tabs-movements" data-toggle="tab" role="tab" href="#lh-movements">Movements</a>
-             <a class="nav-item nav-link" id="linehaul-tabs-deductions" data-toggle="tab" role="tab" href="#lh-deductions">Deductions</a>
-           </div> -->
            <div class="tab-content">
              <div class="tab-pane fade show active" id="lh-movements">
                <div class="clearfix mt-1 mb-1">

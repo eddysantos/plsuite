@@ -245,3 +245,16 @@ aside p{
   height: 100%;
   margin-bottom: 40px;
 }
+
+.main-details-container{
+  height: calc(100vh - 110px);
+  margin-left: 15px;
+  margin-right: 15px;
+	/* margin-top: 58px; */
+  /* margin: 10px 10px 10px 10px;
+  padding-right: 0 !important; */
+}
+
+.main-details-container .div-100h{
+  height: 100%;
+}
