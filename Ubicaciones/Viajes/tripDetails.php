@@ -331,10 +331,391 @@ $lastEl = array_values(array_slice($linehauls, -1))[0];
          </div>
        </div>
      </header>
-     <div class="container-fluid">
+     <!-- <div class="container-fluid">
        <div class="alert linehaulSavedNotice text-center mt-3" role="alert" style="display: none"></div>
+     </div> -->
+
+     <div class="main-details-container">
+       <div class="row div-100h">
+         <div class="col-sm-2 ml-0 pl-0 border border-bottom-0 border-left-0 border-top-0 ml-0 pl-0 pr-0">
+           <nav class="nav flex-column nav-30-px" id="lh-details-tablist" role="tablist">
+             <a class="nav-link dash side-panel active" id="lh-details-tab" data-toggle="tab" role="tab" aria-selected="true" aria-controls="lh-details" href="#lh-details-pane">
+               Linehaul Details
+             </a>
+             <a class="nav-link dash side-panel" id="lh-movs-tab" data-toggle="tab" role="tab" aria-selected="false" aria-controls="lh-movs-dash" href="#lh-movs-pane">
+               Movements
+             </a>
+             <a class="nav-link disabled dash side-panel" id="lh-expenses-tab" data-toggle="tab" role="tab" aria-selected="false" aria-controls="lh-expenses-dash" href="#lh-expenses-pane">
+               Expenses
+             </a>
+             <a class="nav-link disabled dash side-panel " id="lh-dispatch-log-tab" data-toggle="tab" role="tab" aria-selected="false" aria-controls="lh-dispatch-log-tab" href="#lh-dispatch-log-pane" disabled="true">
+               Dispatch Communications
+             </a>
+           </nav>
+         </div>
+         <div class="col-sm-10 tab-info">
+           <div class="tab-content p-1" id="linehaul-details-panes">
+             <div class="tab-pane fade show active" id="lh-details-pane" role="tab-panel" aria-labelledby="lh-details-tab">
+               <div class="row">
+                 <div class="col-lg-10 offset-1">
+                   <form class="form-group" id="lh-details-form">
+                     <fieldset id="lh-fields">
+                       <input type="text" class="linehaulid" id="linehaulid" name="" value="" hidden>
+                       <input type="text" class="lh_status" name="" value="" hidden>
+                       <div class="form-row">
+                         <label for="" class="col-form-label col-md-2">Trailer</label>
+                         <div class="form-group col-md-6">
+                           <input type="text" class="form-control trailer_number readonly" readonly name="" value="">
+                         </div>
+                       </div>
+                       <div class="form-row">
+                         <label for="" class="col-form-label col-md-2">Broker</label>
+                         <div class="form-group col-md-6">
+                           <input type="text" class="form-control broker popup-input" id-display="#broker-popup-list-lh-details" db-id="" name="" value="">
+                           <div id="broker-popup-list-lh-details" class="popup-list mt-2" style="display: none; z-index: 9999">
+                           </div>
+                         </div>
+                         <label for="" class="col-form-label col-md-2 text-right">Reference</label>
+                         <div class="form-group col-md-2">
+                           <input type="text" class="form-control broker_reference" name="" value="">
+                         </div>
+                       </div>
+
+                       <div class="form-row">
+                         <label for="" class="col-form-label col-md-2">Origin</label>
+                         <div class="form-group col-md-2">
+                           <input type="text" class="form-control origin_zip disabled" name="" value="" readonly>
+                         </div>
+                         <div class="form-group col-md-1">
+                           <input type="text" class="form-control origin_state disabled" name="" value="" readonly>
+                         </div>
+                         <div class="form-group col-md-3">
+                           <input type="text" class="form-control origin_city disabled" name="" value="" readonly>
+                         </div>
+                         <label for="" class="col-form-label col-md-2 text-right">Trip Rate</label>
+                         <div class="form-group col-md-2">
+                           <div class="input-group">
+                             <div class="input-group-addon p-0">
+                               <span class="input-group-text">$</span>
+                             </div>
+                             <input type="text" class="form-control rate" name="" value="">
+                           </div>
+                         </div>
+                       </div>
+
+                       <div class="form-row">
+                         <label for="" class="col-form-label col-md-2">Destination</label>
+                         <div class="form-group col-md-2">
+                           <input type="text" class="form-control destination_zip readonly" name="" value="" disabled>
+                         </div>
+                         <div class="form-group col-md-1">
+                           <input type="text" class="form-control destination_state readonly" name="" value="" disabled>
+                         </div>
+                         <div class="form-group col-md-3">
+                           <input type="text" class="form-control destination_city readonly" name="" value="" disabled>
+                         </div>
+                         <label for="" class="col-form-label col-md-2 text-right ">Empty Miles</label>
+                         <div class="form-group col-md-2">
+                           <input type="text" class="form-control empty_miles disabled" name="" value="" readonly>
+                         </div>
+                       </div>
+
+                       <div class="form-row">
+                         <label for="" class="col-form-label col-md-2">Appointment</label>
+                         <div class="form-group col-md-4">
+                           <input type="date" class="form-control appointment date" name="" value="">
+                         </div>
+                         <div class="form-group col-md-1">
+                           <select class="form-control appointment hour" id="appointment_time_hour" name="appointment_time_hour">
+                             <option value="">Hr</option>
+                             <option value="01">01</option>
+                             <option value="02">02</option>
+                             <option value="03">03</option>
+                             <option value="04">04</option>
+                             <option value="05">05</option>
+                             <option value="06">06</option>
+                             <option value="07">07</option>
+                             <option value="08">08</option>
+                             <option value="09">09</option>
+                             <option value="10">10</option>
+                             <option value="11">11</option>
+                             <option value="12">12</option>
+                             <option value="13">13</option>
+                             <option value="14">14</option>
+                             <option value="15">15</option>
+                             <option value="16">16</option>
+                             <option value="17">17</option>
+                             <option value="18">18</option>
+                             <option value="19">19</option>
+                             <option value="20">20</option>
+                             <option value="21">21</option>
+                             <option value="22">22</option>
+                             <option value="23">23</option>
+                             <option value="24">24</option>
+                           </select>
+                         </div>
+                         <div class="form-group col-md-1 pl-0">
+                           <select class="form-control appointment minute" id="appointment_time_minute" name="appointment_time_minute">
+                             <option value="">Min</option>
+                             <option value="00">00</option>
+                             <option value="05">05</option>
+                             <option value="10">10</option>
+                             <option value="15">15</option>
+                             <option value="20">20</option>
+                             <option value="25">25</option>
+                             <option value="30">30</option>
+                             <option value="35">35</option>
+                             <option value="40">40</option>
+                             <option value="45">45</option>
+                             <option value="50">50</option>
+                             <option value="55">55</option>
+                           </select>
+                         </div>
+                         <label for="" class="col-form-label col-md-2 text-right ">Loaded Miles</label>
+                         <div class="form-group col-md-2">
+                           <input type="text" class="form-control loaded_miles disabled" name="" value="" readonly>
+                         </div>
+                       </div>
+
+                       <div class="form-row">
+                         <label for="" class="col-form-label col-md-2">Departure</label>
+                         <div class="form-group col-md-4">
+                           <input type="date" class="form-control departure date" name="" value="">
+                         </div>
+                         <div class="form-group col-md-1">
+                           <select class="form-control departure hour" id="departure_time_hour" name="departure_time_hour">
+                             <option value="">Hr</option>
+                             <option value="01">01</option>
+                             <option value="02">02</option>
+                             <option value="03">03</option>
+                             <option value="04">04</option>
+                             <option value="05">05</option>
+                             <option value="06">06</option>
+                             <option value="07">07</option>
+                             <option value="08">08</option>
+                             <option value="09">09</option>
+                             <option value="10">10</option>
+                             <option value="11">11</option>
+                             <option value="12">12</option>
+                             <option value="13">13</option>
+                             <option value="14">14</option>
+                             <option value="15">15</option>
+                             <option value="16">16</option>
+                             <option value="17">17</option>
+                             <option value="18">18</option>
+                             <option value="19">19</option>
+                             <option value="20">20</option>
+                             <option value="21">21</option>
+                             <option value="22">22</option>
+                             <option value="23">23</option>
+                             <option value="24">24</option>
+                           </select>
+                         </div>
+                         <div class="form-group col-md-1 pl-0">
+                           <select class="form-control departure minute" id="departure_time_minute" name="departure_time_minute">
+                             <option value="">Min</option>
+                             <option value="00">00</option>
+                             <option value="05">05</option>
+                             <option value="10">10</option>
+                             <option value="15">15</option>
+                             <option value="20">20</option>
+                             <option value="25">25</option>
+                             <option value="30">30</option>
+                             <option value="35">35</option>
+                             <option value="40">40</option>
+                             <option value="45">45</option>
+                             <option value="50">50</option>
+                             <option value="55">55</option>
+                           </select>
+                         </div>
+                         <label for="" class="col-form-label col-md-2 text-right ">Total Miles</label>
+                         <div class="form-group col-md-2">
+                           <input type="text" class="form-control total_miles disabled" name="" value="" readonly>
+                         </div>
+                       </div>
+
+                       <div class="form-row">
+                         <label for="" class="col-form-label col-md-2">Arrival</label>
+                         <div class="form-group col-md-4">
+                           <input type="date" class="form-control arrival date" name="" value="">
+                         </div>
+                         <div class="form-group col-md-1">
+                           <select class="form-control arrival hour" id="arrival_time_hour" name="arrival_time_hour">
+                             <option value="">Hr</option>
+                             <option value="01">01</option>
+                             <option value="02">02</option>
+                             <option value="03">03</option>
+                             <option value="04">04</option>
+                             <option value="05">05</option>
+                             <option value="06">06</option>
+                             <option value="07">07</option>
+                             <option value="08">08</option>
+                             <option value="09">09</option>
+                             <option value="10">10</option>
+                             <option value="11">11</option>
+                             <option value="12">12</option>
+                             <option value="13">13</option>
+                             <option value="14">14</option>
+                             <option value="15">15</option>
+                             <option value="16">16</option>
+                             <option value="17">17</option>
+                             <option value="18">18</option>
+                             <option value="19">19</option>
+                             <option value="20">20</option>
+                             <option value="21">21</option>
+                             <option value="22">22</option>
+                             <option value="23">23</option>
+                             <option value="24">24</option>
+                           </select>
+                         </div>
+                         <div class="form-group col-md-1 pl-0">
+                           <select class="form-control arrival minute" id="arrival_time_minute" name="arrival_time_minute">
+                             <option value="">Min</option>
+                             <option value="00">00</option>
+                             <option value="05">05</option>
+                             <option value="10">10</option>
+                             <option value="15">15</option>
+                             <option value="20">20</option>
+                             <option value="25">25</option>
+                             <option value="30">30</option>
+                             <option value="35">35</option>
+                             <option value="40">40</option>
+                             <option value="45">45</option>
+                             <option value="50">50</option>
+                             <option value="55">55</option>
+                           </select>
+                         </div>
+                         <label for="" class="col-form-label col-md-2 text-right">RPM</label>
+                         <div class="form-group col-md-2">
+                           <div class="input-group">
+                             <div class="input-group-addon p-0">
+                               <span class="input-group-text">$</span>
+                             </div>
+                             <input type="text" class="form-control rpm disabled" name="" value="" readonly>
+                           </div>
+                         </div>
+                       </div>
+
+
+                       <div class="form-row">
+                         <label for="" class="col-form-label col-md-2">Delivery</label>
+                         <div class="form-group col-md-4">
+                           <input type="date" class="form-control delivery date" name="" value="">
+                         </div>
+                         <div class="form-group col-md-1">
+                           <select class="form-control delivery hour" id="delivery_time_hour" name="delivery_time_hour">
+                             <option value="">Hr</option>
+                             <option value="01">01</option>
+                             <option value="02">02</option>
+                             <option value="03">03</option>
+                             <option value="04">04</option>
+                             <option value="05">05</option>
+                             <option value="06">06</option>
+                             <option value="07">07</option>
+                             <option value="08">08</option>
+                             <option value="09">09</option>
+                             <option value="10">10</option>
+                             <option value="11">11</option>
+                             <option value="12">12</option>
+                             <option value="13">13</option>
+                             <option value="14">14</option>
+                             <option value="15">15</option>
+                             <option value="16">16</option>
+                             <option value="17">17</option>
+                             <option value="18">18</option>
+                             <option value="19">19</option>
+                             <option value="20">20</option>
+                             <option value="21">21</option>
+                             <option value="22">22</option>
+                             <option value="23">23</option>
+                             <option value="24">24</option>
+                           </select>
+                         </div>
+                         <div class="form-group col-md-1 pl-0">
+                           <select class="form-control delivery minute" id="delivery_time_minute" name="delivery_time_minute">
+                             <option value="">Min</option>
+                             <option value="00">00</option>
+                             <option value="05">05</option>
+                             <option value="10">10</option>
+                             <option value="15">15</option>
+                             <option value="20">20</option>
+                             <option value="25">25</option>
+                             <option value="30">30</option>
+                             <option value="35">35</option>
+                             <option value="40">40</option>
+                             <option value="45">45</option>
+                             <option value="50">50</option>
+                             <option value="55">55</option>
+                           </select>
+                         </div>
+
+                       </div>
+                       <div class="form-row">
+                         <label for="" class="col-form-label col-md-2">Comments</label>
+                         <div class="col-md-10">
+                           <textarea name="" id="lh_comments" class="form-control lh_comment" rows="8"></textarea>
+                         </div>
+                       </div>
+
+                     </fieldset>
+                   </form>
+                 </div>
+                 <div class="col-lg-1">
+
+                   <div class="" id="lh-edit-enabled">
+
+                     <div class="row" style="display: none" id="cancel-editing">
+                       <div class="col-12">
+                         <div class="form-group">
+                           <button type="button" class="btn btn-outline-secondary" id="cancel-editing-button" name="button" data-container="body" data-toggle="tooltip" data-placement="top" title="Disable Editing"><i class="fas fa-undo-alt"></i></button>
+                         </div>
+                       </div>
+                     </div>
+
+                     <div class="row">
+                       <div class="col-12">
+                         <div class="form-group">
+                           <button type="button" class="btn btn-danger finalizeRecord linehaul" form-parent="#lh-details-form" name="button" data-container="body" data-toggle="tooltip" data-placement="top" title="Cancel Trip" type-of-record="linehaul" action="Cancelled" tripyear="<?php echo $trip['tripyear']?>"><i class="fas fa-ban"></i></button>
+                         </div>
+                       </div>
+                     </div>
+
+                     <div class="row">
+                       <div class="col-12">
+                         <div class="form-group">
+                           <button type="button" class="btn btn-outline-success saveLhChanges" tripid="<?php echo $trip['pkidtrip']?>" tripyear="<?php echo $trip['tripyear']?>" form-parent="#lh-details-form" name="button" data-toggle="tooltip" data-placement="top" title="Save Changes"><i class="far fa-save"></i></button>
+                         </div>
+                       </div>
+                     </div>
+                   </div>
+
+                   <div class="" id="lh-edit-disabled" style="display: none">
+                     <div class="row">
+                       <div class="col-12">
+                         <div class="form-group">
+                           <button type="button" class="btn btn-outline-secondary" id="enable-editing" name="button" data-container="body" data-toggle="tooltip" data-placement="top" title="Enable Editing"><i class="fas fa-pencil-alt"></i></button>
+                         </div>
+                       </div>
+                     </div>
+                   </div>
+
+                 </div>
+               </div>
+             </div>
+             <div class="tab-pane fade" id="lh-movs-pane" role="tab-panel" aria-labelledby="lh-movs-tab">
+               <div class="clearfix mt-1 mb-1">
+                 <button type="button" class="btn btn-outline-success float-right add-movement" name="button"><i class="fa fa-plus"></i> Add Movement</button>
+               </div>
+               <table class="table table-striped border text-dark">
+                 <tbody id="mov-dash"></tbody>
+               </table>
+             </div>
+           </div>
+         </div>
+       </div>
      </div>
-     <div class="container-fluid grey-font mt-3" id="lh-summary"> <!-- This content appears to show the linehaul information.-->
+
+     <!--div class="container-fluid grey-font mt-3" id="lh-summary">  This content appears to show the linehaul information.
        <div class="row">
          <div class="col-lg-6">
            <form class="form-group" id="lh-details-form">
@@ -695,7 +1076,7 @@ $lastEl = array_values(array_slice($linehauls, -1))[0];
            </div>
          </div>
        </div>
-    </div>
+    </div> -->
   </div>
 
 

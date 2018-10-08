@@ -329,6 +329,14 @@ $(document).ready(function(){
      });
    })
 
+  $('.next-pane').click(function(){
+    $('#add_trip_progress').find('.nav-link.active').parent().next().find('a').tab('show');
+  });
+
+  $('#trip-details-content').on('blur', 'input', function(){
+
+  })
+
 
 });
 

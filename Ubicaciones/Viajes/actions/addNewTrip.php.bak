@@ -37,9 +37,6 @@ $db->query('LOCK TABLES ct_trip WRITE ;');
 $db->query("SET TRANSACTION ISOLATION LEVEL READ UNCOMMITTED;");
 
 
-
-
-
 try {
 
   $db->begin_transaction();
