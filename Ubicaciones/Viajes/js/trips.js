@@ -330,10 +330,52 @@ $(document).ready(function(){
    })
 
   $('.next-pane').click(function(){
-    $('#add_trip_progress').find('.nav-link.active').parent().next().find('a').tab('show');
+    var next_pane = $('#add_trip_progress')
+      .find('.nav-link.active')
+      .parent().next().find('a');
+
+    next_pane.attr('disabled', false)
+      .removeClass('disabled')
+      .tab('show');
   });
 
-  $('#trip-details-content').on('blur', 'input', function(){
+  $('[tab-type="addTripModal"]').on('show.bs.tab', function(){
+    var next_pane = $(this).parent().next().find('a');
+
+    var validate = next_pane.attr('disabled') == 'disabled';
+
+    if (validate) {
+      $('.next-pane').addClass('disabled').attr('disabled', true);
+    }
+  });
+
+  $('#trip-details-content').on('blur', 'input, select', function(e){
+    if ($(this).attr('readonly')) {
+      return false;
+    }
+    var value = $(this).val();
+    var dbid = $(this).attr('db-id');
+    var activate_next = false;
+
+    var validation = (value == "" || typeof(value) == undefined || (dbid == "" && undefined != typeof(dbid)));
+
+    if (validation) {
+      $(this).addClass('is-invalid').removeClass('is-valid').attr('is-valid', false);
+    } else {
+      $(this).removeClass('is-invalid').addClass('is-valid').attr('is-valid', true);
+    }
+
+    $('#trip-details-content .tab-pane.fade.show.active').find('input, select').each(function(){
+      if ($(this).attr('is-valid')) {
+        activate_next = true;
+      } else {
+        activate_next = false;
+      }
+    });
+
+    if (activate_next) {
+      $('.next-pane').removeClass('disabled').attr('disabled', false)
+    }
 
   })
 
