@@ -907,6 +907,11 @@ $(document).ready(function(){
     let movs = first_and_last(trip_id);
     movs.done(function(r){
       r = JSON.parse(r);
+      console.log(r);
+      if (r.code == 2) {
+        alertify.notify('No info was found for last movement.');
+        return false;
+      }
       var first_loc_input = $this.find('.zipinput').first();
       first_loc_input.val(r.data.last.destination.zip).attr('zip', r.data.last.destination.zip);
       first_loc_input.parents('.row').find('.cityInput').val(r.data.last.destination.city);

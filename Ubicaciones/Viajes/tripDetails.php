@@ -132,9 +132,12 @@ $lastEl = array_values(array_slice($linehauls, -1))[0];
 
 /* GET LAST DESTINATION FROM TRIP */
 
-$query = "SELECT destination_city city, destination_state state, destination_zip zip FROM ct_trip_linehaul_movement WHERE pkid_movement = $trip[last_movement]";
-$stmt = $db->query($query);
-$last_destination = $stmt->fetch_assoc();
+if ($trip['last_movement']) {
+  $query = "SELECT destination_city city, destination_state state, destination_zip zip FROM ct_trip_linehaul_movement WHERE pkid_movement = $trip[last_movement]";
+  $stmt = $db->query($query);
+  $last_destination = $stmt->fetch_assoc();
+}
+
 
  ?>
 

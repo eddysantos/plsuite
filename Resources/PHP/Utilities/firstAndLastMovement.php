@@ -85,6 +85,14 @@ foreach ($movements as $movement => $value) {
   }
 
   $rslt = $stmt->get_result();
+  $rows = $rslt->num_rows;
+
+  if ($rows == 0) {
+    $system_callback['code'] = 2;
+    $system_callback['message'] = "No last movements found";
+    exit_script($system_callback);
+  }
+
   while ($row = $rslt->fetch_assoc()) {
     $movements[$movement]['origin']['city'] = $row['ocity'];
     $movements[$movement]['origin']['state'] = $row['ostate'];
