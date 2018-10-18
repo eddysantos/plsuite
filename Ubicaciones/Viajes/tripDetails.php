@@ -1033,5 +1033,5 @@ require $root . '/plsuite/Resources/PHP/Utilities/footer.php';
  ?>
  <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script> -->
  <script src="/plsuite/Resources/jquery_ui_1_12_1/jquery-ui.min.js" charset="utf-8"></script>
- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCyESDBd2xdkwed-L8ndjifpBlJX9Dpf7w" async defer></script>
+ <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAQSdzCESsae3JfhpTN8WEagdE1Zj4AA0A" async defer></script>
  <script src="js/tripDetails.js" charset="utf-8"></script>

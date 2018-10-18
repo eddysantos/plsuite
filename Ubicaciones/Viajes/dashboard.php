@@ -135,5 +135,5 @@ if ($rslt->num_rows == 0) {
 require 'modales/addTrip.php';
 require $root . '/plsuite/Resources/PHP/Utilities/footer.php';
  ?>
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCyESDBd2xdkwed-L8ndjifpBlJX9Dpf7w" async defer></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAQSdzCESsae3JfhpTN8WEagdE1Zj4AA0A" async defer></script>
 <script src="/plsuite/Ubicaciones/Viajes/js/trips.js" charset="utf-8"></script>
