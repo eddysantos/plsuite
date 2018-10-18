@@ -99,10 +99,10 @@
                   <small class="invalid-feedback font-italic" style="position:relative; width:300px">This field cannot be empty.</small>
                 </div>
                 <div class="col-lg-2" readonly>
-                  <input type="text" class="form-control stateInput" name="" value="<?php echo $last_destination['state']?>" placeholder="State" readonly disabled>
+                  <input type="text" class="form-control stateInput" name="" value="" placeholder="State" readonly disabled>
                 </div>
                 <div class="col-lg-3">
-                  <input type="text" class="form-control cityInput" name="" value="<?php echo $last_destination['city']?>" placeholder="City" readonly disabled>
+                  <input type="text" class="form-control cityInput" name="" value="" placeholder="City" readonly disabled>
                 </div>
                 <div class="col-lg-2">
                   <select class="form-control mov-type" name="" data-is-valid=true>
@@ -243,7 +243,7 @@
                   <div class="col-sm-2 offset-1 text-right">
                     Trip
                   </div>
-                  <div class="col-sm-7 grey-font">
+                  <div class="col-sm-9 grey-font">
                     <p class="d-inline"><span class="confirm-trip-info"></span></p>
                   </div>
                 </div>
@@ -251,7 +251,7 @@
                   <div class="col-sm-2 offset-1 text-right">
                     Truck
                   </div>
-                  <div class="col-sm-7 grey-font">
+                  <div class="col-sm-9 grey-font">
                     <p class="d-inline"><span class="confirm-truck-number"></span></p>
                     <p class="d-inline font-weight-light font-italic">(<span class="confirm-truck-plates"></span>)</p>
                   </div>
@@ -260,7 +260,7 @@
                   <div class="col-sm-2 offset-1 text-right">
                     Trailer
                   </div>
-                  <div class="col-sm-7 grey-font">
+                  <div class="col-sm-9 grey-font">
                     <p class="d-inline"><span class="confirm-trailer-number"></span></p>
                     <p class="d-inline font-weight-light font-italic">(<span class="confirm-trailer-plates"></span>)</p>
                   </div>
@@ -269,21 +269,21 @@
                   <div class="col-sm-2 offset-1 text-right">
                     Driver(s)
                   </div>
-                  <div class="col-sm-7 mb-2 grey-font confirm-driver-list">
+                  <div class="col-sm-9 mb-2 grey-font confirm-driver-list">
                   </div>
                 </div>
                 <div class="row">
                   <div class="col-sm-2 offset-1 text-right">
                     Route
                   </div>
-                  <div class="col-sm-7 grey-font" id="movement-confirmation">
+                  <div class="col-sm-9 grey-font" id="movement-confirmation">
                   </div>
                 </div>
                 <div class="row">
                   <div class="col-sm-2 offset-1 text-right">
                     Appointment
                   </div>
-                  <div class="col-sm-7 grey-font" id="linehaul-appointment">
+                  <div class="col-sm-9 grey-font" id="linehaul-appointment">
                     <p>
                       <span class="date"></span>
                       <span class="hour"></span>:<span class="minutes"></span>
@@ -294,7 +294,7 @@
                   <div class="col-sm-2 offset-1 text-right">
                     Miles
                   </div>
-                  <div class="col-sm-7 grey-font">
+                  <div class="col-sm-9 grey-font">
                     <p class="d-inline"><span class="total-miles"></span></p>
                   </div>
                 </div>
@@ -302,7 +302,7 @@
                   <div class="col-sm-2 offset-1 text-right">
                     Rate
                   </div>
-                  <div class="col-sm-7 grey-font">
+                  <div class="col-sm-9 grey-font">
                     <p class="d-inline">$ <span class="trip-rate-confirmation"></span></p>
                   </div>
                 </div>
@@ -310,7 +310,7 @@
                   <div class="col-sm-2 offset-1 text-right">
                     RPM
                   </div>
-                  <div class="col-sm-7 grey-font">
+                  <div class="col-sm-9 grey-font">
                     <p class="d-inline">$ <span class="rpm-confirmation"></span></p>
                   </div>
                 </div>
@@ -318,7 +318,7 @@
                   <div class="col-sm-2 offset-1 text-right">
                     Broker
                   </div>
-                  <div class="col-sm-7 grey-font">
+                  <div class="col-sm-9 grey-font">
                     <p class="d-inline brokerid-confirmation"></p>
                   </div>
                 </div>
@@ -326,7 +326,7 @@
                   <div class="col-sm-2 offset-1 text-right">
                     Reference
                   </div>
-                  <div class="col-sm-7 grey-font">
+                  <div class="col-sm-9 grey-font">
                     <p class="d-inline broker-reference-confirmation"></p>
                   </div>
                 </div>
@@ -342,7 +342,7 @@
           <button type="button" class="btn btn-primary next-pane disabled" disabled>Next</button>
         </div>
         <div class="add-trip-buttons" style="display: none">
-          <button type="button" class="btn btn-primary add-trip next-pane disabled" disabled>Add Trip</button>
+          <button type="button" class="btn btn-primary add-linehaul next-pane disabled" disabled>Add Trip</button>
         </div>
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
       </div>

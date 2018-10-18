@@ -6,9 +6,9 @@ $query = "SELECT count(pk_idlinehaul) count FROM ct_trip_linehaul WHERE fk_idtri
 
 $stmt = $db->prepare($query);
 if (!($stmt)) {
-  $system_callbac['code'] = "500";
-  $system_callbac['db'] = $db;
-  $system_callbac['message'] = "Error during count TRIP LINEHAULS query prepare [$db->errno]: $db->error";
+  $system_callback['code'] = "500";
+  $system_callback['db'] = $db;
+  $system_callback['message'] = "Error during count TRIP LINEHAULS query prepare [$db->errno]: $db->error";
   exit_script($system_callback);
 }
 
@@ -16,16 +16,16 @@ $stmt->bind_param('s',
 $pk_trip
 );
 if (!($stmt)) {
-  $system_callbac['code'] = "500";
-  $system_callbac['query'] = $query;
-  $system_callbac['message'] = "Error during count TRIP LINEHAULS variables binding [$stmt->errno]: $stmt->error";
+  $system_callback['code'] = "500";
+  $system_callback['query'] = $query;
+  $system_callback['message'] = "Error during count TRIP LINEHAULS variables binding [$stmt->errno]: $stmt->error";
   exit_script($system_callback);
 }
 
 if (!($stmt->execute())) {
-  $system_callbac['code'] = "500";
-  $system_callbac['query'] = $query;
-  $system_callbac['message'] = "Error during count TRIP LINEHAULS query execution [$stmt->errno]: $stmt->error";
+  $system_callback['code'] = "500";
+  $system_callback['query'] = $query;
+  $system_callback['message'] = "Error during count TRIP LINEHAULS query execution [$stmt->errno]: $stmt->error";
   exit_script($system_callback);
 }
 
@@ -47,9 +47,9 @@ $appt = date('Y-m-d H:i', strtotime($trip['linehaul']['appt']['date'] . " " . $t
 
 $stmt = $db->prepare($query);
 if (!($stmt)) {
-  $system_callbac['code'] = "500";
-  $system_callbac['query'] = $query;
-  $system_callbac['message'] = "Error during INSERT TRIP_LINEHAUL query prepare [$stmt->errno]: $stmt->error";
+  $system_callback['code'] = "500";
+  $system_callback['query'] = $query;
+  $system_callback['message'] = "Error during INSERT TRIP_LINEHAUL query prepare [$stmt->errno]: $stmt->error";
   exit_script($system_callback);
 }
 
@@ -70,23 +70,23 @@ $stmt->bind_param('ssssssssssssss',
   $appt
 );
 if (!($stmt)) {
-  $system_callbac['code'] = "500";
-  $system_callbac['query'] = $query;
-  $system_callbac['message'] = "Error during INSERT TRIP_LINEHAUL variables binding [$stmt->errno]: $stmt->error";
+  $system_callback['code'] = "500";
+  $system_callback['query'] = $query;
+  $system_callback['message'] = "Error during INSERT TRIP_LINEHAUL variables binding [$stmt->errno]: $stmt->error";
   exit_script($system_callback);
 }
 
 if (!($stmt->execute())) {
-  $system_callbac['code'] = "500";
-  $system_callbac['query'] = $query;
-  $system_callbac['message'] = "Error during INSERT TRIP_LINEHAUL query execution [$stmt->errno]: $stmt->error";
+  $system_callback['code'] = "500";
+  $system_callback['query'] = $query;
+  $system_callback['message'] = "Error during INSERT TRIP_LINEHAUL query execution [$stmt->errno]: $stmt->error";
   exit_script($system_callback);
 }
 
 if ($db->affected_rows == 0) {
-  $system_callbac['code'] = $db->error;
-  $system_callbac['message'] = "Something happened, no data was added to the database during INSERT TRIP_LINEHAUL query.";
-  $system_callbac['data'] .= $row;
+  $system_callback['code'] = $db->error;
+  $system_callback['message'] = "Something happened, no data was added to the database during INSERT TRIP_LINEHAUL query.";
+  $system_callback['data'] .= $row;
   exit_script($system_callback);
 }
 

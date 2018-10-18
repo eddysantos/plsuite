@@ -252,7 +252,6 @@ function show_trip_info(){
 
   pullTrip.done(function(r){
     var r = JSON.parse(r);
-    console.log(r);
     for (var key in r.data.trip) {
       if (r.data.trip.hasOwnProperty(key)) {
         $('#' + key).html(r['data']['trip'][key]);
@@ -463,6 +462,10 @@ $(document).ready(function(){
       }
     }
     if (arriv != 'Invalid Date') {
+      if (dep == 'Invalid Date') {
+        alertify.error("You cannot add arrival, without departure.");
+        return false;
+      }
       if ($('#arrival_time_hour').val() == "" || $('#arrival_time_minute').val() == "") {
         $('#arrival_time_hour').addClass('is-invalid');
         $('#arrival_time_minute').addClass('is-invalid');
@@ -477,6 +480,10 @@ $(document).ready(function(){
       }
     }
     if (delivery != 'Invalid Date') {
+      if (arriv == 'Invalid Date') {
+        alertify.error("You cannot add delivery, without arrival");
+        return false;
+      }
       if ($('#delivery_time_hour').val() == "" || $('#delivery_time_minute').val() == "") {
         $('#delivery_time_hour').addClass('is-invalid');
         $('#delivery_time_minute').addClass('is-invalid');
@@ -724,6 +731,9 @@ $(document).ready(function(){
         for (var i = 0; i < zips.length - 1; i++) {
           origin = "Zip " + zips[i];
           destination = "Zip " + zips[i + 1];
+          if (origin == destination) {
+            continue;
+          }
           route_details.origins.push(origin);
           route_details.destinations.push(destination);
         }
@@ -898,9 +908,12 @@ $(document).ready(function(){
     movs.done(function(r){
       r = JSON.parse(r);
       var first_loc_input = $this.find('.zipinput').first();
-      first_loc_input.val(r.data.last.destination.zip);
-      first_loc_input.parents('.row').find('.cityinput').val(r.data.last.destination.city);
-      first_loc_input.parents('.row').find('.stateinput').val(r.data.last.destination.state);
+      first_loc_input.val(r.data.last.destination.zip).attr('zip', r.data.last.destination.zip);
+      first_loc_input.parents('.row').find('.cityInput').val(r.data.last.destination.city);
+      first_loc_input.parents('.row').find('.stateInput').val(r.data.last.destination.state);
+      add_driver(r.data.last.driver.name, r.data.last.driver.id);
+      $this.find('.truckid').val(r.data.last.truck.number).attr('db-id', r.data.last.truck.id).attr('plates', r.data.last.truck.plates).addClass('is-valid').data('is-valid', true);
+      // console.log(r);
     });
 
     $(this).find('.trailerid').val(tnumber).attr('plates', tplates).attr('db-id', tid);
@@ -945,6 +958,7 @@ $(document).ready(function(){
 
   })
   $('.next-pane').click(function(){
+    var activate_next = false;
     var next_pane = $('#add_trip_progress')
       .find('.nav-link.active')
       .parent().next().find('a');
@@ -954,6 +968,25 @@ $(document).ready(function(){
       .tab('show');
 
     $('.progress-bar').css('width', next_pane.attr('progress') + "%");
+
+    next_pane.on('shown.bs.tab', function(){
+      $('#trip-details-content .tab-pane.fade.show.active').find('input, select').filter(':not("[readonly]")').each(function(){
+        var check = $(this).data('is-valid');
+        if (check) {
+          activate_next = true;
+        } else {
+          $(this).focus();
+          activate_next = false;
+          return false;
+        }
+      });
+
+      if (activate_next) {
+        $('.next-pane').removeClass('disabled').attr('disabled', false).focus();
+      }
+    })
+
+
   });
   $('[tab-type="addTripModal"]').on('show.bs.tab', function(){
     var next_pane = $(this).parent().next().find('a');
@@ -987,24 +1020,29 @@ $(document).ready(function(){
       var zip = $(this).find('.zipinput').val();
       var type = $(this).find('.mov-type').val();
       var kind = $(this).find('.zipinput').attr('kind');
-      if (typeof(type) !== 'undefined') {
-        movs[zip] = {
-          type: type,
-          kind: kind
-        }
+      movs[zip] = {
+        type: type,
+        kind: kind
       }
+      // if (typeof(type) !== 'undefined') {
+      // }
     });
+
+    console.log(movs);
 
     for (var mov in movs) {
       if (movs.hasOwnProperty(mov)) {
-        destination.find(".ozip:contains(" + mov + ")").parents('.movement').find('.mov-type').html(movs[mov].type)
+        if (typeof movs[mov].type !== 'undefined') {
+          destination.find(".ozip:contains(" + mov + ")").parents('.movement').find('.mov-type').html(movs[mov].type)
+        }
+        console.log(mov);
         switch (movs[mov].kind) {
           case 'origin':
             destination.find(".ozip:contains(" + mov + ")").attr('kind', movs[mov].kind);
             break;
 
           case 'destination':
-          destination.find(".dzip:contains(" + mov + ")").attr('kind', movs[mov].kind);
+            destination.find(".dzip:contains(" + mov + ")").attr('kind', movs[mov].kind);
             break;
           default:
           //Did not match either origin or destination.
@@ -1062,6 +1100,10 @@ $(document).ready(function(){
         name: source.find('.brokerid-confirmation').html(),
       },
       linehaul:{
+        trip:{
+          id: source.find('.confirm-trip-info').attr('db-id'),
+          number: source.find('.confirm-trip-info').html()
+        },
         reference: source.find('.broker-reference-confirmation').html(),
         rate: source.find('.trip-rate-confirmation').html(),
         appt: {
@@ -1069,10 +1111,21 @@ $(document).ready(function(){
           hour: $('#linehaul-appointment').find('.hour').html(),
           minute: $('#linehaul-appointment').find('.minutes').html(),
         },
+        origin:{
+          zip: source.find('.ozip[kind="origin"]').html(),
+          city: source.find('.ozip[kind="origin"]').parents('.movement').find('.ocity').html(),
+          state: source.find('.ozip[kind="origin"]').parents('.movement').find('.ostate').html(),
+        },
+        destination:{
+          zip: source.find('.dzip[kind="destination"]').html(),
+          city: source.find('.dzip[kind="destination"]').parents('.movement').find('.dcity').html(),
+          state: source.find('.dzip[kind="destination"]').parents('.movement').find('.dstate').html(),
+        },
         routes: {},
         drivers:{}
       },
     }
+    console.log(data);
     source.find('.confirm-driver-list p').each(function(i){
       data.linehaul.drivers[i] = {};
       var driver = $(this).children('span');
@@ -1082,7 +1135,6 @@ $(document).ready(function(){
     source.find('#movement-confirmation').find('.movement').each(function(i){
       var ocity, ostate, ozip, dcity, dstate, dzip, miles
       var route = $(this);
-      console.log(route);
       data.linehaul.routes[i] = {
         ocity: route.find('.ocity').html(),
         ostate: route.find('.ostate').html(),
@@ -1098,12 +1150,10 @@ $(document).ready(function(){
 
     })
 
-    // console.log(data);
-
     var put_trip = $.ajax({
       method: 'POST',
       data: data,
-      url: 'actions/addNewTrip.php',
+      url: 'actions/addNewLinehaul.php',
     });
 
     put_trip.done(function(r){
@@ -1111,7 +1161,7 @@ $(document).ready(function(){
       r = JSON.parse(r);
 
       if (r.code == 1) {
-        window.location.href = "tripDetails.php?tripid=" + r.insertid;
+        location.reload();
       } else {
         alertify.error("There was a problem adding the record :(");
         console.warn(r.message);
@@ -1712,11 +1762,15 @@ $(document).ready(function(){
   })
 
   $('#delivery_time, #delivery_time_hour, #delivery_time_minute').change(function(){
-    var date = $('#delivery_time').val() == "";
-    var hour = $('#delivery_time_hour').val() == "";
-    var min = $('#delivery_time_min').val() == "";
+    var date = $('#delivery_time').val() != "";
+    var hour = $('#delivery_time_hour').val() != "";
+    var min = $('#delivery_time_minute').val() != "";
 
-    if (date && hour && min) {
+    var arr_date = $('#arrival_time').val() == "";
+    // var arr_hour = $('#arrival_time_hour').val() == "";
+    // var arr_min = $('#arrival_time_min').val() == "";
+
+    if (date && hour && min && arr_date) {
       $('#arrival_time').val($('#delivery_time').val());
       $('#arrival_time_hour').val($('#delivery_time_hour').val());
       $('#arrival_time_minute').val($('#delivery_time_minute').val());

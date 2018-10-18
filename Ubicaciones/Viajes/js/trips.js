@@ -444,6 +444,9 @@ $(document).ready(function(){
         for (var i = 0; i < zips.length - 1; i++) {
           origin = "Zip " + zips[i];
           destination = "Zip " + zips[i + 1];
+          if (origin == destination) {
+            continue;
+          }
           route_details.origins.push(origin);
           route_details.destinations.push(destination);
         }

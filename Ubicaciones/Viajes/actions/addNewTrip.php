@@ -51,7 +51,7 @@ try {
 
 
   /* ADD TRIP LINEHAUL */
-  // Required to pass origin and destination to Linehaul create.
+// NOTE: Always declare variables $origin, $destination, $pk_trip when not preceded by createTrip.php
   $origin = array(
     'city'=>$trip['linehaul']['routes'][0]['ocity'],
     'state'=>$trip['linehaul']['routes'][0]['ostate'],

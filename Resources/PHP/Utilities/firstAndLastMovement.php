@@ -46,19 +46,19 @@ $movements = [
     'id'=>$row['first'],
     'origin'=>['city'=>'', 'state'=>'', 'zip'=>''],
     'destination'=>['city'=>'', 'state'=>'', 'zip'=>''],
-    'driver'=>'',
-    'truck'=>''
+    'driver'=>['id'=>'', 'name'=>''],
+    'truck'=>['id'=>'', 'number'=>'']
   ],
   'last'=>[
     'id'=>$row['last'],
     'origin'=>['city'=>'', 'state'=>'', 'zip'=>''],
     'destination'=>['city'=>'', 'state'=>'', 'zip'=>''],
-    'driver'=>'',
-    'truck'=>''
+    'driver'=>['id'=>'', 'name'=>''],
+    'truck'=>['id'=>'', 'number'=>'', 'plates'=>'']
   ]
 ];
 
-$query = "SELECT tlm.origin_city ocity, tlm.origin_state ostate, tlm.origin_zip ozip, tlm.destination_city dcity, tlm.destination_state dstate, tlm.destination_zip dzip, t.truckNumber truck_number, d.nameFirst driver_first, d.nameLast driver_last FROM ct_trip_linehaul_movement tlm LEFT JOIN ct_truck t ON tlm.fkid_tractor = t.pkid_truck LEFT JOIN ct_drivers d ON tlm.fkid_driver = d.pkid_driver WHERE tlm.pkid_movement = ?";
+$query = "SELECT tlm.origin_city ocity, tlm.origin_state ostate, tlm.origin_zip ozip, tlm.destination_city dcity, tlm.destination_state dstate, tlm.destination_zip dzip, t.pkid_truck pkid_truck, t.truckNumber truck_number, t.truckPlates truck_plates, d.nameFirst driver_first, d.nameLast driver_last, d.pkid_driver pkid_driver FROM ct_trip_linehaul_movement tlm LEFT JOIN ct_truck t ON tlm.fkid_tractor = t.pkid_truck LEFT JOIN ct_drivers d ON tlm.fkid_driver = d.pkid_driver WHERE tlm.pkid_movement = ?";
 
 $stmt = $db->prepare($query);
 if (!($stmt)) {
@@ -92,8 +92,11 @@ foreach ($movements as $movement => $value) {
     $movements[$movement]['destination']['city'] = $row['dcity'];
     $movements[$movement]['destination']['state'] = $row['dstate'];
     $movements[$movement]['destination']['zip'] = $row['dzip'];
-    $movements[$movement]['driver'] = "$row[driver_first] $row[driver_last]";
-    $movements[$movement]['truck'] = "$row[truck_number]";
+    $movements[$movement]['driver']['id'] = $row['pkid_driver'];
+    $movements[$movement]['driver']['name'] = "$row[driver_first] $row[driver_last]";
+    $movements[$movement]['truck']['id'] = $row['pkid_truck'];
+    $movements[$movement]['truck']['number'] = "$row[truck_number]";
+    $movements[$movement]['truck']['plates'] = "$row[truck_plates]";
   }
 }
 

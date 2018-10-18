@@ -475,7 +475,7 @@ $last_destination = $stmt->fetch_assoc();
                        <div class="form-row">
                          <label for="" class="col-form-label col-md-2">Arrival</label>
                          <div class="form-group col-md-4">
-                           <input type="date" class="form-control arrival date" name="" value="">
+                           <input type="date" class="form-control arrival date" id="arrival_time" name="" value="">
                          </div>
                          <div class="form-group col-md-1">
                            <select class="form-control arrival hour" id="arrival_time_hour" name="arrival_time_hour">
@@ -538,7 +538,7 @@ $last_destination = $stmt->fetch_assoc();
                        <div class="form-row">
                          <label for="" class="col-form-label col-md-2">Delivery</label>
                          <div class="form-group col-md-4">
-                           <input type="date" class="form-control delivery date" name="" value="">
+                           <input type="date" class="form-control delivery date" id="delivery_time" name="" value="">
                          </div>
                          <div class="form-group col-md-1">
                            <select class="form-control delivery hour" id="delivery_time_hour" name="delivery_time_hour">
