@@ -14,7 +14,7 @@ require $root . '/plsuite/Resources/PHP/Utilities/initialScript.php';
      <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
      <!-- Bootstrap CSS -->
-     <link rel="stylesheet" href="/plsuite/Resources/Bootstrap4/css/bootstrap.min.css">
+     <link rel="stylesheet" href="/plsuite/Resources/Bootstrap_4_1_1/css/bootstrap.min.css">
      <link rel="stylesheet" media="screen and (min-device-width: 701px)" href="/plsuite/Resources/CSS/main.css">
      <link rel="stylesheet" media="screen and (min-device-width: 701px)" href="/plsuite/Resources/CSS/trips.css">
      <link rel="stylesheet" media="screen and (min-device-width: 701px)" href="/plsuite/Resources/fontAwesome/css/font-awesome.min.css">
@@ -49,7 +49,18 @@ require $root . '/plsuite/Resources/PHP/Utilities/initialScript.php';
            </div>
          </div>
        </div>
+
+       <div class="col-lg-3">
+         <div class="card">
+           <div class="card-body">
+             <h4 class="card-title">Settlements Portal</h4>
+             <p>Create new and review old truck/driver settlements</p>
+             <a href="settlements" class="btn btn-info" target="_blank">Open</a>
+           </div>
+         </div>
+       </div>
      </div>
+
    </div>
 
 

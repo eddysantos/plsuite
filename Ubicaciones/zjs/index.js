@@ -10,19 +10,24 @@ function load_tables(){
 
     if (r.code == 1) {
       $('#northbound-trips tbody').html(r.data.nb_trips.table);
-      $('#nb-count').html(r.data.nb_trips.count);
+      $('.nb-count').html(r.data.nb_trips.count);
 
       $('#southbound-trips tbody').html(r.data.sb_trips.table);
-      $('#sb-count').html(r.data.sb_trips.count);
+      $('.sb-count').html(r.data.sb_trips.count);
 
       $('#pending-return-trips tbody').html(r.data.pr_trips.table);
-      $('#pr-count').html(r.data.pr_trips.count);
+      $('.pr-count').html(r.data.pr_trips.count);
 
       $('#pending-invoice-trips tbody').html(r.data.pi_trips.table);
-      $('#pi-count').html(r.data.pi_trips.count + " ($" + r.data.pi_trips.amount + ")");
+      $('.pi-count').html(r.data.pi_trips.count);
+      $('.pi-amount').html(" ($" + r.data.pi_trips.amount + ")");
 
       $('#pending-payment-trips tbody').html(r.data.pp_trips.table);
-      $('#pp-count').html(r.data.pp_trips.count + " ($" + r.data.pp_trips.amount + ")");
+      $('.pp-count').html(r.data.pp_trips.count);
+      $('.pp-amount').html(" ($" + r.data.pp_trips.amount + ")");
+
+      $('#pending-delivery-trips tbody').html(r.data.pd_trips.table);
+      $('.pd-count').html(r.data.pd_trips.count);
     }
 
     }).fail(function(x){
@@ -64,7 +69,8 @@ $(document).ready(function(){
       r = JSON.parse(r);
       if (r.code == 1) {
         $('#pending-invoice-trips tbody').html(r.data.pi_trips.table);
-        $('#pi-count').html(r.data.pi_trips.count + " ($" + r.data.pi_trips.amount + ")");
+        $('.pi-count').html(r.data.pi_trips.count);
+        $('.pi-amount').html(" ($" + r.data.pi_trips.amount + ")");
       }
       $this.attr('disabled', false).removeClass('disabled')
     }).fail(function(x){

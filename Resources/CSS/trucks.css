@@ -25,9 +25,9 @@
   color: rgb(75,139, 15) !important;
 }
 
-.active{
+/* .active{
   color: rgb(74, 139, 15) !important;
-}
+} */
 
 .grey-font{
   color: rgb(102, 102, 102);
@@ -87,8 +87,69 @@ aside:after{
   height: 100%
 }
 
-.edocuments{
+.nav-link{
+  border-bottom: #E7E7E7 solid 1px;
+}
 
+/* .main-details-container{
+  height: calc(100vh - 135px);
+  margin: 10px 10px 10px 10px;
+  padding-right: 0 !important;
+} */
+
+.main-details-container{
+  height: calc(100vh - 110px);
+  margin-left: 15px;
+  margin-right: 15px;
+  /* margin: 10px 10px 10px 10px;
+  padding-right: 0 !important; */
+}
+
+.main-details-container div{
+  height: 100%;
+}
+
+.nav-pills{
+  border-radius: 0;
+}
+
+.nav-link{
+  color: black;
+
+}
+
+.tab-info{
+  overflow-x: scroll;
+}
+
+.nav-link:hover{
+  background-color: #444;
+  color: white;
+}
+
+.nav-link.active{
+  background-color: #E7E7E7;
+  color:black;
+}
+
+.nav-link.trucks{
+  border: none;
+  background: transparent;
+}
+
+.nav-link.trucks:hover{
+  color: green;
+}
+
+.nav-link.disabled:hover{
+  cursor: not-allowed;
+  background: inherit;
+  color: #6c757d;
+}
+
+.nav-link.active.trucks{
+  background-color: transparent;
+  border-bottom: 1px solid rgb(75,139, 15);
 }
 
 /*.driver-details-last{

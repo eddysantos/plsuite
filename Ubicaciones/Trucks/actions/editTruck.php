@@ -12,9 +12,12 @@ $brand = $_POST['brand'];
 $year = $_POST['year'];
 $plates = $_POST['plates'];
 $number = $_POST['number'];
+$ppm = $_POST['ppm'];
+$as = $_POST['as'];
 $tId = $_POST['truck_id'];
+$status = $_POST['status'];
 
-$query = "UPDATE ct_truck SET truckOwnedBy = ?, truckVIN = ?, truckBrand = ?, truckYear = ?, truckNumber = ?, truckPlates = ? WHERE pkid_truck = ?";
+$query = "UPDATE ct_truck SET truckOwnedBy = ?, truckVIN = ?, truckBrand = ?, truckYear = ?, truckNumber = ?, truckPlates = ?, pay_per_mile = ?, apply_surcharge = ?, truckStatus = ? WHERE pkid_truck = ?";
 
 $stmt = $db->prepare($query);
 if (!($stmt)) {
@@ -25,7 +28,7 @@ if (!($stmt)) {
 }
 
 
-$stmt->bind_param('sssssss', $owner, $vin, $brand, $year, $number, $plates, $tId);
+$stmt->bind_param('ssssssssss', $owner, $vin, $brand, $year, $number, $plates, $ppm, $as, $status, $tId);
 if (!($stmt)) {
   $system_callback['code'] = "500";
   $system_callback['query'] = $query;

@@ -133,7 +133,7 @@ $lastEl = array_values(array_slice($linehauls, -1))[0];
      <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
      <!-- Bootstrap CSS -->
-     <link rel="stylesheet" href="/plsuite/Resources/Bootstrap4/css/bootstrap.min.css">
+     <link rel="stylesheet" href="/plsuite/Resources/Bootstrap_4_1_1/css/bootstrap.min.css">
      <link rel="stylesheet" media="screen and (min-device-width: 701px)" href="/plsuite/Resources/CSS/main.css">
      <link rel="stylesheet" media="screen and (min-device-width: 701px)" href="/plsuite/Resources/CSS/trips.css">
      <!-- <link rel="stylesheet" media="screen and (min-device-width: 701px)" href="/plsuite/Resources/fontAwesome/css/font-awesome.min.css"> -->
@@ -636,14 +636,22 @@ $lastEl = array_values(array_slice($linehauls, -1))[0];
 
          </div>
          <div class="col-lg-5">
-           <div class="">
-             <div class="">
-               <button type="button" class="btn btn-outline-success float-right add-movement" name="button"><i class="fa fa-plus"></i> Add Movement</button>
-               <h6>Movements</h6>
+           <!-- <div class="nav nav-tabs" id="linehaul-tabs" role="tablist">
+             <a class="nav-item nav-link active" id="linehaul-tabs-movements" data-toggle="tab" role="tab" href="#lh-movements">Movements</a>
+             <a class="nav-item nav-link" id="linehaul-tabs-deductions" data-toggle="tab" role="tab" href="#lh-deductions">Deductions</a>
+           </div> -->
+           <div class="tab-content">
+             <div class="tab-pane fade show active" id="lh-movements">
+               <div class="clearfix mt-1 mb-1">
+                 <button type="button" class="btn btn-outline-success float-right add-movement" name="button"><i class="fa fa-plus"></i> Add Movement</button>
+               </div>
+               <table class="table table-striped border text-dark">
+                 <tbody id="mov-dash"></tbody>
+               </table>
              </div>
-            <table class="table table-striped border text-dark">
-              <tbody id="mov-dash"></tbody>
-            </table>
+             <div class="tab-pane fade black-font" id="lh-deductions">
+               Here we will include de deductions.
+             </div>
            </div>
          </div>
        </div>
