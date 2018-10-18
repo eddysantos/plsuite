@@ -6,8 +6,8 @@
 -- ALTER TABLE `plsuite`.`ct_trip_linehaul_movement` ADD COLUMN `mov_settled` tinyint AFTER `added_by`;
 
 
-ALTER TABLE `plsuite`.`ct_trip` ADD COLUMN `trip_number_i` int AFTER `trip_number`;
-ALTER TABLE `plsuite`.`ct_trip` ADD COLUMN `first_movement` varchar(15) AFTER `added_by`, ADD COLUMN `last_movement` varchar(15) AFTER `first_movement`;
+-- ALTER TABLE `plsuite`.`ct_trip` ADD COLUMN `trip_number_i` int AFTER `trip_number`;
+-- ALTER TABLE `plsuite`.`ct_trip` ADD COLUMN `first_movement` varchar(15) AFTER `added_by`, ADD COLUMN `last_movement` varchar(15) AFTER `first_movement`;
 --
 -- /******** QUERY TO GET SETTLEMENT TRUCK LIST**********/
 --
