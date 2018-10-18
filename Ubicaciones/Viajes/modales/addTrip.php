@@ -10,16 +10,16 @@
       <div class="modal-body">
         <ul class="nav justify-content-center" id="add_trip_progress" role="tablist">
           <li class="nav-item">
-            <a class="nav-link custom active" id="trip-details-tab" data-toggle="tab" tab-type="addTripModal" href="#trip-details-pane" role="tab" aria-controls="trip-details" aria-selected="true">Trip Details</a>
+            <a class="nav-link custom active" id="trip-details-tab" data-toggle="tab" tab-type="addTripModal" href="#trip-details-pane" role="tab" aria-controls="trip-details" aria-selected="true" progress="">Linehaul Details</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link custom disabled" disabled id="lh-details-tab" data-toggle="tab" tab-type="addTripModal" href="#lh-details-pane" role="tab" aria-controls="lh-details" aria-selected="true">Linehaul Details</a>
+            <a class="nav-link custom disabled" disabled id="lh-details-tab" data-toggle="tab" tab-type="addTripModal" href="#lh-details-pane" role="tab" aria-controls="lh-details" aria-selected="true" progress="33">Movement Details</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link custom disabled" disabled id="conveyance-details-tab" data-toggle="tab" tab-type="addTripModal" href="#" role="tab" aria-controls="conveyance-details" aria-selected="true">Conveyance</a>
+            <a class="nav-link custom disabled" disabled id="conveyance-details-tab" data-toggle="tab" tab-type="addTripModal" href="#conveyance-details-pane" role="tab" aria-controls="conveyance-details" aria-selected="true" progress="66">Conveyance</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link custom disabled" disabled id="trip-confirmation-tab" data-toggle="tab" tab-type="addTripModal" href="#" role="tab" aria-controls="trip-confirmation" aria-selected="true">Confirm Trip</a>
+            <a class="nav-link custom disabled" disabled id="trip-confirmation-tab" data-toggle="tab" tab-type="addTripModal" href="#trip-confirmation-pane" role="tab" aria-controls="trip-confirmation" aria-selected="true" progress="100">Confirm Trip</a>
           </li>
         </ul>
 
@@ -28,20 +28,22 @@
         </div>
 
         <div class="tab-content" id="trip-details-content">
-          <div class="tab-pane fade" id="trip-details-pane" role="tabpanel" aria-labelledby="trip-details-tab">
+          <div class="tab-pane fade show active" id="trip-details-pane" role="tabpanel" aria-labelledby="trip-details-tab">
             <form class="needs-validation" action="index.html" onsubmit="return false;" method="post">
 
               <div class="form-group row">
-                <label for="trailer-number" class="col-sm-2 offset-2 col-form-label text-right">Trailer</label>
+                <label for="trailer-number" class="col-sm-2 col-form-label text-right">Trailer</label>
                 <div class="col-sm-5">
-                  <input type="text" class="form-control popup-input" id-display="#trailer-popup-list" type="text" autocomplete="new-password" db-id="" name="" value="" placeholder="Trailer Number">
+                  <div class="">
+                    <input type="text" class="form-control popup-input trailerid" id-display="#trailer-popup-list" type="text" autocomplete="new-password" db-id="" name="" value="" placeholder="Trailer Number">
+                  </div>
                   <div id="trailer-popup-list" class="popup-list mt-3" style="display: none; z-index: 9999"></div>
                   <small class="invalid-feedback font-italic">This field cannot be empty.</small>
                 </div>
               </div>
 
               <div class="form-group row">
-                <label for="broker-name" class="col-sm-2 offset-2 col-form-label text-right">Broker</label>
+                <label for="broker-name" class="col-sm-2 col-form-label text-right">Broker</label>
                 <div class="col-sm-5">
                   <div class="input-group">
                     <div class="input-group-prepend" id="btnQuickAddBroker" role="button" data-container="body" data-toggle="popover">
@@ -55,21 +57,21 @@
               </div>
 
               <div class="form-group row">
-                <label for="broker-reference" class="col-sm-2 offset-2 col-form-label text-right">Reference</label>
+                <label for="broker-reference" class="col-sm-2 col-form-label text-right">Reference</label>
                 <div class="col-sm-5">
-                  <input type="text" class="form-control" name="broker-reference" value="" placeholder="Broker Reference">
+                  <input type="text" class="form-control broker-reference" name="broker-reference" value="" placeholder="Broker Reference">
                   <small class="invalid-feedback">This field cannot be empty.</small>
                 </div>
               </div>
 
               <div class="form-group row">
-                <label for="trip-rate" class="col-sm-2 offset-2 col-form-label text-right">Rate</label>
+                <label for="trip-rate" class="col-sm-2 col-form-label text-right">Rate</label>
                 <div class="col-sm-5">
                   <div class="input-group">
                     <div class="input-group-prepend">
                       <span class="input-group-text"><i class="fas fa-dollar-sign"></i></span>
                     </div>
-                    <input type="text" class="form-control" name="trip-rate" value="" placeholder="Trip Rate">
+                    <input type="number" class="form-control trip-rate" name="trip-rate" value="" placeholder="Trip Rate">
                   </div>
                   <small class="invalid-feedback">This field cannot be empty.</small>
                 </div>
@@ -79,7 +81,7 @@
           </div>
           <div class="tab-pane fade" id="lh-details-pane" role="tabpanel" aria-labelledby="lh-details-tab">
             <form onsubmit="return false;">
-              <div class="form-group row">
+              <div class="form-group row movement">
                 <label for="" class="col-sm-2 col-form-label text-right">Origin</label>
                 <div class="col-lg-2">
                   <input type="text" class="form-control zipInput" autocomplete="new-password" name="" value="" placeholder="Zip Code">
@@ -88,11 +90,22 @@
                 <div class="col-lg-2" readonly>
                   <input type="text" class="form-control stateInput" name="" value="" placeholder="State" readonly disabled>
                 </div>
-                <div class="col-lg-5">
+                <div class="col-lg-3">
                   <input type="text" class="form-control cityInput" name="" value="" placeholder="City" readonly disabled>
+                </div>
+                <div class="col-lg-2">
+                  <select class="form-control mov-type" name="" data-is-valid=true>
+                    <option value="L" selected>Loaded</option>
+                    <option value="E">Empty</option>
+                  </select>
                 </div>
               </div>
               <div class="form-group row">
+                <div class="col-sm-3 text-success add-extra-stop" role="button">
+                  <i class="fa fa-plus"></i> Extra Stop
+                </div>
+              </div>
+              <div class="form-group row movement">
                 <label for="" class="col-sm-2 col-form-label text-right">Destination</label>
                 <div class="col-lg-2">
                   <input type="text" class="form-control zipInput" autocomplete="new-password" name="" value="" placeholder="Zip Code">
@@ -108,13 +121,17 @@
               <div class="form-group row">
                 <label for="" class="col-sm-2 col-form-label text-right">Total Miles</label>
                 <div class="col-sm-4">
-                  <input type="text" class="form-control" name="" value="" placeholder="miles">
+                  <div class="form-control total_distance skip-validation d-flex justify-content-center" readonly>
+                    0
+                  </div>
+                  <!-- <input type="text" class="form-control total_distance" name="" value="" placeholder="Total Miles" readonly disabled> -->
+                  <small class="font-weight-light grey-font font-italic">All destinations must be captured to calculate miles.</small>
                 </div>
               </div>
               <div class="form-group row">
                 <label for="" class="col-sm-2 col-form-label text-right">Appointment</label>
                 <div class="col-lg-5">
-                  <input type="date" class="form-control" id="date-field" name="" value="">
+                  <input type="date" class="form-control appointment date" id="date-field" name="" value="">
                 </div>
                 <div class="col-lg-2">
                   <select class="form-control appointment hour" id="appointment_time_hour_add" name="appointment_time_hour">
@@ -165,13 +182,117 @@
               </div>
             </form>
           </div>
-          <div class="tab-pane fade show active" id="conveyance-details-pane" role="tabpanel" aria-labelledby="conveyance-details-tab">
+          <div class="tab-pane fade" id="conveyance-details-pane" role="tabpanel" aria-labelledby="conveyance-details-tab">
             <form onsubmit="false">
               <div class="form-group row">
                 <label for="" class="col-form-label col-sm-2 text-right">Tractor</label>
                 <div class="col-sm-5">
-                  <input type="text" class="form-control" name="" value="" placeholder="Tractor Number">
+                  <input type="text" class="form-control popup-input truckid" id-display="#truck-popup-list-modal" type="text" autocomplete="new-password" db-id="" name="" value="" placeholder="Tractor Number">
+                  <div class="invalid-feedback font-italic"></div>
+                  <div id="truck-popup-list-modal" class="popup-list mt-3" style="display: none; z-index: 9999">
+                  </div>
                 </div>
+              </div>
+              <div class="form-group row">
+                <label for="" class="col-form-label col-sm-2 text-right">Driver(s)</label>
+                <div class="col-sm-5">
+                  <input type="text" class="form-control popup-input driverid" id-display="#driver-popup-list-modal" type="text" autocomplete="new-password" db-id="" name="" value="" placeholder="Type Driver Name">
+                  <div id="driver-popup-list-modal"  target="#listed-drivers" type="multiple" class="popup-list mt-3" style="display: none; z-index: 9999"></div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-5 offset-2" id="listed-drivers">
+                </div>
+              </div>
+            </form>
+          </div>
+          <div class="tab-pane fade" id="trip-confirmation-pane" role="tabpanel" aria-labelledby="trip-confirmation-tab">
+            <form onsubmit="return false">
+              <div class="trip-contents">
+                <div class="row">
+                  <div class="col-sm-2 offset-1 text-right">
+                    Truck
+                  </div>
+                  <div class="col-sm-7 grey-font">
+                    <p class="d-inline"><span class="confirm-truck-number"></span></p>
+                    <p class="d-inline font-weight-light font-italic">(<span class="confirm-truck-plates"></span>)</p>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-sm-2 offset-1 text-right">
+                    Trailer
+                  </div>
+                  <div class="col-sm-7 grey-font">
+                    <p class="d-inline"><span class="confirm-trailer-number"></span></p>
+                    <p class="d-inline font-weight-light font-italic">(<span class="confirm-trailer-plates"></span>)</p>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-sm-2 offset-1 text-right">
+                    Driver(s)
+                  </div>
+                  <div class="col-sm-7 mb-2 grey-font confirm-driver-list">
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-sm-2 offset-1 text-right">
+                    Route
+                  </div>
+                  <div class="col-sm-7 grey-font" id="movement-confirmation">
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-sm-2 offset-1 text-right">
+                    Appointment
+                  </div>
+                  <div class="col-sm-7 grey-font" id="linehaul-appointment">
+                    <p>
+                      <span class="date"></span>
+                      <span class="hour"></span>:<span class="minutes"></span>
+                    </p>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-sm-2 offset-1 text-right">
+                    Miles
+                  </div>
+                  <div class="col-sm-7 grey-font">
+                    <p class="d-inline"><span class="total-miles"></span></p>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-sm-2 offset-1 text-right">
+                    Rate
+                  </div>
+                  <div class="col-sm-7 grey-font">
+                    <p class="d-inline">$ <span class="trip-rate-confirmation">1500</span></p>
+                  </div>
+                </div>
+                <div class="row mb-2">
+                  <div class="col-sm-2 offset-1 text-right">
+                    RPM
+                  </div>
+                  <div class="col-sm-7 grey-font">
+                    <p class="d-inline">$ <span class="rpm-confirmation"></span></p>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-sm-2 offset-1 text-right">
+                    Broker
+                  </div>
+                  <div class="col-sm-7 grey-font">
+                    <p class="d-inline brokerid-confirmation"></p>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-sm-2 offset-1 text-right">
+                    Reference
+                  </div>
+                  <div class="col-sm-7 grey-font">
+                    <p class="d-inline broker-reference-confirmation"></p>
+                  </div>
+                </div>
+
               </div>
             </form>
           </div>
@@ -179,8 +300,13 @@
 
       </div>
       <div class="modal-footer">
+        <div class="next-pane-buttons">
+          <button type="button" class="btn btn-primary next-pane disabled" disabled>Next</button>
+        </div>
+        <div class="add-trip-buttons" style="display: none">
+          <button type="button" class="btn btn-primary add-trip next-pane disabled" disabled>Add Trip</button>
+        </div>
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary next-pane disabled" disabled>Next</button>
       </div>
     </div>
   </div>

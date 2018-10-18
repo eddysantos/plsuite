@@ -5,8 +5,11 @@ require $root . '/plsuite/Resources/PHP/Utilities/initialScript.php';
 //require $root . '/plsuite/Resources/PHP/Utilities/header.php';
 
 $trip_id = $_GET['tripid'];
-$tripyear = $_GET['tripyear'];
+// $tripyear = $_GET['tripyear'];
 $disabled_finalized = '';
+$show_close_trip = true;
+$show_add_linehaul = true;
+$last_destination = array('City'=>'', 'State'=>'', 'Zip'=>'');
 
 /**Fetch information on the trip**/
 
@@ -30,28 +33,28 @@ function parseDate($datestamp){
   return $return;
 }
 
-$query = "SELECT t.pkid_trip pkidtrip , t.trip_year tripyear , t.trip_status trip_status , t.trailer_number trailer_number , t.date_open date_open , t.date_close date_close , tl.pk_idlinehaul idlh , sum(( SELECT sum(miles_google) FROM ct_trip_linehaul_movement tlm WHERE tl.pk_idlinehaul = tlm.fkid_linehaul AND tl.linehaul_status <> 'Cancelled')) total_miles , sum(( SELECT sum(miles_google) FROM ct_trip_linehaul_movement tlm WHERE tlm.fkid_linehaul = tl.pk_idlinehaul AND tlm.movement_type = 'L' AND tl.linehaul_status <> 'Cancelled')) loaded_miles , sum(( SELECT sum(miles_google) FROM ct_trip_linehaul_movement tlm WHERE tlm.fkid_linehaul = tl.pk_idlinehaul AND tlm.movement_type = 'E' AND tl.linehaul_status <> 'Cancelled')) empty_miles , SUM( IF( tl.linehaul_status <> 'Cancelled' , tl.trip_rate , 0)) total_rate FROM ct_trip t LEFT JOIN ct_trip_linehaul tl ON t.pkid_trip = tl.fk_idtrip AND t.trip_year = tl.fk_tripyear WHERE pkid_trip = ? AND trip_year = ? GROUP BY pkid_trip , trip_year ORDER BY t.pkid_trip DESC";
+$query = "SELECT t.pkid_trip pkidtrip , t.trip_year tripyear, t.trip_number trip_number, t.trip_status trip_status , t.trailer_number trailer_number, t.trailer_plates trailer_plates, t.date_open date_open , t.date_close date_close , tl.pk_idlinehaul idlh, t.first_movement first_movement, t.last_movement last_movement, sum(( SELECT sum(miles_google) FROM ct_trip_linehaul_movement tlm WHERE tl.pk_idlinehaul = tlm.fkid_linehaul AND tl.linehaul_status <> 'Cancelled')) total_miles , sum(( SELECT sum(miles_google) FROM ct_trip_linehaul_movement tlm WHERE tlm.fkid_linehaul = tl.pk_idlinehaul AND tlm.movement_type = 'L' AND tl.linehaul_status <> 'Cancelled')) loaded_miles , sum(( SELECT sum(miles_google) FROM ct_trip_linehaul_movement tlm WHERE tlm.fkid_linehaul = tl.pk_idlinehaul AND tlm.movement_type = 'E' AND tl.linehaul_status <> 'Cancelled')) empty_miles , SUM( IF( tl.linehaul_status <> 'Cancelled' , tl.trip_rate , 0)) total_rate FROM ct_trip t LEFT JOIN ct_trip_linehaul tl ON t.pkid_trip = tl.fk_idtrip WHERE pkid_trip = ? GROUP BY pkid_trip ORDER BY t.pkid_trip DESC";
 
 $stmt = $db->prepare($query);
 if (!($stmt)) {
   $system_callback['query']['code'] = "500";
   $system_callback['query']['query'] = $query;
-  $system_callback['query']['message'] = "Error during trailer query prepare [$db->errno]: $db->error";
+  $system_callback['query']['message'] = "Error during trip fetch query prepare [$db->errno]: $db->error";
   exit_script($system_callback);
 }
 
-$stmt->bind_param('ss', $trip_id, $tripyear);
+$stmt->bind_param('s', $trip_id);
 if (!($stmt)) {
   $system_callback['query']['code'] = "500";
   $system_callback['query']['query'] = $query;
-  $system_callback['query']['message'] = "Error during trailer variables binding [$stmt->errno]: $stmt->error";
+  $system_callback['query']['message'] = "Error during trip fetch variables binding [$stmt->errno]: $stmt->error";
   exit_script($system_callback);
 }
 
 if (!($stmt->execute())) {
   $system_callback['query']['code'] = "500";
   $system_callback['query']['query'] = $query;
-  $system_callback['query']['message'] = "Error during trailer query execution [$stmt->errno]: $stmt->error";
+  $system_callback['query']['message'] = "Error during trip fetch query execution [$stmt->errno]: $stmt->error";
   exit_script($system_callback);
 }
 
@@ -69,11 +72,13 @@ if ($rslt->num_rows == 0) {
 
 if ($trip['trip_status'] == 'Closed') {
   $dis_trip = 'disabled';
+  $show_add_linehaul = false;
+  $show_close_trip = false;
 } else {
   $dis_trip = '';
 }
 
-$query = "SELECT tl.pk_idlinehaul AS pk_idlinehaul , tl.fk_tripyear AS trip_year , tl.linehaul_status AS status , tl.origin_city AS origin_city , tl.origin_state AS origin_state , tl.origin_zip AS origin_zip , tl.destination_city AS destination_city , tl.destination_state AS destination_state , tl.destination_zip AS destination_zip , tl.trip_rate AS trip_rate, tl.broker_reference AS broker_reference, tl.fkid_broker AS brokerid, b.brokerName AS trip_brokerName , tl.rpm AS rpm , sum(tlm.miles_google) AS total_miles , SUM( CASE tlm.movement_type WHEN 'E' THEN tlm.miles_google ELSE 0 END) AS empty_miles , SUM( CASE tlm.movement_type WHEN 'L' THEN tlm.miles_google ELSE 0 END) AS loaded_miles , date_departure AS departure , date_arrival AS arrival , date_delivery AS delivery, date_appointment AS appointment, pk_linehaul_number AS lh_number ,( SELECT concat(nameFirst , ' ' , nameLast) FROM ct_drivers WHERE pkid_driver = tlm.fkid_driver) driver ,( SELECT concat(truckNumber) FROM ct_truck WHERE pkid_truck = tlm.fkid_tractor) tractor FROM ct_trip_linehaul tl LEFT JOIN ct_brokers b ON tl.fkid_broker = b.pkid_broker LEFT JOIN ct_trip_linehaul_movement tlm ON tlm.fkid_linehaul = tl.pk_idlinehaul WHERE tl.fk_idtrip = ? AND tl.fk_tripyear = ? GROUP BY pk_idlinehaul";
+$query = "SELECT tl.pk_idlinehaul AS pk_idlinehaul , tl.fk_tripyear AS trip_year , tl.linehaul_status AS STATUS , tl.origin_city AS origin_city , tl.origin_state AS origin_state , tl.origin_zip AS origin_zip , tl.destination_city AS destination_city , tl.destination_state AS destination_state , tl.destination_zip AS destination_zip , tl.trip_rate AS trip_rate , tl.broker_reference AS broker_reference , tl.fkid_broker AS brokerid , b.brokerName AS trip_brokerName , tl.rpm AS rpm , sum(tlm.miles_google) AS total_miles , SUM( CASE tlm.movement_type WHEN 'E' THEN tlm.miles_google ELSE 0 END) AS empty_miles , SUM( CASE tlm.movement_type WHEN 'L' THEN tlm.miles_google ELSE 0 END) AS loaded_miles , date_departure AS departure , date_arrival AS arrival , date_delivery AS delivery , date_appointment AS appointment , pk_linehaul_number AS lh_number ,( SELECT concat(nameFirst , ' ' , nameLast) FROM ct_drivers WHERE pkid_driver = tlm.fkid_driver) driver ,( SELECT concat(truckNumber) FROM ct_truck WHERE pkid_truck = tlm.fkid_tractor) tractor FROM ct_trip_linehaul tl LEFT JOIN ct_brokers b ON tl.fkid_broker = b.pkid_broker LEFT JOIN ct_trip_linehaul_movement tlm ON tlm.fkid_linehaul = tl.pk_idlinehaul WHERE tl.fk_idtrip = ? GROUP BY pk_idlinehaul";
 
 $stmt = $db->prepare($query);
 if (!($stmt)) {
@@ -83,7 +88,7 @@ if (!($stmt)) {
   exit_script($system_callback);
 }
 
-$stmt->bind_param('ss', $trip_id, $tripyear);
+$stmt->bind_param('s', $trip_id);
 if (!($stmt)) {
   $system_callback['query']['code'] = "500";
   $system_callback['query']['query'] = $query;
@@ -109,6 +114,7 @@ if ($rslt->num_rows == 0) {
     if ($row['status'] == 'Closed' || $row['status'] == 'Cancelled' ) {
       $disabled_finalized = '';
     } else {
+      $show_close_trip = false;
       $disabled_finalized = 'disabled';
     }
     $linehauls[] = $row;
@@ -124,6 +130,12 @@ foreach ($linehauls as $key => $value) {
 
 $lastEl = array_values(array_slice($linehauls, -1))[0];
 
+/* GET LAST DESTINATION FROM TRIP */
+
+$query = "SELECT destination_city city, destination_state state, destination_zip zip FROM ct_trip_linehaul_movement WHERE pkid_movement = $trip[last_movement]";
+$stmt = $db->query($query);
+$last_destination = $stmt->fetch_assoc();
+
  ?>
 
  <!DOCTYPE html>
@@ -136,94 +148,14 @@ $lastEl = array_values(array_slice($linehauls, -1))[0];
      <link rel="stylesheet" href="/plsuite/Resources/Bootstrap_4_1_1/css/bootstrap.min.css">
      <link rel="stylesheet" media="screen and (min-device-width: 701px)" href="/plsuite/Resources/CSS/main.css">
      <link rel="stylesheet" media="screen and (min-device-width: 701px)" href="/plsuite/Resources/CSS/trips.css">
-     <!-- <link rel="stylesheet" media="screen and (min-device-width: 701px)" href="/plsuite/Resources/fontAwesome/css/font-awesome.min.css"> -->
+     <link rel="stylesheet" href="/plsuite/Resources/alertify/css/alertify.min.css">
+     <link rel="stylesheet" href="/plsuite/Resources/alertify/css/themes/bootstrap.min.css">
      <script src="/plsuite/Resources/fa_5/js/fontawesome-all.js"></script>
-     <!-- <script defer src="https://use.fontawesome.com/releases/v5.0.7/js/all.js"></script> -->
      <link rel="stylesheet" media="screen and (max-device-width: 700px)" href="/plsuite/Resources/CSS/mainMobile.css">
-     <!-- <link href="https://fonts.googleapis.com/css?family=Sansita" rel="stylesheet"> -->
      <title>Prolog Transportation Inc</title>
    </head>
   <body style="min-height:100%">
-  <input type="text" name="" id="trip-identifier" value="<?php echo $trip_id?>" hidden>
-  <input type="text" name="" id="year-identifier" value="<?php echo $tripyear?>" hidden>
-  <!-- <header id="trip-header"> <!-- This header appears for the trip information
-     <div class="custom-header">
-       <div class="custom-header-bar">&nbsp;</div>
-       <div class="">
-         <a class="ml-3 mr-5" role="button" id="backToDash" href="javascript:history.back()"><i class="fa fa-chevron-left"></i></a>
-         <div class="w-100 d-flex align-items-center justify-content-between">
-           <div class="pr-5">
-             Trip Status - <span class="trip-status" id="trip_status"></span>
-           </div>
-           <div class="">
-             <i class="fa fa-circle mr-2 trip" id="set-trip-status-button"></i> <!-- Agregar clase para status.
-             <button class="btn btn-outline-primary form-control mr-3 finalizeRecord" type-of-record="trip" action="Closed" tripyear="<?php echo $trip['tripyear']?>" recordid="<?php echo $trip['pkidtrip']?>" type="button" id="btnCloseTrip" name="button">
-               <i class="fa fa-check"></i> Close Trip
-             </button>
-             <button class="btn btn-outline-success form-control mr-3" name="button" data-toggle="modal" data-focus="false" data-target="#addLinehaulModal">
-               <i class="fa fa-plus"></i> Add Linehaul
-             </button>
-           </div>
-         </div>
-       </div>
-     </div>
-  </header> -->
-
-  <!-- <div class="main-details-container">
-    <div class="row div-100h">
-      <div class="col-sm-2 border border-top-0 border-bottom-0 border-left-0 grey-font">
-        <div class="row">
-          <div class="col-lg-4">
-            <p class="text-dark" >Trailer:</p>
-          </div>
-          <div class="col-lg-6">
-            <p id="trailer_number"></p>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-lg-4">
-            <p class="text-dark mb-0">Opened:</p>
-          </div>
-          <div class="col-lg-6">
-            <p class="mb-0" id="date_open"></p>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-lg-4">
-            <p class="text-dark">Closed:</p>
-          </div>
-          <div class="col-lg-6">
-            <p class="" id="date_close"></p>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-lg-6">
-            <p class="text-dark mb-0">Total Miles:</p>
-          </div>
-          <div class="col-lg-6 pl-0">
-            <p class="mb-0" id="total_miles"></p>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-lg-6">
-            <p class="text-dark mb-0">Total Rate:</p>
-          </div>
-          <div class="col-lg-6 pl-0">
-            $ <p class="mb-0 d-inline" id="total_rate"></p>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-lg-6">
-            <p class="text-dark mb-0">RPM:</p>
-          </div>
-          <div class="col-lg-6 pl-0">
-            $ <p class="mb-0 d-inline" id="rpm"></p>
-          </div>
-        </div>
-      </div>
-    </div>
-
-  </div> -->
+  <input type="text" name="" id="trip-identifier" value="<?php echo $trip_id?>" trip-number="<?php echo $trip['trip_number']?>" hidden>
 
    <div class="" id="trip-information" >
     <header id="trip-header"> <!-- This header appears for the trip information -->
@@ -237,12 +169,16 @@ $lastEl = array_values(array_slice($linehauls, -1))[0];
              </div>
              <div class="">
                <i class="fa fa-circle mr-2 trip" id="set-trip-status-button"></i> <!-- Agregar clase para status.-->
-               <button class="btn btn-outline-primary form-control mr-3 finalizeRecord" type-of-record="trip" action="Closed" tripyear="<?php echo $trip['tripyear']?>" recordid="<?php echo $trip['pkidtrip']?>" type="button" id="btnCloseTrip" name="button">
-                 <i class="fa fa-check"></i> Close Trip
-               </button>
-               <button class="btn btn-outline-success form-control mr-3" name="button" data-toggle="modal" data-focus="false" data-target="#addLinehaulModal">
-                 <i class="fa fa-plus"></i> Add Linehaul
-               </button>
+               <?php if ($show_close_trip): ?>
+                 <button class="btn btn-outline-primary form-control mr-3 finalizeRecord" type-of-record="trip" action="Closed" tripyear="<?php echo $trip['tripyear']?>" recordid="<?php echo $trip['pkidtrip']?>" type="button" id="btnCloseTrip" name="button">
+                   <i class="fa fa-check"></i> Close Trip
+                 </button>
+               <?php endif; ?>
+               <?php if ($show_add_linehaul): ?>
+                 <button class="btn btn-outline-success form-control mr-3" name="button" data-toggle="modal" data-focus="false" data-target="#addLinehaulModal">
+                   <i class="fa fa-plus"></i> Add Linehaul
+                 </button>
+               <?php endif; ?>
              </div>
            </div>
          </div>
@@ -257,6 +193,8 @@ $lastEl = array_values(array_slice($linehauls, -1))[0];
            </div>
            <div class="col-lg-6">
              <p id="trailer_number"></p>
+             <p id="trailer_plates" hidden></p>
+             <p id="id_trailer" hidden></p>
            </div>
          </div>
          <div class="row">
@@ -1092,4 +1030,5 @@ require $root . '/plsuite/Resources/PHP/Utilities/footer.php';
  ?>
  <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script> -->
  <script src="/plsuite/Resources/jquery_ui_1_12_1/jquery-ui.min.js" charset="utf-8"></script>
+ <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDuBCFwHZCWMgyeTJ1MI32sXlGnJtIIsUA" async defer></script>
  <script src="js/tripDetails.js" charset="utf-8"></script>

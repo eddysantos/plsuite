@@ -8,6 +8,31 @@ function getCityStateListener(){
 
 }
 
+function first_and_last(pk_trip){
+  var return_value;
+  if (typeof pk_trip === 'undefined') {
+    return false;
+  }
+
+  var get_info = $.ajax({
+    method: 'POST',
+    url: '/plsuite/Resources/PHP/Utilities/firstAndLastMovement.php',
+    data: {pk_trip: pk_trip}
+  });
+
+  return get_info.done(function(r){
+    r = JSON.parse(r);
+    if (r.code == 1) {
+      return_value = r.data
+    } else {
+      return_value = 'Error on the query:' + r.message;
+    }
+  }).fail(function(x){
+    return_value = "Something went wrong. Please contact IT.";
+    console.warn(x);
+  });
+}
+
 $(document).ready(function(){
   FontAwesomeConfig = { autoReplaceSvg: 'nest' }
 

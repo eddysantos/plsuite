@@ -290,6 +290,10 @@ aside p{
   color:black;
 }
 
+.nav-link.disabled.custom{
+  color: rgba(74, 139, 15, 0.6)
+}
+
 
 .nav-link.disabled:hover{
   cursor: not-allowed;
