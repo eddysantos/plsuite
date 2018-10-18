@@ -6,7 +6,7 @@ require $root . '/plsuite/Resources/PHP/Utilities/initialScript.php';
 function GetDrivingDistance($o, $d){
     global $system_callback;
 
-    $url = "https://maps.googleapis.com/maps/api/distancematrix/json?origins=$o&destinations=$d&language=en&key=AIzaSyAQSdzCESsae3JfhpTN8WEagdE1Zj4AA0A";
+    $url = "https://maps.googleapis.com/maps/api/distancematrix/json?origins=$o&destinations=$d&language=en&key=AIzaSyBwOdD2iKFCqP6BWJyRPCL-AxYN4ervUB4";
     $ch = curl_init();
     curl_setopt($ch, CURLOPT_URL, $url);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
