@@ -11,9 +11,9 @@ $query = "";
 $date_close = date('Y-m-d H:i:s', strtotime('today'));
 
 if ($data['record_to_edit'] == "trip") {
-  $query = "UPDATE ct_trip SET trip_status = ?, date_close = ? WHERE pkid_trip = ? AND trip_year = ?";
+  $query = "UPDATE ct_trip SET trip_status = ?, date_close = ? WHERE pkid_trip = ?";
 } else if ($data['record_to_edit'] == "linehaul") {
-  $query = "UPDATE ct_trip_linehaul SET linehaul_status = ?, date_end = ? WHERE pk_idlinehaul = ? AND fk_tripyear = ?";
+  $query = "UPDATE ct_trip_linehaul SET linehaul_status = ?, date_end = ? WHERE pk_idlinehaul = ?";
 }
 
 if ($query == "") {
@@ -30,11 +30,10 @@ if (!($stmt)) {
   exit_script($system_callback);
 }
 
-$stmt->bind_param('ssss',
+$stmt->bind_param('sss',
   $data['action'],
   $date_close,
-  $data['id'],
-  $data['year']
+  $data['id']
 );
 
 if (!($stmt)) {

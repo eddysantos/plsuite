@@ -90,6 +90,10 @@ table-layout: fixed;
   height: 100%;
 }
 
+.div-100 div{
+  height: inherit;
+}
+
 .nav-pills.dash{
   border-radius: 0;
 }

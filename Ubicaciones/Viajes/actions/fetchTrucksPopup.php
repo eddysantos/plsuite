@@ -42,7 +42,7 @@ if ($rslt->num_rows == 0) {
 
 while ($row = $rslt->fetch_assoc()) {
   $system_callback['data'] .=
-  "<p db-id='$row[pkid_truck]'>$row[truckNumber]</p>";
+  "<p db-id='$row[pkid_truck]' plates='$row[truckPlates]'>$row[truckNumber]</p>";
 }
 
 $system_callback['code'] = 1;

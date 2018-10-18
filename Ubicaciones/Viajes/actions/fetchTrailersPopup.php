@@ -6,7 +6,7 @@ require $root . '/plsuite/Resources/PHP/Utilities/initialScript.php';
 $system_callback = [];
 $txt = "%$_POST[txt]%";
 
-$query = "SELECT v.pkid_trailer pkid_trailer , v.trailerNumber trailerNumber FROM ct_trailer v LEFT JOIN ct_trip t ON t.fkid_trailer = v.pkid_trailer WHERE v.deletedTrailer IS NULL AND( t.trip_status IS NULL OR t.trip_status = 'Closed') AND v.trailerNumber LIKE ? GROUP BY pkid_trailer";
+$query = "SELECT v.pkid_trailer pkid_trailer , v.trailerNumber trailerNumber, v.trailerPlates plates FROM ct_trailer v LEFT JOIN ct_trip t ON t.fkid_trailer = v.pkid_trailer WHERE v.deletedTrailer IS NULL AND( t.trip_status IS NULL OR t.trip_status = 'Closed') AND v.trailerNumber LIKE ? GROUP BY pkid_trailer";
 
 $stmt = $db->prepare($query);
 if (!($stmt)) {
@@ -42,7 +42,7 @@ if ($rslt->num_rows == 0) {
 
 while ($row = $rslt->fetch_assoc()) {
   $system_callback['data'] .=
-  "<p db-id='$row[pkid_trailer]'>$row[trailerNumber]</p>";
+  "<p db-id='$row[pkid_trailer]' plates='$row[plates]'>$row[trailerNumber]</p>";
 }
 
 $system_callback['code'] = 1;

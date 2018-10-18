@@ -25,7 +25,7 @@
   color: rgb(75,139, 15) !important;
 }
 
-.active{
+.active.custom{
   color: rgb(74, 139, 15) !important;
 }
 
@@ -244,4 +244,59 @@ aside p{
 #trip-tabs-content{
   height: 100%;
   margin-bottom: 40px;
+}
+
+.nav-link.dash{
+  border-bottom: #E7E7E7 solid 1px;
+}
+
+/* .main-details-container{
+  height: calc(100vh - 135px);
+  margin: 10px 10px 10px 10px;
+  padding-right: 0 !important;
+} */
+
+.main-details-container{
+  height: calc(100vh - 110px);
+  margin-left: 15px;
+  margin-right: 15px;
+  /* margin: 10px 10px 10px 10px;
+  padding-right: 0 !important; */
+}
+
+.main-details-container .div-100h{
+  height: 100%;
+}
+
+.nav-pills.dash{
+  border-radius: 0;
+}
+
+.nav-link.dash:not(.disabled){
+  color: black;
+}
+
+.tab-info{
+  overflow-x: scroll;
+}
+
+.nav-link.side-panel:hover{
+  background-color: #444;
+  color: white;
+}
+
+.nav-link.side-panel.active, .nav-link.side-panel.active:hover{
+  background-color: #E7E7E7;
+  color:black;
+}
+
+.nav-link.disabled.custom{
+  color: rgba(74, 139, 15, 0.6)
+}
+
+
+.nav-link.disabled:hover{
+  cursor: not-allowed;
+  background: inherit;
+  color: #6c757d;
 }
