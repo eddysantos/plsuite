@@ -70,7 +70,7 @@
               <div class="form-group row">
                 <label for="broker-reference" class="col-sm-2 col-form-label text-right">Reference</label>
                 <div class="col-sm-5">
-                  <input type="text" class="form-control broker-reference" name="broker-reference" value="" placeholder="Broker Reference">
+                  <input type="text" class="form-control broker-reference" autocomplete="off" name="broker-reference" value="" placeholder="Broker Reference">
                   <small class="invalid-feedback">This field cannot be empty.</small>
                 </div>
               </div>
