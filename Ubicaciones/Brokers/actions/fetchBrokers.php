@@ -33,7 +33,7 @@ if ($rslt->num_rows == 0) {
 
 while ($row = $rslt->fetch_assoc()) {
   $system_callback['data'] .=
-  "<tr role='button' driverid='$row[pkid_broker]'>
+  "<tr role='button' brokerid='$row[pkid_broker]'>
     <td>$row[pkid_broker]</td>
     <td>$row[brokerName]</td>
     <td>$row[brokerOpsContactName]</td>
