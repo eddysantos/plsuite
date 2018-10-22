@@ -80,4 +80,9 @@ $(document).ready(function(){
 
   });
 
+  $('tbody').on('click', '.linehaul', function(){
+    var tripid = $(this).attr('db-id');
+    window.location = '/plsuite/Ubicaciones/Viajes/tripDetails.php?tripid=' + tripid;
+  })
+
 });
