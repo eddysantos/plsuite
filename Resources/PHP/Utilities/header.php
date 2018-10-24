@@ -78,7 +78,7 @@
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
               <a class="dropdown-item" disabled href="/plsuite/Ubicaciones/Config">Configuration</a>
-              <a class="dropdown-item disabled" disabled href="#">Users</a>
+              <a class="dropdown-item" href="/plsuite/Ubicaciones/Users">Users</a>
               <!-- <a class="dropdown-item" href="/plsuite/Ubicaciones/Reports">Reports</a> -->
               <div class="dropdown-divider"></div>
               <a class="dropdown-item disabled" href="" disabled>Mexican Portal</a>

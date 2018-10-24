@@ -58,6 +58,33 @@
   width: 30vw;
 }
 
+.main-container{
+  height: calc(100vh - 110px);
+  overflow: hidden
+}
+
+.main-container .div-100h{
+  height: 100%;
+}
+
+.custom-table{
+  max-height: -webkit-fill-available;
+  overflow: scroll;
+	position: relative;
+}
+.custom-table tr {
+width: 100%;
+display: inline-table;
+table-layout: fixed;
+}
+
+.custom-table tbody{
+  overflow-y: scroll;
+  height: -webkit-fill-available;
+  /* width: 95%; */
+  position: absolute;
+}
+
 .navbar{
   background-color: none !important;
   border-bottom: grey solid;

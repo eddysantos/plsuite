@@ -45,11 +45,16 @@ if (isset($_POST['login'])) {
 
     if ($validador == 1) {
       $_SESSION['user_info'] = $row;
-      setcookie('Nombre',$row['Nombre']);
-      setcookie('Apellido',$row['Apellido']);
-      setcookie('Usuario',$row['NombreUsuario']);
-      setcookie('idUsuario',$row['pkIdUsers']);
-      setcookie('nombreUsuario', $row['NombreUsuario']);
+
+			$get_permissions = "SELECT * FROM users_permisos WHERE fkid_user = ?";
+			$stmt = $db->prepare($get_permissions);
+			$stmt->bind_param('s', $_SESSION['user_info']['u.pkIdUsers']);
+			$stmt->execute();
+			$results = $stmt->get_result();
+			$row = $results->fetch_assoc();
+			$_SESSION['user_permissions'] = $row;
+
+			error_log(json_encode($_SESSION));
 
       if (detectDevice() == "Mobile") {
         header('location:Ubicaciones/registroHoras.php');

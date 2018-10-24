@@ -39,3 +39,8 @@
 -- GROUP BY truckNumber
 --
 -- /***********************************************************
+
+
+
+
+ALTER TABLE `plsuite`.`Users` ADD COLUMN `email` varchar(300) NOT NULL AFTER `Privileges`;
