@@ -440,6 +440,27 @@ $(document).ready(function(){
         }
 
         var distanceService = new google.maps.DistanceMatrixService();
+        // var directionsService = new google.maps.DirectionsService();
+        //
+        // testTime = new Date();
+        // testTime.setMinutes(testTime.getMinutes() + 20);
+        //
+        // var directionsRequestTest = {
+        //   origin: "Zip 78045",
+        //   destination: "Zip 72209",
+        //   travelMode: google.maps.TravelMode.DRIVING,
+        //   drivingOptions: {
+        //     departureTime: testTime,
+        //     trafficModel: google.maps.TrafficModel.PESSIMISTIC
+        //   },
+        //   avoidTolls: false,
+        //   optimizeWaypoints: true,
+        //   provideRouteAlternatives: false,
+        // };
+        //
+        // directionsService.route(directionsRequestTest, function(r, s){
+        //   console.log(r);
+        // })
 
         for (var i = 0; i < zips.length - 1; i++) {
           origin = "Zip " + zips[i];

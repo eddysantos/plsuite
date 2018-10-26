@@ -44,3 +44,4 @@
 
 
 ALTER TABLE `plsuite`.`Users` ADD COLUMN `email` varchar(300) NOT NULL AFTER `Privileges`;
+ALTER TABLE `plsuite`.`Users` ADD COLUMN `fkid_broker` varchar(5) AFTER `email`;

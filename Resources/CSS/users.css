@@ -1,3 +1,7 @@
 .permissions-list{
   list-style:none;
 }
+
+input{
+  color: black !important;
+}

@@ -4,7 +4,8 @@ $(document).ready(function(){
     if (e.target.tagName == 'BUTTON') {
       return false;
     } else {
-      alertify.notify('Go edit the user!');
+      var user_id = $(this).attr('db-id');
+      window.location.href = "userDetails.php?user_id=" + user_id;
     }
   })
 
@@ -129,6 +130,66 @@ $(document).ready(function(){
   $('.popup-list').on('mouseleave', 'p', function(){
     $(this).attr('class', '')
   });
+
+  $('#save-user-details').click(function(){
+
+    var data = {};
+    $('#user-details-form').find('select, input, checkbox, radio').each(function(){
+      var input_id = $(this).attr('id');
+      var value = $(this).val();
+      var dbid = $(this).attr('db-id');
+      if (typeof input_id !== 'undefined') {
+        if (typeof dbid !== 'undefined') {
+          data[input_id] = dbid
+        } else {
+          data[input_id] = value
+        }
+      }
+    });
+
+    var update_user_details = $.ajax({
+      method: 'POST',
+      url: 'actions/update_user_details.php',
+      data: data
+    });
+
+    update_user_details.done(function(r){
+      r = JSON.parse(r);
+      if (r.code == 1) {
+        alertify.success('User details updated correctly!');
+      } else {
+        alertify.error('Something went wrong on the update. Please contact tech support.');
+        console.warn(r.message);
+      }
+    })
+  })
+
+  $('#user-type').change(function(){
+    var value = $(this).val();
+    if (value == 'Broker') {
+      $('#broker-field').fadeIn();
+    } else {
+      $('#broker-field').fadeOut();
+    }
+  })
+
+  $('#permissions-lists').on('change', 'input:checkbox', function(){
+    var checked = $(this).is(':checked');
+    var parent = $(this).data('parent');
+    var children = $(this).closest('li').find('input:checkbox');
+    // var children = "[data-parent='#" + $(this).attr('id') + "']";
+
+    if (checked) {
+      do {
+        $(parent).prop('checked', true);
+        parent = $(parent).data('parent');
+      } while (typeof parent !== 'undefined');
+    } else {
+      children.prop('checked', false);
+    }
+
+
+  })
 
   $(document).keydown(function(e){
     if (e.keyCode == 38 || e.keyCode == 40){
