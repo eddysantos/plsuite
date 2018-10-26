@@ -73,7 +73,7 @@ $sunday_5weeks = date('m/d/Y', strtotime('sunday 5 weeks ago'));
                 <tr>
                   <th style="width: 80px">Linehaul</th>
                   <th style="width: 160px">Trailer</th>
-                  <th>Closed Date</th>
+                  <th>Delivery Date</th>
                   <th>Amount</th>
                   <th>Client</th>
                 </tr>

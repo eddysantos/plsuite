@@ -12,7 +12,7 @@ if ($_POST['this_week'] == 'true') {
   $and_where = "AND tl.date_end < '$day'";
 }
 
-$query = "SELECT tl.lh_number linehaul , t.trailer_number trailer, tl.trip_rate rate , tl.date_end date_end , datediff(date(curdate()) , tl.date_end) days, b.brokerName broker, t.pkid_trip pkid_trip FROM ct_trip_linehaul tl LEFT JOIN ct_trip t ON t.pkid_trip = tl.fk_idtrip LEFT JOIN ct_brokers b ON tl.fkid_broker = b.pkid_broker WHERE tl.fk_idtrip <> '' AND tl.linehaul_status = 'Closed' AND tl.invoice_number IS NULL $and_where ORDER BY days DESC, linehaul ASC";
+$query = "SELECT tl.lh_number linehaul , t.trailer_number trailer, tl.trip_rate rate , date(tl.date_delivery) date_end , datediff(date(curdate()) , tl.date_delivery) days, b.brokerName broker, t.pkid_trip pkid_trip FROM ct_trip_linehaul tl LEFT JOIN ct_trip t ON t.pkid_trip = tl.fk_idtrip LEFT JOIN ct_brokers b ON tl.fkid_broker = b.pkid_broker WHERE tl.fk_idtrip <> '' AND tl.linehaul_status = 'Closed' AND tl.invoice_number IS NULL $and_where ORDER BY days DESC, linehaul ASC";
 
 $stmt = $db->prepare($query);
 $stmt->execute();
