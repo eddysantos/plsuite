@@ -7,12 +7,13 @@ $users_list = "";
 while ($row = $stmt->fetch_assoc()) {
   $email = $row['email'] == "" ? 'No email on record' : $row['email'];
   $button_color = "";
+
   switch ($row['Status']) {
-    case 'active':
+    case 'Active':
       $button_color = "text-success";
       break;
 
-    case 'inactive':
+    case 'Inactive':
       $button_color = "text-danger";
       break;
 
@@ -20,6 +21,7 @@ while ($row = $stmt->fetch_assoc()) {
       $button_color = "text-success";
       break;
   }
+
   $users_list .= "<tr role='button' db-id='$row[pkIdUsers]'>
     <td style='width: 20px; vertical-align: middle'>
         <div class='$button_color'><i class='fas fa-circle'></i></div>

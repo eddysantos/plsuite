@@ -1,4 +1,56 @@
+function showPosition(position){
+  var location = {
+    longitude: position.coords.longitude,
+    latitude: position.coords.latitude
+  }
+
+  console.log(location);
+}
+
 $(document).ready(function(){
+  $(function(){
+    var path_name = window.location.pathname;
+    var user_id = $('#user-pkid').val();
+
+    if (path_name.includes('userDetails.php')) {
+      var get_permissions = $.ajax({
+        method: 'POST',
+        data: {user_id: user_id},
+        url: 'actions/get_user_permissions.php'
+      });
+
+      get_permissions.done(function(r){
+        r = JSON.parse(r);
+        if (r.code == 1) {
+          for (var permission in r.permissions) {
+            if (r.permissions.hasOwnProperty(permission)) {
+              var $element_id = "#" + permission;
+              var $element = $($element_id);
+              var permission = r.permissions[permission];
+              if (permission === 1) {
+                $element.prop('checked', true);
+              } else {
+                $element.prop('checked', false);
+              }
+            }
+          }
+        } else {
+          alertify.notify('There are no permissions registered for this user.');
+        }
+      }).fail(function(a, status, message){
+        alertify.error('There was a problem. Loading the permissions. Please inform IT.')
+        console.error(status + ": " + message);
+      })
+    }
+  });
+
+  $(function(){
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(showPosition);
+    } else {
+      console.log('Geolocation not supported by browser.');
+    }
+  });
 
   $('#user-table').on('click', 'tr', function(e){
     if (e.target.tagName == 'BUTTON') {
@@ -147,6 +199,8 @@ $(document).ready(function(){
       }
     });
 
+    console.log(data);
+
     var update_user_details = $.ajax({
       method: 'POST',
       url: 'actions/update_user_details.php',
@@ -163,13 +217,208 @@ $(document).ready(function(){
       }
     })
   })
+  $('#save-permissions-btn').click(function(){
 
-  $('#user-type').change(function(){
+    var data = {};
+
+    $('#user-permissions-pane').find('input:checkbox').each(function(){
+      var ids = $(this).attr('id');
+      var values = $(this).is(':checked') === true ? 1 : 0;
+      data[ids] = values;
+    });
+
+    data.fkid_user = $('#user-pkid').val();
+
+    var update_permissions = $.ajax({
+      method: 'POST',
+      data: data,
+      url: 'actions/update_user_permissions.php'
+    });
+
+    update_permissions.done(function(r){
+      r = JSON.parse(r);
+      switch (r.code) {
+        case 1:
+          alertify.success("Permissions updated correctly.");
+          break;
+
+        case 2:
+          alertify.error("There ws nothing to update. Please verify the information.");
+          console.warn(r.message);
+          break;
+
+        default:
+          alertify.error("There was a problem. Please contact IT.")
+          console.warn(r);
+          break;
+      }
+    }).fail(function(a, status, error){
+      alertify.error("Something went wrong. Please contact tech support.");
+      console.log(status + ": " + error);
+    });
+
+    console.log(data);
+  });
+  $('#add_user_form').on('change', '.validate-text', function(){
+    var $this = $(this);
+    var $id = $this.attr('id');
+    var $value = $this.val();
+    var valid_form = false;
+
+    if ($value == "") {
+      $this.addClass('is-invalid').removeClass('is-valid');
+    } else {
+      $this.addClass('is-valid').removeClass('is-invalid');
+    }
+
+    var first_name = $('#add_user_fname');
+    var last_name = $('#add_user_lname');
+    var user_name = $('#add_user_uname');
+
+    // console.log('First Name: ' + first_name.val());
+    // console.log('Last Name: ' + last_name.val());
+    // console.log('User Name: ' + user_name.val());
+
+    var temp_user_name = first_name.val().substring(0,1) + last_name.val();
+
+    var is_first_name = $(this).is(first_name);
+    var is_last_name = $(this).is(last_name);
+
+    if (is_first_name || is_last_name) {
+      if (first_name.val() != "" && last_name.val() != "") {
+        user_name.val(temp_user_name.toLowerCase()).change();
+      }
+    }
+
+    $('#add_user_form').find('input:visible').each(function(){
+      var is_valid = $(this).hasClass('is-valid');
+      if (is_valid) {
+        valid_form = true;
+      } else {
+        valid_form = false;
+        return false;
+      }
+    });
+
+    if (valid_form) {
+      $('#add-user-btn').attr('disabled', false).removeClass('disabled');
+    } else {
+      $('#add-user-btn').attr('disabled', true).addClass('disabled');
+    }
+
+  });
+  $('#add_user_uname').change(function(){
+    var $this = $(this);
+    var data = {
+      user_name: $this.val()
+    }
+
+    if (data.user_name == "") {
+      $this.addClass('is-invalid').removeClass('is-valid')
+      $('#username-validation-addon').find('.active').removeClass('active').addClass('d-none');
+      $('#username-validation-addon').find('.invalid-state').removeClass('d-none').addClass('active');
+      return false;
+    }
+
+    $('#username-validation-addon').find('.active').removeClass('active').addClass('d-none');
+    $('#username-validation-addon').find('.loading-state').removeClass('d-none').addClass('active');
+
+    var validate_username = $.ajax({
+      method: 'POST',
+      url: 'actions/validate_username.php',
+      data: data
+    });
+
+    validate_username.done(function(r){
+      r = JSON.parse(r);
+      if (r.code == 1) {
+        $this.addClass('is-valid').removeClass('is-invalid');
+        $('#username-validation-addon').find('.active').removeClass('active').addClass('d-none');
+        $('#username-validation-addon').find('.valid-state').removeClass('d-none').addClass('active');
+      } else if (r.code == 2) {
+        $this.addClass('is-invalid').removeClass('is-valid')
+        $('#username-validation-addon').find('.active').removeClass('active').addClass('d-none');
+        $('#username-validation-addon').find('.invalid-state').removeClass('d-none').addClass('active');
+      } else {
+        console.error(r.message);
+        alertify.error('There was an error validating the username. Please contact IT.');
+      }
+    }).fail(function(a, status, errorText){
+      console.error(status + ": " + errorText);
+      alertify.error('There was an error validating the username. Please contact IT.');
+    });
+
+    $('#add_user_form').find('input:visible').each(function(){
+      var is_valid = $(this).hasClass('is-valid');
+      if (is_valid) {
+        valid_form = true;
+      } else {
+        valid_form = false;
+        return false;
+      }
+    });
+
+    if (valid_form) {
+      $('#add-user-btn').attr('disabled', false).removeClass('disabled');
+    } else {
+      $('#add-user-btn').attr('disabled', true).addClass('disabled');
+    }
+
+
+
+  });
+  $('#add-user-btn').click(function(){
+    var data = {};
+    $('#add_user_form').find('select, input, checkbox, radio').each(function(){
+      var input_id = $(this).attr('id');
+      var value = $(this).val();
+      var dbid = $(this).attr('db-id');
+      if (typeof input_id !== 'undefined') {
+        if (typeof dbid !== 'undefined') {
+          data[input_id] = dbid
+        } else {
+          data[input_id] = value
+        }
+      }
+    });
+
+    var add_user = $.ajax({
+      method: 'POST',
+      url: 'actions/add_new_user.php',
+      data: data
+    });
+
+    add_user.done(function(r){
+      var r = JSON.parse(r);
+      if (r.code == 1) {
+        var user_id = r.data.insert_id;
+        swal({
+          text: "The username was added successfully!",
+          icon: "success",
+          button: {
+            text: 'Ok',
+            value: true
+          }
+        }).then((value)=>{
+          window.location.href = "userDetails.php?user_id=" + user_id;
+        });
+      } else {
+        alertify.error('There was a problem adding the user:');
+        alertify.notify(r.message, 'warning', 0);
+      }
+    }).fail(function(a, status, errorText){
+      console.error(status + ": " + errorText);
+      alertify.error('Something went wrong. Please contact IT');
+    });
+  });
+
+  $('#add_user_type').change(function(){
     var value = $(this).val();
     if (value == 'Broker') {
-      $('#broker-field').fadeIn();
+      $('#broker-field').fadeIn().find('input').val('');
+      $('#add-user-btn').attr('disabled', true).addClass('disabled');
     } else {
-      $('#broker-field').fadeOut();
+      $('#broker-field').fadeOut().find('input').val('');
     }
   })
 

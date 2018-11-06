@@ -131,8 +131,8 @@ require 'actions/get_user_details.php';
                     <li>
                       <h6>
                         <div class="form-check">
-                          <input class="form-check-input" type="checkbox" value="" id="administration-group">
-                          <label class="form-check-label" for="administration-group">
+                          <input class="form-check-input" type="checkbox" value="" id="administration_role">
+                          <label class="form-check-label" for="administration_role">
                             Administration
                           </label>
                         </div>
@@ -140,24 +140,24 @@ require 'actions/get_user_details.php';
                       <ul class="permissions-list">
                         <li>
                           <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="" id="user-management" data-group="user-management" data-parent="#administration-group">
-                            <label class="form-check-label" for="user-management">
+                            <input class="form-check-input" type="checkbox" value="" id="user_management_role" data-group="user_management_role" data-parent="#administration_role">
+                            <label class="form-check-label" for="user_management_role">
                               User Management
                             </label>
                           </div>
                           <ul class="permissions-list">
                             <li>
                               <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="" id="user-management-add-users" data-group="user-management" data-parent="#user-management">
-                                <label class="form-check-label" for="user-management-add-users">
+                                <input class="form-check-input" type="checkbox" value="" id="user_management_role_add_users" data-group="user_management_role" data-parent="#user_management_role">
+                                <label class="form-check-label" for="user_management_role_add_users">
                                   Add / Remove Users
                                 </label>
                               </div>
                             </li>
                             <li>
                               <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="" id="user-management-change-permissions" data-group="user-management" data-parent="#user-management">
-                                <label class="form-check-label" for="user-management-change-permissions">
+                                <input class="form-check-input" type="checkbox" value="" id="user_management_role_change_permissions" data-group="user_management_role" data-parent="#user_management_role">
+                                <label class="form-check-label" for="user_management_role_change_permissions">
                                   Permissions Management
                                 </label>
                               </div>
@@ -166,16 +166,16 @@ require 'actions/get_user_details.php';
                         </li>
                         <li>
                           <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="" id="invoice-control" data-group="invoice-control">
-                            <label class="form-check-label" for="invoice-control">
+                            <input class="form-check-input" type="checkbox" value="" id="invoice_control_role" data-group="invoice_control_role">
+                            <label class="form-check-label" for="invoice_control_role">
                               Invoice Control
                             </label>
                           </div>
                           <ul class="permissions-list">
                             <li>
                               <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="" id="edit-invoice-information" data-group="invoice-control">
-                                <label class="form-check-label" for="invoice-control">
+                                <input class="form-check-input" type="checkbox" value="" id="invoice_control_save" data-group="invoice_control_role" data-parent="#invoice_control_role">
+                                <label class="form-check-label" for="invoice_control_save">
                                   Edit invoice information
                                 </label>
                               </div>
@@ -191,8 +191,8 @@ require 'actions/get_user_details.php';
                     <li>
                       <h6>
                         <div class="form-check">
-                          <input class="form-check-input" type="checkbox" value="" id="trip-group">
-                          <label class="form-check-label" for="administration-group">
+                          <input class="form-check-input" type="checkbox" value="" id="trip_role">
+                          <label class="form-check-label" for="trip_role">
                             Trips
                           </label>
                         </div>
@@ -200,16 +200,16 @@ require 'actions/get_user_details.php';
                       <ul class="permissions-list">
                         <li>
                           <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="" id="enable_trip_editing" data-group="trip-management">
-                            <label class="form-check-label" for="enable_trip_editing">
+                            <input class="form-check-input" type="checkbox" value="" id="trip_role_editing" data-group="trip-management" data-parent="#trip_role">
+                            <label class="form-check-label" for="trip_role_editing">
                               Enable Editing
                             </label>
                           </div>
                         </li>
                         <li>
                           <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="" id="reopen_closed_trips" data-group="trip-management">
-                            <label class="form-check-label" for="reopen_closed_trips">
+                            <input class="form-check-input" type="checkbox" value="" id="trip_role_reopen_closed_trips" data-group="trip-management" data-parent="#trip_role">
+                            <label class="form-check-label" for="trip_role_reopen_closed_trips">
                               Re-Open Trips
                             </label>
                           </div>
@@ -231,8 +231,8 @@ require 'actions/get_user_details.php';
                   <h6>Brokers</h6>
                 </div>
               </div>
-              <div class="col-md-2" style="display: none" id="permissions-save-col">
-                <button type="button" name="button" class="btn btn-outline-success">Save Changes</button>
+              <div class="col-md-2" id="permissions-save-col">
+                <button type="button" name="button" class="btn btn-outline-success" id="save-permissions-btn">Save Changes</button>
               </div>
             </div>
           </div>

@@ -45,3 +45,4 @@
 
 ALTER TABLE `plsuite`.`Users` ADD COLUMN `email` varchar(300) NOT NULL AFTER `Privileges`;
 ALTER TABLE `plsuite`.`Users` ADD COLUMN `fkid_broker` varchar(5) AFTER `email`;
+ALTER TABLE `plsuite`.`users_permisos` ADD COLUMN `administration_role` tinyint AFTER `invoice_control_save`, ADD COLUMN `user_management_role` tinyint AFTER `administration_role`, ADD COLUMN `user_management_role_add_users` tinyint AFTER `user_management_role`, ADD COLUMN `user_management_role_change_permisssions` tinyint AFTER `user_management_role_add_users`, ADD COLUMN `invoice_control_role` tinyint AFTER `user_management_role_change_permisssions`, CHANGE COLUMN `invoice_control_save` `invoice_control_save` tinyint AFTER `invoice_control_role`, ADD COLUMN `trip_role` tinyint AFTER `invoice_control_save`, ADD COLUMN `trip_role_editing` tinyint AFTER `trip_role`, ADD COLUMN `trip_role_reopen_closed_trips` tinyint AFTER `trip_role_editing`;
