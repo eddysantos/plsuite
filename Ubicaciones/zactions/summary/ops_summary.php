@@ -148,7 +148,7 @@ if ($rows == 0) {
     <td style='width: 80px'>$row[linehaul]</td>
     <td style='width: 160px'>$row[trailer]</td>
     <td style='width: 80px'>$row[tractor]</td>
-    <td>$row[name_first] $row[name_last]</td>
+    <td>$row[first_name] $row[last_name]</td>
     <td>$row[broker]</td>
     <td>$row[o_city], $row[o_state]</td>
     <td>$appt ($row[days])</td>
