@@ -40,7 +40,7 @@
 --
 -- /***********************************************************
 
-CREATE TABLE `plsuite`.`<table_name>` (
+CREATE TABLE `plsuite`.`omni_pos_log` (
 	`tran_id` int(18) NOT NULL,
 	`tran_ts` timestamp NOT NULL,
 	`driverid1` varchar(25),
