@@ -109,8 +109,8 @@ do {
     }
 
     $event_ts = date('Y-m-d h:i:s', strtotime($event_ts));
-    echo $event_ts;
-    die();
+    // echo $event_ts;
+    // die();
 
     $insert_pos_log->bind_param('ssssssss', $position_id, $event_ts, $driver, $driver2, $tractor, $lat, $lon, $speed) or die('Error binding: ' . $insert_pos_log->error);
     $insert_pos_log->execute() or die('Error executing: ' . $insert_pos_log->error);
