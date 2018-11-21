@@ -93,16 +93,10 @@ do {
   foreach ($transactions as $transaction) {
     // var_dump($transaction);
     $position_id =  $transaction->attributes()->ID;
-    $test = $transaction->{'T.2.12.0'};
-    var_dump($test);
-    if ($test) {
-      echo "true";
-    } else {
-      echo "false";
-    }
+    $validate = $transaction->{'T.2.12.0'};
 
     die();
-    if ($transaction->{'T.2.12.0'}) {
+    if ($validate) {
       $event_ts = $transaction->{'T.2.12.0'}->eventTS;
       $tractor = $transaction->{'T.2.12.0'}->equipment->attributes()->ID;
       $driver = $transaction->{'T.2.12.0'}->driverID;
@@ -115,7 +109,7 @@ do {
       echo "NO T.2.12.0\n";
       continue;
     }
-
+    die("Ahora si jalo.");
     $event_ts = date('Y-m-d h:i:s', strtotime($event_ts));
     // echo $event_ts;
     // die();
