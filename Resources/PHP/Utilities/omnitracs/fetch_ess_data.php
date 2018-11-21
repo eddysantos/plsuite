@@ -93,8 +93,9 @@ do {
   foreach ($transactions as $transaction) {
     // var_dump($transaction);
     $position_id =  $transaction->attributes()->ID;
+    $validate = $transaction->{'T.2.12.0'};
 
-    if ($transaction->{'T.2.12.0'}) {
+    if ($validate) {
       $event_ts = $transaction->{'T.2.12.0'}->eventTS;
       $tractor = $transaction->{'T.2.12.0'}->equipment->attributes()->ID;
       $driver = $transaction->{'T.2.12.0'}->driverID;
@@ -104,11 +105,16 @@ do {
       $posTS = $transaction->{'T.2.12.0'}->position->attributes()->posTS;
       $speed = $transaction->{'T.2.12.0'}->speed;
     } else {
+      echo "NO T.2.12.0\n";
       continue;
     }
 
-    $insert_pos_log->bind_param('ssssssss', $position_id, $event_ts, $driver, $driver2, $tractor, $lat, $lon, $speed);
-    $insert_pos_log->execute();
+    $event_ts = date('Y-m-d h:i:s', strtotime($event_ts));
+    // echo $event_ts;
+    // die();
+
+    $insert_pos_log->bind_param('ssssssss', $position_id, $event_ts, $driver, $driver2, $tractor, $lat, $lon, $speed) or die('Error binding: ' . $insert_pos_log->error);
+    $insert_pos_log->execute() or die('Error executing: ' . $insert_pos_log->error);
 
     if (!$insert_pos_log) {
       die("Error executing query: " . $insert_pos_log->error);

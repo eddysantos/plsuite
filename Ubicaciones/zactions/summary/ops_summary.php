@@ -60,7 +60,7 @@ if ($rows == 0) {
 
 
 
-$query = "SELECT t.trip_number trip, t.pkid_trip pkid_trip, t.trailer_number trailer , max(tl.date_departure) departure , max(tl.date_appointment) appointment, datediff(date(CURDATE()), tl.date_appointment) days, trk.truckNumber truck_number, d.nameFirst first_name, d.nameLast last_name FROM ct_trip t LEFT JOIN ct_trip_linehaul tl ON t.pkid_trip = tl.fk_idtrip LEFT JOIN ct_trip_linehaul_movement tlm ON tlm.pkid_movement = t.last_movement LEFT JOIN ct_drivers d ON tlm.fkid_driver = d.pkid_driver LEFT JOIN ct_truck trk ON tlm.fkid_tractor = trk.pkid_truck WHERE t.trip_status NOT IN ('Cancelled', 'Closed') AND tl.linehaul_status NOT IN('Cancelled') GROUP BY t.trip_number HAVING count(tl.fk_idtrip) = 1";
+$query = "SELECT t.trip_number trip, t.pkid_trip pkid_trip, t.trailer_number trailer , max(tl.date_departure) departure , max(tl.date_appointment) appointment, datediff(date(CURDATE()), tl.date_appointment) days, trk.truckNumber truck_number, d.nameFirst first_name, d.nameLast last_name FROM ct_trip t LEFT JOIN ct_trip_linehaul tl ON t.pkid_trip = tl.fk_idtrip LEFT JOIN ct_trip_linehaul_movement tlm ON tlm.pkid_movement = t.last_movement LEFT JOIN ct_drivers d ON tlm.fkid_driver = d.pkid_driver LEFT JOIN ct_truck trk ON tlm.fkid_tractor = trk.pkid_truck WHERE t.trip_status NOT IN ('Cancelled', 'Closed') AND tl.linehaul_status NOT IN('Cancelled') AND tlm.destination_zip NOT IN (78045, 78041, 78040) GROUP BY t.trip_number"; //HAVING count(tl.fk_idtrip) = 1
 
 $stmt = $db->prepare($query);
 $stmt->execute();
@@ -148,7 +148,7 @@ if ($rows == 0) {
     <td style='width: 80px'>$row[linehaul]</td>
     <td style='width: 160px'>$row[trailer]</td>
     <td style='width: 80px'>$row[tractor]</td>
-    <td>$row[name_first] $row[name_last]</td>
+    <td>$row[first_name] $row[last_name]</td>
     <td>$row[broker]</td>
     <td>$row[o_city], $row[o_state]</td>
     <td>$appt ($row[days])</td>
