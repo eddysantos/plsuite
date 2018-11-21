@@ -95,7 +95,6 @@ do {
     $position_id =  $transaction->attributes()->ID;
     $validate = $transaction->{'T.2.12.0'};
 
-    die();
     if ($validate) {
       $event_ts = $transaction->{'T.2.12.0'}->eventTS;
       $tractor = $transaction->{'T.2.12.0'}->equipment->attributes()->ID;
