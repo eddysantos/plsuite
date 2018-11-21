@@ -39,3 +39,15 @@
 -- GROUP BY truckNumber
 --
 -- /***********************************************************
+
+CREATE TABLE `plsuite`.`omni_pos_log` (
+	`tran_id` int(18) NOT NULL,
+	`tran_ts` timestamp NOT NULL,
+	`driverid1` varchar(25),
+	`driverid2` varchar(25),
+	`tractor` varchar(10),
+	`lat` varchar(15),
+	`lon` varchar(15),
+	`speed` varchar(10),
+	PRIMARY KEY (`tran_id`)
+) ENGINE=`InnoDB` COMMENT='';

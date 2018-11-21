@@ -1,7 +1,7 @@
 <?php
 
 // require $root . '/plsuite/Resources/PHP/Utilities/initialScript.php';
-require '/home/esantos/plt/plsuite/Resources/PHP/loginDatabase.php';
+require '/Applications/MAMP/htdocs/plsuite/Resources/PHP/loginDatabase.php';
 
 class WsseAuthHeader extends SoapHeader {
 
@@ -48,10 +48,22 @@ $omni->__setSoapHeaders(array($wsse_header));
 //   new SoapParam('2', 'subscriberId'),
 //   new SoapParam(0, 'transactionIdIn')
 // );
+$subscriber = array(
+  'subscriberId'=>'2',
+  'transactionIdIn'=>170387
+);
 
 // $id = new SoapParam('T049', 'id');
 // $scac = new SoapParam('', 'scac');
 
+try {
+  $ping = $omni->dequeue2($subscriber);
+} catch (SoapFault $e) {
+  var_dump($e);
+  $lastRequest = $omni->__getLastRequest();
+  var_dump($lastRequest);
+  die();
+}
 
 
 // foreach ($transactions as $transaction) {
@@ -66,61 +78,42 @@ if (!$insert_pos_log) {
   die("Error preparing: " . $db->error);
 }
 
-$final_transaction = "";
+$count = $ping->dequeue2Return->count;
+$final_transaction = $ping->dequeue2Return->transactionIdOut;
+$transactions = new SimpleXMLElement($ping->dequeue2Return->transactions);
 
-do {
-  $subscriber = array(
-    'subscriberId'=>'2',
-    'transactionIdIn'=>$final_transaction
-  );
+echo "Count is: " . $count . "\n";
+echo "Final Transaction is: " . $final_transaction . "\n";
 
-  try {
-    $ping = $omni->dequeue2($subscriber);
-  } catch (SoapFault $e) {
-    var_dump($e);
-    $lastRequest = $omni->__getLastRequest();
-    var_dump($lastRequest);
-    die();
+foreach ($transactions as $transaction) {
+  // var_dump($transaction);
+  $position_id =  $transaction->attributes()->ID;
+
+  if ($transaction->{'T.2.12.0'}) {
+    $event_ts = $transaction->{'T.2.12.0'}->eventTS;
+    $tractor = $transaction->{'T.2.12.0'}->equipment->attributes()->ID;
+    $driver = $transaction->{'T.2.12.0'}->driverID;
+    $driver2 = $transaction->{'T.2.12.0'}->driverID2;
+    $lat = $transaction->{'T.2.12.0'}->position->attributes()->lat;
+    $lon = $transaction->{'T.2.12.0'}->position->attributes()->lon;
+    $posTS = $transaction->{'T.2.12.0'}->position->attributes()->posTS;
+    $speed = $transaction->{'T.2.12.0'}->speed;
+  } else {
+    continue;
   }
 
-  $count = $ping->dequeue2Return->count;
-  $final_transaction = $ping->dequeue2Return->transactionIdOut;
-  $transactions = new SimpleXMLElement($ping->dequeue2Return->transactions);
+  $insert_pos_log->bind_param('ssssssss', $position_id, $event_ts, $driver, $driver2, $tractor, $lat, $lon, $speed);
+  $insert_pos_log->execute();
 
-  echo "Count is: " . $count . "\n";
-  echo "Final Transaction is: " . $final_transaction . "\n";
-
-  foreach ($transactions as $transaction) {
-    // var_dump($transaction);
-    $position_id =  $transaction->attributes()->ID;
-    $validate = $transaction->{'T.2.12.0'};
-
-    if ($validate) {
-      $event_ts = $transaction->{'T.2.12.0'}->eventTS;
-      $tractor = $transaction->{'T.2.12.0'}->equipment->attributes()->ID;
-      $driver = $transaction->{'T.2.12.0'}->driverID;
-      $driver2 = $transaction->{'T.2.12.0'}->driverID2;
-      $lat = $transaction->{'T.2.12.0'}->position->attributes()->lat;
-      $lon = $transaction->{'T.2.12.0'}->position->attributes()->lon;
-      $posTS = $transaction->{'T.2.12.0'}->position->attributes()->posTS;
-      $speed = $transaction->{'T.2.12.0'}->speed;
-    } else {
-      echo "NO T.2.12.0\n";
-      continue;
-    }
-
-    $event_ts = date('Y-m-d H:i:s', strtotime($event_ts));
-    // echo $event_ts;
-    // die();
-
-    $insert_pos_log->bind_param('ssssssss', $position_id, $event_ts, $driver, $driver2, $tractor, $lat, $lon, $speed) or die('Error binding: ' . $insert_pos_log->error);
-    $insert_pos_log->execute() or die('Error executing: ' . $insert_pos_log->error);
-
-    if (!$insert_pos_log) {
-      die("Error executing query: " . $insert_pos_log->error);
-    }
+  if (!$insert_pos_log) {
+    die("Error executing query: " . $insert_pos_log->error);
   }
+}
 
-} while ($count > 0);
+// $response = $ping->getVehicleInformationReturn;
+// // var_dump($response);
+// echo "Vehicle ID: " . $response->vehicle->id . "\n";
+// echo "Latitude: " . $response->latitude . "\n";
+// echo "Longitude: " . $response->longitude . "\n";
 
 ?>
