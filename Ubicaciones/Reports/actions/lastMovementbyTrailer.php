@@ -14,24 +14,13 @@ function check_date($date){
   }
 }
 
-$system_callback = [];
-$linehaul = [];
-$grouping = "";
-$data = $_GET;
+$trailers = [];
+$trips = [];
 
-if ($_GET['level'] == 'linehs') {
-  $grouping = "";
-  // $grouping = "GROUP BY tl.pk_idlinehaul";
-}
+// Get list of trailers so we can get the last trip of each one of them.
 
-$data['from'] = $data['from'] . " 00:00";
-$data['to'] = $data['to'] . " 23:59";
-// $data = array(
-//   'from'=>'2018-01-01',
-//   'to'=>'2018-02-28'
-// );
+$query = "SELECT pkid_trailer id_trailer, trailerNumber trailer_number FROM ct_trailer WHERE deletedTrailer IS NOT NULL";
 
-$query = "SELECT t.pkid_trip trip , t.trip_year trip_year , tl.pk_idlinehaul linehaul , tl.linehaul_status lh_status , tl.pk_linehaul_number lh_number , tr.trailerNumber trailer , tl.origin_city linehaul_ocity , tl.origin_state linehaul_ostate , tl.destination_city linehaul_dcity , tl.destination_state linehaul_dstate , tl.date_departure departure , tl.date_arrival arrival , tl.date_delivery delivery , tlm.pk_movement_number mov_number , tlm.origin_city movement_ocity , tlm.origin_state movement_ostate , tlm.destination_city movement_dcity , tlm.destination_state movement_dstate , d.nameFirst driver_firstn , d.nameLast driver_lastn , con.truckNumber truck_number , b.brokerName broker , tl.broker_reference reference_number , tl.trip_rate trip_rate , tlm.miles_google miles , tlm.movement_type mov_type FROM ct_trip t LEFT JOIN ct_trailer tr ON t.fkid_trailer = tr.pkid_trailer LEFT JOIN ct_trip_linehaul tl ON t.pkid_trip = tl.fk_idtrip LEFT JOIN ct_trip_linehaul_movement tlm ON tl.pk_idlinehaul = tlm.fkid_linehaul LEFT JOIN ct_drivers d ON tlm.fkid_driver = d.pkid_driver LEFT JOIN ct_truck con ON tlm.fkid_tractor = con.pkid_truck LEFT JOIN ct_brokers b ON tl.fkid_broker = b.pkid_broker WHERE( tl.linehaul_status <> 'Cancelled' AND(tl.date_arrival IS NULL)) OR( tl.date_arrival >= ? AND tl.date_arrival <= ? AND tl.linehaul_status <> 'Cancelled') $grouping ORDER BY trip DESC , lh_number ASC , departure DESC , arrival DESC , delivery DESC , mov_number ASC";
 
 $stmt = $db->prepare($query);
 if (!($stmt)) {
@@ -41,7 +30,39 @@ if (!($stmt)) {
   exit_script($system_callback);
 }
 
-$stmt->bind_param('ss', $data['from'], $data['to']);
+// $stmt->bind_param('ss', $data['from'], $data['to']);
+// if (!($stmt)) {
+//   $system_callback['code'] = "500";
+//   $system_callback['query'] = $query;
+//   $system_callback['message'] = "Error during variables binding [$stmt->errno]: $stmt->error";
+//   exit_script($system_callback);
+// }
+
+if (!($stmt->execute())) {
+  $system_callback['code'] = "500";
+  $system_callback['query'] = $query;
+  $system_callback['message'] = "Error during query execution [$db->errno]: $db->error";
+  exit_script($system_callback);
+}
+
+$rslt = $stmt->get_result();
+
+while ($row = $rslt->fetch_assoc()) {
+  array_push($trailers, $row['id_trailer']);
+}
+
+
+$query = "SELECT trip_number, trailer_number, last_trip FROM ct_trip WHERE trailer_number = ? LIMIT 1";
+
+$stmt = $db->prepare($query);
+if (!($stmt)) {
+  $system_callback['code'] = "500";
+  $system_callback['query'] = $query;
+  $system_callback['message'] = "Error during query prepare [$db->errno]: $db->error";
+  exit_script($system_callback);
+}
+
+$stmt->bind_param('s', $data['trailer_number']);
 if (!($stmt)) {
   $system_callback['code'] = "500";
   $system_callback['query'] = $query;
@@ -58,60 +79,17 @@ if (!($stmt->execute())) {
 
 $rslt = $stmt->get_result();
 
-if ($rslt->num_rows == 0) {
-  $system_callback['code'] = 2;
-  $system_callback['message'] = "Script called successfully but there are no rows to display.";
-  $system_callback['data'] = $data;
-  header('Location: /plsuite/Ubicaciones/Reports/');
-}
-
 while ($row = $rslt->fetch_assoc()) {
-  // echo json_encode($row) . "\n";
-
-      $records[$row['trip']][$row['linehaul']]['id'] = $row['trip_year'] . str_pad($row['trip'], 4, 0, STR_PAD_LEFT) . $row['lh_number'];
-      $records[$row['trip']][$row['linehaul']]['trailer_number'] = $row['trailer'];
-      $records[$row['trip']][$row['linehaul']]['origin'] = $row['linehaul_ocity'] . ", " . $row['linehaul_ostate'];
-      $records[$row['trip']][$row['linehaul']]['destination'] = $row['linehaul_dcity'] . ", " . $row['linehaul_dstate'];
-      $records[$row['trip']][$row['linehaul']]['departure'] = check_date($row['departure']);
-      $records[$row['trip']][$row['linehaul']]['arrival'] = check_date($row['arrival']);
-      $records[$row['trip']][$row['linehaul']]['delivery'] = check_date($row['delivery']);
-      $records[$row['trip']][$row['linehaul']]['loaded_miles'] += 0;
-      $records[$row['trip']][$row['linehaul']]['empty_miles'] += 0;
-      $records[$row['trip']][$row['linehaul']]['client'] = $row['broker'];
-      $records[$row['trip']][$row['linehaul']]['client_reference'] = $row['reference_number'];
-      $records[$row['trip']][$row['linehaul']]['amount'] = $row['trip_rate'];
-      $records[$row['trip']][$row['linehaul']]['lh_status'] = $row['lh_status'];
-
-      if ($row['mov_type'] == 'E') {
-        $records[$row['trip']][$row['linehaul']]['empty_miles'] += $row['miles'];
-      }
-
-      if ($row['mov_type'] == 'L') {
-        $records[$row['trip']][$row['linehaul']]['loaded_miles'] += $row['miles'];
-      }
-
-      if ($_GET['level'] == 'linehs') {
-        $records[$row['trip']][$row['linehaul']]['driver'] = $row['driver_firstn'] . " " . $row['driver_lastn'];
-        $records[$row['trip']][$row['linehaul']]['truck_number'] = $row['truck_number'];
-        continue;
-      }
-
-      $records[$row['trip']][$row['linehaul']]['movements'][$row['movement_id']] = array(
-        'id' => $row['movement_id'],
-        'origin' => $row['movement_ocity'] . ", " . $row['movement_ostate'],
-        'destination' => $row['movement_dcity'] . ", " . $row['movement_dstate'],
-        'driver' => $row['driver_firstn'] . " " . $row['driver_lastn'],
-        'truck' => $row['truck_number'],
-        'miles' => $row['miles'],
-        'type' => $row['mov_type']
-      );
-
-
+  $record = array(
+    'trip_number' => $row['trip_number'],
+    'last_linehaul'=> '',
+    'last_movement'=> $row['last_trip']
+  );
+  array_push($trips, $record);
 }
 
+$query = "SELECT pk_idlinehaul, lh_number FROM ct_trip_linehaul WHERE fk_idtrip = ?";
 
-// require '/var/www/html/plt/plsuite/Resources/PHPExcel/Classes/PHPExcel.php';
-// require $root . '/plsuite/Resources/PHPSpreadsheet/src/PhpSpreadsheet/Spreadsheet.php';
 
 require $root . '/plsuite/Resources/vendor/autoload.php';
 

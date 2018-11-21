@@ -55,8 +55,89 @@ function toggle_view(element_object){
   // }
 }
 
+function add_driver(driver, dbid){
+  $('#listed-drivers').append("<p class='d-flex justify-content-between'><span db-id='" + dbid + "'>" + driver + "</span><span class='remove-driver' role='button'><i class='fas fa-user-times text-danger'></i></span></p>");
+  $('.popup-list').slideUp();
+  $('#driver-popup-list-modal').html('');
+  $("[id-display='#driver-popup-list-modal']").val("").attr('value', "").prop('value', "").change();
+}
+
+function construct_movement(movements){
+
+  var template = $("<div class='movement'><p class='d-inline'><span class='ocity'></span>, </p><p class='d-inline'><span class='ostate'></span> <span class='ozip'></span></p><p class='d-inline'> - </p><p class='d-inline'><span class='dcity'></span>, </p><p class='d-inline'><span class='dstate'></span> <span class='dzip'></span> (<span class='distance'></span> <span class='mov-type'></span> Miles)</p></div>");
+
+  var html_movement = $("<div></div>");
+
+  var ocity = "";
+  var ostate = "";
+  var ozip = "";
+  var dcity = "";
+  var dstate = "";
+  var dzip = "";
+  var distance = "";
+
+  for (var movement in movements) {
+    if (movements.hasOwnProperty(movement) && movement != 'total_distance') {
+      // html_movement = template;
+
+      ocity = movements[movement].origin.city;
+      ostate = movements[movement].origin.state;
+      ozip = movements[movement].origin.zip;
+
+      dcity = movements[movement].destination.city;
+      dstate = movements[movement].destination.state;
+      dzip = movements[movement].destination.zip;
+
+      distance = movements[movement].distance;
+
+      template.find('.ocity').html(ocity);
+      template.find('.ostate').html(ostate);
+      template.find('.ozip').html(ozip);
+      template.find('.dcity').html(dcity);
+      template.find('.dstate').html(dstate);
+      template.find('.dzip').html(dzip);
+      template.find('.distance').html(distance);
+      template.clone().appendTo(html_movement);
+    }
+
+  }
+  $('#movement-confirmation').html(html_movement);
+
+  // return new_movement;
+
+}
+
 $(document).ready(function(){
 
+  $('.popup-input').keydown(function(e){
+    if (e.keyCode === 13 || e.keyCode === 9) {
+      e.preventDefault();
+      var targetFocus = $(document.activeElement).attr('id-display') + " p" + ".hovered";
+
+
+      var dbid = $(targetFocus).attr('db-id');
+      var inputTarget = $(targetFocus).parent().attr('id');
+      var type = $(targetFocus).parent().attr('type');
+      var target = $(targetFocus).parent().attr('target');
+      var name = $(targetFocus).html();
+      var plates = $(targetFocus).attr('plates');
+
+      switch (type) {
+        case 'multiple':
+        add_driver(name, dbid);
+        break;
+        default:
+        if (plates) {
+          $("[id-display='#" + inputTarget+ "']").attr('plates', plates);
+        }
+        $("[id-display='#" + inputTarget+ "']").attr("value", $(targetFocus).html()).attr('db-id', $(targetFocus).attr('db-id'));
+        $("[id-display='#" + inputTarget+ "']").prop("value", $(targetFocus).html()).change();
+        $('.popup-list').slideUp();
+      }
+
+
+    }
+  });
   $('.popup-input').keyup(function(e){
     if (e.keyCode === 38 || e.keyCode === 40 || e.keyCode === 13 || e.keyCode === 9){return false;}
     data = {}
@@ -108,52 +189,51 @@ $(document).ready(function(){
       })
     }
   })
-
-  $('.popup-list').delegate('p', 'click', function(){
+  $('.popup-list').on('click', 'p', function(){
     var dbid = $(this).attr('db-id');
     var inputTarget = $(this).parent().attr('id');
-    $("[id-display='#" + inputTarget+ "']").attr("value", $(this).html()).attr('db-id', $(this).attr('db-id')).change();
-    $("[id-display='#" + inputTarget+ "']").prop("value", $(this).html()).change();
+    var name = $(this).html();
+    if (inputTarget == "driver-popup-list-modal") {
+        add_driver(name, dbid);
+        return false;
+    }
+
+    if (inputTarget == "trailer-popup-list") {
+      $("[id-display='#" + inputTarget+ "']").attr('plates', $(this).attr('plates'));
+    }
+    $("[id-display='#" + inputTarget+ "']").attr("value", $(this).html()).attr('db-id', $(this).attr('db-id')).blur();
+    $("[id-display='#" + inputTarget+ "']").prop("value", $(this).html()).blur();
     $('.popup-list').slideUp();
 
   });
-
   $('.popup-list').on('mouseenter', 'p', function(){
     $('.hovered').attr('class', '');
     $(this).attr('class', 'hovered');
   });
-
   $('.popup-list').on('mouseleave', 'p', function(){
     $(this).attr('class', '')
   });
 
-  $('.zipInput').blur(function(){
+  $('#tripDashTable').on('click', 'tr', function(){
+    tripid = $(this).attr('db-id');
+    tripyear = $(this).attr('ty');
+    if (typeof tripid === 'undefined' || typeof tripyear === 'undefined') {
+      return false;
+    }
+    window.location.href = "tripDetails.php?tripid=" + tripid
+  });
 
-    el = $(this)
-    var txt = el.val();
-    console.log(el);
-    $.ajax({
-      method: 'POST',
-      data: {txt: txt},
-      url: 'actions/fetchCityState.php',
-      success: function(result){
-        rsp = JSON.parse(result);
-        console.log(rsp);
-        if (rsp.code == 1) {
-          el.parent().siblings().find('.stateInput').val(rsp.data.state).change();
-          el.parent().siblings().find('.cityInput').val(rsp.data.city).change();
-        } else {
-          console.log(rsp.message);
-        }
-      },
-      error: function(exception){
-        console.error(exception);
-      }
+  $('#newTripForm').find('input').on('blur', function(e){
+    var current_target = $(this);
+    var form_inputs = $('#newTripForm').find('input').not($('[type=checkbox], [style="display: none"], .disabled'));
+    valid = validateForm(form_inputs, current_target);
+    if (valid) {
+      $('#addTripButton').removeClass('disabled').attr('disabled', false);
+    } else {
+      $('#addTripButton').addClass('disabled').attr('disabled', true);
+    }
 
-    })
-
-  })
-
+  });
   $('#addTripButton').click(function(){
     var data = {};
     data.truckid = $('[id-display="#truck-popup-list"]').attr('db-id');
@@ -221,30 +301,6 @@ $(document).ready(function(){
     })
 
   })
-
-  $('#tripDashTable').on('click', 'tr', function(){
-    tripid = $(this).attr('db-id');
-    tripyear = $(this).attr('ty');
-    if (typeof tripid === 'undefined' || typeof tripyear === 'undefined') {
-      return false;
-    }
-    window.location.href = "tripDetails.php?tripid=" + tripid + "&tripyear=" + tripyear
-  });
-
-  $('#newTripForm').find('input').on('blur', function(e){
-    // console.log(e);
-    var current_target = $(this);
-    // console.log("Current Target: -> ");
-    // console.log(current_target);
-    var form_inputs = $('#newTripForm').find('input').not($('[type=checkbox], [style="display: none"], .disabled'));
-    valid = validateForm(form_inputs, current_target);
-    if (valid) {
-      $('#addTripButton').removeClass('disabled').attr('disabled', false);
-    } else {
-      $('#addTripButton').addClass('disabled').attr('disabled', true);
-    }
-  });
-
   $('.teamDriverCheck').change(function(){
     valid = $(this).prop('checked');
     target = $(this).attr('target');
@@ -255,29 +311,6 @@ $(document).ready(function(){
       $(target).fadeOut();
     }
   })
-
-  $('[id-display="#driver-popup-list-modal"]').change(function(){
-    data = {
-      driver_id: $(this).attr('db-id')
-    }
-
-    var defaultTruck = $.ajax({
-      method: 'POST',
-      url: 'actions/fetchDefaultTruck.php',
-      data: data
-    });
-
-    defaultTruck.done(function(result){
-      rsp = JSON.parse(result);
-
-      if (rsp.code == 1) {
-        $('[id-display="#truck-popup-list-modal"]').attr('db-id', rsp.data.truck_id).val(rsp.data.truck_number);
-      } else {
-        console.log(rsp.message);
-      }
-    })
-  })
-
   $('[data-toggle="popover"]').popover({
      trigger: 'click',
      container: 'body',
@@ -329,38 +362,370 @@ $(document).ready(function(){
      });
    })
 
+  $('#addTripModal').on('hidden.bs.modal', function(){
+    $(this).find('input').val('').attr('value', '').data('is-valid', false);
+    $(this).find('select').find('option').first().attr('selected', true);
+    $(this).find('#listed-drivers').html('');
+    $('#add_trip_progress').find('a:not(:first)').removeClass('active').addClass('disabled').attr('disabled', true);
+    $('#add_trip_progress').find('a:first').addClass('active');
+    $('.next-pane').addClass('disabled').attr('disabled', true);
+    $('#trip-details-content').children().removeClass('show active');
+    $('#trip-details-content').children().first().addClass('show active');
+    $('.progress-bar').css('width', "0%")
+    $('.popup-list').html('');
+    $('.total_distance').html('');
+  });
+  $('#addTripModal').on('shown.bs.modal', function(){
+    $(this).find('.tab-pane.fade.active.show').find('input').first().focus();
+  });
+  $('#lh-details-pane').on('change', '.zipInput', function(){
+    el = $(this);
+    var txt = el.val();
+    var zips = [];
+    el.attr('zip', txt);
+    var skip = false;
 
-});
+    var distances = {
+      total_distance: 0
+    };
 
-$(document).keydown(function(e){
-  if (e.keyCode == 38 || e.keyCode == 40){
-    if ($(document.activeElement).attr('id-display') !== undefined) {
-      var target = $(document.activeElement).attr('id-display') + " p";
-      var targetFocus = $(document.activeElement).attr('id-display') + " p" + ".hovered";
+    //Validate non-repeat number.
 
-      if ($(targetFocus).length == 0) {
-        $(target).first().addClass('hovered');
+    var pull_city_state = $.ajax({
+      method: 'POST',
+      data: {txt: txt},
+      url: 'actions/fetchCityState.php'
+    });
+
+    pull_city_state.done(function(result){
+      rsp = JSON.parse(result);
+      // console.log(rsp);
+      if (rsp.code == 1) {
+        el.parents('.row').find('.stateinput').val(rsp.data.state).change();
+        el.parents('.row').find('.cityinput').val(rsp.data.city).change();
       } else {
-        if (e.keyCode == 40) {
-          $(targetFocus).removeClass('hovered').next().addClass('hovered');
-        }
-
-        if (e.keyCode == 38) {
-          $(targetFocus).removeClass('hovered').prev().addClass('hovered');
-        }
+        el.parents('.row').find('.stateinput').val("").change();
+        el.parents('.row').find('.cityinput').val("").change();
       }
 
+      $('#lh-details-pane').find('.zipinput').each(function(i){
+        var thisval = $(this).val();
+        var validate = $(this).parents('.row').find('.stateinput').val() != "" && $(this).parents('.row').find('.cityinput').val() != "" && thisval != "";
+
+        if (validate) {
+          zips.push(thisval);
+        } else {
+          return zips = false;
+        }
+
+      });
+
+      if (zips) {
+        $('body').prepend('<div class="remove-this" style="position: absolute; background-color: transparent; width: 100%; height: 100%; z-index: 9999"><div>');
+        $('.total_distance').html('<i class="fas fa-spinner fa-spin align-self-center"></i>');
+        // return false;
+        var parse_zip = /\d+/g;
+        depTime = new Date();
+        depTime.setMinutes(depTime.getMinutes() + 20);
+
+        var route_details = {
+          origins: [],
+          destinations: [],
+          travelMode: 'DRIVING',
+          drivingOptions: {
+            departureTime: depTime,
+            trafficModel: google.maps.TrafficModel.PESSIMISTIC
+          },
+          unitSystem: google.maps.UnitSystem.IMPERIAL,
+        }
+
+        var distanceService = new google.maps.DistanceMatrixService();
+
+        for (var i = 0; i < zips.length - 1; i++) {
+          origin = "Zip " + zips[i];
+          destination = "Zip " + zips[i + 1];
+          if (origin == destination) {
+            continue;
+          }
+          route_details.origins.push(origin);
+          route_details.destinations.push(destination);
+        }
+
+        // console.log(destinations);
+
+        distanceService.getDistanceMatrix(route_details, function(r, s){
+          for (var destination in route_details.destinations) {
+            if (route_details.destinations.hasOwnProperty(destination)) {
+              var origin_element = $('[zip="' + route_details.origins[destination].match(parse_zip)[0] + '"]');
+              var destination_element = $('[zip="' + route_details.destinations[destination].match(parse_zip)[0] + '"]');
+
+              distances[destination] = {
+                origin: {
+                  zip: origin_element.val(),
+                  state: origin_element.parents('.row').find('.stateinput').val(),
+                  city: origin_element.parents('.row').find('.cityinput').val()
+                },
+                destination: {
+                  zip: destination_element.val(),
+                  state: destination_element.parents('.row').find('.stateinput').val(),
+                  city: destination_element.parents('.row').find('.cityinput').val()
+                },
+                distance: parseInt(Math.round(r.rows[destination].elements[destination].distance.value / 1609.34))
+              }
+              distances['total_distance'] += parseInt(distances[destination].distance);
+
+            }
+          }
+
+          $('.remove-this').remove();
+          construct_movement(distances);
+          $('.total_distance').html(distances['total_distance']).change();
+
+        });
+
+      }
+    });
+
+  });
+  $('.next-pane').click(function(){
+    var next_pane = $('#add_trip_progress')
+      .find('.nav-link.active')
+      .parent().next().find('a');
+
+    next_pane.attr('disabled', false)
+      .removeClass('disabled')
+      .tab('show');
+
+    $('.progress-bar').css('width', next_pane.attr('progress') + "%");
+  });
+  $('#lh-details-pane').on('click', '.remove-row', function(){
+    $(this).parents('.row').remove();
+    $('.zipInput').change();
+  });
+  $('#add_trip_progress').on('shown.bs.tab', '[data-toggle="tab"]', function(){
+    $('#addTripModal').find('.tab-pane.fade.active.show').find('input').first().focus();
+  });
+  $('[tab-type="addTripModal"]').on('show.bs.tab', function(){
+    var next_pane = $(this).parent().next().find('a');
+
+    var validate = next_pane.attr('disabled') == 'disabled';
+
+    if (validate) {
+      $('.next-pane').addClass('disabled').attr('disabled', true);
     }
-  }
+  });
+  $('#trip-confirmation-tab').on('show.bs.tab', function(){
+    var source = $('#trip-details-content');
+    var destination = $('#trip-confirmation-pane');
 
-  if (e.keyCode === 13 || e.keyCode === 9) {
-    var targetFocus = $(document.activeElement).attr('id-display') + " p" + ".hovered";
+    var truck = source.find('.truckid');
+    var trailer = source.find('.trailerid');
+    var drivers = $('#listed-drivers').children();
+    var miles = source.find('.total_distance');
+    var rate = source.find('.trip-rate');
+    var rpm = Math.round((rate.val() / miles.html())*100)/100 ;
+    var broker = source.find('.selected-broker');
+    var reference = source.find('.broker-reference');
+    var mov_types = {};
+    var appointment_date = source.find('.appointment.date').val();
+    var appointment_hour = source.find('.appointment.hour').val();
+    var appointment_minute = source.find('.appointment.minute').val();
 
-    var dbid = $(targetFocus).attr('db-id');
-    var inputTarget = $(targetFocus).parent().attr('id');
-    $("[id-display='#" + inputTarget+ "']").attr("value", $(targetFocus).html()).attr('db-id', $(targetFocus).attr('db-id'));
-    $("[id-display='#" + inputTarget+ "']").prop("value", $(targetFocus).html());
-    $('.popup-list').slideUp();
+    $('#lh-details-pane').find('.movement').each(function(){
+      var zip = $(this).find('.zipInput').val();
+      var type = $(this).find('.mov-type').val();
+      if (typeof(type) !== 'undefined') {
+        mov_types[zip] = type
+      }
+    });
 
-  }
+    for (var mov_type in mov_types) {
+      if (mov_types.hasOwnProperty(mov_type)) {
+        destination.find(".ozip:contains(" + mov_type + ")").parents('.movement').find('.mov-type').html(mov_types[mov_type]);
+      }
+    }
+
+    console.log(mov_types);
+
+    destination.find('.confirm-truck-number').attr('db-id', truck.attr('db-id')).html(truck.val());
+    destination.find('.confirm-truck-plates').html(truck.attr('plates'));
+    destination.find('.confirm-trailer-number').html(trailer.val()).attr('db-id', trailer.attr('db-id'));
+    destination.find('.confirm-trailer-plates').html(trailer.attr('plates'));
+    destination.find('.confirm-driver-list').html(drivers.clone()).find('.remove-driver').remove();
+    destination.find('.confirm-driver-list').find('p').removeClass().addClass('mb-0');
+    destination.find('.total-miles').html(miles.html());
+    destination.find('.trip-rate-confirmation').html(rate.val());
+    destination.find('.rpm-confirmation').html(rpm);
+    destination.find('.brokerid-confirmation').html(broker.val()).attr('db-id', broker.attr('db-id'));
+    destination.find('.broker-reference-confirmation').html(reference.val());
+    $('#linehaul-appointment').find('.date').html(appointment_date);
+    $('#linehaul-appointment').find('.hour').html(appointment_hour);
+    $('#linehaul-appointment').find('.minutes').html(appointment_minute);
+
+
+    $('.next-pane-buttons').hide();
+    $('.add-trip-buttons').show();
+
+
+  });
+  $('#trip-confirmation-tab').on('hide.bs.tab',function(){
+    $('.add-trip-buttons').hide();
+    $('.next-pane-buttons').show();
+  })
+  $('.add-extra-stop').click(function(){
+    $(this).parent().after('<div class="form-group row movement"><label for="" class="col-sm-2 col-form-label text-right"><i class="fas fa-times text-danger mr-2 remove-row"></i>Extra Stop</label><div class="col-lg-2"><input type="text" class="form-control zipInput" autocomplete="new-password" name="" value="" placeholder="Zip Code"><small class="invalid-feedback font-italic" style="position:relative; width:300px">This field cannot be empty.</small></div><div class="col-lg-2" readonly><input type="text" class="form-control stateInput" name="" value="" placeholder="State" readonly disabled></div><div class="col-lg-3"><input type="text" class="form-control cityInput" name="" value="" placeholder="City" readonly disabled></div><div class="col-lg-2"><select class="form-control mov-type"><option value="L" selected>Loaded</option><option value="E">Empty</option></select></div></div>');
+  });
+  $('#trip-details-content').on('change', 'input, select', function(e){
+    // if ($(this).attr('readonly')) {
+    //   return false;
+    // }
+
+
+    var value = $(this).val();
+    var dbid = $(this).attr('db-id');
+    var activate_next = false;
+
+    if ($(this).hasClass('driverid')) {
+      var count = $('#listed-drivers p').length;
+      if (count > 0) {
+        value = "some value";
+        dbid = "some value";
+      }
+    }
+    var validation = (value == "" || typeof(value) == undefined || (dbid == "" && undefined != typeof(dbid)));
+
+    if (validation) {
+      $(this).addClass('is-invalid').removeClass('is-valid').data('is-valid', false);
+    } else {
+      $(this).removeClass('is-invalid').addClass('is-valid').data('is-valid', true);
+    }
+
+    $('#trip-details-content .tab-pane.fade.show.active').find('input, select').each(function(){
+      var check = $(this).data('is-valid');
+      if (check) {
+        activate_next = true;
+      } else {
+        $(this).focus();
+        activate_next = false;
+        return false;
+      }
+    });
+
+    if (activate_next) {
+      $('.next-pane').removeClass('disabled').attr('disabled', false).focus();
+    }
+
+  })
+  $('#listed-drivers').on('click', 'span', function(){
+    $(this).parent().remove();
+
+    var count = $('#listed-drivers p').length;
+
+    if (count == 0) {
+      $('.next-pane').addClass('disabled').attr('disabled', true);
+    }
+
+  });
+  $('.add-trip').click(function(){
+    var source = $('#trip-confirmation-pane');
+    var data = {
+      trailer: {
+        id: source.find('.confirm-trailer-number').attr('db-id'),
+        number: source.find('.confirm-trailer-number').html(),
+        plates: source.find('.confirm-trailer-plates').html(),
+      },
+      truck:{
+        id: source.find('.confirm-truck-number').attr('db-id'),
+        number: source.find('.confirm-truck-number').html(),
+        plates: source.find('.confirm-truck-plates').html(),
+      },
+      broker:{
+        id: source.find('.brokerid-confirmation').attr('db-id'),
+        name: source.find('.brokerid-confirmation').html(),
+      },
+      linehaul:{
+        reference: source.find('.broker-reference-confirmation').html(),
+        rate: source.find('.trip-rate-confirmation').html(),
+        appt: {
+          date: $('#linehaul-appointment').find('.date').html(),
+          hour: $('#linehaul-appointment').find('.hour').html(),
+          minute: $('#linehaul-appointment').find('.minutes').html(),
+        },
+        routes: {},
+        drivers:{}
+      },
+    }
+    source.find('.confirm-driver-list p').each(function(i){
+      data.linehaul.drivers[i] = {};
+      var driver = $(this).children('span');
+      data.linehaul.drivers[i]['id'] = driver.attr('db-id');
+      data.linehaul.drivers[i]['name'] = driver.html();
+    })
+    source.find('#movement-confirmation').find('.movement').each(function(i){
+      var ocity, ostate, ozip, dcity, dstate, dzip, miles
+      var route = $(this);
+      console.log(route);
+      data.linehaul.routes[i] = {
+        ocity: route.find('.ocity').html(),
+        ostate: route.find('.ostate').html(),
+        ozip: route.find('.ozip').html(),
+
+        dcity: route.find('.dcity').html(),
+        dstate: route.find('.dstate').html(),
+        dzip: route.find('.dzip').html(),
+
+        miles: route.find('.distance').html(),
+        type: route.find('.mov-type').html()
+      }
+
+    })
+
+    // console.log(data);
+
+    var put_trip = $.ajax({
+      method: 'POST',
+      data: data,
+      url: 'actions/addNewTrip.php',
+    });
+
+    put_trip.done(function(r){
+      // console.log(r);
+      r = JSON.parse(r);
+
+      if (r.code == 1) {
+        window.location.href = "tripDetails.php?tripid=" + r.insertid;
+      } else {
+        alertify.error("There was a problem adding the record :(");
+        console.warn(r.message);
+      }
+    }).fail(function(x){
+      console.error(x)
+    });
+  });
+
+
+  $(document).keydown(function(e){
+    if (e.keyCode == 38 || e.keyCode == 40){
+      if ($(document.activeElement).attr('id-display') !== undefined) {
+        var target = $(document.activeElement).attr('id-display') + " p";
+        var targetFocus = $(document.activeElement).attr('id-display') + " p" + ".hovered";
+
+        if ($(targetFocus).length == 0) {
+          $(target).first().addClass('hovered');
+        } else {
+          if (e.keyCode == 40) {
+            $(targetFocus).removeClass('hovered').next().addClass('hovered');
+          }
+
+          if (e.keyCode == 38) {
+            $(targetFocus).removeClass('hovered').prev().addClass('hovered');
+          }
+        }
+
+      }
+    }
+
+  });
+
+
 });

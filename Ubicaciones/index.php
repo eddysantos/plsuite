@@ -73,7 +73,7 @@ $sunday_5weeks = date('m/d/Y', strtotime('sunday 5 weeks ago'));
                 <tr>
                   <th style="width: 80px">Linehaul</th>
                   <th style="width: 160px">Trailer</th>
-                  <th>Closed Date</th>
+                  <th>Delivery Date</th>
                   <th>Amount</th>
                   <th>Client</th>
                 </tr>
@@ -89,11 +89,12 @@ $sunday_5weeks = date('m/d/Y', strtotime('sunday 5 weeks ago'));
               <table class="table table-striped table-sm dash-table" id="pending-payment-trips">
                 <thead>
                   <tr>
+                    <th style="width: 80px">Linehaul</th>
                     <th style="width: 80px">Invoice</th>
                     <th>Client</th>
                     <th>Payment Due</th>
                     <th style="width: 80px">Amount</th>
-                    <th>Reference</th>
+                    <th style="width: 120px">Reference</th>
                   </tr>
                 </thead>
                 <tbody></tbody>
@@ -109,7 +110,9 @@ $sunday_5weeks = date('m/d/Y', strtotime('sunday 5 weeks ago'));
                 <thead>
                   <tr>
                     <th style="width: 80px">Linehaul</th>
-                    <th style="width: 80px">Unit</th>
+                    <th style="width: 80px">Truck</th>
+                    <th style="width: 160px">Trailer</th>
+                    <th>Driver</th>
                     <th>Destination</th>
                     <th>Broker</th>
                     <th>Appointment</th>
@@ -129,7 +132,9 @@ $sunday_5weeks = date('m/d/Y', strtotime('sunday 5 weeks ago'));
                 <thead>
                   <tr>
                     <th style="width: 80px">Linehaul</th>
-                    <th style="width: 80px">Unit</th>
+                    <th style="width: 80px">Truck</th>
+                    <th style="width: 160px">Trailer</th>
+                    <th>Driver</th>
                     <th>Origin</th>
                     <th>Broker</th>
                     <th>Start Date</th>
@@ -148,7 +153,9 @@ $sunday_5weeks = date('m/d/Y', strtotime('sunday 5 weeks ago'));
                 <thead>
                   <tr>
                     <th style="width: 80px">Trip</th>
+                    <th style="width: 80px">Truck</th>
                     <th style="width: 160px">Trailer</th>
+                    <th>Driver</th>
                     <th>Appointment Date</th>
                   </tr>
                 </thead>
@@ -167,6 +174,7 @@ $sunday_5weeks = date('m/d/Y', strtotime('sunday 5 weeks ago'));
                     <th class="" style="width: 80px">Linehaul</th>
                     <th class="" style="width: 160px">Trailer</th>
                     <th class="" style="width: 80px">Truck</th>
+                    <th class="">Driver</th>
                     <th class="">Broker</th>
                     <th>Origin</th>
                     <th>Appointment (Days)</th>

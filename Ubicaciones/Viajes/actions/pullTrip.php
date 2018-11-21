@@ -8,7 +8,7 @@ $data = $_POST;
 
 function parseDate($datestamp, $option = 1){
   if ($datestamp == "") {
-    return $return;
+    return false;
   }
 
   if ($option == 1) {
@@ -35,7 +35,7 @@ function numberify($number){
 }
 
 
-$query = "SELECT t.pkid_trip pkidtrip , t.trip_year tripyear , t.trip_status trip_status , t.trailer_number trailer_number , t.date_open date_open , t.date_close date_close , tl.pk_idlinehaul idlh , sum(( SELECT sum(miles_google) FROM ct_trip_linehaul_movement tlm WHERE tl.pk_idlinehaul = tlm.fkid_linehaul AND tl.linehaul_status <> 'Cancelled')) total_miles , sum(( SELECT sum(miles_google) FROM ct_trip_linehaul_movement tlm WHERE tlm.fkid_linehaul = tl.pk_idlinehaul AND tlm.movement_type = 'L' AND tl.linehaul_status <> 'Cancelled')) loaded_miles , sum(( SELECT sum(miles_google) FROM ct_trip_linehaul_movement tlm WHERE tlm.fkid_linehaul = tl.pk_idlinehaul AND tlm.movement_type = 'E' AND tl.linehaul_status <> 'Cancelled')) empty_miles , SUM( IF( tl.linehaul_status <> 'Cancelled' , tl.trip_rate , 0)) total_rate FROM ct_trip t LEFT JOIN ct_trip_linehaul tl ON t.pkid_trip = tl.fk_idtrip AND t.trip_year = tl.fk_tripyear WHERE pkid_trip = ? AND trip_year = ? GROUP BY pkid_trip , trip_year ORDER BY t.pkid_trip DESC";
+$query = "SELECT t.pkid_trip pkidtrip , t.trip_year tripyear , t.trip_status trip_status , t.trailer_number trailer_number, t.trailer_plates trailer_plates, t.fkid_trailer id_trailer, t.date_open date_open , t.date_close date_close , tl.pk_idlinehaul idlh , sum(( SELECT sum(miles_google) FROM ct_trip_linehaul_movement tlm WHERE tl.pk_idlinehaul = tlm.fkid_linehaul AND tl.linehaul_status <> 'Cancelled')) total_miles , sum(( SELECT sum(miles_google) FROM ct_trip_linehaul_movement tlm WHERE tlm.fkid_linehaul = tl.pk_idlinehaul AND tlm.movement_type = 'L' AND tl.linehaul_status <> 'Cancelled')) loaded_miles , sum(( SELECT sum(miles_google) FROM ct_trip_linehaul_movement tlm WHERE tlm.fkid_linehaul = tl.pk_idlinehaul AND tlm.movement_type = 'E' AND tl.linehaul_status <> 'Cancelled')) empty_miles , SUM( IF( tl.linehaul_status <> 'Cancelled' , tl.trip_rate , 0)) total_rate FROM ct_trip t LEFT JOIN ct_trip_linehaul tl ON t.pkid_trip = tl.fk_idtrip WHERE pkid_trip = ? GROUP BY pkid_trip , trip_year ORDER BY t.pkid_trip DESC";
 
 $stmt = $db->prepare($query);
 if (!($stmt)) {
@@ -44,7 +44,7 @@ if (!($stmt)) {
   exit_script($sc);
 }
 
-$stmt->bind_param('ss', $data['id'], $data['year']);
+$stmt->bind_param('s', $data['id']);
 if (!($stmt)) {
   $sc['code'] = "500";
   $sc['message'] = "Error during trailer variables binding [$stmt->errno]: $stmt->error";
@@ -81,7 +81,7 @@ $sc['data']['trip'] = $trip;
 
 
 
-$query = "SELECT tl.pk_idlinehaul AS pk_idlinehaul , tl.fk_tripyear AS trip_year , tl.linehaul_status AS status , tl.origin_city AS origin_city , tl.origin_state AS origin_state , tl.origin_zip AS origin_zip , tl.destination_city AS destination_city , tl.destination_state AS destination_state , tl.destination_zip AS destination_zip , tl.trip_rate AS trip_rate, tl.broker_reference AS broker_reference, tl.fkid_broker AS brokerid, b.brokerName AS trip_brokerName , tl.rpm AS rpm , sum(tlm.miles_google) AS total_miles , SUM( CASE tlm.movement_type WHEN 'E' THEN tlm.miles_google ELSE 0 END) AS empty_miles , SUM( CASE tlm.movement_type WHEN 'L' THEN tlm.miles_google ELSE 0 END) AS loaded_miles , date_departure AS departure , date_arrival AS arrival , date_delivery AS delivery, date_appointment AS appointment, pk_linehaul_number AS lh_number ,( SELECT concat(nameFirst , ' ' , nameLast) FROM ct_drivers WHERE pkid_driver = tlm.fkid_driver) driver ,( SELECT concat(truckNumber) FROM ct_truck WHERE pkid_truck = tlm.fkid_tractor) tractor FROM ct_trip_linehaul tl LEFT JOIN ct_brokers b ON tl.fkid_broker = b.pkid_broker LEFT JOIN ct_trip_linehaul_movement tlm ON tlm.fkid_linehaul = tl.pk_idlinehaul WHERE tl.fk_idtrip = ? AND tl.fk_tripyear = ? GROUP BY pk_idlinehaul";
+$query = "SELECT tl.pk_idlinehaul AS pk_idlinehaul, tl.lh_number lh_number, tl.fk_tripyear AS trip_year , tl.linehaul_status AS status , tl.origin_city AS origin_city , tl.origin_state AS origin_state , tl.origin_zip AS origin_zip , tl.destination_city AS destination_city , tl.destination_state AS destination_state , tl.destination_zip AS destination_zip , tl.trip_rate AS trip_rate, tl.broker_reference AS broker_reference, tl.fkid_broker AS brokerid, b.brokerName AS trip_brokerName , tl.rpm AS rpm , sum(tlm.miles_google) AS total_miles , SUM( CASE tlm.movement_type WHEN 'E' THEN tlm.miles_google ELSE 0 END) AS empty_miles , SUM( CASE tlm.movement_type WHEN 'L' THEN tlm.miles_google ELSE 0 END) AS loaded_miles , date_departure AS departure , date_arrival AS arrival , date_delivery AS delivery, date_appointment AS appointment ,( SELECT concat(nameFirst , ' ' , nameLast) FROM ct_drivers WHERE pkid_driver = tlm.fkid_driver) driver ,( SELECT concat(truckNumber) FROM ct_truck WHERE pkid_truck = tlm.fkid_tractor) tractor FROM ct_trip_linehaul tl LEFT JOIN ct_brokers b ON tl.fkid_broker = b.pkid_broker LEFT JOIN ct_trip_linehaul_movement tlm ON tlm.fkid_linehaul = tl.pk_idlinehaul WHERE tl.fk_idtrip = ? GROUP BY pk_idlinehaul";
 
 $stmt = $db->prepare($query);
 if (!($stmt)) {
@@ -91,7 +91,7 @@ if (!($stmt)) {
   exit_script($system_callback);
 }
 
-$stmt->bind_param('ss', $data['id'], $data['year']);
+$stmt->bind_param('s', $data['id']);
 if (!($stmt)) {
   $system_callback['query']['code'] = "500";
   $system_callback['query']['query'] = $query;
@@ -138,7 +138,7 @@ foreach ($linehauls as $lh) {
     $status_button = "<i class='fas fa-circle $lh[status]'></i>";
   }
 
-  $lh_number = $lh['trip_year'] .  str_pad($trip['pkidtrip'], 4, 0, STR_PAD_LEFT) .$lh['lh_number'];
+  $lh_number = $lh['lh_number'];
 
   $sc['data']['linehauls'] .= "<tr role='button' lhid='$lh[pk_idlinehaul]'>
     <td style='width: 20px'>
