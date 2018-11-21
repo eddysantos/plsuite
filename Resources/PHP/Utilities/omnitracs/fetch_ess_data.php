@@ -95,6 +95,12 @@ do {
     $position_id =  $transaction->attributes()->ID;
     $test = $transaction->{'T.2.12.0'};
     var_dump($test);
+    if ($test) {
+      echo "true";
+    } else {
+      echo "false";
+    }
+
     die();
     if ($transaction->{'T.2.12.0'}) {
       $event_ts = $transaction->{'T.2.12.0'}->eventTS;
@@ -106,7 +112,7 @@ do {
       $posTS = $transaction->{'T.2.12.0'}->position->attributes()->posTS;
       $speed = $transaction->{'T.2.12.0'}->speed;
     } else {
-      echo "NO T.2.12.0";
+      echo "NO T.2.12.0\n";
       continue;
     }
 
