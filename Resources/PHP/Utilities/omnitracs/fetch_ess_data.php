@@ -108,7 +108,7 @@ do {
       echo "NO T.2.12.0\n";
       continue;
     }
-    die("Ahora si jalo.");
+
     $event_ts = date('Y-m-d h:i:s', strtotime($event_ts));
     // echo $event_ts;
     // die();
