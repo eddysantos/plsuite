@@ -42,6 +42,55 @@ $(document).ready(function(){
       $('.ratepermilerpmc').removeClass('bg-dark').removeClass('text-white');
   })
 
+  $('#toggleFleetMap').click(function(){
+
+    var latlng = {
+      lat: 0,
+      lng: 0
+    };
+    var bounds = new google.maps.LatLngBounds(null);
+    var map_e = $('#fleetView')[0];
+    var fleetMap = new google.maps.Map(map_e,{
+        zoom: 4.75,
+        center: {lat: 38.9949553, lng: -97.7107527}
+      }
+    );
+
+    $('#fleetViewMap').modal('show');
+    var pull_positions = $.ajax({
+      method: 'POST',
+      url: '/plsuite/Resources/PHP/Utilities/fleet_location/allAroundLocation.php'
+    });
+
+    pull_positions.done(function(r){
+      r = JSON.parse(r);
+      console.log(r);
+
+      for (var truck in r.trucks) {
+        if (r.trucks.hasOwnProperty(truck)) {
+          latlng.lat = r.trucks[truck].lat;
+          latlng.lng = r.trucks[truck].lng;
+          var position = new google.maps.Marker({
+            map: fleetMap,
+            draggable: false,
+            animation: google.maps.Animation.DROP,
+            position: latlng,
+            title: truck
+          })
+          bounds.extend(latlng);
+        }
+      }
+        // fleetMap.setCenter(latlng);
+        // fleetMap.fitBounds(bounds);
+
+    }).fail(function(a, b){
+      console.log(a + ": " + b);
+    })
+
+
+
+  })
+
   $('.zipInputrpmc').on('blur',function(){
 
     el = $(this)

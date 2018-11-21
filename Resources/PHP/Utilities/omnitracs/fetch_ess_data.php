@@ -109,7 +109,7 @@ do {
       continue;
     }
 
-    $event_ts = date('Y-m-d h:i:s', strtotime($event_ts));
+    $event_ts = date('Y-m-d H:i:s', strtotime($event_ts));
     // echo $event_ts;
     // die();
 
