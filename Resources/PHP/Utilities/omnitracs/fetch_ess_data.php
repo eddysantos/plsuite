@@ -93,7 +93,9 @@ do {
   foreach ($transactions as $transaction) {
     // var_dump($transaction);
     $position_id =  $transaction->attributes()->ID;
-
+    $test = $transaction->{'T.2.12.0'};
+    var_dump($test);
+    die();
     if ($transaction->{'T.2.12.0'}) {
       $event_ts = $transaction->{'T.2.12.0'}->eventTS;
       $tractor = $transaction->{'T.2.12.0'}->equipment->attributes()->ID;
