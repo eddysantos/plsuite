@@ -106,7 +106,15 @@ do {
       $speed = $transaction->{'T.2.12.0'}->speed;
       $heading = $transaction->{'T.2.12.0'}->heading;
     } else {
-      continue;
+      $event_ts = $transaction->{'T.2.06.0'}->eventTS;
+      $tractor = $transaction->{'T.2.06.0'}->equipment->attributes()->ID;
+      $driver = $transaction->{'T.2.06.0'}->driverID;
+      $driver2 = $transaction->{'T.2.06.0'}->driverID2;
+      $lat = $transaction->{'T.2.06.0'}->position->attributes()->lat;
+      $lon = $transaction->{'T.2.06.0'}->position->attributes()->lon;
+      $posTS = $transaction->{'T.2.06.0'}->position->attributes()->posTS;
+      $speed = $transaction->{'T.2.06.0'}->speed;
+      $heading = $transaction->{'T.2.06.0'}->heading;
     }
 
     $event_ts = date('Y-m-d H:i:s', strtotime($event_ts));

@@ -8,6 +8,7 @@ function getCityStateListener(){
 
 }
 
+
 function first_and_last(pk_trip){
   var return_value;
   if (typeof pk_trip === 'undefined') {
@@ -33,6 +34,14 @@ function first_and_last(pk_trip){
   });
 }
 
+function gmaps_select_icon(speed){
+  if (speed == 0) {
+    return google.maps.SymbolPath.CIRCLE;
+  } else {
+    return google.maps.SymbolPath.FORWARD_OPEN_ARROW;
+  }
+}
+
 $(document).ready(function(){
   FontAwesomeConfig = { autoReplaceSvg: 'nest' }
 
@@ -48,9 +57,12 @@ $(document).ready(function(){
       lat: 0,
       lng: 0
     };
+    var locations = [];
     var bounds = new google.maps.LatLngBounds(null);
     var map_e = $('#fleetView')[0];
-    var fleetMap = new google.maps.Map(map_e,{
+    var tuck_selector_template = $('<div class="border mr-3 mb-2 fw-item rounded text-center" role="button"></div>');
+
+    fleetMap = new google.maps.Map(map_e,{
         zoom: 4.75,
         center: {lat: 38.9949553, lng: -97.7107527}
       }
@@ -70,18 +82,35 @@ $(document).ready(function(){
         if (r.trucks.hasOwnProperty(truck)) {
           latlng.lat = r.trucks[truck].lat;
           latlng.lng = r.trucks[truck].lng;
+          tuck_selector_template.html(truck);
+          tuck_selector_template.clone().data('lat', r.trucks[truck].lat).data('lng', r.trucks[truck].lng).appendTo('#fleetMapList');
           var position = new google.maps.Marker({
             map: fleetMap,
             draggable: false,
             animation: google.maps.Animation.DROP,
             position: latlng,
-            title: truck
+            title: truck,
+            label: truck,
+            icon: {
+              path: gmaps_select_icon(r.trucks[truck].speed),
+              scale: 3,
+              strokeColor: '#ff0000',
+              fillColor: '#ff0000',
+              fillOpacity: 1,
+              labelOrigin: google.maps.Point(40, 33),
+              rotation: r.trucks[truck].rotation
+            }
           })
-          bounds.extend(latlng);
+          locations.push(position);
+          // bounds.extend(latlng);
         }
       }
         // fleetMap.setCenter(latlng);
         // fleetMap.fitBounds(bounds);
+      console.log(locations);
+      var fleetCluster = new MarkerClusterer(fleetMap, locations, {
+        imagePath: '/plsuite/Resources/gmapslibs/markerclusterer/images/m'
+      })
 
     }).fail(function(a, b){
       console.log(a + ": " + b);
@@ -90,6 +119,15 @@ $(document).ready(function(){
 
 
   })
+
+  $('#fleetMapList').on('click', 'div', function(){
+    latlng = {
+      lat: $(this).data('lat'),
+      lng: $(this).data('lng')
+    }
+    fleetMap.setCenter(latlng);
+    fleetMap.setZoom(17);
+  });
 
   $('.zipInputrpmc').on('blur',function(){
 

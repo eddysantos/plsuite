@@ -54,7 +54,7 @@ while ($row = $rslt->fetch_assoc()) {
   );
 }
 
-$query = "SELECT lat, lon FROM omni_pos_log WHERE tractor = ? ORDER BY tran_ts DESC LIMIT 1";
+$query = "SELECT lat, lon, heading, speed FROM omni_pos_log WHERE tractor = ? ORDER BY tran_ts DESC LIMIT 1";
 $stmt = $db->prepare($query);
 if (!($stmt)) {
   $system_callback['code'] = "500";
@@ -84,6 +84,8 @@ foreach ($trucks as $truck => $values) {
     while ($row = $rslt->fetch_assoc()) {
       $trucks[$truck]['lat'] = (double)$row['lat'];
       $trucks[$truck]['lng'] = (double)$row['lon'];
+      $trucks[$truck]['rotation'] = (double)$row['heading'];
+      $trucks[$truck]['speed'] = (double)$row['speed'];
     }
   }
 

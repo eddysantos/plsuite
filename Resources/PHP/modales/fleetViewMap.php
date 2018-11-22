@@ -8,7 +8,11 @@
         </button>
       </div>
       <div class="modal-body">
-        <div class="" id="fleetView" style="height: 70vh"></div>
+        <div class="">
+          <div class="fleetViewList float-left" id="fleetMapList" style="width: 10%">
+          </div>
+          <div class="" id="fleetView" style="height: 70vh"></div>
+        </div>
       </div>
     </div>
   </div>
