@@ -126,7 +126,7 @@ $(document).ready(function(){
       lng: $(this).data('lng')
     }
     fleetMap.setCenter(latlng);
-    fleetMap.setZoom(17);
+    fleetMap.setZoom(19);
   });
 
   $('.zipInputrpmc').on('blur',function(){
