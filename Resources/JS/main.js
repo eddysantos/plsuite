@@ -52,7 +52,7 @@ $(document).ready(function(){
   })
 
   $('#toggleFleetMap').click(function(){
-
+    $('#fleetMapList').html();
     var latlng = {
       lat: 0,
       lng: 0
