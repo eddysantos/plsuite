@@ -60,7 +60,7 @@ $(document).ready(function(){
     var locations = [];
     var bounds = new google.maps.LatLngBounds(null);
     var map_e = $('#fleetView')[0];
-    var tuck_selector_template = $('<div class="border mr-3 mb-2 fw-item rounded text-center" role="button"></div>');
+    var truck_selector_template = $('<div class="d-flex justify-content-around border mr-3 mb-2 fw-item rounded text-center" role="button"></div>');
 
     fleetMap = new google.maps.Map(map_e,{
         zoom: 4.75,
@@ -82,8 +82,17 @@ $(document).ready(function(){
         if (r.trucks.hasOwnProperty(truck)) {
           latlng.lat = r.trucks[truck].lat;
           latlng.lng = r.trucks[truck].lng;
-          tuck_selector_template.html(truck);
-          tuck_selector_template.clone().data('lat', r.trucks[truck].lat).data('lng', r.trucks[truck].lng).appendTo('#fleetMapList');
+          var list_direction_indicator = parseFloat(r.trucks[truck].rotation) - 45;
+
+          if (r.trucks[truck].speed == 0) {
+            var icon = '<i class="fas fa-circle"></i>';
+          } else {
+            var icon = '<i class="fas fa-location-arrow">';
+          }
+
+          truck_selector_template.html('<span>' + truck + '</span>');
+          truck_selector_template.append('<span class="align-self-center text-info" style="transform: rotate(' + list_direction_indicator + 'deg)">' + icon + '</span>');
+          truck_selector_template.clone().data('lat', r.trucks[truck].lat).data('lng', r.trucks[truck].lng).appendTo('#fleetMapList');
           var position = new google.maps.Marker({
             map: fleetMap,
             draggable: false,
