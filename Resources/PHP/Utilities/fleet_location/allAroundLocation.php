@@ -82,8 +82,8 @@ foreach ($trucks as $truck => $values) {
     unset($trucks[$truck]);
   } else {
     while ($row = $rslt->fetch_assoc()) {
-      $trucks[$truck]['lat'] = (int)$row['lat'];
-      $trucks[$truck]['lng'] = (int)$row['lon'];
+      $trucks[$truck]['lat'] = (double)$row['lat'];
+      $trucks[$truck]['lng'] = (double)$row['lon'];
     }
   }
 

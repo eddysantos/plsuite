@@ -104,8 +104,8 @@ do {
       $lon = $transaction->{'T.2.12.0'}->position->attributes()->lon;
       $posTS = $transaction->{'T.2.12.0'}->position->attributes()->posTS;
       $speed = $transaction->{'T.2.12.0'}->speed;
+      $heading = $transaction->{'T.2.12.0'}->heading;
     } else {
-      echo "NO T.2.12.0\n";
       continue;
     }
 
