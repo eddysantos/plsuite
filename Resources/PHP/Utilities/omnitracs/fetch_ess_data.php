@@ -97,6 +97,8 @@ do {
       }
     }
 
+    echo $branch . "\n";
+
     switch ($branch) {
       case 'T2120':
       $event_ts = $transaction->{'T.2.12.0'}->eventTS;
@@ -123,6 +125,7 @@ do {
       break;
 
       default:
+      echo "Skipping this loop!\n";
       continue 2;
       break;
     }
