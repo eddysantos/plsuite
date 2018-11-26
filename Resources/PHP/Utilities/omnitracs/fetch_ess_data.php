@@ -41,7 +41,7 @@ $omni->__setSoapHeaders(array($wsse_header));
 
 $query = "SELECT tran_id FROM omni_pos_log ORDER BY tran_ts DESC LIMIT 1";
 $last_transaction_get = $db->query($query) or die("Error querying last tran: " . $db->error);
-$last_transaction_get = $last_transaction->fetch_assoc() or die("Error fetching results: " . $db->$last_transaction_get);
+$last_transaction_get = $last_transaction_get->fetch_assoc() or die("Error fetching results: " . $db->$last_transaction_get);
 
 $last_transaction = $last_transaction_get['tran_id'];
 
