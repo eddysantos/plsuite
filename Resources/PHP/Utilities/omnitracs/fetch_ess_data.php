@@ -73,10 +73,10 @@ do {
   $final_transaction = $ping->dequeue2Return->transactionIdOut;
   $transactions = new SimpleXMLElement($ping->dequeue2Return->transactions);
 
-  echo "Count is: " . $count . "\n";
-  echo "Final Transaction is: " . $final_transaction . "\n";
 
   foreach ($transactions as $transaction) {
+    echo "Count is: " . $count . "\n";
+    echo "Final Transaction is: " . $final_transaction . "\n\n";
     // var_dump($transaction);
     $position_id =  $transaction->attributes()->ID;
     $validate = $transaction->{'T.2.12.0'};
