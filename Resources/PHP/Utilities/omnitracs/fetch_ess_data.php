@@ -82,45 +82,44 @@ do {
     $position_id =  $transaction->attributes()->ID;
     $validate = $transaction->{'T.2.12.0'};
 
-    foreach ($transaction as $tran) {
-      var_dump($tran);
-    }
-
-    die();
-
-    if ($validate) {
-      $event_ts = $transaction->{'T.2.12.0'}->eventTS;
-      $tractor = $transaction->{'T.2.12.0'}->equipment->attributes()->ID;
-      $driver = $transaction->{'T.2.12.0'}->driverID;
-      $driver2 = $transaction->{'T.2.12.0'}->driverID2;
-      $lat = $transaction->{'T.2.12.0'}->position->attributes()->lat;
-      $lon = $transaction->{'T.2.12.0'}->position->attributes()->lon;
-      $posTS = $transaction->{'T.2.12.0'}->position->attributes()->posTS;
-      $speed = $transaction->{'T.2.12.0'}->speed;
-      $heading = $transaction->{'T.2.12.0'}->heading;
-    } else {
-      $event_ts = $transaction->{'T.2.06.0'}->eventTS;
-      $tractor = $transaction->{'T.2.06.0'}->equipment->attributes()->ID;
-      $driver = $transaction->{'T.2.06.0'}->driverID;
-      $driver2 = $transaction->{'T.2.06.0'}->driverID2;
-      $lat = $transaction->{'T.2.06.0'}->position->attributes()->lat;
-      $lon = $transaction->{'T.2.06.0'}->position->attributes()->lon;
-      $posTS = $transaction->{'T.2.06.0'}->position->attributes()->posTS;
-      $speed = $transaction->{'T.2.06.0'}->speed;
-      $heading = $transaction->{'T.2.06.0'}->heading;
-    }
-
-    $event_ts = date('Y-m-d H:i:s', strtotime($event_ts));
-    // echo $event_ts;
+    var_dump($transaction);
     // die();
+    //
+    // if ($validate) {
+    //   $event_ts = $transaction->{'T.2.12.0'}->eventTS;
+    //   $tractor = $transaction->{'T.2.12.0'}->equipment->attributes()->ID;
+    //   $driver = $transaction->{'T.2.12.0'}->driverID;
+    //   $driver2 = $transaction->{'T.2.12.0'}->driverID2;
+    //   $lat = $transaction->{'T.2.12.0'}->position->attributes()->lat;
+    //   $lon = $transaction->{'T.2.12.0'}->position->attributes()->lon;
+    //   $posTS = $transaction->{'T.2.12.0'}->position->attributes()->posTS;
+    //   $speed = $transaction->{'T.2.12.0'}->speed;
+    //   $heading = $transaction->{'T.2.12.0'}->heading;
+    // } else {
+    //   $event_ts = $transaction->{'T.2.06.0'}->eventTS;
+    //   $tractor = $transaction->{'T.2.06.0'}->equipment->attributes()->ID;
+    //   $driver = $transaction->{'T.2.06.0'}->driverID;
+    //   $driver2 = $transaction->{'T.2.06.0'}->driverID2;
+    //   $lat = $transaction->{'T.2.06.0'}->position->attributes()->lat;
+    //   $lon = $transaction->{'T.2.06.0'}->position->attributes()->lon;
+    //   $posTS = $transaction->{'T.2.06.0'}->position->attributes()->posTS;
+    //   $speed = $transaction->{'T.2.06.0'}->speed;
+    //   $heading = $transaction->{'T.2.06.0'}->heading;
+    // }
 
-    $insert_pos_log->bind_param('ssssssssssssssss', $position_id, $event_ts, $driver, $driver2, $tractor, $lat, $lon, $speed, $position_id, $event_ts, $driver, $driver2, $tractor, $lat, $lon, $speed) or die('Error binding: ' . $insert_pos_log->error);
-    $insert_pos_log->execute() or die('Error executing: ' . $insert_pos_log->error);
-
-    if (!$insert_pos_log) {
-      die("Error executing query: " . $insert_pos_log->error);
-    }
+    // $event_ts = date('Y-m-d H:i:s', strtotime($event_ts));
+    // // echo $event_ts;
+    // // die();
+    //
+    // $insert_pos_log->bind_param('ssssssssssssssss', $position_id, $event_ts, $driver, $driver2, $tractor, $lat, $lon, $speed, $position_id, $event_ts, $driver, $driver2, $tractor, $lat, $lon, $speed) or die('Error binding: ' . $insert_pos_log->error);
+    // $insert_pos_log->execute() or die('Error executing: ' . $insert_pos_log->error);
+    //
+    // if (!$insert_pos_log) {
+    //   die("Error executing query: " . $insert_pos_log->error);
+    // }
   }
+
+  die();
 
 } while ($count > 0);
 
