@@ -92,6 +92,7 @@ do {
       $speed = $transaction->{'T.2.12.0'}->speed;
       $heading = $transaction->{'T.2.12.0'}->heading;
     } else {
+      var_dump($transaction);
       $event_ts = $transaction->{'T.2.06.0'}->eventTS;
       $tractor = $transaction->{'T.2.06.0'}->equipment->attributes()->ID;
       $driver = $transaction->{'T.2.06.0'}->driverID;
