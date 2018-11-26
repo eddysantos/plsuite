@@ -77,7 +77,7 @@ do {
   $branch = "";
 
 
-  foreach ($transactions as $transaction) {e
+  foreach ($transactions as $transaction) {
     echo "Count is: " . $count . "\n";
     echo "Final Transaction is: " . $final_transaction . "\n\n";
     // var_dump($transaction);
