@@ -101,39 +101,27 @@ do {
 
     switch ($branch) {
       case 'T2120':
-      try {
-        $event_ts = $transaction->{'T.2.12.0'}->eventTS;
-        $tractor = $transaction->{'T.2.12.0'}->equipment->attributes()->ID;
-        $driver = $transaction->{'T.2.12.0'}->driverID;
-        $driver2 = $transaction->{'T.2.12.0'}->driverID2;
-        $lat = $transaction->{'T.2.12.0'}->position->attributes()->lat;
-        $lon = $transaction->{'T.2.12.0'}->position->attributes()->lon;
-        $posTS = $transaction->{'T.2.12.0'}->position->attributes()->posTS;
-        $speed = $transaction->{'T.2.12.0'}->speed;
-        $heading = $transaction->{'T.2.12.0'}->heading;
-      } catch (\Exception $e) {
-        var_dump($e);
-        die();
-      }
-
+      $event_ts = $transaction->{'T.2.12.0'}->eventTS;
+      $tractor = $transaction->{'T.2.12.0'}->equipment->attributes()->ID;
+      $driver = $transaction->{'T.2.12.0'}->driverID;
+      $driver2 = $transaction->{'T.2.12.0'}->driverID2;
+      $lat = $transaction->{'T.2.12.0'}->position->attributes()->lat;
+      $lon = $transaction->{'T.2.12.0'}->position->attributes()->lon;
+      $posTS = $transaction->{'T.2.12.0'}->position->attributes()->posTS;
+      $speed = $transaction->{'T.2.12.0'}->speed;
+      $heading = $transaction->{'T.2.12.0'}->heading;
       break;
 
       case 'T2060':
-      var_dump($transaction);
-      try {
-        $event_ts = $transaction->{'T.2.06.0'}->eventTS;
-        $tractor = $transaction->{'T.2.06.0'}->equipment->attributes()->ID;
-        $driver = $transaction->{'T.2.06.0'}->driverID;
-        $driver2 = $transaction->{'T.2.06.0'}->driverID2;
-        $lat = $transaction->{'T.2.06.0'}->position->attributes()->lat;
-        $lon = $transaction->{'T.2.06.0'}->position->attributes()->lon;
-        $posTS = $transaction->{'T.2.06.0'}->position->attributes()->posTS;
-        $speed = $transaction->{'T.2.06.0'}->speed;
-        $heading = $transaction->{'T.2.06.0'}->heading;
-      } catch (\Exception $e) {
-        var_dump($e);
-        die();
-      }
+      $event_ts = $transaction->{'T.2.06.0'}->eventTS;
+      $tractor = $transaction->{'T.2.06.0'}->equipment->attributes()->ID;
+      $driver = $transaction->{'T.2.06.0'}->driverID;
+      $driver2 = $transaction->{'T.2.06.0'}->driverID2;
+      $lat = $transaction->{'T.2.06.0'}->position->attributes()->lat;
+      $lon = $transaction->{'T.2.06.0'}->position->attributes()->lon;
+      $posTS = $transaction->{'T.2.06.0'}->position->attributes()->posTS;
+      $speed = $transaction->{'T.2.06.0'}->speed;
+      $heading = $transaction->{'T.2.06.0'}->heading;
 
       break;
 
@@ -146,7 +134,7 @@ do {
     $event_ts = date('Y-m-d H:i:s', strtotime($event_ts));
     // echo $event_ts;
     // die();
-
+    echo "Inserting data for transaction $position_id\n";
     $insert_pos_log->bind_param('ssssssssssssssss', $position_id, $event_ts, $driver, $driver2, $tractor, $lat, $lon, $speed, $position_id, $event_ts, $driver, $driver2, $tractor, $lat, $lon, $speed) or die('Error binding: ' . $insert_pos_log->error);
     $insert_pos_log->execute() or die('Error executing: ' . $insert_pos_log->error);
 
