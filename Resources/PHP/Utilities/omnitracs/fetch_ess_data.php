@@ -97,36 +97,34 @@ do {
       }
     }
 
-    if ($validate) {
-      switch ($branch) {
-        case 'T2120':
-        $event_ts = $transaction->{'T.2.12.0'}->eventTS;
-        $tractor = $transaction->{'T.2.12.0'}->equipment->attributes()->ID;
-        $driver = $transaction->{'T.2.12.0'}->driverID;
-        $driver2 = $transaction->{'T.2.12.0'}->driverID2;
-        $lat = $transaction->{'T.2.12.0'}->position->attributes()->lat;
-        $lon = $transaction->{'T.2.12.0'}->position->attributes()->lon;
-        $posTS = $transaction->{'T.2.12.0'}->position->attributes()->posTS;
-        $speed = $transaction->{'T.2.12.0'}->speed;
-        $heading = $transaction->{'T.2.12.0'}->heading;
-        break;
+    switch ($branch) {
+      case 'T2120':
+      $event_ts = $transaction->{'T.2.12.0'}->eventTS;
+      $tractor = $transaction->{'T.2.12.0'}->equipment->attributes()->ID;
+      $driver = $transaction->{'T.2.12.0'}->driverID;
+      $driver2 = $transaction->{'T.2.12.0'}->driverID2;
+      $lat = $transaction->{'T.2.12.0'}->position->attributes()->lat;
+      $lon = $transaction->{'T.2.12.0'}->position->attributes()->lon;
+      $posTS = $transaction->{'T.2.12.0'}->position->attributes()->posTS;
+      $speed = $transaction->{'T.2.12.0'}->speed;
+      $heading = $transaction->{'T.2.12.0'}->heading;
+      break;
 
-        case 'T2060':
-        $event_ts = $transaction->{'T.2.06.0'}->eventTS;
-        $tractor = $transaction->{'T.2.06.0'}->equipment->attributes()->ID;
-        $driver = $transaction->{'T.2.06.0'}->driverID;
-        $driver2 = $transaction->{'T.2.06.0'}->driverID2;
-        $lat = $transaction->{'T.2.06.0'}->position->attributes()->lat;
-        $lon = $transaction->{'T.2.06.0'}->position->attributes()->lon;
-        $posTS = $transaction->{'T.2.06.0'}->position->attributes()->posTS;
-        $speed = $transaction->{'T.2.06.0'}->speed;
-        $heading = $transaction->{'T.2.06.0'}->heading;
-          break;
+      case 'T2060':
+      $event_ts = $transaction->{'T.2.06.0'}->eventTS;
+      $tractor = $transaction->{'T.2.06.0'}->equipment->attributes()->ID;
+      $driver = $transaction->{'T.2.06.0'}->driverID;
+      $driver2 = $transaction->{'T.2.06.0'}->driverID2;
+      $lat = $transaction->{'T.2.06.0'}->position->attributes()->lat;
+      $lon = $transaction->{'T.2.06.0'}->position->attributes()->lon;
+      $posTS = $transaction->{'T.2.06.0'}->position->attributes()->posTS;
+      $speed = $transaction->{'T.2.06.0'}->speed;
+      $heading = $transaction->{'T.2.06.0'}->heading;
+      break;
 
-        default:
-        continue 2;
-          break;
-      }
+      default:
+      continue 2;
+      break;
     }
 
     $event_ts = date('Y-m-d H:i:s', strtotime($event_ts));
