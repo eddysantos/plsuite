@@ -45,7 +45,7 @@ $omni->__setSoapHeaders(array($wsse_header));
 
 // $last_transaction = $last_transaction_get['tran_id'];
 
-$query = "INSERT INTO omni_pos_log(tran_id, tran_ts, driverid1, driverid2, tractor, lat, lon, speed) VALUES (?,?,?,?,?,?,?,?) ON DUPLICATE KEY UPDATE tran_id = ?, tran_ts = ?, driverid1 = ?, driverid2 = ?, tractor = ?, lat = ?, lon = ?, speed = ?";
+$query = "INSERT INTO omni_pos_log(tran_id, tran_ts, driverid1, driverid2, tractor, lat, lon, speed, heading) VALUES (?,?,?,?,?,?,?,?,?) ON DUPLICATE KEY UPDATE tran_id = ?, tran_ts = ?, driverid1 = ?, driverid2 = ?, tractor = ?, lat = ?, lon = ?, speed = ?";
 $insert_pos_log = $db->prepare($query);
 
 if (!$insert_pos_log) {
@@ -136,7 +136,7 @@ do {
     // echo $event_ts;
     // die();
     // echo "Inserting data for transaction $position_id\n";
-    $insert_pos_log->bind_param('ssssssssssssssss', $position_id, $event_ts, $driver, $driver2, $tractor, $lat, $lon, $speed, $position_id, $event_ts, $driver, $driver2, $tractor, $lat, $lon, $speed) or die('Error binding: ' . $insert_pos_log->error);
+    $insert_pos_log->bind_param('sssssssssssssssss', $position_id, $event_ts, $driver, $driver2, $tractor, $lat, $lon, $speed, $position_id, $event_ts, $driver, $driver2, $tractor, $lat, $lon, $speed, $heading) or die('Error binding: ' . $insert_pos_log->error);
     $insert_pos_log->execute() or die('Error executing: ' . $insert_pos_log->error);
 
     if (!$insert_pos_log) {
