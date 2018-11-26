@@ -92,7 +92,7 @@ $(document).ready(function(){
           }
 
           truck_selector_template.html('<span>' + truck + '</span>');
-          truck_selector_template.append('<span class="align-self-center text-info" style="transform: rotate(' + list_direction_indicator + 'deg)">' + icon + '</span><br><small>Last ping: ' + last_ping + '</small>');
+          truck_selector_template.append('<span class="align-self-center text-info" style="transform: rotate(' + list_direction_indicator + 'deg)">' + icon + '</span><div>' + last_ping + '</div>');
           truck_selector_template.clone().data('lat', r.trucks[truck].lat).data('lng', r.trucks[truck].lng).appendTo('#fleetMapList');
           var position = new google.maps.Marker({
             map: fleetMap,
