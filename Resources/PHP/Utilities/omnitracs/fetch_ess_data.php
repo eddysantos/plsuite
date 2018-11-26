@@ -110,7 +110,7 @@ do {
       $lon = $transaction->{'T.2.12.0'}->position->attributes()->lon;
       $posTS = $transaction->{'T.2.12.0'}->position->attributes()->posTS;
       $speed = $transaction->{'T.2.12.0'}->speed;
-      $heading = $transaction->{'T.2.12.0'}->heading;
+      $heading = (double)$transaction->{'T.2.12.0'}->heading;
       break;
 
       case 'T2060':
@@ -123,7 +123,7 @@ do {
       $lon = $transaction->{'T.2.06.0'}->position->attributes()->lon;
       $posTS = $transaction->{'T.2.06.0'}->position->attributes()->posTS;
       $speed = $transaction->{'T.2.06.0'}->speed;
-      $heading = $transaction->{'T.2.06.0'}->heading;
+      $heading = (double)$transaction->{'T.2.06.0'}->heading;
       break;
 
       default:
