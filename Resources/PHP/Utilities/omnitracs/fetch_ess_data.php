@@ -78,6 +78,7 @@ do {
 
   foreach ($transactions as $transaction) {
     $validate = false;
+    $branch = "";
     echo "Count is: " . $count . "\n";
     echo "Final Transaction is: " . $final_transaction . "\n\n";
     // var_dump($transaction);
@@ -113,7 +114,7 @@ do {
       break;
 
       case 'T2060':
-      var_dump($transaction);
+      // var_dump($transaction);
       $event_ts = $transaction->{'T.2.06.0'}->eventTS;
       $tractor = $transaction->{'T.2.06.0'}->equipment->attributes()->ID;
       $driver = $transaction->{'T.2.06.0'}->driverID;
