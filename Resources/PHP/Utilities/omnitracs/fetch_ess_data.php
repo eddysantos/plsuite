@@ -37,27 +37,13 @@ $functions = $omni->__getFunctions();
 
 $omni->__setSoapHeaders(array($wsse_header));
 
-// var_dump($functions);
+//Get Last transaction for elimination.
 
-// $vehicle = array('vehicle'=>array(
-//   'id'=>'T049',
-//   'scac'=>''
-// ));
+$query = "SELECT tran_id FROM omni_pos_log ORDER BY tran_ts DESC LIMIT 1";
+$last_transaction_get = $db->query($query);
+$last_transaction_get = $last_transaction->fetch_assoc();
 
-// $subscriber = array(
-//   new SoapParam('2', 'subscriberId'),
-//   new SoapParam(0, 'transactionIdIn')
-// );
-
-// $id = new SoapParam('T049', 'id');
-// $scac = new SoapParam('', 'scac');
-
-
-
-// foreach ($transactions as $transaction) {
-//   $tractor = $transaction->equipment;
-//   var_dump($tractor);
-// }
+$last_transaction = $last_transaction_get['tran_id'];
 
 $query = "INSERT INTO omni_pos_log(tran_id, tran_ts, driverid1, driverid2, tractor, lat, lon, speed) VALUES (?,?,?,?,?,?,?,?) ON DUPLICATE KEY UPDATE tran_id = ?, tran_ts = ?, driverid1 = ?, driverid2 = ?, tractor = ?, lat = ?, lon = ?, speed = ?";
 $insert_pos_log = $db->prepare($query);
@@ -66,7 +52,7 @@ if (!$insert_pos_log) {
   die("Error preparing: " . $db->error);
 }
 
-$final_transaction = "";
+$final_transaction = $last_transaction;
 
 do {
   $subscriber = array(
