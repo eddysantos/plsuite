@@ -73,11 +73,11 @@ do {
   $count = $ping->dequeue2Return->count;
   $final_transaction = $ping->dequeue2Return->transactionIdOut;
   $transactions = new SimpleXMLElement($ping->dequeue2Return->transactions);
-  $validate = false;
   $branch = "";
 
 
   foreach ($transactions as $transaction) {
+    $validate = false;
     echo "Count is: " . $count . "\n";
     echo "Final Transaction is: " . $final_transaction . "\n\n";
     // var_dump($transaction);
