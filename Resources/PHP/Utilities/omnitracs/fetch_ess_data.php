@@ -79,8 +79,8 @@ do {
   foreach ($transactions as $transaction) {
     $validate = false;
     $branch = "";
-    echo "Count is: " . $count . "\n";
-    echo "Final Transaction is: " . $final_transaction . "\n\n";
+    // echo "Count is: " . $count . "\n";
+    // echo "Final Transaction is: " . $final_transaction . "\n\n";
     // var_dump($transaction);
     $position_id =  $transaction->attributes()->ID;
 
@@ -98,7 +98,7 @@ do {
       }
     }
 
-    echo $branch . "\n";
+    // echo $branch . "\n";
 
     switch ($branch) {
       case 'T2120':
@@ -127,7 +127,7 @@ do {
       break;
 
       default:
-      echo "Skipping this loop!\n";
+      // echo "Skipping this loop!\n";
       continue 2;
       break;
     }
@@ -135,7 +135,7 @@ do {
     $event_ts = date('Y-m-d H:i:s', strtotime($event_ts));
     // echo $event_ts;
     // die();
-    echo "Inserting data for transaction $position_id\n";
+    // echo "Inserting data for transaction $position_id\n";
     $insert_pos_log->bind_param('ssssssssssssssss', $position_id, $event_ts, $driver, $driver2, $tractor, $lat, $lon, $speed, $position_id, $event_ts, $driver, $driver2, $tractor, $lat, $lon, $speed) or die('Error binding: ' . $insert_pos_log->error);
     $insert_pos_log->execute() or die('Error executing: ' . $insert_pos_log->error);
 
