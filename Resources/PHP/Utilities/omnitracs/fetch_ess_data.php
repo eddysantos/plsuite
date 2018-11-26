@@ -59,7 +59,7 @@ $omni->__setSoapHeaders(array($wsse_header));
 //   var_dump($tractor);
 // }
 
-$query = "INSERT INTO omni_pos_log(tran_id, tran_ts, driverid1, driverid2, tractor, lat, lon, speed) VALUES (?,?,?,?,?,?,?,?)";
+$query = "INSERT INTO omni_pos_log(tran_id, tran_ts, driverid1, driverid2, tractor, lat, lon, speed) VALUES (?,?,?,?,?,?,?,?) ON DUPLICATE KEY UPDATE tran_id = ?, tran_ts = ?, driverid1 = ?, driverid2 = ?, tractor = ?, lat = ?, lon = ?, speed = ?";
 $insert_pos_log = $db->prepare($query);
 
 if (!$insert_pos_log) {
@@ -121,7 +121,7 @@ do {
     // echo $event_ts;
     // die();
 
-    $insert_pos_log->bind_param('ssssssss', $position_id, $event_ts, $driver, $driver2, $tractor, $lat, $lon, $speed) or die('Error binding: ' . $insert_pos_log->error);
+    $insert_pos_log->bind_param('ssssssssssssssss', $position_id, $event_ts, $driver, $driver2, $tractor, $lat, $lon, $speed, $position_id, $event_ts, $driver, $driver2, $tractor, $lat, $lon, $speed) or die('Error binding: ' . $insert_pos_log->error);
     $insert_pos_log->execute() or die('Error executing: ' . $insert_pos_log->error);
 
     if (!$insert_pos_log) {
