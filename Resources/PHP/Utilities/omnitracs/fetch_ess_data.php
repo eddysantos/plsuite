@@ -124,7 +124,7 @@ do {
           break;
 
         default:
-        continue 3;
+        continue 2;
           break;
       }
     }
