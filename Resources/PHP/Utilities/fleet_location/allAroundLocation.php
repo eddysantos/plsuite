@@ -86,6 +86,7 @@ foreach ($trucks as $truck => $values) {
       $trucks[$truck]['lng'] = (double)$row['lon'];
       $trucks[$truck]['rotation'] = (double)$row['heading'];
       $trucks[$truck]['speed'] = (double)$row['speed'];
+      $trucks[$truck]['last_ping'] = $row['tran_ts'];
     }
   }
 
