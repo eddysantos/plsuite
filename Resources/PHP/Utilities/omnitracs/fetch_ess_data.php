@@ -119,6 +119,7 @@ do {
       break;
 
       case 'T2060':
+      var_dump($transaction);
       try {
         $event_ts = $transaction->{'T.2.06.0'}->eventTS;
         $tractor = $transaction->{'T.2.06.0'}->equipment->attributes()->ID;
