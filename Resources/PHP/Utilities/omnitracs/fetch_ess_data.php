@@ -131,7 +131,7 @@ do {
       continue 2;
       break;
     }
-
+    var_dump($transaction);
     $event_ts = date('Y-m-d H:i:s', strtotime($event_ts));
     // echo $event_ts;
     // die();
