@@ -153,7 +153,7 @@ if ($trip['last_movement']) {
      <link rel="stylesheet" media="screen and (min-device-width: 701px)" href="/plsuite/Resources/CSS/trips.css">
      <link rel="stylesheet" href="/plsuite/Resources/alertify/css/alertify.min.css">
      <link rel="stylesheet" href="/plsuite/Resources/alertify/css/themes/bootstrap.min.css">
-     <script src="/plsuite/Resources/fa_5/js/fontawesome-all.js"></script>
+     <script src="/plsuite/Resources/fa_5/js/fontawesome-all.min.js"></script>
      <link rel="stylesheet" media="screen and (max-device-width: 700px)" href="/plsuite/Resources/CSS/mainMobile.css">
      <title>Prolog Transportation Inc</title>
    </head>
