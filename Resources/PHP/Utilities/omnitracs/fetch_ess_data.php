@@ -144,8 +144,6 @@ do {
     }
   }
 
-  die();
-
 } while ($count > 0);
 
 ?>
