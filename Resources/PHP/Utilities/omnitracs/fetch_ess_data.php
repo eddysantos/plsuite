@@ -113,6 +113,7 @@ do {
       break;
 
       case 'T2060':
+      var_dump($transaction);
       $event_ts = $transaction->{'T.2.06.0'}->eventTS;
       $tractor = $transaction->{'T.2.06.0'}->equipment->attributes()->ID;
       $driver = $transaction->{'T.2.06.0'}->driverID;
@@ -122,7 +123,6 @@ do {
       $posTS = $transaction->{'T.2.06.0'}->position->attributes()->posTS;
       $speed = $transaction->{'T.2.06.0'}->speed;
       $heading = $transaction->{'T.2.06.0'}->heading;
-
       break;
 
       default:
