@@ -39,9 +39,9 @@ $omni->__setSoapHeaders(array($wsse_header));
 
 //Get Last transaction for elimination.
 
-$query = "SELECT tran_id FROM omni_pos_log ORDER BY tran_ts DESC LIMIT 1";
-$last_transaction_get = $db->query($query) or die("Error querying last tran: " . $db->error);
-$last_transaction_get = $last_transaction_get->fetch_assoc() or die("Error fetching results: " . $db->$last_transaction_get);
+// $query = "SELECT tran_id FROM omni_pos_log ORDER BY tran_ts DESC LIMIT 1";
+// $last_transaction_get = $db->query($query) or die("Error querying last tran: " . $db->error);
+// $last_transaction_get = $last_transaction_get->fetch_assoc() or die("Error fetching results: " . $db->$last_transaction_get);
 
 $last_transaction = $last_transaction_get['tran_id'];
 
@@ -52,7 +52,8 @@ if (!$insert_pos_log) {
   die("Error preparing: " . $db->error);
 }
 
-$final_transaction = $last_transaction;
+$final_transaction = "";
+// $final_transaction = $last_transaction;
 
 do {
   $subscriber = array(
@@ -81,6 +82,12 @@ do {
     $position_id =  $transaction->attributes()->ID;
     $validate = $transaction->{'T.2.12.0'};
 
+    foreach ($transaction as $tran) {
+      var_dump($tran);
+    }
+
+    die();
+
     if ($validate) {
       $event_ts = $transaction->{'T.2.12.0'}->eventTS;
       $tractor = $transaction->{'T.2.12.0'}->equipment->attributes()->ID;
@@ -92,7 +99,6 @@ do {
       $speed = $transaction->{'T.2.12.0'}->speed;
       $heading = $transaction->{'T.2.12.0'}->heading;
     } else {
-      var_dump($transaction);
       $event_ts = $transaction->{'T.2.06.0'}->eventTS;
       $tractor = $transaction->{'T.2.06.0'}->equipment->attributes()->ID;
       $driver = $transaction->{'T.2.06.0'}->driverID;
