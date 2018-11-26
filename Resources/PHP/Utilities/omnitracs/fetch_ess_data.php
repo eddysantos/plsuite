@@ -77,7 +77,7 @@ do {
   $branch = "";
 
 
-  foreach ($transactions as $transaction) {
+  foreach ($transactions as $transaction) {e
     echo "Count is: " . $count . "\n";
     echo "Final Transaction is: " . $final_transaction . "\n\n";
     // var_dump($transaction);
@@ -124,7 +124,7 @@ do {
           break;
 
         default:
-        continue;
+        continue 2;
           break;
       }
     }
