@@ -43,7 +43,7 @@ $omni->__setSoapHeaders(array($wsse_header));
 // $last_transaction_get = $db->query($query) or die("Error querying last tran: " . $db->error);
 // $last_transaction_get = $last_transaction_get->fetch_assoc() or die("Error fetching results: " . $db->$last_transaction_get);
 
-$last_transaction = $last_transaction_get['tran_id'];
+// $last_transaction = $last_transaction_get['tran_id'];
 
 $query = "INSERT INTO omni_pos_log(tran_id, tran_ts, driverid1, driverid2, tractor, lat, lon, speed) VALUES (?,?,?,?,?,?,?,?) ON DUPLICATE KEY UPDATE tran_id = ?, tran_ts = ?, driverid1 = ?, driverid2 = ?, tractor = ?, lat = ?, lon = ?, speed = ?";
 $insert_pos_log = $db->prepare($query);
