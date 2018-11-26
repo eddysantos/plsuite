@@ -54,7 +54,7 @@ while ($row = $rslt->fetch_assoc()) {
   );
 }
 
-$query = "SELECT lat, lon, heading, speed FROM omni_pos_log WHERE tractor = ? ORDER BY tran_ts DESC LIMIT 1";
+$query = "SELECT lat, lon, heading, speed, tran_ts FROM omni_pos_log WHERE tractor = ? ORDER BY tran_ts DESC LIMIT 1";
 $stmt = $db->prepare($query);
 if (!($stmt)) {
   $system_callback['code'] = "500";
