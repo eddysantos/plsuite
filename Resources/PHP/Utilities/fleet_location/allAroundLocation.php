@@ -20,7 +20,12 @@ function get_time_difference($from, $to = NULL){
   }
 
   $start_date = new DateTime($from);
-  $since_start = $start_date->diff($to);
+  $since_start = $to->diff($start_date);
+
+  // var_dump($start_date);
+  // var_dump($to);
+  // var_dump($since_start);
+  // die();
 
   if ($since_start->days >= 1) {
     return $since_start->days . " day(s) ago";
@@ -30,8 +35,8 @@ function get_time_difference($from, $to = NULL){
     return $since_start->h . " hour(s) ago";
   }
 
-  if ($since_start->m >= 1) {
-    return $since_start->m . " minute(s) ago";
+  if ($since_start->i >= 1) {
+    return $since_start->i . " minute(s) ago";
   }
 
   return $since_start->s . " second(s) ago";
@@ -107,6 +112,7 @@ foreach ($trucks as $truck => $values) {
     unset($trucks[$truck]);
   } else {
     while ($row = $rslt->fetch_assoc()) {
+      error_log("Tractor: $truck");
       $trucks[$truck]['lat'] = (double)$row['lat'];
       $trucks[$truck]['lng'] = (double)$row['lon'];
       $trucks[$truck]['rotation'] = (double)$row['heading'];

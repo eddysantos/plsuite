@@ -42,16 +42,16 @@ $omni->__setSoapHeaders(array($wsse_header));
 //   'scac'=>''
 // ));
 
-$subscriber = array('deque2'=>array(
-  'subscriberId'=>'2',
-  'transactionIdIn'=>0
+$subscriber = array('vehicle'=>array(
+  'id'=>'T021',
+  'scac'=>''
 ));
 
 // $id = new SoapParam('T049', 'id');
 // $scac = new SoapParam('', 'scac');
 
 try {
-  $ping = $omni->getSubscriberInfo($subscriber);
+  $ping = $omni->getVehicleInformation($subscriber);
 } catch (SoapFault $e) {
   var_dump($e);
   $lastRequest = $omni->__getLastRequest();
