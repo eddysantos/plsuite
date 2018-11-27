@@ -1,7 +1,7 @@
 <?php
 
 
-require $root . '/plsuite/Resources/PHP/Utilities/session.php';
+// require $root . '/plsuite/Resources/PHP/Utilities/session.php';
 
 include($root . '/plsuite/Resources/PHP/loginDatabase.php');
 date_default_timezone_set('America/Monterrey');
