@@ -18,25 +18,23 @@ function get_time_difference($from, $to = NULL){
   if (!$to) {
     $to = new DateTime();
   }
-  
+
   $start_date = new DateTime($from);
   $since_start = $start_date->diff($to);
 
-  if ($since_start->days > 1) {
+  if ($since_start->days >= 1) {
     return $since_start->days . " day(s) ago";
   }
 
-  if ($since_start->h > 1) {
+  if ($since_start->h >= 1) {
     return $since_start->h . " hour(s) ago";
   }
 
-  if ($since_start->m > 1) {
+  if ($since_start->m >= 1) {
     return $since_start->m . " minute(s) ago";
   }
 
-  if ($since_start->s > 1) {
-    return $since_start->s . " second(s) ago";
-  }
+  return $since_start->s . " second(s) ago";
 }
 
 $system_callback = [];
