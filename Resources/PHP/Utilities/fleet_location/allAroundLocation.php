@@ -1,7 +1,6 @@
 <?php
 
 $root = $_SERVER['DOCUMENT_ROOT'];
-$root = "/Applications/MAMP/htdocs";
 require $root . '/plsuite/Resources/PHP/Utilities/initialScript.php';
 
 function utf8ize($d) {
