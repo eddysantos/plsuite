@@ -14,8 +14,35 @@ function utf8ize($d) {
     return $d;
 }
 
+function get_time_difference($from, $to = NULL){
+  if (!$to) {
+    $to = new DateTime();
+  }
+  
+  $start_date = new DateTime($from);
+  $since_start = $start_date->diff($to);
+
+  if ($since_start->days > 1) {
+    return $since_start->days . " day(s) ago";
+  }
+
+  if ($since_start->h > 1) {
+    return $since_start->h . " hour(s) ago";
+  }
+
+  if ($since_start->m > 1) {
+    return $since_start->m . " minute(s) ago";
+  }
+
+  if ($since_start->s > 1) {
+    return $since_start->s . " second(s) ago";
+  }
+}
+
 $system_callback = [];
 $trucks = [];
+
+$now = date('Y-m-d- H:i:s');
 
 // for ($i=0; $i < 1000; $i++) {
 //   echo "Chingas a $i";
@@ -86,7 +113,7 @@ foreach ($trucks as $truck => $values) {
       $trucks[$truck]['lng'] = (double)$row['lon'];
       $trucks[$truck]['rotation'] = (double)$row['heading'];
       $trucks[$truck]['speed'] = (double)$row['speed'];
-      $trucks[$truck]['last_ping'] = $row['tran_ts'];
+      $trucks[$truck]['last_ping'] = get_time_difference($row['tran_ts']);
     }
   }
 

@@ -9,7 +9,17 @@
       </div>
       <div class="modal-body">
         <div class="">
-          <div class="fleetViewList float-left" id="fleetMapList" style="width: 10%">
+          <div class="fleetViewList float-left d-flex flex-wrap" id="fleetMapList" style="width: 20%">
+          <!-- <div class="fleetViewList float-left" style="width: 10%">
+            <div class="d-flex flex-column border mr-3 mb-2 fw-item rounded">
+              <div class="d-flex justify-content-around text-center">
+                <span class="truck-number">T009</span>
+                <span class="d-flex direction"><i class="fas fa-location-arrow align-self-center"></i></span>
+              </div>
+              <div class="px-1 last-ping" style="font-size: x-small">
+                Last ping
+              </div>
+            </div> -->
           </div>
           <div class="" id="fleetView" style="height: 70vh"></div>
         </div>

@@ -1,3 +1,4 @@
+FontAwesomeConfig = { autoReplaceSvg: 'nest' }
 function loadingScreenRpmc(message){
   console.log("Loading screen active!");
   $('body').append("<div class='overlay d-flex align-items-center' style='z-index: 2000'><div class='overlay-loading justify-content-center d-flex align-items-center'><p><i class='fa fa-spinner fa-pulse fa-3x fa-fw'></i></p><p>" + message +"</p><div></div>")
@@ -43,7 +44,6 @@ function gmaps_select_icon(speed){
 }
 
 $(document).ready(function(){
-  FontAwesomeConfig = { autoReplaceSvg: 'nest' }
 
   $('#rpmCalculator').on('hidden.bs.modal', function(e){
     $(this).find('input').val('');
@@ -60,7 +60,8 @@ $(document).ready(function(){
     var locations = [];
     var bounds = new google.maps.LatLngBounds(null);
     var map_e = $('#fleetView')[0];
-    var truck_selector_template = $('<div class="d-flex justify-content-around border mr-3 mb-2 fw-item rounded text-center" role="button"></div>');
+    // var truck_selector_template = $('<div class="d-flex justify-content-around border mr-3 mb-2 fw-item rounded text-center" role="button"></div>');
+    var truck_selector_template = $('<div class="d-flex flex-column border mr-3 mb-2 fw-item rounded" style="width: 40%"><div class="d-flex justify-content-around text-center"><span class="truck-number">T009</span><span class="d-flex direction align-self-center text-info"><i class="fas fa-location-arrow align-self-center"></i></span></div><div class="px-1 last-ping" style="font-size: x-small"></div></div>');
 
     fleetMap = new google.maps.Map(map_e,{
         zoom: 4.75,
@@ -91,8 +92,9 @@ $(document).ready(function(){
             var icon = '<i class="fas fa-location-arrow">';
           }
 
-          truck_selector_template.html('<span>' + truck + '</span>');
-          truck_selector_template.append('<span class="align-self-center text-info" style="transform: rotate(' + list_direction_indicator + 'deg)">' + icon + '</span><div>' + last_ping + '</div>');
+          truck_selector_template.find('.truck-number').html(truck);
+          truck_selector_template.find('.direction').css({'transform': 'rotate(' + list_direction_indicator +'deg)'}).html(icon);
+          truck_selector_template.find('.last-ping').html(last_ping);
           truck_selector_template.clone().data('lat', r.trucks[truck].lat).data('lng', r.trucks[truck].lng).appendTo('#fleetMapList');
           var position = new google.maps.Marker({
             map: fleetMap,
