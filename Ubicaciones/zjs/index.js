@@ -15,7 +15,7 @@ function load_tables(){
       $('#southbound-trips tbody').html(r.data.sb_trips.table);
       $('.sb-count').html(r.data.sb_trips.count);
 
-      $('#pending-return-trips tbody').html(r.data.pr_trips.table);
+      $('#pending-return-trips').html(r.data.pr_trips.table);
       $('.pr-count').html(r.data.pr_trips.count);
 
       $('#pending-invoice-trips tbody').html(r.data.pi_trips.table);

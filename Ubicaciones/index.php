@@ -147,20 +147,46 @@ $sunday_5weeks = date('m/d/Y', strtotime('sunday 5 weeks ago'));
         </div>
         <div class="tab-pane fade" id="pending-return-trip-pane">
           <section class="">
-            <h6 class="mb-0">Pending Return Trip: <span class="text-secondary pr-count"></span></h6>
-            <div class="table-container">
-              <table class="table table-striped table-sm dash-table" id="pending-return-trips">
-                <thead>
-                  <tr>
-                    <th style="width: 80px">Trip</th>
-                    <th style="width: 80px">Truck</th>
-                    <th style="width: 160px">Trailer</th>
-                    <th>Driver</th>
-                    <th>Appointment Date</th>
-                  </tr>
-                </thead>
-                <tbody></tbody>
-              </table>
+            <div class="row w-100">
+              <div class="col-6">
+                <h6 class="mb-0 border-0">Pending Return Trip: <span class="text-secondary pr-count"></span></h6>
+              </div>
+              <div class="col-6">
+                <h6 class="mb-0 border-0">Potential Return Trips</h6>
+              </div>
+            </div>
+            <div class="table-container d-flex justify-content-around">
+              <div class="row w-100">
+                <div class="col-6" style="overflow-y: scroll" id="pending-return-trips">
+                  <div class="card">
+                    <div class="card-body">
+                      <h5 class="card-title">181045</h5>
+                      <p class="card-text mb-0">Isaias Guatzozon (TO35 - NONZ977389)</p>
+                      <div class="clearfix">
+                        <p class="card-text mb-0 float-left">Laredo, TX - Little Rock, AR</p>
+                        <p class="float-right">Appointment Time</p>
+                      </div>
+                      <p class="mb-0">Truck Location:</p>
+                      <p class="mb-0">Distance to Return:</p>
+                      <p class="mb-0">ETA to Return:</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-6">
+                  <div class="card">
+                    <div class="card-body">
+                      <!-- <h5 class="card-title">181045</h5> -->
+                      <div class="d-flex justify-content-between">
+                        <input type="text" class="form-control mr-1" name="" value="" placeholder="Zip Code">
+                        <span class="align-self-center">or</span>
+                        <input type="text" class="form-control ml-1" name="" value="" placeholder="City">
+                        <input type="text" class="form-control" name="" value="" placeholder="State">
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
             </div>
           </section>
         </div>
