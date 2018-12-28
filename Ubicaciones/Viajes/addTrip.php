@@ -58,8 +58,7 @@ function parseDate($datestamp){
                Add New Trip
              </div>
              <div class="mr-5">
-               <button type="button" class="btn btn-outline-secondary" name="button">Show Favorite Trips</button>
-               <button type="button" class="btn btn-outline-secondary" name="button">Add Custom Trip</button>
+               <button type="button" class="btn btn-outline-secondary" name="button" data-toggle="button" aria-pressed="false" autocomplete="off"><span id="toggle-fav-trips">Show<span> Favorite Trips</button>
              </div>
            </div>
          </div>
