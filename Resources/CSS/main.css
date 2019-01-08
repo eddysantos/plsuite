@@ -256,6 +256,11 @@ input[type=number]::-webkit-outer-spin-button {
   color: black !important;
 }
 
+#trip-information * .row,
+#trip-information .row{
+  margin-right: 0px !important;
+}
+
 .fw-item:hover{
   background-color: rgba(124, 124, 124, 0.44)
 }
