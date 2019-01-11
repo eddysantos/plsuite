@@ -1,5 +1,5 @@
 <div class="modal fade" id="docs_viewer" tabindex="-1" role="dialog" aria-labelledby="docs_viewer">
-  <div class="modal-dialog modal-lg" role="document" style="min-width: 90%;max-width: 90%;">
+  <div class="modal-dialog modal-lg" role="document" style="min-width: 90%;max-height: 90vh;">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title">Document Viewer</h5>
