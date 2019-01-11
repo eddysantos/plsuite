@@ -74,8 +74,8 @@ $rslt = $stmt->get_result();
 
 if ($rslt->num_rows == 0) {
   $sc['code'] = 1;
-  $sc['message'] = "<tr><td>No documents were found.</td><td></td><td></td><td></td></tr>";
-  $sc['data'] = $data;
+  $sc['data'] = "<tr><td>No documents were found.</td><td></td><td></td><td></td></tr>";
+  // $sc['data'] = $data;
   exit_script($sc);
 }
 
