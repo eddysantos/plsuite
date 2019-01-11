@@ -76,7 +76,8 @@ if (!($stmt->execute())) {
   die($sc['message']);
 }
 
-$url = $stmt->get_result()->fetch_assoc();
+$rslt = $stmt->get_result()->fetch_assoc();
+$url = $rslt['document_url'];
 
 die($url);
 
