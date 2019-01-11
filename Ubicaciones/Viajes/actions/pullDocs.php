@@ -48,7 +48,7 @@ function encrypt($string){
 
 
 
-$query = "SELECT document_type , document_name , document_url , date_added , added_by , pkid_document FROM document_catalog WHERE fk_related_id = ?";
+$query = "SELECT document_type , document_name , document_url , date_added , added_by , pkid_document FROM document_catalog WHERE fk_related_id = ? AND fk_related_type ='linehaul'";
 
 $stmt = $db->prepare($query);
 if (!($stmt)) {
@@ -89,7 +89,7 @@ while ($row = $rslt->fetch_assoc()) {
     <td>$row[added_by]</td>
     <td class='text-right'>
       <i class='fas fa-download mr-1 text-primary' role='button'></i>
-      <i class='far fa-file-pdf mr-1' role='button' document_id='$encrypted_id'></i>
+      <i class='far fa-file-pdf mr-1 show_pdf' data-toggle='modal' data-target='#docs_viewer' role='button' document_id='$encrypted_id'></i>
       <i class='far fa-trash-alt mr-1 text-danger' role='button'></i>
     </td>
   </tr>";

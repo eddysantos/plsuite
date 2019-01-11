@@ -687,16 +687,6 @@ if ($trip['last_movement']) {
                      <th></th>
                    </thead>
                    <tbody id="document-table">
-                     <tr>
-                       <td>Rate Confirmation</td>
-                       <td>01/08/2018</td>
-                       <td>Salvador Corona</td>
-                       <td class="text-right">
-                         <i class="fas fa-download mr-1 text-primary" role="button"></i>
-                         <i class="far fa-file-pdf mr-1" role="button"></i>
-                         <i class="far fa-trash-alt mr-1 text-danger" role="button"></i>
-                       </td>
-                     </tr>
                    </tbody>
                  </table>
                </div>
@@ -1079,6 +1069,7 @@ if ($trip['last_movement']) {
 require 'modales/addLinehaul.php';
 require 'modales/addMovement.php';
 require 'modales/closeTripConfirmation.php';
+require 'modales/doc_viewer.php';
 require $root . '/plsuite/Resources/PHP/Utilities/footer.php';
  ?>
  <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script> -->
