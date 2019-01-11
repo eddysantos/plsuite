@@ -54,7 +54,7 @@ function encrypt($string){
 
 
 
-$query = "SELECT document_url FROM document_catalog WHERE pkid_document = ?";
+$query = "SELECT document_url, document_name, fk_related_id FROM document_catalog WHERE pkid_document = ?";
 
 $stmt = $db->prepare($query);
 if (!($stmt)) {
@@ -78,13 +78,14 @@ if (!($stmt->execute())) {
 
 $rslt = $stmt->get_result()->fetch_assoc();
 $url = $rslt['document_url'];
+$filename = $rslt['document_name'] . $rslt['fk_related_id'];
 
 // $url ="https://yourFile.pdf";
 $content = file_get_contents($url);
 
 header('Content-Type: application/pdf');
 header('Content-Length: ' . strlen($content));
-header('Content-Disposition: inline; filename="YourFileName.pdf"');
+header('Content-Disposition: inline; filename="'.$file_name.'"');
 header('Cache-Control: private, max-age=0, must-revalidate');
 header('Pragma: public');
 ini_set('zlib.output_compression','0');
