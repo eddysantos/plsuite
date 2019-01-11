@@ -4,7 +4,7 @@ $valor1 = $_GET['id'];
 $cipher = "AES-256-CBC";
 $key =hash('sha256', "ewgdhfjjluo3pip4l");
 $iv = substr(hash('sha256', "sdfkljsadf567890saf"), 0, 16);
-$file_id = openssl_decrypt(base64_decode("UmhaN284bEUxeStZWXF0eTJ3ODhNQT09"),$cipher, $key, 0, $iv);
+$file_id = openssl_decrypt(base64_decode($valor1),$cipher, $key, 0, $iv);
 
 echo $file_id;
 //
