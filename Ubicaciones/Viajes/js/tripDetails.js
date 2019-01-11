@@ -1283,6 +1283,9 @@ $(document).ready(function(){
       $('#close-custom-identifier').click();
     })
   });
+  $('.show-pdf').click(function(){
+    $('#docs_viewer').find('iframe').attr('src', 'actions/showDocumentOnline.php?id=' + $(this).attr('id'));
+  });
 
   $('.teamDriverCheck').change(function(){
     valid = $(this).prop('checked');
