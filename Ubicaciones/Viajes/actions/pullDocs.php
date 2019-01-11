@@ -84,7 +84,7 @@ while ($row = $rslt->fetch_assoc()) {
   $encrypted_id = encrypt($row['pkid_document']);
 
   $table_row = "<tr>
-    <td>$row[document_type]</td>
+    <td>$row[document_name]</td>
     <td>$row[date_added]</td>
     <td>$row[added_by]</td>
     <td class='text-right'>
