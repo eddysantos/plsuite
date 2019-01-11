@@ -49,7 +49,7 @@ $system_callback['return'] = [
 
 try {
 
-$system_callback['moved'] = move_uploaded_file($data['file']['tmp_name'], $directory);
+$system_callback['moved'] = move_uploaded_file($data['file']['tmp_name'], $path);
 $system_callback['message'] = "File uploaded correctly!";
 
 } catch (\Exception $e) {
