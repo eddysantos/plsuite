@@ -161,7 +161,7 @@ function show_lh_details(lhid = undefined){
   pullLh.done(function(r){
     // console.log(r);
     r = JSON.parse(r);
-    console.log(r);
+    
     for (var key in r.data) {
       if ($('.' + key).is('select')) {
         continue;
