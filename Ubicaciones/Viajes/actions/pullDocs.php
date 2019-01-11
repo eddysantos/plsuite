@@ -88,7 +88,6 @@ while ($row = $rslt->fetch_assoc()) {
     <td>$row[date_added]</td>
     <td>$row[added_by]</td>
     <td class='text-right'>
-      <i class='fas fa-download mr-1 text-primary' role='button'></i>
       <i class='far fa-file-pdf mr-1 show-pdf' data-toggle='modal' data-target='#docs_viewer' role='button' document_id='$encrypted_id'></i>
       <i class='far fa-trash-alt mr-1 text-danger' role='button'></i>
     </td>
