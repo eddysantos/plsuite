@@ -89,7 +89,7 @@ while ($row = $rslt->fetch_assoc()) {
     <td>$row[added_by]</td>
     <td class='text-right'>
       <i class='far fa-file-pdf mr-1 show-pdf' data-toggle='modal' data-target='#docs_viewer' role='button' document_id='$encrypted_id'></i>
-      <i class='far fa-trash-alt mr-1 text-danger' role='button'></i>
+      // <i class='far fa-trash-alt mr-1 text-danger' role='button'></i>
     </td>
   </tr>";
   $sc['data'] .= $table_row;
