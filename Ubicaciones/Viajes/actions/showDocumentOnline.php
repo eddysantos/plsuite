@@ -78,7 +78,7 @@ if (!($stmt->execute())) {
 
 $rslt = $stmt->get_result()->fetch_assoc();
 $url = $rslt['document_url'];
-$filename = $rslt['document_name'] . $rslt['fk_related_id'];
+$filename = $rslt['document_name'] . "_" . $rslt['fk_related_id'];
 
 // $url ="https://yourFile.pdf";
 $content = file_get_contents($url);

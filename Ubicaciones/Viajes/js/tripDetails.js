@@ -4,42 +4,6 @@ function loadingScreen(message){
   $('body').append("<div class='overlay d-flex align-items-center' style='z-index: 2000'><div class='overlay-loading justify-content-center d-flex align-items-center'><p><i class='fa fa-spinner fa-pulse fa-3x fa-fw'></i></p><p>" + message +"</p><div></div>")
 }
 
-// function getCityStateListener(){
-//   $('.zipInput').unbind().blur(function(){
-//
-//     el = $(this)
-//     var txt = el.val();
-//
-//     message = "Loading..."
-//
-//     var getCityState = $.ajax({
-//       method: 'POST',
-//       beforeSend: function(){
-//         loadingScreen(message);
-//       },
-//       data: {txt: txt},
-//       url: 'actions/fetchCityState.php',
-//     });
-//
-//     getCityState.done(function(result){
-//       var rsp = JSON.parse(result);
-//       //console.log(rsp);
-//       if (rsp.code == 1) {
-//         el.parent().siblings().find('.stateInput').val(rsp.data.state).change();
-//         el.parent().siblings().find('.cityInput').val(rsp.data.city).change();
-//       } else {
-//         // console.log(rsp.message);
-//       }
-//       $('.overlay').remove();
-//     }).fail(function(jqXHR, textStatus, errorThrown){
-//       console.log(textStatus + ': ' + errorThrown);
-//       $('.overlay').remove();
-//     });
-//
-//   })
-//
-// }
-
 function fetchAllLinehauls(tripyear, tripid){
   var data = {
     tripid: tripid,
@@ -161,7 +125,7 @@ function show_lh_details(lhid = undefined){
   pullLh.done(function(r){
     // console.log(r);
     r = JSON.parse(r);
-    
+
     for (var key in r.data) {
       if ($('.' + key).is('select')) {
         continue;
@@ -249,6 +213,10 @@ function show_lh_details(lhid = undefined){
 
 
   $('#trip-information').fadeOut(function(){$('#linehaul-information').fadeIn()});
+}
+
+function load_docs(){
+
 }
 
 function show_trip_info(){
@@ -1280,6 +1248,7 @@ $(document).ready(function(){
       $('#e-document-input').siblings('label').html("Choose File");
       $('#file-identifier-select').val('').change();
       $('#close-custom-identifier').click();
+      show_lh_details($('#linehaulid').val());
     })
   });
   $('#document-table').on('click', '.show-pdf', function(){
