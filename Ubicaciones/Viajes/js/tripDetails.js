@@ -1283,7 +1283,7 @@ $(document).ready(function(){
     })
   });
   $('#document-table').on('click', '.show-pdf', function(){
-    $('#docs_viewer').find('iframe').attr('src', 'actions/showDocumentOnline.php?id=' + $(this).attr('id'));
+    $('#docs_viewer').find('iframe').attr('src', 'actions/showDocumentOnline.php?id=' + $(this).attr('document_id'));
   });
 
   $('.teamDriverCheck').change(function(){
