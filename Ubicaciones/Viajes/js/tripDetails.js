@@ -242,7 +242,6 @@ function show_lh_details(lhid = undefined){
   });
   pullDocs.done(function(r){
     r = JSON.parse(r);
-    console.log(r);
     if (r.code == "1") {
       $('#document-table').html(r.data);
     }
@@ -1283,7 +1282,7 @@ $(document).ready(function(){
       $('#close-custom-identifier').click();
     })
   });
-  $('.show-pdf').click(function(){
+  $('#document-table').on('click', '.show-pdf', function(){
     $('#docs_viewer').find('iframe').attr('src', 'actions/showDocumentOnline.php?id=' + $(this).attr('id'));
   });
 
