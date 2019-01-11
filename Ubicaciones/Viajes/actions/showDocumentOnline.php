@@ -54,7 +54,7 @@ function encrypt($string){
 
 
 
-$query = "SELECT document_url FROM document_catalog WHERE pk_document_id = ?";
+$query = "SELECT document_url FROM document_catalog WHERE pkid_document = ?";
 
 $stmt = $db->prepare($query);
 if (!($stmt)) {
