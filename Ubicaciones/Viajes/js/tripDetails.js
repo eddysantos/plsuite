@@ -141,11 +141,15 @@ function show_lh_details(lhid = undefined){
     data: data,
     url: 'actions/pullLinehaul.php'
   });
-
   var pullMov = $.ajax({
     method: 'POST',
     data: data,
     url: 'actions/pullMovements.php'
+  });
+  var pullDocs = $.ajax({
+    method: 'POST',
+    data: data,
+    url: 'actions/pullDocs.php'
   });
 
   pullMov.done(function(r){
@@ -154,7 +158,6 @@ function show_lh_details(lhid = undefined){
       $('#mov-dash').html(r.data);
     }
   });
-
   pullLh.done(function(r){
     // console.log(r);
     r = JSON.parse(r);
@@ -236,6 +239,13 @@ function show_lh_details(lhid = undefined){
       $('#lh-fields').prop('disabled', false);
     }
 
+  });
+  pullDocs.done(function(r){
+    r = JSON.parse(r);
+
+    if (r.code == "1") {
+      $('#document-table').html(r.data);
+    }
   });
 
 

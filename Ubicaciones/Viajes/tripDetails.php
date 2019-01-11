@@ -686,15 +686,17 @@ if ($trip['last_movement']) {
                      <th>Uploaded By</th>
                      <th></th>
                    </thead>
-                   <tbody>
-                     <td>Rate Confirmation</td>
-                     <td>01/08/2018</td>
-                     <td>Salvador Corona</td>
-                     <td class="text-right">
-                       <i class="fas fa-download mr-1 text-primary" role="button"></i>
-                       <i class="far fa-file-pdf mr-1" role="button"></i>
-                       <i class="far fa-trash-alt mr-1 text-danger" role="button"></i>
-                     </td>
+                   <tbody id="document-table">
+                     <tr>
+                       <td>Rate Confirmation</td>
+                       <td>01/08/2018</td>
+                       <td>Salvador Corona</td>
+                       <td class="text-right">
+                         <i class="fas fa-download mr-1 text-primary" role="button"></i>
+                         <i class="far fa-file-pdf mr-1" role="button"></i>
+                         <i class="far fa-trash-alt mr-1 text-danger" role="button"></i>
+                       </td>
+                     </tr>
                    </tbody>
                  </table>
                </div>
