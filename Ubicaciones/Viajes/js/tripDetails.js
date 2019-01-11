@@ -242,7 +242,7 @@ function show_lh_details(lhid = undefined){
   });
   pullDocs.done(function(r){
     r = JSON.parse(r);
-
+    console.log(r);
     if (r.code == "1") {
       $('#document-table').html(r.data);
     }
