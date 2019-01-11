@@ -60,29 +60,23 @@ $stmt = $db->prepare($query);
 if (!($stmt)) {
   $sc['code'] = "500";
   $sc['message'] = "Error during query prepare [$db->errno]: $db->error";
-  exit_script($sc);
+  die($sc['message']);
 }
 
 $stmt->bind_param('s', $file_id);
 if (!($stmt)) {
   $sc['code'] = "500";
   $sc['message'] = "Error during variables binding [$stmt->errno]: $stmt->error";
-  exit_script($sc);
+  die($sc['message']);
 }
 
 if (!($stmt->execute())) {
   $sc['code'] = "500";
   $sc['message'] = "Error during query execution [$db->errno]: $db->error";
-  exit_script($sc);
+  die($sc['message']);
 }
 
 $url = $stmt->get_result()->fetch_assoc();
-
-
-
-$sc['code'] = 1;
-$sc['message'] = "Script called successfully!";
-exit_script($sc);
 
 // $url ="https://yourFile.pdf";
 $content = file_get_contents($url);
