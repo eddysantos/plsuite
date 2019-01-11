@@ -49,8 +49,12 @@ try {
     $system_callback['code'] = "500";
     $system_callback['query'] = $query;
     $system_callback['message'] = "Error during ADD DOCUMENT REGISTRY query prepare [$stmt->errno]: $stmt->error";
+    throw new \Exception("Did not add nothing to database", 1);
+
     exit_script($system_callback);
   }
+
+  error_log("Inserting?");
 
   $stmt->bind_param('sssss',
     $extension,
