@@ -78,6 +78,8 @@ if (!($stmt->execute())) {
 
 $url = $stmt->get_result()->fetch_assoc();
 
+die($url);
+
 // $url ="https://yourFile.pdf";
 $content = file_get_contents($url);
 
