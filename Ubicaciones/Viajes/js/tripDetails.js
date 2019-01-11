@@ -106,6 +106,9 @@ function validateForm(form_inputs, current_target){
     }
   });
 
+
+
+
   form_inputs.each(function(i){
     if ($(this).attr('db-id') === "") {
       if ($(this).attr('db-id') !== undefined) {
@@ -169,6 +172,7 @@ function show_lh_details(lhid = undefined){
     }
 
     $('.finalizeRecord.linehaul').attr('recordid', r.data.linehaulid);
+    $('#upload-file').attr('recordid', r.data.linehaulid);
     $('.lh-status-button').removeClass('Open Pending Delivery Closed Closure Cancelled').addClass(r.data.lh_status);
 
     if (r.data.lh_status == 'Closed' || r.data.lh_status == 'Cancelled') {
@@ -1176,78 +1180,99 @@ $(document).ready(function(){
     });
   });
 
+  $('#file-identifier-select').change(function(){
+    var text = $(this).val();
+
+    if (text == "other") {
+      $(this).fadeOut(function(){
+        $('#file-identifier').find('input').val('');
+        $('#file-identifier').fadeIn();
+      })
+    } else {
+      $('#file-identifier').find('input').val(text);
+    }
+
+  });
+  $('#close-custom-identifier').click(function(){
+    $('#file-identifier').fadeOut(function(){
+      $('#file-identifier-select').fadeIn();
+    });
+  })
+  $('#e-document-input').change(function(){
+    var file_name = $(this).prop('files')[0]['name'];
+    $(this).siblings('label').html(file_name);
+  })
+  $('#upload-file').click(function(){
+    //Validation first ... always.
+
+    var id_related = $(this).attr('recordid');
+    var file_identifier = $('#file-identifier').find('input').val();
+    var file_data = $('#e-document-input').prop('files')[0];
+    var authorized_files = [
+      'pdf', 'jpg', 'jpeg', 'xls', 'xlsx', 'doc', 'docx', 'bmp', 'txt'
+    ];
+
+    if (file_identifier == "") {
+      $('#file-identifier-select').addClass('is-invalid').removeClass('is-valid');
+      $('#file-identifier').find('input').addClass('is-invalid').removeClass('is-valid');
+      alertify.error('The file identifier must be specified.');
+      return false;
+    } else {
+      $('#file-identifier-select').removeClass('is-invalid');
+      $('#file-identifier').find('input').removeClass('is-invalid');
+    }
+
+    if (typeof file_data === 'undefined') {
+      $('#e-document-input').addClass('is-invalid');
+      alertify.error('There is no document selected.');
+      return false;
+    } else {
+      $('#e-document-input').removeClass('is-invalid');
+    }
+
+    valid_extension = false;
+
+    for (var i = 0; i < authorized_files.length; i++) {
+      var valid = authorized_files[i];
+      var file_name = file_data.name;
+      var test = file_name.substr(file_name.lastIndexOf('.') + 1);
+
+      if (valid == test) {
+        valid_extension = true;
+      }
+
+    }
+
+    if (!valid_extension) {
+      alertify.error('The uploaded file is not any of the type: PDF, Word, Excel or Picture.');
+      return false;
+    }
 
 
-  // $('.popup-input').keyup(function(e){
-  //   if (e.keyCode === 38 || e.keyCode === 40 || e.keyCode === 13 || e.keyCode === 9){return false;}
-  //   if ($(this).attr('readonly')) {return false;}
-  //   data = {}
-  //   pop = $(this).attr('id-display');
-  //   data.txt = $(this).val();
-  //
-  //
-  //   if (data.txt == "") {
-  //     $('.popup-list').slideUp();
-  //     return false;
-  //   } else {
-  //
-  //     if (pop.indexOf('trailer') >= 0){
-  //       url = "actions/fetchTrailersPopup.php"
-  //     }
-  //     if (pop.indexOf('truck') >= 0){
-  //       url = "actions/fetchTrucksPopup.php"
-  //     }
-  //     if (pop.indexOf('driver') >= 0){
-  //       url = "actions/fetchDriversPopup.php"
-  //     }
-  //     if (pop.indexOf('broker') >= 0) {
-  //       url = "actions/fetchBrokersPopup.php"
-  //     }
-  //
-  //     $.ajax({
-  //       method: 'POST',
-  //       data: data,
-  //       url: url,
-  //       success: function(result){
-  //         resp = JSON.parse(result);
-  //
-  //         switch (resp.code) {
-  //           case 1:
-  //             $(pop).html(resp.data).slideDown();
-  //             break;
-  //           case 2:
-  //           $(pop).html("<p>No se encontraron resulados...</p>").slideDown();
-  //             break;
-  //           default:
-  //           console.error(resp.message);
-  //           $(pop).html("").slideUp();
-  //
-  //         }
-  //       },
-  //       error: function(exception){
-  //         console.error(exception);
-  //       }
-  //     })
-  //   }
-  // })
-  //
-  // $('.popup-list').on('click', 'p', function(){
-  //   var dbid = $(this).attr('db-id');
-  //   var inputTarget = $(this).parent().attr('id');
-  //   $("[id-display='#" + inputTarget+ "']").attr("value", $(this).html()).attr('db-id', $(this).attr('db-id'));
-  //   $("[id-display='#" + inputTarget+ "']").prop("value", $(this).html()).change();
-  //   $('.popup-list').slideUp();
-  //
-  // });
-  //
-  // $('.popup-list').on('mouseenter', 'p', function(){
-  //   $('.hovered').attr('class', '');
-  //   $(this).attr('class', 'hovered');
-  // });
-  //
-  // $('.popup-list').on('mouseleave', 'p', function(){
-  //   $(this).attr('class', '')
-  // });
+
+    var data = new FormData();
+    data.append('file', file_data);
+    data.append('identifier', file_identifier);
+    data.append('id_related', id_related);
+
+    var upload_file = $.ajax({
+      method: 'POST',
+      url: 'actions/upload_file.php',
+      cache: false,
+      contentType: false,
+      processData: false,
+      data: data,
+    });
+
+    upload_file.done(function(r){
+      r = JSON.parse(r);
+      console.log(r);
+      $('#e-document-input').val('');
+      $('#e-document-input').siblings('label').html("Choose File");
+      $('#file-identifier-select').val('').change();
+      $('#close-custom-identifier').click();
+    })
+  });
 
   $('.teamDriverCheck').change(function(){
     valid = $(this).prop('checked');
