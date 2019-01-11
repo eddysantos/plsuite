@@ -8,7 +8,7 @@
         </button>
       </div>
       <div class="modal-body">
-        <iframe src=""></iframe>
+        <iframe src="" width="100%" height="100%"></iframe>
       </div>
       <div class="modal-footer">
         <div class="next-pane-buttons">
