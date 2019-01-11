@@ -42,7 +42,7 @@ try {
 
   $db->begin_transaction();
 
-  $query = "INSERT INTO document_catalog(document_type, document_name, document_url, added_by, fk_related_category, fk_related_type) VALUES (?,?,?,?,?,?)";
+  $query = "INSERT INTO document_catalog(document_type, document_name, document_url, added_by, fk_related_id, fk_related_type) VALUES (?,?,?,?,?,?)";
 
   $stmt = $db->prepare($query);
   if (!($stmt)) {
