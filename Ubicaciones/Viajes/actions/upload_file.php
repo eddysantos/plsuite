@@ -38,7 +38,7 @@ $related_id = $post['id_related'];
 $file_title = $post['identifier'];
 $doc_category = "linehaul";
 
-$return = [
+$system_callback['return'] = [
   "File name"=>$file_name,
   "Directory"=>$directory,
   "Path"=>$path,
@@ -50,15 +50,16 @@ $return = [
 try {
 
 move_uploaded_file($file_name, $directory);
+$system_callback['message'] = "File uploaded correctly!";
 
 } catch (\Exception $e) {
 
 $system_callback['code'] = "500";
-$system_callback["Unable to upload file: $e"];
+$system_callback['message'] = "Unable to upload file: $e";
 
 }
 
 
-exit_script($return);
+exit_script($system_callback);
 
  ?>
