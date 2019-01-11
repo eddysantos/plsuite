@@ -1,6 +1,6 @@
 <div class="modal fade" id="docs_viewer" tabindex="-1" role="dialog" aria-labelledby="docs_viewer">
-  <div class="modal-dialog modal-lg" role="document" style="min-width: 90%;max-height: 90vh;">
-    <div class="modal-content">
+  <div class="modal-dialog modal-lg" role="document" style="min-width: 90%;height: 90%;">
+    <div class="modal-content" style="height: 100%">
       <div class="modal-header">
         <h5 class="modal-title">Document Viewer</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
