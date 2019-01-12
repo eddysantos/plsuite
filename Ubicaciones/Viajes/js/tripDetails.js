@@ -1160,7 +1160,7 @@ $(document).ready(function(){
   $('#file-identifier-select').change(function(){
     var text = $(this).val();
 
-    if (text == "other") {
+    if (text == "Other") {
       $(this).fadeOut(function(){
         $('#file-identifier').find('input').val('');
         $('#file-identifier').fadeIn();
