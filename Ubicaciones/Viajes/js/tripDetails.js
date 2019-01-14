@@ -1254,6 +1254,30 @@ $(document).ready(function(){
   $('#document-table').on('click', '.show-pdf', function(){
     $('#docs_viewer').find('iframe').attr('src', 'actions/showDocumentOnline.php?id=' + $(this).attr('document_id'));
   });
+  $('#document-table').on('click', '.remove-file', function(){
+    var doc_id = $(this).attr('document_id');
+
+    data = {
+      doc_id: doc_id
+    };
+
+    var remove_doc = $.ajax({
+      method: 'POST',
+      data: data,
+      url: 'actions/remove_file.php'
+    });
+
+    remove_doc.done(function(r){
+      r = JSON.parse(r);
+      console.log(r);
+      if (r.code == "1") {
+        show_lh_details($('#linehaulid').val());
+      }
+      }).fail(function(x,y){
+      console.error(x);
+      console.error(y);
+    });
+  });
 
   $('.teamDriverCheck').change(function(){
     valid = $(this).prop('checked');

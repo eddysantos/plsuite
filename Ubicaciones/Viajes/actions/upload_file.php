@@ -54,8 +54,6 @@ try {
     exit_script($system_callback);
   }
 
-  error_log("Inserting?");
-
   $stmt->bind_param('ssssss',
     $extension,
     $file_title,
