@@ -48,7 +48,7 @@ function encrypt($string){
 
 
 
-$query = "SELECT document_type , document_name , document_url , date_added , added_by , pkid_document FROM document_catalog WHERE fk_related_id = ? AND fk_related_type ='linehaul'";
+$query = "SELECT document_type , document_name , document_url , date_added , added_by , pkid_document FROM document_catalog WHERE fk_related_id = ? AND fk_related_type ='linehaul' AND document_url <> ''";
 
 $stmt = $db->prepare($query);
 if (!($stmt)) {
