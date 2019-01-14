@@ -153,7 +153,7 @@ if ($trip['last_movement']) {
      <link rel="stylesheet" media="screen and (min-device-width: 701px)" href="/plsuite/Resources/CSS/trips.css">
      <link rel="stylesheet" href="/plsuite/Resources/alertify/css/alertify.min.css">
      <link rel="stylesheet" href="/plsuite/Resources/alertify/css/themes/bootstrap.min.css">
-     <script src="/plsuite/Resources/fa_5/js/fontawesome-all.min.js"></script>
+     <script src="/plsuite/Resources/fa_5/js/fontawesome-all.min.js" data-auto-replace-svg="nest" charset="utf-8"></script>
      <link rel="stylesheet" media="screen and (max-device-width: 700px)" href="/plsuite/Resources/CSS/mainMobile.css">
      <title>Prolog Transportation Inc</title>
    </head>
@@ -285,6 +285,9 @@ if ($trip['last_movement']) {
              </a>
              <a class="nav-link dash side-panel" id="lh-movs-tab" data-toggle="tab" role="tab" aria-selected="false" aria-controls="lh-movs-dash" href="#lh-movs-pane">
                Movements
+             </a>
+             <a class="nav-link dash side-panel" id="lh-e-documents-tab" data-toggle="tab" role="tab" aria-selected="false" aria-controls="lh-e-documents-dash" href="#lh-e-documents-pane">
+               E-Documents
              </a>
              <a class="nav-link disabled dash side-panel" id="lh-expenses-tab" data-toggle="tab" role="tab" aria-selected="false" aria-controls="lh-expenses-dash" href="#lh-expenses-pane">
                Expenses
@@ -650,6 +653,43 @@ if ($trip['last_movement']) {
                <table class="table table-striped border text-dark">
                  <tbody id="mov-dash"></tbody>
                </table>
+             </div>
+             <div class="tab-pane fade" id="lh-e-documents-pane" role="tab-panel" aria-labelledby="lh-movs-tab">
+               <!-- <div class="clearfix mt-1 mb-1">
+                 <button type="button" class="btn btn-outline-success float-right" name="button"><i class="fa fa-plus"></i> Add Document</button>
+               </div> -->
+               <div class="container-fluid">
+                 <form class="form-inline justify-content-around" onsubmit="return false;">
+                   <div class="col-auto">
+                     <label for="" class="d-inline col-form-label">File Name</label>
+                     <span  class="" id="file-identifier" style="display: none">
+                       <input type="text" list="doc-names" class="form-control" name="" value="" placeholder="Enter File Name">
+                       <i class="far fa-times-circle text-danger" id="close-custom-identifier" role="button"></i>
+                     </span>
+                     <select class="form-control" name="" id="file-identifier-select">
+                       <option value="">Select identifier</option>
+                       <option value="Rate Confirmation">Rate Confirmation</option>
+                       <option value="Proof Of Delivery">Proof Of Delivery</option>
+                       <option value="Other">Other</option>
+                     </select>
+                   </div>
+                   <div class="custom-file col-md-4">
+                     <input type="file" class="custom-file-input" id="e-document-input">
+                     <label class="custom-file-label justify-content-start" for="e-document-input">Choose File</label>
+                   </div>
+                   <button type="button" class="btn btn-outline-primary" name="button" id="upload-file">Upload</button>
+                 </form>
+                 <table class="table table-striped mt-3">
+                   <thead>
+                     <th>Filename</th>
+                     <th>Date Uploaded</th>
+                     <th>Uploaded By</th>
+                     <th></th>
+                   </thead>
+                   <tbody id="document-table">
+                   </tbody>
+                 </table>
+               </div>
              </div>
            </div>
          </div>
@@ -1029,6 +1069,7 @@ if ($trip['last_movement']) {
 require 'modales/addLinehaul.php';
 require 'modales/addMovement.php';
 require 'modales/closeTripConfirmation.php';
+require 'modales/doc_viewer.php';
 require $root . '/plsuite/Resources/PHP/Utilities/footer.php';
  ?>
  <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script> -->
