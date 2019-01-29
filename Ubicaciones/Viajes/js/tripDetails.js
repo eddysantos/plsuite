@@ -215,10 +215,6 @@ function show_lh_details(lhid = undefined){
   $('#trip-information').fadeOut(function(){$('#linehaul-information').fadeIn()});
 }
 
-function load_docs(){
-
-}
-
 function show_trip_info(){
   var data = {
     id: $('#trip-identifier').val(),
@@ -1954,7 +1950,7 @@ $(document).ready(function(){
        return $('#addBrokerQuick').html()
      },
      template: '<div class="popover" role="tooltip"><div class="arrow"></div><h3 class="popover-header"></h3><div class="popover-body"></div></div>'
-   }).on('shown.bs.popover', function(){
+    }).on('shown.bs.popover', function(){
 
      $('.qa-broker-submit').click(function(){
        var data = {

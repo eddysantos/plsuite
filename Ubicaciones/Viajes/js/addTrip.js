@@ -57,48 +57,37 @@ function pad (str, max) {
 function construct_movement(movements){
 
   // var template = $("<div class='movement'><p class='d-inline'><span class='ocity'></span>, </p><p class='d-inline'><span class='ostate'></span> <span class='ozip'></span></p><p class='d-inline'> - </p><p class='d-inline'><span class='dcity'></span>, </p><p class='d-inline'><span class='dstate'></span> <span class='dzip'></span> (<span class='distance'></span> <span class='mov-type'></span> Miles)</p></div>");
-  var template = $("<div class='movement'><p class='d-inline'><span class='origin'></span><p class='d-inline'> - </p><p class='d-inline'><span class='destination'></span></span> (<span class='distance'></span> <span class='mov-type'></span> Miles)</p></div>");
+  // var template = $("<div class='movement'><p class='d-inline'><span class='origin'></span><p class='d-inline'> - </p><p class='d-inline'><span class='destination'></span></span> (<span class='distance'></span> <span class='mov-type'></span> Miles)</p></div>");
+  var template = $("<div class='movement row'><div class='origin col-sm-6'></div><div class='col-sm-6'><span class='destination'></span>(<span class='distance'></span> <span class='mov-type'></span> Miles)</div></div>");
 
-  var html_movement = $("<div></div>");
-
-  var ocity = "";
-  var ostate = "";
-  var ozip = "";
-  var dcity = "";
-  var dstate = "";
-  var dzip = "";
-  var distance = "";
-  var origin = "";
-  var destination = "";
+  var html_movement = $("<div><div class='row'><div class='col-sm-6 text-center text-dark'>Origin</div><div class='col-sm-6 text-center text-dark'>Destination</div></div></div>");
 
   for (var movement in movements) {
     if (movements.hasOwnProperty(movement) && movement != 'total_distance') {
-      // html_movement = template;
 
-      origin = movements[movement].origin;
-      destination = movements[movement].destination;
-
-      // ocity = movements[movement].origin.city;
-      // ostate = movements[movement].origin.state;
-      // ozip = movements[movement].origin.zip;
-      //
-      // dcity = movements[movement].destination.city;
-      // dstate = movements[movement].destination.state;
-      // dzip = movements[movement].destination.zip;
+      origin = movements[movement].origin.address;
+      origin_attributes = movements[movement].origin.attributes;
+      destination = movements[movement].destination.address;
+      destination_attributes = movements[movement].destination.attributes;
 
       distance = movements[movement].distance;
 
       template.find('.origin').html(origin);
+      for (var attribute in origin_attributes) {
+        if (origin_attributes.hasOwnProperty(attribute)) {
+          template.find('.origin').attr(attribute, origin_attributes[attribute]);
+        }
+      }
       template.find('.destination').html(destination);
+      for (var attribute in origin_attributes) {
+        if (destination_attributes.hasOwnProperty(attribute)) {
+          template.find('.destination').attr(attribute, destination_attributes[attribute]);
+        }
+      }
       template.find('.distance').html(distance);
-      // template.find('.ozip').html(ozip);
-      // template.find('.dcity').html(dcity);
-      // template.find('.dstate').html(dstate);
-      // template.find('.dzip').html(dzip);
-      // template.find('.distance').html(distance);
+      template.find('.mov-type').html(origin_attributes.mov_type);
       template.clone().uniqueId().appendTo(html_movement);
     }
-
   }
   $('#movement-confirmation').html(html_movement);
 
@@ -113,83 +102,41 @@ function add_driver(driver, dbid){
   $("[id-display='#driver-popup-list-modal']").val("").attr('value', "").prop('value', "").change();
 }
 
-function catchLocation(id = 'testvalue'){
-  var place = google_autocompletes[id].goo_ac.getPlace();
-  $('#' + id).val(place.formatted_address).attr('value', place.formatted_address).prop('value', place.formatted_address);
+function catchLocation(id = 'testvalue', change_place = true){
 
-  var locations = [];
-  var distances = {
-    total_distance: 0
-  };
 
-  $('#lh-details-pane').find('.google-location-input').each(function(i){
-    var thisval = $(this).val();
-    var validate = thisval != "";
+  if (change_place) {
+    var place = google_autocompletes[id].goo_ac.getPlace();
 
-    if (validate) {
-      locations.push(thisval);
-    } else {
-      return locations = false;
-    }
+    var componentForm = {
+      street_number: 'short_name',
+      route: 'long_name',
+      locality: 'long_name',
+      administrative_area_level_1: 'short_name',
+      country: 'long_name',
+      postal_code: 'short_name'
+    };
+    var address_fields = {};
+    var mov_type = "movement";
 
-  });
-
-  if (locations) {
-    console.log("This is happening...");
-    $('body').prepend('<div class="remove-this" style="position: absolute; background-color: transparent; width: 100%; height: 100%; z-index: 9999"><div>');
-    $('.total_distance').html('<i class="fas fa-spinner fa-spin align-self-center"></i>');
-    // return false;
-    var parse_zip = /\d+/g;
-    depTime = new Date();
-    depTime.setMinutes(depTime.getMinutes() + 20);
-
-    var route_details = {
-      origins: [],
-      destinations: [],
-      travelMode: 'DRIVING',
-      drivingOptions: {
-        departureTime: depTime,
-        trafficModel: google.maps.TrafficModel.PESSIMISTIC
-      },
-      unitSystem: google.maps.UnitSystem.IMPERIAL,
-    }
-
-    var distanceService = new google.maps.DistanceMatrixService();
-
-    for (var i = 0; i < locations.length - 1; i++) {
-      origin = locations[i];
-      destination = locations[i + 1];
-      if (origin == destination) {
-        continue;
+    for (var i = 0; i < place.address_components.length; i++) {
+      var address_type = place.address_components[i].types[0];
+      if (componentForm[address_type]) {
+        var value = place.address_components[i][componentForm[address_type]];
+        address_fields[address_type] = value;
       }
-      route_details.origins.push(origin);
-      route_details.destinations.push(destination);
     }
 
-    // console.log(destinations);
+    $('#' + id).val(place.formatted_address).attr('value', place.formatted_address).prop('value', place.formatted_address);
 
-    distanceService.getDistanceMatrix(route_details, function(r, s){
-      for (var destination in route_details.destinations) {
-        if (route_details.destinations.hasOwnProperty(destination)) {
-          // var origin_element = $('[zip="' + route_details.origins[destination].match(parse_zip)[0] + '"]');
-          // var destination_element = $('[zip="' + route_details.destinations[destination].match(parse_zip)[0] + '"]');
-
-          distances[destination] = {
-            origin: route_details.origins[destination],
-            destination: route_details.destinations[destination],
-            distance: parseInt(Math.round(r.rows[destination].elements[destination].distance.value / 1609.34))
-          }
-          distances['total_distance'] += parseInt(distances[destination].distance);
-
-        }
+    for (var component in address_fields) {
+      if (address_fields.hasOwnProperty(component)) {
+        $('#' + id).attr(component, address_fields[component]);
       }
-      $('.remove-this').remove();
-      construct_movement(distances);
-      $('.total_distance').html(distances['total_distance']).change();
-
-    });
-
+    }
   }
+
+  $('#movement-details').trigger('calculate-distances');
 
 }
 
@@ -198,7 +145,7 @@ $(document).ready(function(){
   /** This listeners control the popup snippet to select trailers, drivers, tractors and brokers.  **/
   $('.popup-input').keydown(function(e){
     if (e.keyCode === 13 || e.keyCode === 9) {
-      e.preventDefault();
+      // e.preventDefault();
       var targetFocus = $(document.activeElement).attr('id-display') + " p" + ".hovered";
 
 
@@ -301,107 +248,162 @@ $(document).ready(function(){
     $(this).attr('class', '')
   });
 
+  $(function () { //Initialize required libraries widgets.
+    $('[data-toggle="tooltip"]').tooltip()
+    $('#movement-details').sortable({
+    items: "> tr",
+    stop: function(){
+      $('#movement-details').trigger('calculate-distances');
+    }
+  });
+  })
 
 
 
   /** This listeners control the inputs validation and modifications that need to happen during the new trip entry. **/
-  $('#lh-details-pane').on('calculate_distance', '.google-location-input', function(){
-    el = $(this);
-    var txt = el.val();
-    var locations = [];
-    var skip = false;
 
-    var distances = {
-      total_distance: 0
-    };
-    //Validate non-repeat number.
+  $('#movement-details').on('change', '[name="na-appt"]', function(){
+    var na = this.checked;
 
-    // var pull_city_state = $.ajax({
-    //   method: 'POST',
-    //   data: {txt: txt},
-    //   url: 'actions/fetchCityState.php'
-    // });
+    if (na) {
+      $(this).parents('td').find('.appt').attr('disabled', true).addClass('disabled');
+    } else {
+      $(this).parents('td').find('.appt').attr('disabled', false).removeClass('disabled');
+    }
 
-    // pull_city_state.done(function(result){
-    //   rsp = JSON.parse(result);
-    //   // console.log(rsp);
-    //   if (rsp.code == 1) {
-    //     el.parents('.row').find('.stateInput').val(rsp.data.state).change();
-    //     el.parents('.row').find('.cityInput').val(rsp.data.city).change();
-    //   } else {
-    //     el.parents('.row').find('.stateInput').val("").change();
-    //     el.parents('.row').find('.cityInput').val("").change();
-    //   }
-
-      $('#lh-details-pane').find('.google-location-input').each(function(i){
-        var thisval = $(this).val();
-        var validate = thisval != "";
-
-        if (validate) {
-          locations.push(thisval);
-        } else {
-          return locations = false;
-        }
-
-      });
-
-      if (locations) {
-        $('body').prepend('<div class="remove-this" style="position: absolute; background-color: transparent; width: 100%; height: 100%; z-index: 9999"><div>');
-        $('.total_distance').html('<i class="fas fa-spinner fa-spin align-self-center"></i>');
-        // return false;
-        var parse_zip = /\d+/g;
-        depTime = new Date();
-        depTime.setMinutes(depTime.getMinutes() + 20);
-
-        var route_details = {
-          origins: [],
-          destinations: [],
-          travelMode: 'DRIVING',
-          drivingOptions: {
-            departureTime: depTime,
-            trafficModel: google.maps.TrafficModel.PESSIMISTIC
-          },
-          unitSystem: google.maps.UnitSystem.IMPERIAL,
-        }
-
-        var distanceService = new google.maps.DistanceMatrixService();
-
-        for (var i = 0; i < locations.length - 1; i++) {
-          origin = locations[i];
-          destination = locations[i + 1];
-          if (origin == destination) {
-            continue;
-          }
-          route_details.origins.push(origin);
-          route_details.destinations.push(destination);
-        }
-
-        // console.log(destinations);
-
-        distanceService.getDistanceMatrix(route_details, function(r, s){
-          for (var destination in route_details.destinations) {
-            if (route_details.destinations.hasOwnProperty(destination)) {
-              // var origin_element = $('[zip="' + route_details.origins[destination].match(parse_zip)[0] + '"]');
-              // var destination_element = $('[zip="' + route_details.destinations[destination].match(parse_zip)[0] + '"]');
-
-              distances[destination] = {
-                origin: route_details.origins[destination],
-                destination: route_details.destinations[destination],
-                distance: parseInt(Math.round(r.rows[destination].elements[destination].distance.value / 1609.34))
-              }
-              distances['total_distance'] += parseInt(distances[destination].distance);
-
-            }
-          }
-          $('.remove-this').remove();
-          construct_movement(distances);
-          $('.total_distance').html(distances['total_distance']).change();
-
-        });
-
-      }
   });
-  $('#trip-details-content').on('change', 'input, select', function(e){
+  $('#movement-details').on('change', '[name="origin-flag"], [name="destination-flag"]', function(){
+    var checked = this.checked;
+    var name = this.name;
+    var remove_od_flag = "";
+
+    if (!checked) {
+      return false;
+    }
+
+    switch (name) {
+      case 'origin-flag':
+        remove_od_flag = $(this).parents('tr').find('[name="destination-flag"]');
+        break;
+
+      case 'destination-flag':
+        remove_od_flag = $(this).parents('tr').find('[name="origin-flag"]');
+        break;
+      default:
+    }
+
+    remove_od_flag.prop('checked', false);
+
+  });
+  $('#add-location').click(function(){
+      var tr = '<tr id="ui-id-1" class="ui-sortable-handle"><td><i class="" data-fa-i2svg=""><svg class="svg-inline--fa fa-sort fa-w-10" aria-hidden="true" data-prefix="fas" data-icon="sort" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512" data-fa-i2svg=""><path fill="currentColor" d="M41 288h238c21.4 0 32.1 25.9 17 41L177 448c-9.4 9.4-24.6 9.4-33.9 0L24 329c-15.1-15.1-4.4-41 17-41zm255-105L177 64c-9.4-9.4-24.6-9.4-33.9 0L24 183c-15.1 15.1-4.4 41 17 41h238c21.4 0 32.1-25.9 17-41z"></path></svg></i></td><td><div class="form-check"><input class="form-check-input position-static" type="radio" name="origin-flag" value="1"></div></td><td><div class="form-check"><input class="form-check-input position-static" type="radio" name="destination-flag" value="1"></div></td><td> <input type="text" class="form-control form-control-sm google-location-input" name="" value="" placeholder="Enter a location" autocomplete="off"> </td><td class="mov-type-td"><div class="form-check form-check-inline"><input class="form-check-input" type="radio" name="mov-type-ui-id-1" value="Emtpy"><label class="form-check-label" for="inlineRadio1">E</label></div><div class="form-check form-check-inline"><input class="form-check-input" type="radio" name="mov-type-ui-id-1" value="L"><label class="form-check-label" for="inlineRadio1">L</label></div></td><td><select class="form-control form-control-sm" name="eal"><option value="Yes">Yes</option><option value="No" selected="">No</option></select></td><td class="appt-td"><div class="form-group m-0 form-inline"><div class="form-check form-check-inline"><input class="form-check-input" type="checkbox" name="na-appt" value="NA"><label class="form-check-label" for="na-appt">N/A</label></div><input type="date" class="form-control form-control-sm appt" name="appt-date" value=""><div class=""><select class="form-control form-control-sm ml-1 appt" name="appt-from-hour"><option value="">Hrs</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8</option><option value="9">9</option><option value="10">10</option><option value="11">11</option><option value="12">12</option><option value="13">13</option><option value="14">14</option><option value="15">15</option><option value="16">16</option><option value="17">17</option><option value="18">18</option><option value="19">19</option><option value="20">20</option><option value="21">21</option><option value="22">22</option><option value="23">23</option><option value="24">24</option></select> : <select class="form-control form-control-sm appt" name="appt-from-min"><option value="">Mins</option><option value="00">00</option><option value="05">05</option><option value="10">10</option><option value="15">15</option><option value="20">20</option><option value="25">25</option><option value="30">30</option><option value="35">35</option><option value="40">40</option><option value="45">45</option><option value="50">50</option><option value="55">55</option></select> - <select class="form-control form-control-sm appt" name="appt-to-hour"><option value="">Hrs</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8</option><option value="9">9</option><option value="10">10</option><option value="11">11</option><option value="12">12</option><option value="13">13</option><option value="14">14</option><option value="15">15</option><option value="16">16</option><option value="17">17</option><option value="18">18</option><option value="19">19</option><option value="20">20</option><option value="21">21</option><option value="22">22</option><option value="23">23</option><option value="24">24</option></select> : <select class="form-control form-control-sm appt" name="appt-to-min"><option value="">Mins</option><option value="00">00</option><option value="5">5</option><option value="10">10</option><option value="15">15</option><option value="20">20</option><option value="25">25</option><option value="30">30</option><option value="35">35</option><option value="40">40</option><option value="45">45</option><option value="50">50</option><option value="55">55</option></select></div></div></td><td><div class="form-control form-control-sm readonly distance" value=""></div></td><td><i class="text-danger remove-row" data-fa-i2svg=""><svg class="svg-inline--fa fa-times fa-w-11" aria-hidden="true" data-prefix="fas" data-icon="times" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 352 512" data-fa-i2svg=""><path fill="currentColor" d="M242.72 256l100.07-100.07c12.28-12.28 12.28-32.19 0-44.48l-22.24-22.24c-12.28-12.28-32.19-12.28-44.48 0L176 189.28 75.93 89.21c-12.28-12.28-32.19-12.28-44.48 0L9.21 111.45c-12.28 12.28-12.28 32.19 0 44.48L109.28 256 9.21 356.07c-12.28 12.28-12.28 32.19 0 44.48l22.24 22.24c12.28 12.28 32.2 12.28 44.48 0L176 322.72l100.07 100.07c12.28 12.28 32.2 12.28 44.48 0l22.24-22.24c12.28-12.28 12.28-32.19 0-44.48L242.72 256z"></path></svg></i></td></tr>'
+
+      tr = $(tr);
+
+      tr.attr('id', '');
+      tr.uniqueId();
+
+      var id = tr.attr('id');
+      tr.find('[name^="mov-type"]').attr('name', 'mov-type-' + id);
+      var gi = tr.find('.google-location-input');
+      gi.uniqueId();
+
+      var html = gi[0];
+      google_autocompletes[gi.attr('id')] = {
+        id: gi.attr('id'),
+        goo_ac: new google.maps.places.Autocomplete(html, google_autocomplete_options)
+      }
+      google_autocompletes[gi.attr('id')].goo_ac.setFields(['address_components', 'formatted_address']);
+      google.maps.event.addListener(google_autocompletes[gi.attr('id')].goo_ac, 'place_changed', function(){catchLocation(gi.attr('id'))});
+
+      tr.appendTo('#movement-details');
+
+  });
+  $('#movement-details').on('click', '.remove-row', function(){
+    $(this).parents('tr').remove();
+  });
+  $('#movement-details').on('calculate-distances', function(){
+    var locations = [];
+    var id_order = {};
+    var proceed = true;
+    var distances = {};
+    var panel = $(this);
+
+    $(this).find('.google-location-input').each(function(){
+      var id = this.id;
+      var value = this.value;
+
+      if (value == "") {
+        proceed = false;
+        return false;
+      }
+
+      locations.push(value);
+      id_order[value] = id;
+    });
+
+    if (!proceed) {
+      return false;
+    }
+
+    $(this).find('.distance').addClass('spinner-grow');
+
+    $('body').prepend('<div class="remove-this" style="position: absolute; background-color: transparent; width: 100%; height: 100%; z-index: 9999"><div>');
+    // $('.total_distance').html('<i class="fas fa-spinner fa-spin align-self-center"></i>');
+    // return false;
+    var parse_zip = /\d+/g;
+    depTime = new Date();
+    depTime.setMinutes(depTime.getMinutes() + 20);
+
+    var route_details = {
+      origins: [],
+      destinations: [],
+      travelMode: 'DRIVING',
+      drivingOptions: {
+        departureTime: depTime,
+        trafficModel: google.maps.TrafficModel.PESSIMISTIC
+      },
+      unitSystem: google.maps.UnitSystem.IMPERIAL,
+    }
+
+    var distanceService = new google.maps.DistanceMatrixService();
+
+    for (var i = 0; i < locations.length - 1; i++) {
+      origin = locations[i];
+      destination = locations[i + 1];
+      if (origin == destination) {
+        continue;
+      }
+      route_details.origins.push(origin);
+      route_details.destinations.push(destination);
+    }
+
+    // console.log(destinations);
+
+    distanceService.getDistanceMatrix(route_details, function(r, s){
+      panel.find('.distance').first().removeClass('spinner-grow').val('N/A').html('N/A');
+      for (var destination in route_details.destinations) {
+        if (route_details.destinations.hasOwnProperty(destination)) {
+          var dist = parseInt(Math.round(r.rows[destination].elements[destination].distance.value / 1609.34));
+          var to_id = id_order[route_details.destinations[destination]];
+          var distance_box = $('#' + to_id).parents('tr').find('.distance');
+          distance_box.removeClass('spinner-grow').val(dist).html(dist);
+          distances[to_id] = {
+            distance: dist
+          }
+        }
+      }
+      console.log(distances);
+      $('.remove-this').remove();
+
+    });
+
+
+
+  })
+
+
+  $('#trip--details--content').on('change', 'input, select', function(e){
     var value = $(this).val();
     var dbid = $(this).attr('db-id');
     var activate_next = false;
@@ -421,11 +423,14 @@ $(document).ready(function(){
       $(this).removeClass('is-invalid').addClass('is-valid').data('is-valid', true);
     }
 
-    $('#trip-details-content .tab-pane.fade.show.active').find('input, select').filter(':not("[readonly]")').each(function(){
+    $('#trip-details-content .tab-pane.fade.active.show').find('input, select').filter(':not("[readonly]")').each(function(){
+
       var check = $(this).data('is-valid');
+      console.log(check);
       if (check) {
         activate_next = true;
       } else {
+        console.log("Next shlud be disabled");
         $(this).focus();
         activate_next = false;
         return false;
@@ -436,111 +441,347 @@ $(document).ready(function(){
       $('.next-pane').removeClass('disabled').attr('disabled', false).focus();
     }
 
-  })
+  }); //Disabled by changing the selector...
   $('.next-pane').click(function(){
-    var activate_next = false;
-    var next_pane = $('#add_trip_progress')
+    next_pane = $('#add_trip_progress')
       .find('.nav-link.active')
       .parent().next().find('a');
+    next_pane.removeClass('disabled').tab('show');
 
-    next_pane.attr('disabled', false)
+  });
+  $('a[data-toggle="tab"]').on('hide.bs.tab', function(e){
+    var current = e.target.getAttribute('progress');
+    var previous = e.relatedTarget.getAttribute('progress');
+    console.log(previous);
+    console.log(current);
+    var prior = parseInt(previous) < parseInt(current);
+    console.log(prior);
+
+    if (prior) {
+      return true;
+    };
+
+    id = $('.tab-pane.fade.active.show').attr('id');
+    validation = {status: false};
+    next_pane = $('#add_trip_progress')
+      .find('.nav-link.active')
+      .parent().next().find('a');
+    $('#'+id).trigger('validate', [validation]);
+
+    if (validation.status) {
+      next_pane.attr('disabled', false)
       .removeClass('disabled')
-      .tab('show');
+      $('.progress-bar').css('width', next_pane.attr('progress') + "%");
+      return true
+    } else {
+      next_pane.attr('disabled', true)
+      .addClass('disabled')
+      return false;
+    }
 
-    $('.progress-bar').css('width', next_pane.attr('progress') + "%");
-
-    next_pane.on('shown.bs.tab', function(){
-      $('#trip-details-content .tab-pane.fade.show.active').find('input, select').filter(':not("[readonly]")').each(function(){
-        var check = $(this).data('is-valid');
-        if (check) {
-          activate_next = true;
-        } else {
-          $(this).focus();
-          activate_next = false;
-          return false;
-        }
-      });
-
-      if (activate_next) {
-        $('.next-pane').removeClass('disabled').attr('disabled', false).focus();
-      }
-    })
 
 
   });
-  $('#trip-confirmation-tab').on('show.bs.tab', function(){
-    var source = $('#trip-details-content');
-    var destination = $('#trip-confirmation-pane');
 
-    var truck = source.find('.truckid');
-    var trailer = source.find('.trailerid');
-    var drivers = $('#listed-drivers').children();
-    var miles = source.find('.total_distance');
-    var rate = source.find('.trip-rate');
-    var rpm = Math.round((rate.val() / miles.html())*100)/100 ;
-    var broker = source.find('.selected-broker');
-    var reference = source.find('.broker-reference');
-    var movs = {};
-    var appointment_date = source.find('.appointment.date').val();
-    var appointment_hour = source.find('.appointment.hour').val();
-    var appointment_minute = source.find('.appointment.minute').val();
-    var tripno = source.find('.tripid').val();
-    var tripid = source.find('.tripid').attr('db-id');
+  $('.appointment.from.hour').change(function(){
+    var hour = $('.appointment.from.hour').val();
+    $('.appointment.to.hour').val(hour).change();
+  });
+  $('.appointment.from.minute').change(function(){
+    var minute = $('.appointment.from.minute').val();
+    $('.appointment.to.minute').val(minute).change();
+  });
 
-    $('#lh-details-pane-add').find('.movement').each(function(){
-      var zip = $(this).find('.zipinput').val();
-      var type = $(this).find('.mov-type').val();
-      var kind = $(this).find('.google-location-input').attr('kind');
-      var location = $(this).find('.google-location-input').val();
-      movs[zip] = {
-        type: type,
-        kind: kind
+  //Pane validations.
+  $('#lh-details-pane').on('validate', function(){
+
+    var origin_flag = $('[name="origin-flag"]');
+    var destination_flag = $('[name="destination-flag"]');
+    var movement_type_tds = $('.mov-type-td:visible');
+    var locations = $('.google-location-input');
+    var appts = $('.appt-td');
+    // var of_validation, df_validation, loc_validation = false;
+    var of_validation  = false;
+    var df_validation = false;
+    var loc_validation = true;
+    var movement_type_validation = true;
+    var appt_validation = true;
+
+    //Validate origination bullets being selected.
+    origin_flag.each(function(){
+      // console.log("Value: " + this.value);
+      if (this.checked) {
+        of_validation = true;
       }
-      // if (typeof(type) !== 'undefined') {
-      // }
     });
 
-    console.log(movs);
+    if (of_validation) {
+      origin_flag.parents('td').removeClass('table-danger');
+    } else {
+      origin_flag.parents('td').addClass('table-danger');
+    }
 
-    for (var mov in movs) {
-      if (movs.hasOwnProperty(mov)) {
-        if (typeof movs[mov].type !== 'undefined') {
-          destination.find(".ozip:contains(" + mov + ")").parents('.movement').find('.mov-type').html(movs[mov].type)
-        }
-        console.log(mov);
-        switch (movs[mov].kind) {
-          case 'origin':
-            destination.find(".ozip:contains(" + mov + ")").attr('kind', movs[mov].kind);
-            break;
 
-          case 'destination':
-            destination.find(".dzip:contains(" + mov + ")").attr('kind', movs[mov].kind);
-            break;
-          default:
-          //Did not match either origin or destination.
+    //Validate destination bullets being selected.
+    destination_flag.each(function(){
+      // console.log("Value: " + this.value);
+      if (this.checked) {
+        df_validation = true;
+      }
+    });
+    if (df_validation) {
+        destination_flag.each(function(){
+          $(this).parents('td').removeClass('table-danger');
+        });
+    } else {
+        destination_flag.each(function(){
+          $(this).parents('td').addClass('table-danger');
+        });
+    }
+
+    //Validate locations inputs being filled out properly.
+    locations.each(function(){
+      var location = this.value;
+
+      if (location == "") {
+        $(this).parents('td').addClass('table-danger');
+      } else {
+        $(this).parents('td').removeClass('table-danger');
+      }
+    });
+
+
+    //Validate movement type fields.
+    movement_type_tds.each(function(){
+      var validate = $(this).find('input:checked').val();
+      if (validate) {
+        $(this).removeClass('table-danger')
+      } else {
+        movement_type_validation = false;
+        $(this).addClass('table-danger')
+      }
+    });
+
+    //Validate appointments fields.
+    appts.each(function(){
+      var na = $(this).find('[name="na-appt"]:checked').val();
+      var fail = true;
+      var inputs = $(this).find('.appt');
+
+      if (na) {
+        inputs.each(function(){
+          $(this).removeClass('is-invalid');
+        })
+        $(this).removeClass('table-danger')
+        return true;
+      }
+
+      inputs.each(function(){
+        var val = this.value;
+        if (val == "") {
+          $(this).addClass('is-invalid');
+          fail = false;
+        } else {
+          $(this).removeClass('is-invalid');
         }
+      })
+
+      if (fail) {
+        $(this).removeClass('table-danger');
+      } else {
+        appt_validation = false;
+        $(this).addClass('table-danger');
+      }
+
+    });
+
+    if (of_validation && df_validation && loc_validation && movement_type_validation && appt_validation) {
+      // console.log(true);
+      validation.status = true;
+    } else {
+      // console.log(false);
+      validation.status = false;
+    }
+
+
+  });
+  $('#trip-details-pane').on('validate', function(){
+    var validate = true;
+    var inputs = $(this).find('input');
+
+    inputs.each(function(){
+      var dbid = $(this).attr('db-id');
+      if (typeof dbid === 'undefined') {
+        if (this.value == "") {
+          validate = false;
+          $(this).addClass('is-invalid');
+        } else {
+          $(this).removeClass('is-invalid')
+        }
+      } else {
+        if (dbid == "") {
+          $(this).addClass('is-invalid');
+          validate = false;
+        } else {
+          $(this).removeClass('is-invalid')
+        }
+      }
+    });
+
+    validation.status = validate;
+
+  });
+  $('#conveyance-details-pane').on('validate', function(){
+    var validate = true;
+    var truck = $(this).find('.truckid').val() != "" && $(this).find('.truckid').attr('db-id') != "";
+    var drivers = $(this).find('#listed-drivers').length > 0;
+
+    if (!truck) {
+      $(this).find('.truckid').addClass('is-invalid');
+      validate = false;
+    } else {
+      $(this).find('.truckid').removeClass('is-invalid')
+    }
+
+    if (!drivers) {
+      $(this).find('.driverid').addClas('is-invalid');
+      validate = false;
+    } else {
+      $(this).find('.driverid').removeClass('is-invalid');
+    }
+
+    if (validate) {
+      validation.status = true;
+    }
+
+  });
+
+
+
+  $('#trip-confirmation-tab').on('show.bs.tab', function(){
+
+        //Get all the information from the different panes.
+    var tripDet = $('#trip-details-pane');
+    var lhDet = $('#lh-details-pane');
+    var convDet = $('#conveyance-details-pane');
+
+    var truck = convDet.find('.truckid');
+    var drivers = {};
+      convDet.find('#listed-drivers').find('[db-id]').each(function(i){
+        drivers[i] = {
+          id: $(this).attr('db-id'),
+          name:$(this).html(),
+        }
+      });
+    var trailer = tripDet.find('.trailerid');
+    var route = {};
+    var totalMiles = 0;
+    var rate = tripDet.find('.trip-rate');
+    var broker = tripDet.find('.selected-broker');
+    var reference = tripDet.find('.broker-reference');
+    lhDet.find('#movement-details').find('tr').each(function(i){
+      var origin_flag = $(this).find('[name=origin-flag]').prop('checked');
+      var destination_flag = $(this).find('[name=destination-flag]').prop('checked');
+      var id = this.id;
+      var loc = $(this).find('.google-location-input');
+      var location = {
+        formatted: loc.val(),
+        city: loc.attr('locality'),
+        state: loc.attr('administrative_area_level_1'),
+        country: loc.attr('country'),
+        street_number: loc.attr('street_number'),
+        street: loc.attr('route'),
+        zip: loc.attr('postal_code')
+      }
+      var emptyLoaded = $(this).find('[name=mov-type-' + id + ']:checked').val();
+      var eal = $(this).find('[name=eal]').val();
+      var appt = {
+        isna: $(this).find('[name=na-appt]').prop('checked'),
+        date: $(this).find('[name=appt-date]').val(),
+        from_hour: $(this).find('[name=appt-from-hour]').val(),
+        from_min: $(this).find('[name=appt-from-min]').val(),
+        to_hour: $(this).find('[name=appt-to-hour]').val(),
+        to_min: $(this).find('[name=appt-to-min]').val(),
+      }
+      var miles = $(this).find('.distance').val();
+
+      route[i] = {
+        is_origin: origin_flag,
+        is_dest: destination_flag,
+        location: location,
+        type: emptyLoaded,
+        eal: eal,
+        appt: appt,
+        miles: miles
+      }
+
+      if (!isNaN(parseInt(miles))) {
+        totalMiles += parseInt(miles);
+      }
+    });
+
+
+    //Insert information into confirmation pane.
+    var $this = $($(this).attr('href'));
+    $this.find('.confirm-truck-number').attr('db-id', truck.attr('db-id')).html(truck.val()); //Truck data.
+    $this.find('.confirm-truck-plates').html(truck.attr('plates'));
+    $this.find('.confirm-trailer-number').attr('db-id', trailer.attr('db-id')).html(trailer.val()); //Truck data.
+    $this.find('.confirm-trailer-plates').html(trailer.attr('plates'));
+
+    $this.find('.confirm-driver-list').html('');
+
+    for (var driver in drivers) {
+      if (drivers.hasOwnProperty(driver)) {
+        var confirmed_driver = $('<p></p>');
+        confirmed_driver
+          .addClass('mb-0')
+          .html('<span><span>');
+        confirmed_driver.find('span').attr('db-id', drivers[driver].id).html(drivers[driver].name);
+
+        confirmed_driver.appendTo($this.find('.confirm-driver-list'));
       }
     }
 
-    destination.find('.confirm-truck-number').attr('db-id', truck.attr('db-id')).html(truck.val());
-    destination.find('.confirm-truck-plates').html(truck.attr('plates'));
-    destination.find('.confirm-trailer-number').html(trailer.val()).attr('db-id', trailer.attr('db-id'));
-    destination.find('.confirm-trailer-plates').html(trailer.attr('plates'));
-    destination.find('.confirm-driver-list').html(drivers.clone()).find('.remove-driver').remove();
-    destination.find('.confirm-driver-list').find('p').removeClass().addClass('mb-0');
-    destination.find('.total-miles').html(miles.html());
-    destination.find('.trip-rate-confirmation').html(rate.val());
-    destination.find('.rpm-confirmation').html(rpm);
-    destination.find('.brokerid-confirmation').html(broker.val()).attr('db-id', broker.attr('db-id'));
-    destination.find('.broker-reference-confirmation').html(reference.val());
-    $('#linehaul-appointment').find('.date').html(appointment_date);
-    $('#linehaul-appointment').find('.hour').html(appointment_hour);
-    $('#linehaul-appointment').find('.minutes').html(appointment_minute);
-    destination.find('.confirm-trip-info').html(tripno).attr('db-id', tripid);
+    $this.find('#movement-confirmation').html('');
+    for (var r in route) {
+      if (route.hasOwnProperty(r)) {
+          var this_route = $('<div class="row"></div>');
+          this_route.append('<div class="col-md-6 address"></div>');
+          this_route.append('<div class="col-md-3 appt"></div>');
+
+          this_route.find('.address').html(route[r].location.formatted);
+          if (!route[r].appt.isna) {
+            this_route.find('.appt').html(
+              route[r].appt.date + " " +
+              route[r].appt.from_hour + ":" +
+              route[r].appt.from_min + " - " +
+              route[r].appt.to_hour + ":" +
+              route[r].appt.to_min
+            );
+          } else {
+            this_route.find('.appt').html("No appointment");
+          }
+
+          if (route[r].is_origin) {
+            this_route.attr('mov-nature', 'origin');
+          }
+
+          if (route[r].is_dest) {
+            this_route.attr('mov-nature', 'destination');
+          }
+
+          this_route.appendTo($this.find('#movement-confirmation'));
+      }
+    }
+
+    $this.find('.total-miles').html(totalMiles);
+    $this.find('.trip-rate-confirmation').html(rate.val());
+    $this.find('.rpm-confirmation').html(rate.val() / totalMiles);
+    $this.find('.rpm-confirmation').html(Math.round((rate.val() / totalMiles) * 100)/100);
 
 
-    $('.next-pane-buttons').hide();
-    $('.add-trip-buttons').show();
+
+
 
 
   });
@@ -553,8 +794,8 @@ $(document).ready(function(){
     var id = "";
     var html = "";
 
-    place_template.uniqueId();
-    id = place_template.attr('id');
+    place_template.find('.google-location-input').uniqueId();
+    id = place_template.find('.google-location-input').attr('id');
     html = place_template.find('.google-location-input')[0];
     $(this).parent().after(place_template);
 
@@ -567,12 +808,16 @@ $(document).ready(function(){
   });
   $('#lh-details-pane').on('click', '.remove-row', function(){
     $(this).parents('.row.movement').remove();
+    var first_id = $('.google-location-input').first().attr('id');
+    catchLocation(first_id, false);
   });
   $('#add_trip_progress').on('shown.bs.tab', '[data-toggle="tab"]', function(){
     $('#addLinehaulModal').find('.tab-pane.fade.active.show').find('input').first().focus();
   });
   $('.add-linehaul').click(function(){
     var source = $('#trip-confirmation-pane');
+    var origin = source.find('[mov_type="origin"]');
+    var destination = source.find('[mov_type="destination"]');
     var data = {
       trailer: {
         id: source.find('.confirm-trailer-number').attr('db-id'),
@@ -597,18 +842,32 @@ $(document).ready(function(){
         rate: source.find('.trip-rate-confirmation').html(),
         appt: {
           date: $('#linehaul-appointment').find('.date').html(),
-          hour: $('#linehaul-appointment').find('.hour').html(),
-          minute: $('#linehaul-appointment').find('.minutes').html(),
+          from: {
+            hour: $('#linehaul-appointment').find('.hour').html(),
+            minute: $('#linehaul-appointment').find('.minutes').html(),
+          },
+          to:{
+            hour: $('#linehaul-appointment').find('.to-hour').html(),
+            minute: $('#linehaul-appointment').find('.to-minutes').html(),
+          }
         },
         origin:{
-          zip: source.find('.ozip[kind="origin"]').html(),
-          city: source.find('.ozip[kind="origin"]').parents('.movement').find('.ocity').html(),
-          state: source.find('.ozip[kind="origin"]').parents('.movement').find('.ostate').html(),
+          zip: origin.attr('postal_code'),
+          city: origin.attr('locality'),
+          state: origin.attr('administrative_area_level_1'),
+          street: origin.attr('route'),
+          street_number: origin.attr('street_number'),
+          country: origin.attr('country'),
+          formatted: origin.html(),
         },
         destination:{
-          zip: source.find('.dzip[kind="destination"]').html(),
-          city: source.find('.dzip[kind="destination"]').parents('.movement').find('.dcity').html(),
-          state: source.find('.dzip[kind="destination"]').parents('.movement').find('.dstate').html(),
+          zip: destination.attr('postal_code'),
+          city: destination.attr('locality'),
+          state: destination.attr('administrative_area_level_1'),
+          street: destination.attr('route'),
+          street_number: destination.attr('street_number'),
+          country: destination.attr('country'),
+          formatted: destination.html(),
         },
         routes: {},
         drivers:{}
@@ -624,15 +883,29 @@ $(document).ready(function(){
     source.find('#movement-confirmation').find('.movement').each(function(i){
       var ocity, ostate, ozip, dcity, dstate, dzip, miles
       var route = $(this);
+
+      var origin = $(this).find('.origin');
+      var destination = $(this).find('.destination');
+
       data.linehaul.routes[i] = {
-        ocity: route.find('.ocity').html(),
-        ostate: route.find('.ostate').html(),
-        ozip: route.find('.ozip').html(),
-
-        dcity: route.find('.dcity').html(),
-        dstate: route.find('.dstate').html(),
-        dzip: route.find('.dzip').html(),
-
+        origin:{
+          zip: origin.attr('postal_code'),
+          city: origin.attr('locality'),
+          state: origin.attr('administrative_area_level_1'),
+          street: origin.attr('route'),
+          street_number: origin.attr('street_number'),
+          country: origin.attr('country'),
+          formatted: origin.html(),
+        },
+        destination:{
+          zip: destination.attr('postal_code'),
+          city: destination.attr('locality'),
+          state: destination.attr('administrative_area_level_1'),
+          street: destination.attr('route'),
+          street_number: destination.attr('street_number'),
+          country: destination.attr('country'),
+          formatted: destination.html(),
+        },
         miles: route.find('.distance').html(),
         type: route.find('.mov-type').html()
       }
@@ -660,24 +933,6 @@ $(document).ready(function(){
     });
   });
 
-  // $('#lh-details-pane').on('change', '.google-location-input', function(){
-  //   var id = $(this).attr('id');
-  //   do {
-  //     console.log("Checking place:");
-  //     console.log(google_autocompletes[id].goo_ac.getPlace());
-  //   } while (typeof google_autocompletes[id].goo_ac.getPlace() == 'undefined');
-  //   // setTimeout(function () {
-  //   //   var place = google_autocompletes[id].goo_ac.getPlace();
-  //   //   console.log(place);
-  //   // }, 100);
-  //   var count = 0;
-  //   // do {
-  //   // } while (typeof place === 'undefined');
-  //
-  //   // console.log(place);
-
-  // })
-
   /** This functions/listeners will control the google autocomplete inputs **/
 
   var google_autocomplete_options = { //This options manage the autocomplete settings throughtout the page.
@@ -693,7 +948,7 @@ $(document).ready(function(){
       id: id,
       goo_ac: new google.maps.places.Autocomplete(html, google_autocomplete_options)
     }
-
+    google_autocompletes[id].goo_ac.setFields(['address_components', 'formatted_address']);
     google.maps.event.addListener(google_autocompletes[id].goo_ac, 'place_changed', function(){catchLocation(id)});
   });
 

@@ -36,12 +36,12 @@ function parseDate($datestamp){
      <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
      <!-- Bootstrap CSS -->
-     <link rel="stylesheet" href="/plsuite/Resources/Bootstrap_4_1_1/css/bootstrap.min.css">
+     <link rel="stylesheet" href="/plsuite/Resources/Bootstrap_4_2/css/bootstrap.min.css">
      <link rel="stylesheet" media="screen and (min-device-width: 701px)" href="/plsuite/Resources/CSS/main.css">
      <link rel="stylesheet" media="screen and (min-device-width: 701px)" href="/plsuite/Resources/CSS/trips.css">
      <link rel="stylesheet" href="/plsuite/Resources/alertify/css/alertify.min.css">
      <link rel="stylesheet" href="/plsuite/Resources/alertify/css/themes/bootstrap.min.css">
-     <script src="/plsuite/Resources/fa_5/js/fontawesome-all.min.js"></script>
+     <script src="/plsuite/Resources/fa_5/js/fontawesome-all.min.js" data-auto-replace-svg="nest" charset="utf-8"></script>
      <link rel="stylesheet" media="screen and (max-device-width: 700px)" href="/plsuite/Resources/CSS/mainMobile.css">
      <title>Prolog Transportation Inc</title>
    </head>
@@ -66,16 +66,16 @@ function parseDate($datestamp){
     </header>
     <ul class="nav justify-content-center" id="add_trip_progress" role="tablist">
       <li class="nav-item">
-        <a class="nav-link custom active" id="trip-details-tab" data-toggle="tab" tab-type="addTripModal" href="#trip-details-pane" role="tab" aria-controls="trip-details" aria-selected="true" progress="">Linehaul Details</a>
+        <a class="nav-link custom active" id="trip-details-tab" data-toggle="tab" tab-type="addTripWindow" href="#trip-details-pane" role="tab" aria-controls="trip-details" aria-selected="true" progress="0">Linehaul Details</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link custom disabled" disabled id="lh-details-tab" data-toggle="tab" tab-type="addTripModal" href="#lh-details-pane" role="tab" aria-controls="lh-details" aria-selected="true" progress="33">Movement Details</a>
+        <a class="nav-link custom disabled" disabled id="lh-details-tab" data-toggle="tab" tab-type="addTripWindow" href="#lh-details-pane" role="tab" aria-controls="lh-details" aria-selected="true" progress="33">Movement Details</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link custom disabled" disabled id="conveyance-details-tab" data-toggle="tab" tab-type="addTripModal" href="#conveyance-details-pane" role="tab" aria-controls="conveyance-details" aria-selected="true" progress="66">Conveyance</a>
+        <a class="nav-link custom disabled" disabled id="conveyance-details-tab" data-toggle="tab" tab-type="addTripWindow" href="#conveyance-details-pane" role="tab" aria-controls="conveyance-details" aria-selected="true" progress="66">Conveyance</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link custom disabled" disabled id="trip-confirmation-tab" data-toggle="tab" tab-type="addTripModal" href="#trip-confirmation-pane" role="tab" aria-controls="trip-confirmation" aria-selected="true" progress="100">Confirm Trip</a>
+        <a class="nav-link custom disabled" disabled id="trip-confirmation-tab" data-toggle="tab" tab-type="addTripWindow" href="#trip-confirmation-pane" role="tab" aria-controls="trip-confirmation" aria-selected="true" progress="100">Confirm Trip</a>
       </li>
     </ul>
 
@@ -136,145 +136,195 @@ function parseDate($datestamp){
         </form>
       </div>
       <div class="tab-pane fade" id="lh-details-pane" role="tabpanel" aria-labelledby="lh-details-tab">
-        <form onsubmit="return false;" class="linehaul-details-form">
-          <div class="form-group row movement">
-            <label for="" class="col-sm-2 col-form-label text-right">Origin</label>
-            <div class="col-lg-7">
-              <input type="text" class="form-control google-location-input" id="origin_location" name="" value="">
-            </div>
-            <div class="col-lg-2">
-              <select class="form-control mov-type" name="" data-is-valid=true>
-                <option value="L" selected>Loaded</option>
-                <option value="E">Empty</option>
-              </select>
-            </div>
-          </div>
-          <div class="form-group row">
-            <div class="col-sm-2 text-success text-right add-extra-stop" role="button">
-              <i class="fa fa-plus"></i> Extra Stop
-            </div>
-          </div>
-          <div class="form-group row movement">
-            <label for="" class="col-sm-2 col-form-label text-right">Destination</label>
-            <div class="col-lg-7">
-              <input type="text" class="form-control google-location-input" id="destination_location" name="" value="">
-            </div>
-          </div>
-          <div class="form-group row">
-            <label for="" class="col-sm-2 col-form-label text-right">Total Miles</label>
-            <div class="col-sm-4">
-              <div class="form-control total_distance skip-validation d-flex justify-content-center" readonly>
-                0
-              </div>
-              <!-- <input type="text" class="form-control total_distance" name="" value="" placeholder="Total Miles" readonly disabled> -->
-              <small class="font-weight-light grey-font font-italic">All destinations must be captured to calculate miles.</small>
-            </div>
-          </div>
-          <div class="form-group row">
-            <label for="" class="col-sm-2 col-form-label text-right">Appointment</label>
-            <div class="col-lg-2">
-              <input type="date" class="form-control appointment date" id="date-field" name="" value="">
-            </div>
-            <div class="col-sm-8">
-              <div class="row">
-                <label for="" class="col-sm-1 col-form-label text-right">From</label>
-                <div class="col-lg-2">
-                  <select class="form-control appointment hour" id="appointment_time_hour_add" name="appointment_time_hour">
-                    <option value="">Hr</option>
-                    <option value="01">01</option>
-                    <option value="02">02</option>
-                    <option value="03">03</option>
-                    <option value="04">04</option>
-                    <option value="05">05</option>
-                    <option value="06">06</option>
-                    <option value="07">07</option>
-                    <option value="08">08</option>
-                    <option value="09">09</option>
-                    <option value="10">10</option>
-                    <option value="11">11</option>
-                    <option value="12">12</option>
-                    <option value="13">13</option>
-                    <option value="14">14</option>
-                    <option value="15">15</option>
-                    <option value="16">16</option>
-                    <option value="17">17</option>
-                    <option value="18">18</option>
-                    <option value="19">19</option>
-                    <option value="20">20</option>
-                    <option value="21">21</option>
-                    <option value="22">22</option>
-                    <option value="23">23</option>
-                    <option value="24">24</option>
-                  </select>
+        <div class="m-2">
+          <button type="button" class="btn btn-outline-primary" id="add-location" name="button">Add Location</button>
+        </div>
+        <table class="table border-bottom">
+          <thead>
+            <tr>
+              <th></th>
+              <th>O</th>
+              <th>D</th>
+              <th>Location</th>
+              <th>Mov. Type</th>
+              <th>EAL <span data-toggle="tooltip" data-placement="top" title="Empty As Loaded"><i class="far fa-question-circle"></i></span></th>
+              <th>Appointment</th>
+              <th style="width: 100px">Miles</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody id="movement-details">
+            <tr id="tr-1">
+              <td><i class="fas fa-sort"></i></td>
+              <td>
+                <div class="form-check">
+                  <input class="form-check-input position-static" type="radio" name="origin-flag" value="1">
                 </div>
-                <div class="col-lg-2">
-                  <select class="form-control appointment minute" id="appointment_time_minute_add" name="appointment_time_minute">
-                    <option value="">Min</option>
-                    <option value="00">00</option>
-                    <option value="05">05</option>
-                    <option value="10">10</option>
-                    <option value="15">15</option>
-                    <option value="20">20</option>
-                    <option value="25">25</option>
-                    <option value="30">30</option>
-                    <option value="35">35</option>
-                    <option value="40">40</option>
-                    <option value="45">45</option>
-                    <option value="50">50</option>
-                    <option value="55">55</option>
-                  </select>
+              </td>
+              <td>
+                <div class="form-check">
+                  <input class="form-check-input position-static" type="radio" name="destination-flag" value="1">
                 </div>
-                <label for="" class="col-sm-1 col-form-label text-right">To</label>
-                <div class="col-lg-2">
-                  <select class="form-control appointment hour" id="appointment_time_hour_add" name="appointment_time_hour">
-                    <option value="">Hr</option>
-                    <option value="01">01</option>
-                    <option value="02">02</option>
-                    <option value="03">03</option>
-                    <option value="04">04</option>
-                    <option value="05">05</option>
-                    <option value="06">06</option>
-                    <option value="07">07</option>
-                    <option value="08">08</option>
-                    <option value="09">09</option>
-                    <option value="10">10</option>
-                    <option value="11">11</option>
-                    <option value="12">12</option>
-                    <option value="13">13</option>
-                    <option value="14">14</option>
-                    <option value="15">15</option>
-                    <option value="16">16</option>
-                    <option value="17">17</option>
-                    <option value="18">18</option>
-                    <option value="19">19</option>
-                    <option value="20">20</option>
-                    <option value="21">21</option>
-                    <option value="22">22</option>
-                    <option value="23">23</option>
-                    <option value="24">24</option>
-                  </select>
+              </td>
+              <td class="w-25"> <input type="text" class="form-control form-control-sm google-location-input" id="gi-1" name="" value=""> </td>
+              <td class="mov-type-td">
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" name="mov-type-tr-1" value="Empty">
+                  <label class="form-check-label" for="inlineRadio1">E</label>
                 </div>
-                <div class="col-lg-2">
-                  <select class="form-control appointment minute" id="appointment_time_minute_add" name="appointment_time_minute">
-                    <option value="">Min</option>
-                    <option value="00">00</option>
-                    <option value="05">05</option>
-                    <option value="10">10</option>
-                    <option value="15">15</option>
-                    <option value="20">20</option>
-                    <option value="25">25</option>
-                    <option value="30">30</option>
-                    <option value="35">35</option>
-                    <option value="40">40</option>
-                    <option value="45">45</option>
-                    <option value="50">50</option>
-                    <option value="55">55</option>
-                  </select>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" name="mov-type-tr-1" value="Loaded">
+                  <label class="form-check-label" for="inlineRadio1">L</label>
                 </div>
-              </div>
-            </div>
-          </div>
-        </form>
+              </td>
+              <td>
+                <select class="form-control form-control-sm" name="eal">
+                  <!-- <option value="">Yes/No</option> -->
+                  <option value="Yes">Yes</option>
+                  <option value="No" selected>No</option>
+                </select>
+              </td>
+              <td class="appt-td">
+                <div class="form-group m-0 form-inline">
+                  <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="checkbox" name="na-appt" value="NA">
+                    <label class="form-check-label" for="na-appt">N/A</label>
+                  </div>
+                  <input type="date" class="form-control form-control-sm appt" name="appt-date" value="">
+                  <div class="">
+                    <select class="form-control form-control-sm ml-1 appt" name="appt-from-hour">
+                      <option value="">Hrs</option>
+                      <?php for ($i=1; $i < 25; $i++) {
+                        ?>
+                        <option value="<?php echo $i ?>"><?php echo $i ?></option>
+                        <?php
+                      } ?>
+                    </select>
+                    :
+                    <select class="form-control form-control-sm appt" name="appt-from-min">
+                      <option value="">Mins</option>
+                      <option value="00">00</option>
+                      <?php for ($i=1; $i < 12; $i++) {
+                        ?>
+                        <option value="<?php echo $i * 5 ?>"><?php echo $i * 5 ?></option>
+                        <?php
+                      } ?>
+                    </select>
+                    -
+                    <select class="form-control form-control-sm appt" name="appt-to-hour">
+                      <option value="">Hrs</option>
+                      <?php for ($i=1; $i < 25; $i++) {
+                        ?>
+                        <option value="<?php echo $i ?>"><?php echo $i ?></option>
+                        <?php
+                      } ?>
+                    </select>
+                    :
+                    <select class="form-control form-control-sm appt" name="appt-to-min">
+                      <option value="">Mins</option>
+                      <option value="00">00</option>
+                      <?php for ($i=1; $i < 12; $i++) {
+                        ?>
+                        <option value="<?php echo $i * 5 ?>"><?php echo $i * 5 ?></option>
+                        <?php
+                      } ?>
+                    </select>
+                  </div>
+                </div>
+              </td>
+              <td>
+                <div class="form-control form-control-sm readonly distance" value="">
+                </div>
+                <!-- <input type="text" class="form-control form-control-sm readonly distance" readonly name="" value=""> -->
+              </td>
+              <td><i class="fas fa-times text-danger remove-row"></i></td>
+            </tr>
+            <tr id="tr-2">
+              <td><i class="fas fa-sort"></i></td>
+              <td>
+                <div class="form-check">
+                  <input class="form-check-input position-static" type="radio" name="origin-flag" value="1">
+                </div>
+              </td>
+              <td>
+                <div class="form-check">
+                  <input class="form-check-input position-static" type="radio" name="destination-flag" value="1">
+                </div>
+              </td>
+              <td> <input type="text" class="form-control form-control-sm google-location-input" id="gi-2" name="" value=""> </td>
+              <td class="mov-type-td">
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" name="mov-type-tr-2" value="Empty">
+                  <label class="form-check-label" for="inlineRadio1">E</label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" name="mov-type-tr-2" value="Loaded">
+                  <label class="form-check-label" for="inlineRadio1">L</label>
+                </div>
+              </td>
+              <td>
+                <select class="form-control form-control-sm" name="eal">
+                  <!-- <option value="">Yes/No</option> -->
+                  <option value="Yes">Yes</option>
+                  <option value="No" selected>No</option>
+                </select>
+              </td>
+              <td class="appt-td">
+                <div class="form-group m-0 form-inline">
+                  <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="checkbox" name="na-appt" value="NA">
+                    <label class="form-check-label" for="na-appt">N/A</label>
+                  </div>
+                  <input type="date" class="form-control form-control-sm appt" name="appt-date" value="">
+                  <div class="">
+                    <select class="form-control form-control-sm ml-1 appt" name="appt-from-hour">
+                      <option value="">Hrs</option>
+                      <?php for ($i=1; $i < 25; $i++) {
+                        ?>
+                        <option value="<?php echo $i ?>"><?php echo $i ?></option>
+                        <?php
+                      } ?>
+                    </select>
+                    :
+                    <select class="form-control form-control-sm appt" name="appt-from-min">
+                      <option value="">Mins</option>
+                      <option value="00">00</option>
+                      <?php for ($i=1; $i < 12; $i++) {
+                        ?>
+                        <option value="<?php echo $i * 5 ?>"><?php echo $i * 5 ?></option>
+                        <?php
+                      } ?>
+                    </select>
+                    -
+                    <select class="form-control form-control-sm appt" name="appt-to-hour">
+                      <option value="">Hrs</option>
+                      <?php for ($i=1; $i < 25; $i++) {
+                        ?>
+                        <option value="<?php echo $i ?>"><?php echo $i ?></option>
+                        <?php
+                      } ?>
+                    </select>
+                    :
+                    <select class="form-control form-control-sm appt" name="appt-to-min">
+                      <option value="">Mins</option>
+                      <option value="00">00</option>
+                      <?php for ($i=1; $i < 12; $i++) {
+                        ?>
+                        <option value="<?php echo $i * 5 ?>"><?php echo $i * 5 ?></option>
+                        <?php
+                      } ?>
+                    </select>
+                  </div>
+                </div>
+              </td>
+              <td>
+                <div class="form-control form-control-sm readonly distance" value=""></div>
+                <!-- <input type="text" class="form-control form-control-sm readonly distance" readonly name="" value=""> -->
+              </td>
+              <td><i class="fas fa-times text-danger remove-row"></i></td>
+            </tr>
+          </tbody>
+        </table>
       </div>
       <div class="tab-pane fade" id="conveyance-details-pane" role="tabpanel" aria-labelledby="conveyance-details-tab">
         <form onsubmit="false">
@@ -332,7 +382,7 @@ function parseDate($datestamp){
               <div class="col-sm-2 offset-1 text-right">
                 Route
               </div>
-              <div class="col-sm-7 grey-font" id="movement-confirmation">
+              <div class="col-sm-8 grey-font" id="movement-confirmation"> <!-- id="movement-confirmation" -->
               </div>
             </div>
             <div class="row">
@@ -343,6 +393,8 @@ function parseDate($datestamp){
                 <p>
                   <span class="date"></span>
                   <span class="hour"></span>:<span class="minutes"></span>
+                  <span> - </span>
+                  <span class="to-hour"></span>:<span class="to-minutes"></span>
                 </p>
               </div>
             </div>
@@ -359,7 +411,7 @@ function parseDate($datestamp){
                 Rate
               </div>
               <div class="col-sm-7 grey-font">
-                <p class="d-inline">$ <span class="trip-rate-confirmation">1500</span></p>
+                <p class="d-inline">$ <span class="trip-rate-confirmation"></span></p>
               </div>
             </div>
             <div class="row mb-2">
@@ -395,7 +447,7 @@ function parseDate($datestamp){
       <div class="col-sm-3 offset-7">
         <div class="d-flex justify-content-end">
           <div class="next-pane-buttons">
-            <button type="button" class="btn btn-primary next-pane disabled" disabled>Next</button>
+            <button type="button" class="btn btn-primary next-pane">Next</button>
           </div>
           <div class="add-trip-buttons" style="display: none">
             <button type="button" class="btn btn-primary add-trip next-pane disabled" disabled>Add Trip</button>

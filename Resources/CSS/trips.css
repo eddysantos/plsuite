@@ -300,3 +300,19 @@ aside p{
   background: inherit;
   color: #6c757d;
 }
+
+[mov-nature="origin"]{
+  background-color: rgba(79, 152, 67, 0.2);
+}
+
+[mov-nature="destination"]{
+  background-color: rgba(185, 75, 75, 0.2);
+}
+
+tr:first-child > .mov-type-td > div{
+  display: none;
+}
+
+tr:first-child > td:nth-last-child(2) > div {
+  display: none
+}
