@@ -302,17 +302,46 @@ aside p{
 }
 
 [mov-nature="origin"]{
-  background-color: rgba(79, 152, 67, 0.2);
+  background-color: rgba(79, 152, 67, 0.05);
 }
 
 [mov-nature="destination"]{
-  background-color: rgba(185, 75, 75, 0.2);
+  background-color: rgba(185, 75, 75, 0.05);
 }
 
-tr:first-child > .mov-type-td > div{
+#movement-details > tr:first-child > .mov-type-td > div,
+#movement-details > tr:first-child > td:nth-last-child(2) > div,
+#movement-details > tr:first-child > td:nth-child(6) > select{
   display: none;
 }
 
-tr:first-child > td:nth-last-child(2) > div {
-  display: none
+.add-row-line{
+  background-color: rgb(16, 204, 0);
+  max-height: .1px;
+  opacity: 0;
 }
+
+.add-row-line:hover{
+  opacity: 1;
+  max-height: 2px;
+}
+
+.movement-nav-content{
+  display: block;
+  position:absolute;
+  height:auto;
+  bottom:0;
+  top:0;
+  left:0;
+  right:0;
+}
+
+.add-row-line span{
+  position: relative;
+  left: -16px;
+  top: -11px;
+  color: rgb(16, 204, 0);
+}
+/* tr:first-child > td:nth-last-child(2) > div {
+  display: none
+} */

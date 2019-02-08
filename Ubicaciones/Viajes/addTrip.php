@@ -169,11 +169,11 @@ function parseDate($datestamp){
               <td class="w-25"> <input type="text" class="form-control form-control-sm google-location-input" id="gi-1" name="" value=""> </td>
               <td class="mov-type-td">
                 <div class="form-check form-check-inline">
-                  <input class="form-check-input" type="radio" name="mov-type-tr-1" value="Empty">
+                  <input class="form-check-input" type="radio" name="mov-type-tr-1" value="E">
                   <label class="form-check-label" for="inlineRadio1">E</label>
                 </div>
                 <div class="form-check form-check-inline">
-                  <input class="form-check-input" type="radio" name="mov-type-tr-1" value="Loaded">
+                  <input class="form-check-input" type="radio" name="mov-type-tr-1" value="L">
                   <label class="form-check-label" for="inlineRadio1">L</label>
                 </div>
               </td>
@@ -254,11 +254,11 @@ function parseDate($datestamp){
               <td> <input type="text" class="form-control form-control-sm google-location-input" id="gi-2" name="" value=""> </td>
               <td class="mov-type-td">
                 <div class="form-check form-check-inline">
-                  <input class="form-check-input" type="radio" name="mov-type-tr-2" value="Empty">
+                  <input class="form-check-input" type="radio" name="mov-type-tr-2" value="E">
                   <label class="form-check-label" for="inlineRadio1">E</label>
                 </div>
                 <div class="form-check form-check-inline">
-                  <input class="form-check-input" type="radio" name="mov-type-tr-2" value="Loaded">
+                  <input class="form-check-input" type="radio" name="mov-type-tr-2" value="L">
                   <label class="form-check-label" for="inlineRadio1">L</label>
                 </div>
               </td>
@@ -387,19 +387,6 @@ function parseDate($datestamp){
             </div>
             <div class="row">
               <div class="col-sm-2 offset-1 text-right">
-                Appointment
-              </div>
-              <div class="col-sm-7 grey-font" id="linehaul-appointment">
-                <p>
-                  <span class="date"></span>
-                  <span class="hour"></span>:<span class="minutes"></span>
-                  <span> - </span>
-                  <span class="to-hour"></span>:<span class="to-minutes"></span>
-                </p>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-sm-2 offset-1 text-right">
                 Miles
               </div>
               <div class="col-sm-7 grey-font">
@@ -450,7 +437,7 @@ function parseDate($datestamp){
             <button type="button" class="btn btn-primary next-pane">Next</button>
           </div>
           <div class="add-trip-buttons" style="display: none">
-            <button type="button" class="btn btn-primary add-trip next-pane disabled" disabled>Add Trip</button>
+            <button type="button" class="btn btn-primary add-trip next-pane">Add Trip</button>
           </div>
           <button type="button" class="btn btn-secondary ml-2" data-dismiss="modal">Close</button>
         </div>

@@ -272,9 +272,6 @@ if ($trip['last_movement']) {
          </div>
        </div>
      </header>
-     <!-- <div class="container-fluid">
-       <div class="alert linehaulSavedNotice text-center mt-3" role="alert" style="display: none"></div>
-     </div> -->
 
      <div class="main-details-container">
        <div class="row div-100h">
@@ -300,351 +297,833 @@ if ($trip['last_movement']) {
          <div class="col-sm-10 tab-info">
            <div class="tab-content p-1" id="linehaul-details-panes">
              <div class="tab-pane fade show active" id="lh-details-pane" role="tab-panel" aria-labelledby="lh-details-tab">
-               <div class="row">
-                 <div class="col-lg-10 offset-1">
-                   <form class="form-group" id="lh-details-form">
-                     <fieldset id="lh-fields">
-                       <input type="text" class="linehaulid" id="linehaulid" name="" value="" hidden>
-                       <input type="text" class="lh_status" name="" value="" hidden>
-                       <div class="form-row">
-                         <label for="" class="col-form-label col-md-2">Trailer</label>
-                         <div class="form-group col-md-6">
-                           <input type="text" class="form-control trailer_number readonly" readonly name="" value="">
-                         </div>
-                       </div>
-                       <div class="form-row">
-                         <label for="" class="col-form-label col-md-2">Broker</label>
-                         <div class="form-group col-md-6">
-                           <input type="text" class="form-control broker popup-input" id-display="#broker-popup-list-lh-details" db-id="" name="" value="">
-                           <div id="broker-popup-list-lh-details" class="popup-list mt-2" style="display: none; z-index: 9999">
-                           </div>
-                         </div>
-                         <label for="" class="col-form-label col-md-2 text-right">Reference</label>
-                         <div class="form-group col-md-2">
-                           <input type="text" class="form-control broker_reference" name="" value="">
-                         </div>
-                       </div>
-
-                       <div class="form-row">
-                         <label for="" class="col-form-label col-md-2">Origin</label>
-                         <div class="form-group col-md-2">
-                           <input type="text" class="form-control origin_zip disabled" name="" value="" readonly>
-                         </div>
-                         <div class="form-group col-md-1">
-                           <input type="text" class="form-control origin_state disabled" name="" value="" readonly>
-                         </div>
-                         <div class="form-group col-md-3">
-                           <input type="text" class="form-control origin_city disabled" name="" value="" readonly>
-                         </div>
-                         <label for="" class="col-form-label col-md-2 text-right">Trip Rate</label>
-                         <div class="form-group col-md-2">
-                           <div class="input-group">
-                             <div class="input-group-addon p-0">
-                               <span class="input-group-text">$</span>
-                             </div>
-                             <input type="text" class="form-control rate" name="" value="">
-                           </div>
-                         </div>
-                       </div>
-
-                       <div class="form-row">
-                         <label for="" class="col-form-label col-md-2">Destination</label>
-                         <div class="form-group col-md-2">
-                           <input type="text" class="form-control destination_zip readonly" name="" value="" disabled>
-                         </div>
-                         <div class="form-group col-md-1">
-                           <input type="text" class="form-control destination_state readonly" name="" value="" disabled>
-                         </div>
-                         <div class="form-group col-md-3">
-                           <input type="text" class="form-control destination_city readonly" name="" value="" disabled>
-                         </div>
-                         <label for="" class="col-form-label col-md-2 text-right ">Empty Miles</label>
-                         <div class="form-group col-md-2">
-                           <input type="text" class="form-control empty_miles disabled" name="" value="" readonly>
-                         </div>
-                       </div>
-
-                       <div class="form-row">
-                         <label for="" class="col-form-label col-md-2">Appointment</label>
-                         <div class="form-group col-md-4">
-                           <input type="date" class="form-control appointment date" name="" value="">
-                         </div>
-                         <div class="form-group col-md-1">
-                           <select class="form-control appointment hour" id="appointment_time_hour" name="appointment_time_hour">
-                             <option value="">Hr</option>
-                             <option value="01">01</option>
-                             <option value="02">02</option>
-                             <option value="03">03</option>
-                             <option value="04">04</option>
-                             <option value="05">05</option>
-                             <option value="06">06</option>
-                             <option value="07">07</option>
-                             <option value="08">08</option>
-                             <option value="09">09</option>
-                             <option value="10">10</option>
-                             <option value="11">11</option>
-                             <option value="12">12</option>
-                             <option value="13">13</option>
-                             <option value="14">14</option>
-                             <option value="15">15</option>
-                             <option value="16">16</option>
-                             <option value="17">17</option>
-                             <option value="18">18</option>
-                             <option value="19">19</option>
-                             <option value="20">20</option>
-                             <option value="21">21</option>
-                             <option value="22">22</option>
-                             <option value="23">23</option>
-                             <option value="24">24</option>
-                           </select>
-                         </div>
-                         <div class="form-group col-md-1 pl-0">
-                           <select class="form-control appointment minute" id="appointment_time_minute" name="appointment_time_minute">
-                             <option value="">Min</option>
-                             <option value="00">00</option>
-                             <option value="05">05</option>
-                             <option value="10">10</option>
-                             <option value="15">15</option>
-                             <option value="20">20</option>
-                             <option value="25">25</option>
-                             <option value="30">30</option>
-                             <option value="35">35</option>
-                             <option value="40">40</option>
-                             <option value="45">45</option>
-                             <option value="50">50</option>
-                             <option value="55">55</option>
-                           </select>
-                         </div>
-                         <label for="" class="col-form-label col-md-2 text-right ">Loaded Miles</label>
-                         <div class="form-group col-md-2">
-                           <input type="text" class="form-control loaded_miles disabled" name="" value="" readonly>
-                         </div>
-                       </div>
-
-                       <div class="form-row">
-                         <label for="" class="col-form-label col-md-2">Departure</label>
-                         <div class="form-group col-md-4">
-                           <input type="date" class="form-control departure date" name="" value="">
-                         </div>
-                         <div class="form-group col-md-1">
-                           <select class="form-control departure hour" id="departure_time_hour" name="departure_time_hour">
-                             <option value="">Hr</option>
-                             <option value="01">01</option>
-                             <option value="02">02</option>
-                             <option value="03">03</option>
-                             <option value="04">04</option>
-                             <option value="05">05</option>
-                             <option value="06">06</option>
-                             <option value="07">07</option>
-                             <option value="08">08</option>
-                             <option value="09">09</option>
-                             <option value="10">10</option>
-                             <option value="11">11</option>
-                             <option value="12">12</option>
-                             <option value="13">13</option>
-                             <option value="14">14</option>
-                             <option value="15">15</option>
-                             <option value="16">16</option>
-                             <option value="17">17</option>
-                             <option value="18">18</option>
-                             <option value="19">19</option>
-                             <option value="20">20</option>
-                             <option value="21">21</option>
-                             <option value="22">22</option>
-                             <option value="23">23</option>
-                             <option value="24">24</option>
-                           </select>
-                         </div>
-                         <div class="form-group col-md-1 pl-0">
-                           <select class="form-control departure minute" id="departure_time_minute" name="departure_time_minute">
-                             <option value="">Min</option>
-                             <option value="00">00</option>
-                             <option value="05">05</option>
-                             <option value="10">10</option>
-                             <option value="15">15</option>
-                             <option value="20">20</option>
-                             <option value="25">25</option>
-                             <option value="30">30</option>
-                             <option value="35">35</option>
-                             <option value="40">40</option>
-                             <option value="45">45</option>
-                             <option value="50">50</option>
-                             <option value="55">55</option>
-                           </select>
-                         </div>
-                         <label for="" class="col-form-label col-md-2 text-right ">Total Miles</label>
-                         <div class="form-group col-md-2">
-                           <input type="text" class="form-control total_miles disabled" name="" value="" readonly>
-                         </div>
-                       </div>
-
-                       <div class="form-row">
-                         <label for="" class="col-form-label col-md-2">Arrival</label>
-                         <div class="form-group col-md-4">
-                           <input type="date" class="form-control arrival date" id="arrival_time" name="" value="">
-                         </div>
-                         <div class="form-group col-md-1">
-                           <select class="form-control arrival hour" id="arrival_time_hour" name="arrival_time_hour">
-                             <option value="">Hr</option>
-                             <option value="01">01</option>
-                             <option value="02">02</option>
-                             <option value="03">03</option>
-                             <option value="04">04</option>
-                             <option value="05">05</option>
-                             <option value="06">06</option>
-                             <option value="07">07</option>
-                             <option value="08">08</option>
-                             <option value="09">09</option>
-                             <option value="10">10</option>
-                             <option value="11">11</option>
-                             <option value="12">12</option>
-                             <option value="13">13</option>
-                             <option value="14">14</option>
-                             <option value="15">15</option>
-                             <option value="16">16</option>
-                             <option value="17">17</option>
-                             <option value="18">18</option>
-                             <option value="19">19</option>
-                             <option value="20">20</option>
-                             <option value="21">21</option>
-                             <option value="22">22</option>
-                             <option value="23">23</option>
-                             <option value="24">24</option>
-                           </select>
-                         </div>
-                         <div class="form-group col-md-1 pl-0">
-                           <select class="form-control arrival minute" id="arrival_time_minute" name="arrival_time_minute">
-                             <option value="">Min</option>
-                             <option value="00">00</option>
-                             <option value="05">05</option>
-                             <option value="10">10</option>
-                             <option value="15">15</option>
-                             <option value="20">20</option>
-                             <option value="25">25</option>
-                             <option value="30">30</option>
-                             <option value="35">35</option>
-                             <option value="40">40</option>
-                             <option value="45">45</option>
-                             <option value="50">50</option>
-                             <option value="55">55</option>
-                           </select>
-                         </div>
-                         <label for="" class="col-form-label col-md-2 text-right">RPM</label>
-                         <div class="form-group col-md-2">
-                           <div class="input-group">
-                             <div class="input-group-addon p-0">
-                               <span class="input-group-text">$</span>
-                             </div>
-                             <input type="text" class="form-control rpm disabled" name="" value="" readonly>
-                           </div>
-                         </div>
-                       </div>
-
-
-                       <div class="form-row">
-                         <label for="" class="col-form-label col-md-2">Delivery</label>
-                         <div class="form-group col-md-4">
-                           <input type="date" class="form-control delivery date" id="delivery_time" name="" value="">
-                         </div>
-                         <div class="form-group col-md-1">
-                           <select class="form-control delivery hour" id="delivery_time_hour" name="delivery_time_hour">
-                             <option value="">Hr</option>
-                             <option value="01">01</option>
-                             <option value="02">02</option>
-                             <option value="03">03</option>
-                             <option value="04">04</option>
-                             <option value="05">05</option>
-                             <option value="06">06</option>
-                             <option value="07">07</option>
-                             <option value="08">08</option>
-                             <option value="09">09</option>
-                             <option value="10">10</option>
-                             <option value="11">11</option>
-                             <option value="12">12</option>
-                             <option value="13">13</option>
-                             <option value="14">14</option>
-                             <option value="15">15</option>
-                             <option value="16">16</option>
-                             <option value="17">17</option>
-                             <option value="18">18</option>
-                             <option value="19">19</option>
-                             <option value="20">20</option>
-                             <option value="21">21</option>
-                             <option value="22">22</option>
-                             <option value="23">23</option>
-                             <option value="24">24</option>
-                           </select>
-                         </div>
-                         <div class="form-group col-md-1 pl-0">
-                           <select class="form-control delivery minute" id="delivery_time_minute" name="delivery_time_minute">
-                             <option value="">Min</option>
-                             <option value="00">00</option>
-                             <option value="05">05</option>
-                             <option value="10">10</option>
-                             <option value="15">15</option>
-                             <option value="20">20</option>
-                             <option value="25">25</option>
-                             <option value="30">30</option>
-                             <option value="35">35</option>
-                             <option value="40">40</option>
-                             <option value="45">45</option>
-                             <option value="50">50</option>
-                             <option value="55">55</option>
-                           </select>
-                         </div>
-
-                       </div>
-                       <div class="form-row">
-                         <label for="" class="col-form-label col-md-2">Comments</label>
-                         <div class="col-md-10">
-                           <textarea name="" id="lh_comments" class="form-control lh_comment" rows="8"></textarea>
-                         </div>
-                       </div>
-
-                     </fieldset>
-                   </form>
-                 </div>
-                 <div class="col-lg-1">
-
-                   <div class="" id="lh-edit-enabled">
-
-                     <div class="row" style="display: none" id="cancel-editing">
-                       <div class="col-12">
-                         <div class="form-group">
-                           <button type="button" class="btn btn-outline-secondary" id="cancel-editing-button" name="button" data-container="body" data-toggle="tooltip" data-placement="top" title="Disable Editing"><i class="fas fa-undo-alt"></i></button>
-                         </div>
-                       </div>
-                     </div>
-
-                     <div class="row">
-                       <div class="col-12">
-                         <div class="form-group">
-                           <button type="button" class="btn btn-danger finalizeRecord linehaul" form-parent="#lh-details-form" name="button" data-container="body" data-toggle="tooltip" data-placement="top" title="Cancel Trip" type-of-record="linehaul" action="Cancelled" tripyear="<?php echo $trip['tripyear']?>"><i class="fas fa-ban"></i></button>
-                         </div>
-                       </div>
-                     </div>
-
-                     <div class="row">
-                       <div class="col-12">
-                         <div class="form-group">
-                           <button type="button" class="btn btn-outline-success saveLhChanges" tripid="<?php echo $trip['pkidtrip']?>" tripyear="<?php echo $trip['tripyear']?>" form-parent="#lh-details-form" name="button" data-toggle="tooltip" data-placement="top" title="Save Changes"><i class="far fa-save"></i></button>
-                         </div>
-                       </div>
-                     </div>
-                   </div>
-
-                   <div class="" id="lh-edit-disabled" style="display: none">
-                     <div class="row">
-                       <div class="col-12">
-                         <div class="form-group">
-                           <button type="button" class="btn btn-outline-secondary" id="enable-editing" name="button" data-container="body" data-toggle="tooltip" data-placement="top" title="Enable Editing"><i class="fas fa-pencil-alt"></i></button>
-                         </div>
-                       </div>
-                     </div>
-                   </div>
-
-                 </div>
-               </div>
+              <div class="row">
+                <div class="col">
+                  <div class="row">
+                    <div class="col-lg-3 text-right"><span>Trailer:</span></div><div class="col"><span class="text-secondary">NONZ976976</span></div>
+                  </div>
+                  <div class="row">
+                    <div class="col-lg-3 text-right"><span>Rate:</span></div><div class="col"><span class="text-secondary">$ 1500</span></div>
+                  </div>
+                  <div class="row">
+                    <div class="col-lg-3 text-right"><span>RPM:</span></div><div class="col"><span class="text-secondary">$ 2.05</span></div>
+                  </div>
+                </div>
+                <div class="col">
+                  <div class="row">
+                    <div class="text-right"><span>Miles:</span></div><div class="col"><span class="text-secondary">1546</span></div>
+                  </div>
+                  <div class="row">
+                    <div class="text-right"><span>Loaded Miles:</span></div><div class="col"><span class="text-secondary">1046</span></div>
+                  </div>
+                  <div class="row">
+                    <div class="text-right"><span>Empty Miles:</span></div><div class="col"><span class="text-secondary">500</span></div>
+                  </div>
+                </div>
+                <div class="col">
+                  <div class="row">
+                    <div class="col-lg-4 text-right"><span>Client:</span></div><div class="col"><span class="text-secondary">CHR Hussman</span></div>
+                  </div>
+                  <div class="row">
+                    <div class="col-lg-4 text-right"><span>Reference:</span></div><div class="col"><span class="text-secondary">234567890</span></div>
+                  </div>
+                  <div class="row">
+                    <div class="col-lg-4 text-right"><span>RC:</span></div><div class="col"><span class="text-secondary">Pending</span></div>
+                  </div>
+                  <div class="row">
+                    <div class="col-lg-4 text-right"><span>POD:</span></div><div class="col"><span class="text-secondary">Pending</span></div>
+                  </div>
+                </div>
+                <div class="col-lg-1">
+                  <div class="btn-group-vertical">
+                    <button type="button" class="btn btn-sm btn-outline-primary" name="button">Close</button>
+                    <button type="button" class="btn btn-sm btn-outline-secondary" name="button">Edit</button>
+                    <button type="button" class="btn btn-sm btn-outline-danger" name="button">Cancel</button>
+                  </div>
+                </div>
+              </div>
+              <div class="accordion" id="linehaul-movements">
+                <div class="add-row-line" role="button"><span><i class="fas fa-plus-circle"></i></span></div>
+                <div class="card movement">
+                  <div class="card-header" id="movement1_header" data-toggle="collapse" data-target="#collapse_movement1" aria-expanded="true" aria-controls="collapseOne" role="button">
+                    <div class="d-flex justify-content-between">
+                      <div class="d-flex">
+                        <div class="align-self-center">[O]</div>
+                        <div class="ml-3">
+                          <div>9000 San Mateo Dr, Laredo TX, 78045</div>
+                        </div>
+                      </div>
+                      <div class="">
+                        <div class="badge badge-danger">Pending Departure Time</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div id="collapse_movement1" class="collapse" aria-labelledby="movement1_header" data-parent="#linehaul-movements">
+                    <div class="card-body">
+                      <div class="row">
+                        <div class="col">
+                          <div class="row">
+                            <div class="col">
+                              <div class="form-group">
+                                <label for="appointment-date" class="mb-0">Appointment</label>
+                                <div class="form-inline">
+                                  <input type="date" class="form-control form-control-sm" name="" value="">
+                                  <select class="form-control form-control-sm ml-2" name="">
+                                    <option value="00">00</option>
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                    <option value="6">6</option>
+                                    <option value="7">7</option>
+                                    <option value="8">8</option>
+                                    <option value="9">9</option>
+                                    <option value="10">10</option>
+                                    <option value="11">11</option>
+                                    <option value="12">12</option>
+                                    <option value="13">13</option>
+                                    <option value="14">14</option>
+                                    <option value="15">15</option>
+                                    <option value="16">16</option>
+                                    <option value="17">17</option>
+                                    <option value="18">18</option>
+                                    <option value="19">19</option>
+                                    <option value="20">20</option>
+                                    <option value="21">21</option>
+                                    <option value="22">22</option>
+                                    <option value="23">23</option>
+                                  </select>
+                                  <select class="form-control form-control-sm ml-2" name="">
+                                    <option value="00">00</option>
+                                    <option value="05">05</option>
+                                    <option value="10">10</option>
+                                    <option value="15">15</option>
+                                    <option value="20">20</option>
+                                    <option value="25">25</option>
+                                    <option value="30">30</option>
+                                    <option value="35">35</option>
+                                    <option value="40">40</option>
+                                    <option value="45">45</option>
+                                    <option value="50">50</option>
+                                    <option value="55">55</option>
+                                  </select>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="row">
+                            <div class="col">
+                              <div class="form-group">
+                                <label for="appointment-date" class="mb-0">Arrival</label>
+                                <div class="form-inline">
+                                  <input type="date" class="form-control form-control-sm" name="" value="">
+                                  <select class="form-control form-control-sm ml-2" name="">
+                                    <option value="00">00</option>
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                    <option value="6">6</option>
+                                    <option value="7">7</option>
+                                    <option value="8">8</option>
+                                    <option value="9">9</option>
+                                    <option value="10">10</option>
+                                    <option value="11">11</option>
+                                    <option value="12">12</option>
+                                    <option value="13">13</option>
+                                    <option value="14">14</option>
+                                    <option value="15">15</option>
+                                    <option value="16">16</option>
+                                    <option value="17">17</option>
+                                    <option value="18">18</option>
+                                    <option value="19">19</option>
+                                    <option value="20">20</option>
+                                    <option value="21">21</option>
+                                    <option value="22">22</option>
+                                    <option value="23">23</option>
+                                  </select>
+                                  <select class="form-control form-control-sm ml-2" name="">
+                                    <option value="00">00</option>
+                                    <option value="05">05</option>
+                                    <option value="10">10</option>
+                                    <option value="15">15</option>
+                                    <option value="20">20</option>
+                                    <option value="25">25</option>
+                                    <option value="30">30</option>
+                                    <option value="35">35</option>
+                                    <option value="40">40</option>
+                                    <option value="45">45</option>
+                                    <option value="50">50</option>
+                                    <option value="55">55</option>
+                                  </select>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="row">
+                            <div class="col">
+                              <div class="form-group">
+                                <label for="appointment-date" class="mb-0">Loaded / Unloaded</label>
+                                <div class="form-inline">
+                                  <input type="date" class="form-control form-control-sm" name="" value="">
+                                  <select class="form-control form-control-sm ml-2" name="">
+                                    <option value="00">00</option>
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                    <option value="6">6</option>
+                                    <option value="7">7</option>
+                                    <option value="8">8</option>
+                                    <option value="9">9</option>
+                                    <option value="10">10</option>
+                                    <option value="11">11</option>
+                                    <option value="12">12</option>
+                                    <option value="13">13</option>
+                                    <option value="14">14</option>
+                                    <option value="15">15</option>
+                                    <option value="16">16</option>
+                                    <option value="17">17</option>
+                                    <option value="18">18</option>
+                                    <option value="19">19</option>
+                                    <option value="20">20</option>
+                                    <option value="21">21</option>
+                                    <option value="22">22</option>
+                                    <option value="23">23</option>
+                                  </select>
+                                  <select class="form-control form-control-sm ml-2" name="">
+                                    <option value="00">00</option>
+                                    <option value="05">05</option>
+                                    <option value="10">10</option>
+                                    <option value="15">15</option>
+                                    <option value="20">20</option>
+                                    <option value="25">25</option>
+                                    <option value="30">30</option>
+                                    <option value="35">35</option>
+                                    <option value="40">40</option>
+                                    <option value="45">45</option>
+                                    <option value="50">50</option>
+                                    <option value="55">55</option>
+                                  </select>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="row">
+                            <div class="col">
+                              <div class="form-group">
+                                <label for="appointment-date" class="mb-0">Departure</label>
+                                <div class="form-inline">
+                                  <input type="date" class="form-control form-control-sm" name="" value="">
+                                  <select class="form-control form-control-sm ml-2" name="">
+                                    <option value="00">00</option>
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                    <option value="6">6</option>
+                                    <option value="7">7</option>
+                                    <option value="8">8</option>
+                                    <option value="9">9</option>
+                                    <option value="10">10</option>
+                                    <option value="11">11</option>
+                                    <option value="12">12</option>
+                                    <option value="13">13</option>
+                                    <option value="14">14</option>
+                                    <option value="15">15</option>
+                                    <option value="16">16</option>
+                                    <option value="17">17</option>
+                                    <option value="18">18</option>
+                                    <option value="19">19</option>
+                                    <option value="20">20</option>
+                                    <option value="21">21</option>
+                                    <option value="22">22</option>
+                                    <option value="23">23</option>
+                                  </select>
+                                  <select class="form-control form-control-sm ml-2" name="">
+                                    <option value="00">00</option>
+                                    <option value="05">05</option>
+                                    <option value="10">10</option>
+                                    <option value="15">15</option>
+                                    <option value="20">20</option>
+                                    <option value="25">25</option>
+                                    <option value="30">30</option>
+                                    <option value="35">35</option>
+                                    <option value="40">40</option>
+                                    <option value="45">45</option>
+                                    <option value="50">50</option>
+                                    <option value="55">55</option>
+                                  </select>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-8">
+                          <div class="movement-nav-content">
+                            <div class="d-flex flex-column">
+                              <ul class="nav nav-tabs">
+                                <li class="nav-item">
+                                  <a class="nav-link active" href="#">Conveyance</a>
+                                </li>
+                                <li class="nav-item">
+                                  <a class="nav-link" href="#">Trip Details</a>
+                                </li>
+                                <li class="nav-item">
+                                  <a class="nav-link" href="#">Link</a>
+                                </li>
+                                <li class="nav-item">
+                                  <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+                                </li>
+                              </ul>
+                              <div class="border border-top-0 rounded-bottom" style="box-sizing: border-box">
+                                navigation panes here.
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="add-row-line" role="button"><span><i class="fas fa-plus-circle"></i></span></div>
+                <div class="card movement">
+                  <div class="card-header" id="movement1_header" data-toggle="collapse" data-target="#collapse_movement2" aria-expanded="true" aria-controls="collapseOne" role="button">
+                    <div class="d-flex justify-content-between">
+                      <div class="d-flex">
+                        <div class="align-self-center">[S]</div>
+                        <div class="ml-3">
+                          <div>12401 I-30, Little Rock AR, 72209</div>
+                          <div>739 Loaded Miles</div>
+                        </div>
+                      </div>
+                      <div class="">
+                        <span class="badge badge-danger">Pending Arrival Time</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div id="collapse_movement2" class="collapse" aria-labelledby="movement2_header" data-parent="#linehaul-movements">
+                    <div class="card-body">
+                      <div class="row">
+                        <div class="col">
+                          <div class="row">
+                            <div class="col">
+                              <div class="form-group">
+                                <label for="appointment-date" class="mb-0">Appointment</label>
+                                <div class="form-inline">
+                                  <input type="date" class="form-control form-control-sm" name="" value="">
+                                  <select class="form-control form-control-sm ml-2" name="">
+                                    <option value="00">00</option>
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                    <option value="6">6</option>
+                                    <option value="7">7</option>
+                                    <option value="8">8</option>
+                                    <option value="9">9</option>
+                                    <option value="10">10</option>
+                                    <option value="11">11</option>
+                                    <option value="12">12</option>
+                                    <option value="13">13</option>
+                                    <option value="14">14</option>
+                                    <option value="15">15</option>
+                                    <option value="16">16</option>
+                                    <option value="17">17</option>
+                                    <option value="18">18</option>
+                                    <option value="19">19</option>
+                                    <option value="20">20</option>
+                                    <option value="21">21</option>
+                                    <option value="22">22</option>
+                                    <option value="23">23</option>
+                                  </select>
+                                  <select class="form-control form-control-sm ml-2" name="">
+                                    <option value="00">00</option>
+                                    <option value="05">05</option>
+                                    <option value="10">10</option>
+                                    <option value="15">15</option>
+                                    <option value="20">20</option>
+                                    <option value="25">25</option>
+                                    <option value="30">30</option>
+                                    <option value="35">35</option>
+                                    <option value="40">40</option>
+                                    <option value="45">45</option>
+                                    <option value="50">50</option>
+                                    <option value="55">55</option>
+                                  </select>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="row">
+                            <div class="col">
+                              <div class="form-group">
+                                <label for="appointment-date" class="mb-0">Arrival</label>
+                                <div class="form-inline">
+                                  <input type="date" class="form-control form-control-sm" name="" value="">
+                                  <select class="form-control form-control-sm ml-2" name="">
+                                    <option value="00">00</option>
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                    <option value="6">6</option>
+                                    <option value="7">7</option>
+                                    <option value="8">8</option>
+                                    <option value="9">9</option>
+                                    <option value="10">10</option>
+                                    <option value="11">11</option>
+                                    <option value="12">12</option>
+                                    <option value="13">13</option>
+                                    <option value="14">14</option>
+                                    <option value="15">15</option>
+                                    <option value="16">16</option>
+                                    <option value="17">17</option>
+                                    <option value="18">18</option>
+                                    <option value="19">19</option>
+                                    <option value="20">20</option>
+                                    <option value="21">21</option>
+                                    <option value="22">22</option>
+                                    <option value="23">23</option>
+                                  </select>
+                                  <select class="form-control form-control-sm ml-2" name="">
+                                    <option value="00">00</option>
+                                    <option value="05">05</option>
+                                    <option value="10">10</option>
+                                    <option value="15">15</option>
+                                    <option value="20">20</option>
+                                    <option value="25">25</option>
+                                    <option value="30">30</option>
+                                    <option value="35">35</option>
+                                    <option value="40">40</option>
+                                    <option value="45">45</option>
+                                    <option value="50">50</option>
+                                    <option value="55">55</option>
+                                  </select>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="row">
+                            <div class="col">
+                              <div class="form-group">
+                                <label for="appointment-date" class="mb-0">Loaded / Unloaded</label>
+                                <div class="form-inline">
+                                  <input type="date" class="form-control form-control-sm" name="" value="">
+                                  <select class="form-control form-control-sm ml-2" name="">
+                                    <option value="00">00</option>
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                    <option value="6">6</option>
+                                    <option value="7">7</option>
+                                    <option value="8">8</option>
+                                    <option value="9">9</option>
+                                    <option value="10">10</option>
+                                    <option value="11">11</option>
+                                    <option value="12">12</option>
+                                    <option value="13">13</option>
+                                    <option value="14">14</option>
+                                    <option value="15">15</option>
+                                    <option value="16">16</option>
+                                    <option value="17">17</option>
+                                    <option value="18">18</option>
+                                    <option value="19">19</option>
+                                    <option value="20">20</option>
+                                    <option value="21">21</option>
+                                    <option value="22">22</option>
+                                    <option value="23">23</option>
+                                  </select>
+                                  <select class="form-control form-control-sm ml-2" name="">
+                                    <option value="00">00</option>
+                                    <option value="05">05</option>
+                                    <option value="10">10</option>
+                                    <option value="15">15</option>
+                                    <option value="20">20</option>
+                                    <option value="25">25</option>
+                                    <option value="30">30</option>
+                                    <option value="35">35</option>
+                                    <option value="40">40</option>
+                                    <option value="45">45</option>
+                                    <option value="50">50</option>
+                                    <option value="55">55</option>
+                                  </select>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="row">
+                            <div class="col">
+                              <div class="form-group">
+                                <label for="appointment-date" class="mb-0">Departure</label>
+                                <div class="form-inline">
+                                  <input type="date" class="form-control form-control-sm" name="" value="">
+                                  <select class="form-control form-control-sm ml-2" name="">
+                                    <option value="00">00</option>
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                    <option value="6">6</option>
+                                    <option value="7">7</option>
+                                    <option value="8">8</option>
+                                    <option value="9">9</option>
+                                    <option value="10">10</option>
+                                    <option value="11">11</option>
+                                    <option value="12">12</option>
+                                    <option value="13">13</option>
+                                    <option value="14">14</option>
+                                    <option value="15">15</option>
+                                    <option value="16">16</option>
+                                    <option value="17">17</option>
+                                    <option value="18">18</option>
+                                    <option value="19">19</option>
+                                    <option value="20">20</option>
+                                    <option value="21">21</option>
+                                    <option value="22">22</option>
+                                    <option value="23">23</option>
+                                  </select>
+                                  <select class="form-control form-control-sm ml-2" name="">
+                                    <option value="00">00</option>
+                                    <option value="05">05</option>
+                                    <option value="10">10</option>
+                                    <option value="15">15</option>
+                                    <option value="20">20</option>
+                                    <option value="25">25</option>
+                                    <option value="30">30</option>
+                                    <option value="35">35</option>
+                                    <option value="40">40</option>
+                                    <option value="45">45</option>
+                                    <option value="50">50</option>
+                                    <option value="55">55</option>
+                                  </select>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div> <!-- COLUMN FOR MOVEMENT DATETIMES. -->
+                        <div class="col-3">
+                          <div class="form-group">
+                            <div class="d-flex justify-content-between">
+                              <h5>Drivers</h5>
+                              <i class="fas fa-user-plus text-success"></i>
+                            </div>
+                            <div class="d-flex justify-content-between">
+                              <span contenteditable="true">Gustavo Soto</span>
+                              <i class="fas fa-user-slash text-danger"></i>
+                            </div>
+                            <div class="d-flex justify-content-between">
+                              <span>Alan Apellido</span>
+                              <i class="fas fa-user-slash text-danger"></i>
+                            </div>
+                          </div>
+                          <div class="form-group">
+                            <div class="d-flex justify-content-between">
+                              <h5>Tractor</h5>
+                              <i class="far fa-edit text-primary edit-tractor" role="button"></i>
+                              <i class="fas fa-times text-danger cancel-tractor-edit" role="button" style="display: none"></i>
+                            </div>
+                            <div class="assigned-tractor">
+                              T030
+                            </div>
+                            <div class="edit-tractor-field" style="display: none">
+                              <div class="d-flex justify-content-between">
+                                <input type="text" class="form-control form-control-sm" name="" value="" placeholder="Enter new tractor">
+                                <i class="far fa-save text-primary float-right save-tractor-edit ml-3 align-self-center" role="button"></i>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col">
+                          <div class="form-group d-flex justify-content-between">
+                            <label for=""><b>Movement Type</b></label>
+                            <div class="">
+                              <div class="form-check">
+                                <input class="form-check-input" type="radio" name="movement-type" id="movement-type-loaded" value="Loaded">
+                                <label class="form-check-label" for="movement-type-loaded">Loaded</label>
+                              </div>
+                              <div class="form-check">
+                                <input class="form-check-input" type="radio" name="movement-type" id="movement-type-empty" value="Empty">
+                                <label class="form-check-label" for="movement-type-empty">Empty</label>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="form-group d-flex justify-content-between">
+                            <label for=""><b>Empty as Loaded</b></label>
+                            <div class="">
+                              <div class="form-check">
+                                <input class="form-check-input" type="radio" name="empty-as-loaded" id="empty-as-loaded-true" value="yes">
+                                <label class="form-check-label" for="empty-as-loaded-true">Yes</label>
+                              </div>
+                              <div class="form-check">
+                                <input class="form-check-input" type="radio" name="empty-as-loaded" id="empty-as-loaded-false" value="no">
+                                <label class="form-check-label" for="empty-as-loaded-false">No</label>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="form-group d-flex justify-content-between">
+                            <label for=""><b>Extra Stop</b></label>
+                            <div class="">
+                              <div class="form-check">
+                                <input class="form-check-input" type="radio" name="extra-stop" id="extra-stop-true" value="yes">
+                                <label class="form-check-label" for="extra-stop-true">Yes</label>
+                              </div>
+                              <div class="form-check">
+                                <input class="form-check-input" type="radio" name="extra-stop" id="extra-stop-false" value="no">
+                                <label class="form-check-label" for="extra-stop-false">No</label>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-md-1">
+                          <div class="btn-group-vertical">
+                            <button type="button" class="btn btn-sm btn-outline-primary" name="button">Save</button>
+                            <button type="button" class="btn btn-sm btn-outline-danger" name="button">Delete</button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="add-row-line" role="button"><span><i class="fas fa-plus-circle"></i></span></div>
+                <div class="card movement">
+                  <div class="card-header" id="movement3_header" data-toggle="collapse" data-target="#collapse_movement3" aria-expanded="true" aria-controls="collapseOne" role="button">
+                    <div class="d-flex justify-content-between">
+                      <div class="d-flex">
+                        <div class="align-self-center">[D]</div>
+                        <div class="ml-3">
+                          <div>12401 I-30, Little Rock AR, 72209</div>
+                          <div>739 Loaded Miles</div>
+                        </div>
+                      </div>
+                      <div class="">
+                        <span class="badge badge-danger">Pending Arrival Time</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div id="collapse_movement3" class="collapse" aria-labelledby="movement3_header" data-parent="#linehaul-movements">
+                    <div class="card-body">
+                      <div class="row">
+                        <div class="col">
+                          <div class="row">
+                            <div class="col">
+                              <div class="form-group">
+                                <label for="appointment-date" class="mb-0">Appointment</label>
+                                <div class="form-inline">
+                                  <input type="date" class="form-control form-control-sm" name="" value="">
+                                  <select class="form-control form-control-sm ml-2" name="">
+                                    <option value="00">00</option>
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                    <option value="6">6</option>
+                                    <option value="7">7</option>
+                                    <option value="8">8</option>
+                                    <option value="9">9</option>
+                                    <option value="10">10</option>
+                                    <option value="11">11</option>
+                                    <option value="12">12</option>
+                                    <option value="13">13</option>
+                                    <option value="14">14</option>
+                                    <option value="15">15</option>
+                                    <option value="16">16</option>
+                                    <option value="17">17</option>
+                                    <option value="18">18</option>
+                                    <option value="19">19</option>
+                                    <option value="20">20</option>
+                                    <option value="21">21</option>
+                                    <option value="22">22</option>
+                                    <option value="23">23</option>
+                                  </select>
+                                  <select class="form-control form-control-sm ml-2" name="">
+                                    <option value="00">00</option>
+                                    <option value="05">05</option>
+                                    <option value="10">10</option>
+                                    <option value="15">15</option>
+                                    <option value="20">20</option>
+                                    <option value="25">25</option>
+                                    <option value="30">30</option>
+                                    <option value="35">35</option>
+                                    <option value="40">40</option>
+                                    <option value="45">45</option>
+                                    <option value="50">50</option>
+                                    <option value="55">55</option>
+                                  </select>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="row">
+                            <div class="col">
+                              <div class="form-group">
+                                <label for="appointment-date" class="mb-0">Arrival</label>
+                                <div class="form-inline">
+                                  <input type="date" class="form-control form-control-sm" name="" value="">
+                                  <select class="form-control form-control-sm ml-2" name="">
+                                    <option value="00">00</option>
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                    <option value="6">6</option>
+                                    <option value="7">7</option>
+                                    <option value="8">8</option>
+                                    <option value="9">9</option>
+                                    <option value="10">10</option>
+                                    <option value="11">11</option>
+                                    <option value="12">12</option>
+                                    <option value="13">13</option>
+                                    <option value="14">14</option>
+                                    <option value="15">15</option>
+                                    <option value="16">16</option>
+                                    <option value="17">17</option>
+                                    <option value="18">18</option>
+                                    <option value="19">19</option>
+                                    <option value="20">20</option>
+                                    <option value="21">21</option>
+                                    <option value="22">22</option>
+                                    <option value="23">23</option>
+                                  </select>
+                                  <select class="form-control form-control-sm ml-2" name="">
+                                    <option value="00">00</option>
+                                    <option value="05">05</option>
+                                    <option value="10">10</option>
+                                    <option value="15">15</option>
+                                    <option value="20">20</option>
+                                    <option value="25">25</option>
+                                    <option value="30">30</option>
+                                    <option value="35">35</option>
+                                    <option value="40">40</option>
+                                    <option value="45">45</option>
+                                    <option value="50">50</option>
+                                    <option value="55">55</option>
+                                  </select>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="row">
+                            <div class="col">
+                              <div class="form-group">
+                                <label for="appointment-date" class="mb-0">Loaded / Unloaded</label>
+                                <div class="form-inline">
+                                  <input type="date" class="form-control form-control-sm" name="" value="">
+                                  <select class="form-control form-control-sm ml-2" name="">
+                                    <option value="00">00</option>
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                    <option value="6">6</option>
+                                    <option value="7">7</option>
+                                    <option value="8">8</option>
+                                    <option value="9">9</option>
+                                    <option value="10">10</option>
+                                    <option value="11">11</option>
+                                    <option value="12">12</option>
+                                    <option value="13">13</option>
+                                    <option value="14">14</option>
+                                    <option value="15">15</option>
+                                    <option value="16">16</option>
+                                    <option value="17">17</option>
+                                    <option value="18">18</option>
+                                    <option value="19">19</option>
+                                    <option value="20">20</option>
+                                    <option value="21">21</option>
+                                    <option value="22">22</option>
+                                    <option value="23">23</option>
+                                  </select>
+                                  <select class="form-control form-control-sm ml-2" name="">
+                                    <option value="00">00</option>
+                                    <option value="05">05</option>
+                                    <option value="10">10</option>
+                                    <option value="15">15</option>
+                                    <option value="20">20</option>
+                                    <option value="25">25</option>
+                                    <option value="30">30</option>
+                                    <option value="35">35</option>
+                                    <option value="40">40</option>
+                                    <option value="45">45</option>
+                                    <option value="50">50</option>
+                                    <option value="55">55</option>
+                                  </select>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="row">
+                            <div class="col">
+                              <div class="form-group">
+                                <label for="appointment-date" class="mb-0">Departure</label>
+                                <div class="form-inline">
+                                  <input type="date" class="form-control form-control-sm" name="" value="">
+                                  <select class="form-control form-control-sm ml-2" name="">
+                                    <option value="00">00</option>
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                    <option value="6">6</option>
+                                    <option value="7">7</option>
+                                    <option value="8">8</option>
+                                    <option value="9">9</option>
+                                    <option value="10">10</option>
+                                    <option value="11">11</option>
+                                    <option value="12">12</option>
+                                    <option value="13">13</option>
+                                    <option value="14">14</option>
+                                    <option value="15">15</option>
+                                    <option value="16">16</option>
+                                    <option value="17">17</option>
+                                    <option value="18">18</option>
+                                    <option value="19">19</option>
+                                    <option value="20">20</option>
+                                    <option value="21">21</option>
+                                    <option value="22">22</option>
+                                    <option value="23">23</option>
+                                  </select>
+                                  <select class="form-control form-control-sm ml-2" name="">
+                                    <option value="00">00</option>
+                                    <option value="05">05</option>
+                                    <option value="10">10</option>
+                                    <option value="15">15</option>
+                                    <option value="20">20</option>
+                                    <option value="25">25</option>
+                                    <option value="30">30</option>
+                                    <option value="35">35</option>
+                                    <option value="40">40</option>
+                                    <option value="45">45</option>
+                                    <option value="50">50</option>
+                                    <option value="55">55</option>
+                                  </select>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-md-4">
+                          Movement type and shit
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="add-row-line" role="button"><span><i class="fas fa-plus-circle"></i></span></div>
+              </div>
              </div>
              <div class="tab-pane fade" id="lh-movs-pane" role="tab-panel" aria-labelledby="lh-movs-tab">
                <div class="clearfix mt-1 mb-1">
