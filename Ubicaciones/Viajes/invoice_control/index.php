@@ -31,9 +31,16 @@ $filter_45days = date('Y-m-d', strtotime('today - 45 days'));
     <div class="tab-display" style="color: black !important; " id="pending-invoice-trips" role="tabpanel">
 
       <form class="form-inline justify-content-between" onsubmit="return false;">
-        <div class="form-inline">
-          <label class="form-control-label mr-3">To begin, type a trip or trailer number:</label>
-          <input type="text" class="form-control" autocomplete="off" id="pending-invoice-trip-search" name="" value="">
+        <div class="">
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text" id="basic-addon1"><i class="fas fa-search"></i></span>
+            </div>
+            <input type="text" class="form-control" autocomplete="off" id="table-search" name="" value="" aria-describedby="basic-addon1"  aria-label="search-term">
+          </div>
+          <small id="searchExplanation" class="form-text text-muted">
+            To search through the table type on this box.
+          </small>
         </div>
         <div class="">
           <!-- <button type="button" class="btn btn-outline-secondary" id="pending-payments-toggle" active="0" name="button">Show pending payment only</button> -->
