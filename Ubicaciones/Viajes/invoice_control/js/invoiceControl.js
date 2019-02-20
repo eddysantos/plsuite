@@ -35,6 +35,11 @@ Date.prototype.yyyymmdd = function() {
 };
 
 $(document).ready(function(){
+
+  $(function(){ //onload executables.
+    $('#apply-filter').click();
+  })
+
   $('#pending-invoice-trip-search').keyup(function(){
 
     var text = $(this).val();
@@ -190,5 +195,345 @@ $(document).ready(function(){
 
 
   })
+
+  $('.dropdown.invoice-export-dropdown').on({
+    "shown.bs.dropdown" : function(){this.closable = false;},
+    // "click"             : function(){this.closable = true;},
+    "hide.bs.dropdown"  : function(e){
+      return this.closable
+    }
+  });
+  $('.dropdown.invoice-export-dropdown').on('click', '.close-filter', function(e){
+    e.delegateTarget.closable = true;
+    // e.delegateTarget.dropdown('hide');
+  });
+  $('#export-invoices').click(function(){
+    var $inputs = $(this).parents('.dropdown-menu').find('input');
+    var data = {
+      trips:{
+        from: "",
+        to: "",
+        client:{
+          name: "",
+          id: "",
+        },
+        trailer:{
+          name: "",
+          id: "",
+        }
+      },
+      invoice:{
+        from: "",
+        to: "",
+        no_invoice: ""
+      },
+      payment:{
+        from: "",
+        to: "",
+        no_payment: ""
+      },
+    };
+
+    $inputs.each(function(){
+      if (this.value != "") {
+        switch (this.name) {
+          case "trip-from":
+          data.trips.from = this.value;
+          data.trips.to = this.value;
+          break;
+
+          case "trip-to":
+            data.trips.to = this.value;
+            break;
+
+          case "invoice-from":
+            data.invoice.from = this.value;
+            data.invoice.to = this.value;
+            break;
+
+          case "invoice-to":
+            data.invoice.to = this.value;
+            break;
+
+          case "payment-from":
+            data.payment.from = this.value;
+            data.payment.to = this.value;
+            break;
+
+          case "payment-to":
+            data.payment.to = this.value;
+            break;
+
+          case "client-name":
+            data.client.name = this.value;
+            data.client.id = $(this).attr('db-id');
+            break;
+
+          case "trailer-number":
+            data.trailer.name = this.value;
+            data.trailer.id = $(this).attr('db-id');
+          default:
+          //Ignore!
+        }
+      }
+    })
+    console.log(data);
+  })
+  $('.show-filter').click(function(){
+    $('.filter-tab').animate({
+      right: 0
+    }, 300);
+  });
+  $('.hide-filter').click(function(){
+    $('.filter-tab').animate({
+      right: "-25%"
+    }, 300);
+  });
+  $('#apply-filter').click(function(){
+    var data = {
+      trips:{
+        from: "",
+        to: "",
+        client:{
+          name: "",
+          id: "",
+        },
+        trailer:{
+          name: "",
+          id: "",
+        }
+      },
+      invoice:{
+        from: "",
+        to: "",
+        no_invoice: ""
+      },
+      payment:{
+        from: "",
+        to: "",
+        no_payment: ""
+      },
+    };
+    $('#filter-form').find('input').each(function(){
+      if (this.value != "") {
+        switch (this.name) {
+          case "trip-from":
+          data.trips.from = this.value;
+          data.trips.to = this.value;
+          break;
+
+          case "trip-to":
+            data.trips.to = this.value;
+            break;
+
+          case "invoice-from":
+            data.invoice.from = this.value;
+            data.invoice.to = this.value;
+            break;
+
+          case "invoice-to":
+            data.invoice.to = this.value;
+            break;
+
+          case "no-invoice":
+            if (this.checked) {
+              data.invoice.no_invoice = this.value;
+            }
+            break;
+
+          case "payment-from":
+            data.payment.from = this.value;
+            data.payment.to = this.value;
+            break;
+
+          case "payment-to":
+            data.payment.to = this.value;
+            break;
+
+          case "no-payment":
+            if (this.checked) {
+              data.payment.no_payment = this.value;
+            }
+            break;
+
+          case "client-name":
+            data.trips.client.name = this.value;
+            data.trips.client.id = $(this).attr('db-id');
+            break;
+
+          case "trailer-number":
+            data.trips.trailer.name = this.value;
+            data.trips.trailer.id = $(this).attr('db-id');
+          default:
+          //Ignore!
+        }
+      }
+    });
+    console.log(data);
+
+    var pull_data = $.ajax({
+      method: 'POST',
+      url: 'actions/fetchTripsInvoiceControl.php',
+      data: data
+    });
+
+    pull_data.done(function(r){
+      r = JSON.parse(r);
+      console.log(r);
+      if (r.code == 1) {
+        $('#trip-invoice-search').html(r.data);
+      } else {
+        $('#trip-invoice-search').html("<tr><td colspan='4'>No trips found</td></tr>");
+        console.log("There was an error");
+        console.error(r.message);
+      }
+      $('.hide-filter').click();
+    }).fail(function(x){
+      console.error(x);
+    })
+
+
+  });
+
+
+  $('.popup-input').keydown(function(e){
+    if (e.keyCode === 13 || e.keyCode === 9) {
+      e.preventDefault();
+      var targetFocus = $(document.activeElement).attr('id-display') + " p" + ".hovered";
+
+
+      var dbid = $(targetFocus).attr('db-id');
+      var inputTarget = $(targetFocus).parent().attr('id');
+      var type = $(targetFocus).parent().attr('type');
+      var target = $(targetFocus).parent().attr('target');
+      var name = $(targetFocus).html();
+      var plates = $(targetFocus).attr('plates');
+
+      switch (type) {
+        case 'multiple':
+        add_driver(name, dbid);
+        break;
+        default:
+        if (plates) {
+          $("[id-display='#" + inputTarget+ "']").attr('plates', plates);
+        }
+        $("[id-display='#" + inputTarget+ "']").attr("value", $(targetFocus).html()).attr('db-id', $(targetFocus).attr('db-id'));
+        $("[id-display='#" + inputTarget+ "']").prop("value", $(targetFocus).html()).change();
+        $('.popup-list').slideUp();
+      }
+
+
+    }
+  });
+  $('.popup-input').keyup(function(e){
+    if (e.keyCode === 38 || e.keyCode === 40 || e.keyCode === 13 || e.keyCode === 9){return false;}
+    data = {}
+    pop = $(this).attr('id-display');
+    data.txt = $(this).val();
+
+
+    if (data.txt == "") {
+      $('.popup-list').slideUp();
+      return false;
+    } else {
+
+      if (pop.indexOf('trailer') >= 0){
+        url = "../actions/fetchTrailersPopup.php"
+      }
+      if (pop.indexOf('truck') >= 0){
+        url = "../actions/fetchTrucksPopup.php"
+      }
+      if (pop.indexOf('driver') >= 0){
+        url = "../actions/fetchDriversPopup.php"
+      }
+      if (pop.indexOf('broker') >= 0) {
+        url = "../actions/fetchBrokersPopup.php"
+      }
+
+      $.ajax({
+        method: 'POST',
+        data: data,
+        url: url,
+        success: function(result){
+          resp = JSON.parse(result);
+
+          switch (resp.code) {
+            case 1:
+              $(pop).html(resp.data).slideDown();
+              break;
+            case 2:
+            $(pop).html("<p>No se encontraron resulados...</p>").slideDown();
+              break;
+            default:
+            console.error(resp.message);
+            $(pop).html("").slideUp();
+
+          }
+        },
+        error: function(exception){
+          console.error(exception);
+        }
+      })
+    }
+  })
+  $('.popup-list').on('click', 'p', function(){
+    var dbid = $(this).attr('db-id');
+    var inputTarget = $(this).parent().attr('id');
+    var name = $(this).html();
+    if (inputTarget == "driver-popup-list-modal") {
+        add_driver(name, dbid);
+        return false;
+    }
+
+    if (inputTarget == "trailer-popup-list") {
+      $("[id-display='#" + inputTarget+ "']").attr('plates', $(this).attr('plates'));
+    }
+    $("[id-display='#" + inputTarget+ "']").attr("value", $(this).html()).attr('db-id', $(this).attr('db-id')).blur();
+    $("[id-display='#" + inputTarget+ "']").prop("value", $(this).html()).blur();
+    $('.popup-list').slideUp();
+
+  });
+  $('.popup-list').on('mouseenter', 'p', function(){
+    $('.hovered').attr('class', '');
+    $(this).attr('class', 'hovered');
+  });
+  $('.popup-list').on('mouseleave', 'p', function(){
+    $(this).attr('class', '')
+  });
+
+  $(document).keydown(function(e){
+    if (e.keyCode == 38 || e.keyCode == 40){
+      if ($(document.activeElement).attr('id-display') !== undefined) {
+        var target = $(document.activeElement).attr('id-display') + " p";
+        var targetFocus = $(document.activeElement).attr('id-display') + " p" + ".hovered";
+
+        if ($(targetFocus).length == 0) {
+          $(target).first().addClass('hovered');
+        } else {
+          if (e.keyCode == 40) {
+            $(targetFocus).removeClass('hovered').next().addClass('hovered');
+          }
+
+          if (e.keyCode == 38) {
+            $(targetFocus).removeClass('hovered').prev().addClass('hovered');
+          }
+        }
+
+      }
+    }
+
+    if (e.keyCode === 13 || e.keyCode === 9) {
+      var targetFocus = $(document.activeElement).attr('id-display') + " p" + ".hovered";
+
+      var dbid = $(targetFocus).attr('db-id');
+      var inputTarget = $(targetFocus).parent().attr('id');
+      $("[id-display='#" + inputTarget+ "']").attr("value", $(targetFocus).html()).attr('db-id', $(targetFocus).attr('db-id'));
+      $("[id-display='#" + inputTarget+ "']").prop("value", $(targetFocus).html());
+      $('.popup-list').slideUp();
+
+    }
+
+
+  });
 
 })
