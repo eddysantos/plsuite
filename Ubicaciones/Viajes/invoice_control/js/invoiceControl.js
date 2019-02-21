@@ -80,6 +80,11 @@ $(document).ready(function(){
 
   $('#trip-invoice-search').on('click', 'tr', function(){
     var target = $(this).attr('target');
+
+    if (target == "no-contest") {
+      return false;
+    }
+
     var tripno = $(this).find('td:first').html();
     var $this = $(this);
     var data = {

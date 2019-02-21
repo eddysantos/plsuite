@@ -113,10 +113,10 @@ if ($data['payment']['no_payment'] != "") {
 }
 
 foreach ($pre_where as $clause) {
-  if ($where == "") {
-    $where .= $clause;
-    continue;
-  }
+  // if ($where == "") {
+  //   $where .= $clause;
+  //   continue;
+  // }
 
   $where .= " AND $clause";
 }
@@ -147,12 +147,15 @@ $query = "SELECT
 	tl.invoice_date inv_date ,
 	tl.invoice_payment_due payment_due ,
 	tl.invoice_payment_date payment_date ,
+  tl.linehaul_status lh_status,
 	b.brokerName broker
 FROM
 	ct_trip t
 LEFT JOIN ct_trip_linehaul tl ON t.pkid_trip = tl.fk_idtrip
 LEFT JOIN ct_brokers b ON tl.fkid_broker = b.pkid_broker
-WHERE $where";
+WHERE
+  tl.linehaul_status <> 'Cancelled'
+  $where";
 
 
 
@@ -191,23 +194,48 @@ if ($rslt->num_rows == 0) {
   $sc['data'] = "<tr><td colspan='4'>No trips found</td></tr>";
   $sc['message'] = "Script called successfully but there are no rows to display. For trip query.";
   exit_script($sc);
+
+
 } else {
   while ($row = $rslt->fetch_assoc()) {
+
     $status = "";
 
-    if ($row['invoice_number'] != "") {
-      $status = "table-warning";
+
+    if ($row['payment_date'] != "" && $row['invoice'] != "" && $row['lh_status'] == 'Closed') {
+      $status = "table-success";
+      $data_target = "target='#pending-invoice-trip-details' dbid='$row[dbid]'";
     }
 
-    if ($row['check_number'] != "") {
-      $status = "table-success";
+    if ($row['payment_date'] == "") {
+      $status = "table-warning";
+      $data_target = "target='#pending-invoice-trip-details' dbid='$row[dbid]'";
     }
+
+    if ($row['invoice'] == "") {
+      $status = "table-danger";
+      $data_target = "target='#pending-invoice-trip-details' dbid='$row[dbid]'";
+    }
+
+    if ($row['lh_status'] != 'Closed') {
+      $status = "";
+      $data_target = "target='no-contest'";
+    }
+
+
+    // if ($row['invoice_number'] != "") {
+    //   $status = "table-warning";
+    // }
+    //
+    // if ($row['check_number'] != "") {
+    //   $status = "table-success";
+    // }
 
     $rate = numberify($row['rate']);
     $trip_date = parseDate($row['departure']);
     $pay_date = parseDate($row['payment_date']);
     $invoice_date = parseDate($row['inv_date']);
-    $sc['data'] .= "<tr role='button' class='$status' target='#pending-invoice-trip-details' dbid='$row[dbid]'><td>US$row[lh_number]</td><td>$trip_date</td><td>$row[trailer]</td><td>$row[ocity], $row[ostate] - $row[dcity], $row[dstate]</td><td>Driver</td><td>$row[broker]</td><td>$$rate</td><td>$row[invoice]</td><td>$invoice_date</td><td>$pay_date</td></tr>";
+    $sc['data'] .= "<tr role='button' class='$status' $data_target ><td>US$row[lh_number]</td><td>$trip_date</td><td>$row[trailer]</td><td>$row[ocity], $row[ostate] - $row[dcity], $row[dstate]</td><td>Driver</td><td>$row[broker]</td><td>$$rate</td><td>$row[invoice]</td><td>$invoice_date</td><td>$pay_date</td></tr>";
   }
 }
 
