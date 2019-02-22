@@ -143,8 +143,7 @@ function parseDate($datestamp){
           <thead>
             <tr>
               <th></th>
-              <th>O</th>
-              <th>D</th>
+              <th>O / D</th>
               <th>Location</th>
               <th>Mov. Type</th>
               <th>EAL <span data-toggle="tooltip" data-placement="top" title="Empty As Loaded"><i class="far fa-question-circle"></i></span></th>
@@ -157,14 +156,15 @@ function parseDate($datestamp){
             <tr id="tr-1">
               <td><i class="fas fa-sort"></i></td>
               <td>
-                <div class="form-check">
+                <span class="text-danger">Origin</span>
+                <!-- <div class="form-check">
                   <input class="form-check-input position-static" type="radio" name="origin-flag" value="1">
                 </div>
               </td>
               <td>
                 <div class="form-check">
                   <input class="form-check-input position-static" type="radio" name="destination-flag" value="1">
-                </div>
+                </div> -->
               </td>
               <td class="w-25"> <input type="text" class="form-control form-control-sm google-location-input" id="gi-1" name="" value=""> </td>
               <td class="mov-type-td">
@@ -242,14 +242,15 @@ function parseDate($datestamp){
             <tr id="tr-2">
               <td><i class="fas fa-sort"></i></td>
               <td>
-                <div class="form-check">
+                <span class="text-success">Destination</span>
+                <!-- <div class="form-check">
                   <input class="form-check-input position-static" type="radio" name="origin-flag" value="1">
                 </div>
               </td>
               <td>
                 <div class="form-check">
                   <input class="form-check-input position-static" type="radio" name="destination-flag" value="1">
-                </div>
+                </div> -->
               </td>
               <td> <input type="text" class="form-control form-control-sm google-location-input" id="gi-2" name="" value=""> </td>
               <td class="mov-type-td">
