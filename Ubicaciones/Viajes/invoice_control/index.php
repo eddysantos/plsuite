@@ -1,6 +1,6 @@
 <?php
 $root = $_SERVER['DOCUMENT_ROOT'];
-// require $root . '/plsuite/Resources/PHP/Utilities/session.php';
+require $root . '/plsuite/Resources/PHP/Utilities/session.php';
 
 
 echo "<link rel='stylesheet' href='/plsuite/Resources/CSS/invoiceControl.css'>";
@@ -14,16 +14,6 @@ $filter_45days = date('Y-m-d', strtotime('today - 45 days'));
  ?>
 <div class="container-fluid align-items-right d-flex align-content-center mb-3 position-sticky" style="margin-top: 65px">
   <h1 class="nb-id d-inline text-secondary">Invoice Control</h1>
-  <!-- <div class="ml-5">
-    <ul class="nav nav-pills" role="tablist">
-      <li class="nav-item">
-        <a class="nav-link active" id="pending-invoice-tab" data-toggle="tab" href="#pending-invoice-trips" role="tab">Pending Invoice</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link"id="pending-payment-tab" data-toggle="tab" href="#pending-payment-trips" role="tab">Pending Payment</a>
-      </li>
-    </ul>
-  </div> -->
 </div>
 
 <div class="container-fluid" style="overflow-y: scroll; height: calc(100vh - 190px);">
