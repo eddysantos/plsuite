@@ -643,7 +643,7 @@ if ($trip['last_movement']) {
                        </div>
                      </div>
 
-                     <div class="row" style="display: none">
+                     <div class="row">
                        <div class="col-12">
                          <div class="form-group">
                            <a role="button" class="btn btn-outline-secondary" target="_blank" name="plscope_anchor" href="" data-toggle="tooltip" data-placement="top" title="Open PL Scope"><i class="fas fa-map-marked-alt"></i></a>
