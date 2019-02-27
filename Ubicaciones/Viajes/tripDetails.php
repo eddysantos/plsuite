@@ -157,6 +157,7 @@ if ($trip['last_movement']) {
    <head>
      <meta charset="utf-8">
      <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+     <link rel="icon" href="/plsuite/Resources/images/icono.png">
 
      <!-- Bootstrap CSS -->
      <link rel="stylesheet" href="/plsuite/Resources/Bootstrap_4_1_1/css/bootstrap.min.css">
