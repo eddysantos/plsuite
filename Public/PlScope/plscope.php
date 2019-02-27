@@ -90,7 +90,7 @@ $data = $_GET;
         <i class="fas fa-globe-americas"></i> - Waiting for GeoLocation information...
       </div>
     </div>
-    <div id="status-message-container" style="display: none">
+    <div id="status-message-container" class="h-100 w-100 position-fixed"> 
       <div class="status-message d-flex justify-content-center">
         <div class="status-message-body align-self-center">
           Loading trip data. Please wait.

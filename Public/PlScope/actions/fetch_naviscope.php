@@ -39,7 +39,7 @@ $key =hash('sha256', "ewgdhfjjluo3pip4l");
 $iv = substr(hash('sha256', "sdfkljsadf567890saf"), 0, 16);
 $lh_id = openssl_decrypt(base64_decode($valor1),$cipher, $key, 0, $iv);
 
-$get_trip_info = "SELECT tl.lh_number lh_number , b.brokerName broker_name FROM ct_trip_linehaul tl LEFT JOIN ct_brokers b ON tl.fkid_broker = b.pkid_broker WHERE tl.pk_idlinehaul = ?";
+$get_trip_info = "SELECT tl.lh_number lh_number , b.brokerName broker_name, tl.linehaul_status lh_status FROM ct_trip_linehaul tl LEFT JOIN ct_brokers b ON tl.fkid_broker = b.pkid_broker WHERE tl.pk_idlinehaul = ?";
 
 $get_trip_info = $db->prepare($get_trip_info);
 if (!($get_trip_info)) {
@@ -68,6 +68,24 @@ $trip_info = $trip_info->fetch_assoc();
 
 foreach ($trip_info as $key => $value) {
   $system_callback['data'][$key] = $value;
+}
+
+if ($trip_info['lh_status'] == 'Pending') {
+  $system_callback['code'] = 2;
+  $system_callback['message'] = "The truck has not yet departed from shipper's. Please contact dispatch for more information.";
+  exit_script($system_callback);
+}
+
+if ($trip_info['lh_status'] == 'Cancelled') {
+  $system_callback['code'] = 2;
+  $system_callback['message'] = "This trip has been cancelled. Please contact dispatch for more information.";
+  exit_script($system_callback);
+}
+
+if ($trip_info['lh_status'] == 'Closed') {
+  $system_callback['code'] = 2;
+  $system_callback['message'] = "This trip has already been closed. Please contact dispatch for more information.";
+  exit_script($system_callback);
 }
 
 $get_conveyance = "SELECT t.truckNumber truck_number , concat(d.nameFirst , ' ' , d.nameLast) driver_name FROM ct_trip_linehaul_movement tlm LEFT JOIN ct_truck t ON tlm.fkid_tractor = t.pkid_truck LEFT JOIN ct_drivers d ON tlm.fkid_driver = d.pkid_driver WHERE tlm.fkid_linehaul = ? ORDER BY tlm.pk_movement_number DESC LIMIT 1";
