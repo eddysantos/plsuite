@@ -156,7 +156,7 @@ function parseDate($datestamp){
             <tr id="tr-1">
               <td><i class="fas fa-sort"></i></td>
               <td>
-                <span class="text-danger">Origin</span>
+                <span class="origin-destination-flag text-danger">Origin</span>
                 <!-- <div class="form-check">
                   <input class="form-check-input position-static" type="radio" name="origin-flag" value="1">
                 </div>
@@ -242,7 +242,7 @@ function parseDate($datestamp){
             <tr id="tr-2">
               <td><i class="fas fa-sort"></i></td>
               <td>
-                <span class="text-success">Destination</span>
+                <span class="origin-destination-flag text-success">Destination</span>
                 <!-- <div class="form-check">
                   <input class="form-check-input position-static" type="radio" name="origin-flag" value="1">
                 </div>
