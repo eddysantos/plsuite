@@ -125,7 +125,7 @@ function show_lh_details(lhid = undefined){
   pullLh.done(function(r){
     // console.log(r);
     r = JSON.parse(r);
-
+    console.log(r);
     for (var key in r.data) {
       if ($('.' + key).is('select')) {
         continue;
@@ -141,6 +141,7 @@ function show_lh_details(lhid = undefined){
     $('.finalizeRecord.linehaul').attr('recordid', r.data.linehaulid);
     $('#upload-file').attr('recordid', r.data.linehaulid);
     $('.lh-status-button').removeClass('Open Pending Delivery Closed Closure Cancelled').addClass(r.data.lh_status);
+    $('[name=plscope_anchor]').attr('href', r.data.plscope_target);
 
     if (r.data.lh_status == 'Closed' || r.data.lh_status == 'Cancelled') {
       $('.finalizeRecord.closelh').hide();

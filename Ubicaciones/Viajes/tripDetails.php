@@ -33,6 +33,17 @@ function parseDate($datestamp){
   return $return;
 }
 
+function encrypt($string){
+  $cipher = "AES-256-CBC";
+  $key =hash('sha256', "ewgdhfjjluo3pip4l");
+  $iv = substr(hash('sha256', "sdfkljsadf567890saf"), 0, 16);
+  $token = openssl_encrypt($string, $cipher, $key, 0, $iv);
+  $token = base64_encode($token);
+
+  return $token;
+  // $token = openssl_decrypt(base64_decode("UmhaN284bEUxeStZWXF0eTJ3ODhNQT09"),$cipher, $key, 0, $iv);
+}
+
 $query = "SELECT t.pkid_trip pkidtrip , t.trip_year tripyear, t.trip_number trip_number, t.trip_status trip_status , t.trailer_number trailer_number, t.trailer_plates trailer_plates, t.date_open date_open , t.date_close date_close , tl.pk_idlinehaul idlh, t.first_movement first_movement, t.last_movement last_movement, sum(( SELECT sum(miles_google) FROM ct_trip_linehaul_movement tlm WHERE tl.pk_idlinehaul = tlm.fkid_linehaul AND tl.linehaul_status <> 'Cancelled')) total_miles , sum(( SELECT sum(miles_google) FROM ct_trip_linehaul_movement tlm WHERE tlm.fkid_linehaul = tl.pk_idlinehaul AND tlm.movement_type = 'L' AND tl.linehaul_status <> 'Cancelled')) loaded_miles , sum(( SELECT sum(miles_google) FROM ct_trip_linehaul_movement tlm WHERE tlm.fkid_linehaul = tl.pk_idlinehaul AND tlm.movement_type = 'E' AND tl.linehaul_status <> 'Cancelled')) empty_miles , SUM( IF( tl.linehaul_status <> 'Cancelled' , tl.trip_rate , 0)) total_rate FROM ct_trip t LEFT JOIN ct_trip_linehaul tl ON t.pkid_trip = tl.fk_idtrip WHERE pkid_trip = ? GROUP BY pkid_trip ORDER BY t.pkid_trip DESC";
 
 $stmt = $db->prepare($query);
@@ -628,6 +639,14 @@ if ($trip['last_movement']) {
                        <div class="col-12">
                          <div class="form-group">
                            <button type="button" class="btn btn-outline-success saveLhChanges" tripid="<?php echo $trip['pkidtrip']?>" tripyear="<?php echo $trip['tripyear']?>" form-parent="#lh-details-form" name="button" data-toggle="tooltip" data-placement="top" title="Save Changes"><i class="far fa-save"></i></button>
+                         </div>
+                       </div>
+                     </div>
+
+                     <div class="row" style="display: none">
+                       <div class="col-12">
+                         <div class="form-group">
+                           <a role="button" class="btn btn-outline-secondary" target="_blank" name="plscope_anchor" href="" data-toggle="tooltip" data-placement="top" title="Open PL Scope"><i class="fas fa-map-marked-alt"></i></a>
                          </div>
                        </div>
                      </div>

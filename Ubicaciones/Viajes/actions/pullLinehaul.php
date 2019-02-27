@@ -6,6 +6,17 @@ require $root . '/plsuite/Resources/PHP/Utilities/initialScript.php';
 $sc = [];
 $data = $_POST;
 
+function encrypt($string){
+  $cipher = "AES-256-CBC";
+  $key =hash('sha256', "ewgdhfjjluo3pip4l");
+  $iv = substr(hash('sha256', "sdfkljsadf567890saf"), 0, 16);
+  $token = openssl_encrypt($string, $cipher, $key, 0, $iv);
+  $token = base64_encode($token);
+
+  return $token;
+  // $token = openssl_decrypt(base64_decode("UmhaN284bEUxeStZWXF0eTJ3ODhNQT09"),$cipher, $key, 0, $iv);
+}
+
 function parseDate($datestamp, $option = 1){
   if ($datestamp == "") {
     return $return;
@@ -72,6 +83,7 @@ if ($rslt->num_rows == 0) {
 
 $sc['data'] = $rslt->fetch_assoc();
 // $sc['data']['lh_number'] = $sc['data']['trip_year'] . str_pad($sc['data']['tripid'], 4, 0, STR_PAD_LEFT) . $sc['data']['lh_number'];
+$sc['data']['plscope_target'] = "/plsuite/public/PlScope/plscope.php?lh_reference=" . encrypt($sc['data']['linehaulid']);
 $sc['data']['lh_number'] = $sc['data']['lh_number'];
 $sc['data']['rpm'] = numberify($sc['data']['rate']/$sc['data']['total_miles']);
 $sc['data']['rate'] = numberify($sc['data']['rate']);
