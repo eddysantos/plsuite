@@ -1,0 +1,407 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="c82c7a8e-7d02-4436-9c12-5eb33a3f3465" name="Default Changelist" comment="Fixed origin-destination tag.">
+      <change afterPath="$PROJECT_DIR$/Public/NavViewer.php" afterDir="false" />
+    </list>
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ComposerSettings" synchronizationState="SYNCHRONIZE">
+    <pharConfigPath>$PROJECT_DIR$/Resources/composer.json</pharConfigPath>
+  </component>
+  <component name="DatabaseView">
+    <option name="SHOW_INTERMEDIATE" value="true" />
+    <option name="GROUP_DATA_SOURCES" value="true" />
+    <option name="GROUP_SCHEMA" value="true" />
+    <option name="GROUP_CONTENTS" value="false" />
+    <option name="SORT_POSITIONED" value="false" />
+    <option name="SHOW_EMPTY_GROUPS" value="false" />
+    <option name="AUTO_SCROLL_FROM_SOURCE" value="false" />
+    <option name="HIDDEN_KINDS">
+      <set />
+    </option>
+    <expand>
+      <path>
+        <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
+        <item name="@localhost" type="feb32156:DbDataSourceImpl" />
+      </path>
+      <path>
+        <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
+        <item name="@localhost" type="feb32156:DbDataSourceImpl" />
+        <item name="schemas" type="d4e8921:DatabaseStructure$FamilyGroup" />
+      </path>
+      <path>
+        <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
+        <item name="@localhost" type="feb32156:DbDataSourceImpl" />
+        <item name="schemas" type="d4e8921:DatabaseStructure$FamilyGroup" />
+        <item name="plsuite: schema" type="76f4a085:MysqlImplModel$Schema" />
+      </path>
+    </expand>
+    <select />
+  </component>
+  <component name="FileEditorManager">
+    <leaf>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/Public/NavViewer.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state>
+              <caret lean-forward="true" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/index.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="352">
+              <caret line="84" column="86" lean-forward="true" selection-start-line="84" selection-start-column="20" selection-end-line="84" selection-end-column="86" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
+  </component>
+  <component name="FindInProjectRecents">
+    <findStrings>
+      <find>first</find>
+    </findStrings>
+  </component>
+  <component name="Git.Settings">
+    <option name="ROOT_SYNC" value="DONT_SYNC" />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="new-pending-return" />
+      </map>
+    </option>
+  </component>
+  <component name="IdeDocumentHistory">
+    <option name="CHANGED_PATHS">
+      <list>
+        <option value="$PROJECT_DIR$/Resources/CSS/trips.css" />
+        <option value="$PROJECT_DIR$/Ubicaciones/Viajes/addTrip.php" />
+        <option value="$PROJECT_DIR$/Ubicaciones/Viajes/js/addTrip.js" />
+        <option value="$PROJECT_DIR$/Public/NavViewer.php" />
+      </list>
+    </option>
+  </component>
+  <component name="PhpWorkspaceProjectConfiguration">
+    <include_path>
+      <path value="$PROJECT_DIR$/Resources/vendor/composer" />
+      <path value="$PROJECT_DIR$/Resources/vendor/tecnickcom/tcpdf" />
+      <path value="$PROJECT_DIR$/Resources/vendor/psr/simple-cache" />
+      <path value="$PROJECT_DIR$/Resources/vendor/phpoffice/phpspreadsheet" />
+    </include_path>
+  </component>
+  <component name="ProjectFrameBounds" extendedState="6">
+    <option name="y" value="23" />
+    <option name="width" value="1440" />
+    <option name="height" value="877" />
+  </component>
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectView">
+    <navigator proportions="" version="1">
+      <foldersAlwaysOnTop value="true" />
+    </navigator>
+    <panes>
+      <pane id="ProjectPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="plsuite" type="b2602c69:ProjectViewProjectNode" />
+              <item name="plsuite" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="plsuite" type="b2602c69:ProjectViewProjectNode" />
+              <item name="plsuite" type="462c0819:PsiDirectoryNode" />
+              <item name="Ubicaciones" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="plsuite" type="b2602c69:ProjectViewProjectNode" />
+              <item name="plsuite" type="462c0819:PsiDirectoryNode" />
+              <item name="Ubicaciones" type="462c0819:PsiDirectoryNode" />
+              <item name="Viajes" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="plsuite" type="b2602c69:ProjectViewProjectNode" />
+              <item name="External Libraries" type="bcb0276e:PhpExternalLibrariesNodePatcher$PatchedExternalLibrariesNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
+      <pane id="Scope" />
+    </panes>
+  </component>
+  <component name="PropertiesComponent">
+    <property name="DatabaseDriversLRU" value="mysql" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="c82c7a8e-7d02-4436-9c12-5eb33a3f3465" name="Default Changelist" comment="" />
+      <created>1551127514095</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1551127514095</updated>
+      <workItem from="1551127516094" duration="6456000" />
+    </task>
+    <task id="LOCAL-00001" summary="Fixed origin-destination tag.">
+      <created>1551286424008</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1551286424008</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
+    <servers />
+  </component>
+  <component name="TimeTrackingManager">
+    <option name="totallyTimeSpent" value="6456000" />
+  </component>
+  <component name="TodoView">
+    <todo-panel id="selected-file">
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+    <todo-panel id="all">
+      <are-packages-shown value="true" />
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="0" y="23" width="1440" height="877" extended-state="6" />
+    <layout>
+      <window_info id="Favorites" side_tool="true" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.24248926" />
+      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info anchor="bottom" id="Docker" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Database Changes" weight="0.32953367" />
+      <window_info anchor="bottom" id="Version Control" weight="0.3299363" />
+      <window_info anchor="bottom" id="Terminal" />
+      <window_info anchor="bottom" id="Event Log" side_tool="true" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Find" order="1" />
+      <window_info anchor="bottom" id="Run" order="2" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="bottom" id="TODO" order="6" weight="0.32953367" />
+      <window_info anchor="right" id="Database" weight="0.3297568" />
+      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+    </layout>
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Fixed origin-destination tag." />
+    <option name="LAST_COMMIT_MESSAGE" value="Fixed origin-destination tag." />
+  </component>
+  <component name="editorHistoryManager">
+    <entry file="file://$APPLICATION_CONFIG_DIR$/consoles/db/8c5687f3-a0d1-4268-ae3a-cd6b12ea159f/console.sql">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Ubicaciones/Viajes/addTrip.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="129">
+          <caret line="158" column="64" selection-start-line="158" selection-start-column="64" selection-end-line="158" selection-end-column="64" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Ubicaciones/Viajes/actions/addTrip.php">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Ubicaciones/Viajes/actions/addNewTrip.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="90">
+          <caret line="6" column="112" selection-start-line="6" selection-start-column="112" selection-end-line="6" selection-end-column="112" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Ubicaciones/Viajes/js/addTrip.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="322">
+          <caret line="262" column="119" selection-start-line="262" selection-start-column="119" selection-end-line="262" selection-end-column="119" />
+          <folding>
+            <element signature="n#!!block;n#loadingScreen#0" />
+            <element signature="n#!!block;n#validateForm#0" />
+            <element signature="e#474#1287#0" />
+            <element signature="e#514#705#0" />
+            <element signature="e#752#909#0" />
+            <element signature="e#942#1090#0" />
+            <element signature="e#1096#1219#0" />
+            <element signature="e#1256#1283#0" />
+            <element signature="e#1321#1558#0" />
+            <element signature="e#1361#1470#0" />
+            <element signature="e#1410#1419#0" />
+            <element signature="e#1502#1554#0" />
+            <element signature="n#!!block;n#pad#0" />
+            <element signature="n#!!block;n#construct_movement#0" />
+            <element signature="e#1734#2147#0" />
+            <element signature="e#2849#3946#0" />
+            <element signature="e#2927#3942#0" />
+            <element signature="e#3323#3483#0" />
+            <element signature="e#3382#3475#0" />
+            <element signature="e#3586#3761#0" />
+            <element signature="e#3650#3753#0" />
+            <element signature="n#!!block;n#add_driver#0" />
+            <element signature="n#!!block;n#catchLocation#0" />
+            <element signature="e#4548#5515#0" />
+            <element signature="e#4635#4841#0" />
+            <element signature="e#4966#5209#0" />
+            <element signature="e#5070#5203#0" />
+            <element signature="e#5378#5511#0" />
+            <element signature="e#5432#5505#0" />
+            <element signature="e#5611#5711#0" />
+            <element signature="e#5751#6730#0" />
+            <element signature="e#5798#6726#0" />
+            <element signature="e#6239#6718#0" />
+            <element signature="e#6263#6326#0" />
+            <element signature="e#6335#6710#0" />
+            <element signature="e#6364#6449#0" />
+            <element signature="e#6770#8040#0" />
+            <element signature="e#6980#7041#0" />
+            <element signature="e#7047#8036#0" />
+            <element signature="e#7088#7144#0" />
+            <element signature="e#7181#7235#0" />
+            <element signature="e#7273#7328#0" />
+            <element signature="e#7367#7422#0" />
+            <element signature="e#7437#8029#0" />
+            <element signature="e#7534#7938#0" />
+            <element signature="e#7584#7928#0" />
+            <element signature="e#7617#7695#0" />
+            <element signature="e#7708#7814#0" />
+            <element signature="e#7827#7915#0" />
+            <element signature="e#7974#8021#0" />
+            <element signature="e#8088#8699#0" />
+            <element signature="e#8260#8321#0" />
+            <element signature="e#8368#8461#0" />
+            <element signature="e#8753#8833#0" />
+            <element signature="e#8887#8922#0" />
+            <element signature="n#style#0;n#div#0;n#!!top" expanded="true" />
+            <element signature="e#21408#24496#0" />
+            <element signature="e#24563#24630#0" />
+            <element signature="e#24636#24705#0" />
+            <element signature="e#24765#25352#0" />
+            <element signature="e#24859#25310#0" />
+            <element signature="e#24940#25122#0" />
+            <element signature="e#24972#25053#0" />
+            <element signature="e#25059#25114#0" />
+            <element signature="e#25128#25304#0" />
+            <element signature="e#25154#25235#0" />
+            <element signature="e#25241#25296#0" />
+            <element signature="e#25412#26018#0" />
+            <element signature="e#25620#25706#0" />
+            <element signature="e#25712#25776#0" />
+            <element signature="e#25796#25882#0" />
+            <element signature="e#25888#25954#0" />
+            <element signature="e#25974#26013#0" />
+            <element signature="e#26082#31275#0" />
+            <element signature="e#26411#26521#0" />
+            <element signature="e#26434#26513#0" />
+            <element signature="e#26826#28252#0" />
+            <element signature="e#27091#27382#0" />
+            <element signature="e#27532#27901#0" />
+            <element signature="e#27971#28161#0" />
+            <element signature="e#28198#28246#0" />
+            <element signature="e#28792#29154#0" />
+            <element signature="e#28836#29148#0" />
+            <element signature="e#29232#30760#0" />
+            <element signature="e#29269#30754#0" />
+            <element signature="e#29581#29865#0" />
+            <element signature="e#29871#29945#0" />
+            <element signature="e#29981#30047#0" />
+            <element signature="e#30081#30152#0" />
+            <element signature="e#30484#30746#0" />
+            <element signature="e#30550#30734#0" />
+            <element signature="e#30599#30642#0" />
+            <element signature="e#31335#31411#0" />
+            <element signature="e#31453#32461#0" />
+            <element signature="e#32234#32340#0" />
+            <element signature="e#32525#32680#0" />
+            <element signature="e#32761#32859#0" />
+            <element signature="e#32899#37042#0" />
+            <element signature="e#33079#35177#0" />
+            <element signature="e#33096#33297#0" />
+            <element signature="e#33311#33506#0" />
+            <element signature="e#33521#33655#0" />
+            <element signature="e#33672#35170#0" />
+            <element signature="e#33687#33820#0" />
+            <element signature="e#33970#34388#0" />
+            <element signature="e#34053#34205#0" />
+            <element signature="e#34220#34378#0" />
+            <element signature="e#34405#34735#0" />
+            <element signature="e#34757#35122#0" />
+            <element signature="e#35259#35465#0" />
+            <element signature="e#35543#36604#0" />
+            <element signature="e#35762#36597#0" />
+            <element signature="e#35779#36109#0" />
+            <element signature="e#36131#36496#0" />
+            <element signature="e#36633#36721#0" />
+            <element signature="e#36754#36988#0" />
+            <element signature="e#36830#36866#0" />
+            <element signature="e#36872#36982#0" />
+            <element signature="e#37006#37036#0" />
+            <element signature="e#37048#37124#0" />
+            <element signature="e#37162#37309#0" />
+            <element signature="e#37164#37233#0" />
+            <element signature="e#37442#37927#0" />
+            <element signature="e#37609#37715#0" />
+            <element signature="e#38028#38119#0" />
+            <element signature="e#38263#39383#0" />
+            <element signature="e#38306#38896#0" />
+            <element signature="e#38376#38892#0" />
+            <element signature="e#38579#38635#0" />
+            <element signature="e#38641#38885#0" />
+            <element signature="e#38672#38759#0" />
+            <element signature="e#38790#38877#0" />
+            <element signature="e#38941#39379#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Resources/CSS/trips.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="648">
+          <caret line="302" selection-start-line="302" selection-end-line="302" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/index.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="352">
+          <caret line="84" column="86" lean-forward="true" selection-start-line="84" selection-start-column="20" selection-end-line="84" selection-end-column="86" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Public/NavViewer.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret lean-forward="true" />
+        </state>
+      </provider>
+    </entry>
+  </component>
+</project>
