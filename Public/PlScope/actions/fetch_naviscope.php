@@ -39,7 +39,7 @@ $key =hash('sha256', "ewgdhfjjluo3pip4l");
 $iv = substr(hash('sha256', "sdfkljsadf567890saf"), 0, 16);
 $lh_id = openssl_decrypt(base64_decode($valor1),$cipher, $key, 0, $iv);
 
-$get_trip_info = "SELECT tl.lh_number lh_number , b.brokerName broker_name, tl.linehaul_status lh_status FROM ct_trip_linehaul tl LEFT JOIN ct_brokers b ON tl.fkid_broker = b.pkid_broker WHERE tl.pk_idlinehaul = ?";
+$get_trip_info = "SELECT tl.lh_number lh_number , b.brokerName broker_name, tl.linehaul_status lh_status, broker_reference broker_reference FROM ct_trip_linehaul tl LEFT JOIN ct_brokers b ON tl.fkid_broker = b.pkid_broker WHERE tl.pk_idlinehaul = ?";
 
 $get_trip_info = $db->prepare($get_trip_info);
 if (!($get_trip_info)) {
@@ -119,36 +119,47 @@ foreach ($conveyance_info as $key => $value) {
   $system_callback['data'][$key] = $value;
 }
 
-$get_location = "SELECT lat, lon, heading, speed, tran_ts FROM omni_pos_log WHERE tractor = ? ORDER BY tran_ts DESC LIMIT 1";
+// $get_location = "SELECT lat, lon, heading, speed, tran_ts FROM omni_pos_log WHERE tractor = ? ORDER BY tran_ts DESC LIMIT 1";
+//
+// $get_location = $db->prepare($get_location);
+// if (!($get_location)) {
+//   $system_callback['code'] = "500";
+//   $system_callback['query'] = $query;
+//   $system_callback['message'] = "Error during query prepare [$db->errno]: $db->error";
+//   exit_script($system_callback);
+// }
+//
+//
+// if (!($get_location->bind_param('s', $system_callback['data']['truck_number']))) {
+//   $system_callback['code'] = "500";
+//   $system_callback['message'] = "Error during query execution [$db->errno]: $db->error";
+//   exit_script($system_callback);
+// }
+//
+// if (!($get_location->execute())) {
+//   $system_callback['code'] = "500";
+//   $system_callback['query'] = $query;
+//   $system_callback['message'] = "Error during query execution [$db->errno]: $db->error";
+//   exit_script($system_callback);
+// }
+//
+// $location_info = $get_location->get_result();
+// $location_info = $location_info->fetch_assoc();
+//
+// foreach ($location_info as $key => $value) {
+//   $system_callback['location'][$key] = $value;
+// }
 
-$get_location = $db->prepare($get_location);
-if (!($get_location)) {
-  $system_callback['code'] = "500";
-  $system_callback['query'] = $query;
-  $system_callback['message'] = "Error during query prepare [$db->errno]: $db->error";
-  exit_script($system_callback);
-}
 
 
-if (!($get_location->bind_param('s', $system_callback['data']['truck_number']))) {
-  $system_callback['code'] = "500";
-  $system_callback['message'] = "Error during query execution [$db->errno]: $db->error";
-  exit_script($system_callback);
-}
+require 'get_vehicle_location.php';
 
-if (!($get_location->execute())) {
-  $system_callback['code'] = "500";
-  $system_callback['query'] = $query;
-  $system_callback['message'] = "Error during query execution [$db->errno]: $db->error";
-  exit_script($system_callback);
-}
+$system_callback['location']['lat'] = $gps_response->latitude;
+$system_callback['location']['lon'] = $gps_response->longitude;
+$system_callback['location']['speed'] = 0;
+$system_callback['location']['tran_ts'] = $gps_response->timePositionReport;
 
-$location_info = $get_location->get_result();
-$location_info = $location_info->fetch_assoc();
 
-foreach ($location_info as $key => $value) {
-  $system_callback['location'][$key] = $value;
-}
 
 $system_callback['location']['tran_ts'] = get_time_difference($system_callback['location']['tran_ts']);
 $system_callback['lh_id_decrypted'] = $lh_id_decrypted;

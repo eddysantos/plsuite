@@ -43,7 +43,7 @@ $omni->__setSoapHeaders(array($wsse_header));
 // ));
 
 $vehicle = array('vehicle'=>array(
-  'id'=>'T021',
+  'id'=>$system_callback['data']['truck_number'],
   'scac'=>''
 ));
 
@@ -51,7 +51,7 @@ $vehicle = array('vehicle'=>array(
 // $scac = new SoapParam('', 'scac');
 
 try {
-  $ping = $omni->getVehicleInformation($vehicle);
+  $gps_response = $omni->getVehicleInformation($vehicle);
 } catch (SoapFault $e) {
   var_dump($e);
   $lastRequest = $omni->__getLastRequest();
@@ -59,9 +59,9 @@ try {
   die();
 }
 
-var_dump($ping);
 
-// $response = $ping->getVehicleInformationReturn;
+
+$gps_response = $gps_response->getVehicleInformationReturn;
 // // var_dump($response);
 // echo "Vehicle ID: " . $response->vehicle->id . "\n";
 // echo "Latitude: " . $response->latitude . "\n";

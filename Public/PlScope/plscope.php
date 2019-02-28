@@ -50,9 +50,12 @@ $data = $_GET;
             <h5 class="mb-0">
               PL Scope
             </h5>
-            <div class="">
+            <div class="mb-0">
               Automated trip monitoring system
             </div>
+            <small class="text-secondary">
+              <i>Client Reference: <span id="broker_reference"></span></i>
+            </small>
           </div>
         </a>
         <div class="d-flex flex-column">
@@ -82,15 +85,18 @@ $data = $_GET;
           Current Location: <span id="current_location" class="text-secondary"></span>
         </div>
         <div class="">
-          <small>Last Update: <span class="text-secondary" id="location_last_ping"></span></small>
-          <button type="button" class="btn btn-outline-primary btn-sm" name="button" id="refresh_map"><i class="fas fa-sync-alt" role="button"></i></button>
+          <div class="">
+            <small>Last Update: <span class="text-secondary" id="location_last_ping"></span></small>
+            <button type="button" class="btn btn-outline-primary btn-sm" name="button" id="refresh_map"><i class="fas fa-sync-alt" role="button"></i></button>
+          </div>
+          <small class="text-secondary">Map will refresh automatically every minute</small>
         </div>
       </div>
       <div class="border rounded flex-grow-1 p-1" id="plscope_map">
         <i class="fas fa-globe-americas"></i> - Waiting for GeoLocation information...
       </div>
     </div>
-    <div id="status-message-container" class="h-100 w-100 position-fixed"> 
+    <div id="status-message-container" class="h-100 w-100 position-fixed">
       <div class="status-message d-flex justify-content-center">
         <div class="status-message-body align-self-center">
           Loading trip data. Please wait.

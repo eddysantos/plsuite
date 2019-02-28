@@ -86,6 +86,8 @@ $(document).ready(function(){
   });
   $('#refresh_map').click(function(){
     $('#plscope_map').trigger('refresh_map');
-  })
+  });
+
+  setInterval(function(){$('#plscope_map').trigger('refresh_map')}, 60000);
 
 });
