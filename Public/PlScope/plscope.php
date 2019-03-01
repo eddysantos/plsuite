@@ -122,4 +122,4 @@ $data = $_GET;
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDuBCFwHZCWMgyeTJ1MI32sXlGnJtIIsUA" async defer></script>
 <script src="/plsuite/Resources/gmapslibs/markerclusterer/src/markerclusterer.js" async defer></script>
 <script src="/plsuite/Resources/jquery_ui_1_12_1/jquery-ui.min.js" charset="utf-8"></script>
-<script src="js/plscope.js?2" charset="utf-8"></script>
+<script src="js/plscope.js?3" charset="utf-8"></script>

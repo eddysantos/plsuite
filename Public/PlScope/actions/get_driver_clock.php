@@ -56,7 +56,8 @@ $omni->__setSoapHeaders(array($wsse_header));
 // ));
 $params = array('request'=>array(
   'Drivers'=>array(
-    $system_callback['data']['omni_login']
+    // $system_callback['data']['omni_login']
+    $gps_response->driver1
   ),
   'RuleSet'=>'USA',
   'TimeResolutionInSeconds'=>false

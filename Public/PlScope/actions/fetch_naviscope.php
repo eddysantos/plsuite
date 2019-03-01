@@ -183,12 +183,16 @@ $system_callback['location']['lat'] = $gps_response->latitude;
 $system_callback['location']['lon'] = $gps_response->longitude;
 $system_callback['location']['speed'] = 0;
 $system_callback['location']['tran_ts'] = $gps_response->timePositionReport;
-
+$system_callback['gps'] = $gps_response;
 
 require 'get_driver_clock.php';
-
 $system_callback['clock'] = $driver_clock;
 $system_callback['clock']->v_status = parse_activity($driver_clock->Activity);
+// if ($system_callback['data']['omni_login'] == "") {
+// } else {
+//   $system_callback['clock'] = "Unavailable";
+// }
+
 
 
 $system_callback['location']['tran_ts'] = get_time_difference($system_callback['location']['tran_ts']);

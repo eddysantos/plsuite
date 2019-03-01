@@ -41,7 +41,7 @@ $(document).ready(function(){
 
     pull_location.done(function(r){
       r = JSON.parse(r);
-      // console.log(r);
+      console.log(r);
 
       //setup the driver clock times for furhter eta calculation.
       eta.driver_status = r.clock.v_status;
@@ -87,8 +87,6 @@ $(document).ready(function(){
           avoidHighways: false,
           avoidTolls: true,
         }, function(r_dm, s){
-          // console.log(r);
-          // console.log(r_dm.rows[0].elements[0].duration.value);
           eta.route_time = r_dm.rows[0].elements[0].duration.value / 60;
           if (eta.route_time > eta.driver_remaining_driving) {
             eta.cycles = Math.floor(eta.route_time / 660);
@@ -107,6 +105,7 @@ $(document).ready(function(){
           eta.date = eta.date.toLocaleString("en-US");
           $('#eta_time').html(eta.eta_hours + " Hours, " + eta.eta_minutes + " Minutes.");
           $('#eta_date').html(eta.date);
+          console.log(eta);
         })
 
         directionsService.route({
