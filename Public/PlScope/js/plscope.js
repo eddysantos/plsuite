@@ -80,7 +80,7 @@ $(document).ready(function(){
           $('#current_location').html(address);
         });
 
-        if (!r.clock.v_status) {
+        if (!r.clock.faultstring) {
           distanceMatrix.getDistanceMatrix({
             origins: [latlng],
             destinations: ['zip' + r.data.dzip],
@@ -115,8 +115,8 @@ $(document).ready(function(){
           })
 
         } else {
-          $('#eta_time').html("ETA Clock not available. Please report to dispatch.");
-          $('#eta_date').html("");
+          $('#eta_time').html("Clock not available.");
+          $('#eta_date').html(r.clock.faultstring);
         }
 
 
