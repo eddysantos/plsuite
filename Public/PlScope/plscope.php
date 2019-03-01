@@ -88,6 +88,9 @@ $data = $_GET;
           <div class="">
             Destination: <span class="text-secondary"><span id="dcity"></span>, <span id="dstate"></span> <span id="dzip"></span></span>
           </div>
+          <div class="">
+            ETA: <span class="text-secondary"> <span id="eta_time"></span> (<span id="eta_date"></span>) </span>
+          </div>
         </div>
         <div class="">
           <div class="">

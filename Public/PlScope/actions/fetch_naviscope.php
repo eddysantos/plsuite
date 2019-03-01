@@ -31,6 +31,31 @@ function get_time_difference($from, $to = NULL){
 
   return $since_start->s . " second(s) ago";
 }
+function parse_activity($activity){
+  //1=Off Duty, 2=Sleeper Berth, 3=Driving, 4=On Duty, Not Driving, 5=Off Duty Driving
+  switch ($activity) {
+    case '1':
+      return "Off Duty";
+      break;
+    case '2':
+      return "Sleeper Berth";
+      break;
+    case '3':
+      return "Driving";
+      break;
+    case '4':
+      return "On Duty, Not Driving";
+      break;
+    case '5':
+      return "Off Duty, Driving";
+      break;
+
+    default:
+      return "Error";
+      break;
+  }
+}
+
 $data = $_POST;
 
 $valor1 = $_POST['linehaul'];
@@ -88,7 +113,7 @@ if ($trip_info['lh_status'] == 'Closed') {
   exit_script($system_callback);
 }
 
-$get_conveyance = "SELECT t.truckNumber truck_number , concat(d.nameFirst , ' ' , d.nameLast) driver_name FROM ct_trip_linehaul_movement tlm LEFT JOIN ct_truck t ON tlm.fkid_tractor = t.pkid_truck LEFT JOIN ct_drivers d ON tlm.fkid_driver = d.pkid_driver WHERE tlm.fkid_linehaul = ? ORDER BY tlm.pk_movement_number DESC LIMIT 1";
+$get_conveyance = "SELECT t.truckNumber truck_number , concat(d.nameFirst , ' ' , d.nameLast) driver_name, d.omni_login omni_login FROM ct_trip_linehaul_movement tlm LEFT JOIN ct_truck t ON tlm.fkid_tractor = t.pkid_truck LEFT JOIN ct_drivers d ON tlm.fkid_driver = d.pkid_driver WHERE tlm.fkid_linehaul = ? ORDER BY tlm.pk_movement_number DESC LIMIT 1";
 
 $get_conveyance = $db->prepare($get_conveyance);
 if (!($get_conveyance)) {
@@ -159,6 +184,11 @@ $system_callback['location']['lon'] = $gps_response->longitude;
 $system_callback['location']['speed'] = 0;
 $system_callback['location']['tran_ts'] = $gps_response->timePositionReport;
 
+
+require 'get_driver_clock.php';
+
+$system_callback['clock'] = $driver_clock;
+$system_callback['clock']->v_status = parse_activity($driver_clock->Activity);
 
 
 $system_callback['location']['tran_ts'] = get_time_difference($system_callback['location']['tran_ts']);
