@@ -183,7 +183,8 @@ $system_callback['location']['lat'] = $gps_response->latitude;
 $system_callback['location']['lon'] = $gps_response->longitude;
 $system_callback['location']['speed'] = 0;
 $system_callback['location']['tran_ts'] = $gps_response->timePositionReport;
-$system_callback['gps'] = $gps_response;
+$system_callback['location']['NDrivers'] = $gps_response->NDrivers;
+// $system_callback['gps'] = $gps_response;
 
 require 'get_driver_clock.php';
 $system_callback['clock'] = $driver_clock;

@@ -97,12 +97,17 @@ $(document).ready(function(){
             eta.cycles = 0;
           }
 
+          if (r.location.NDrivers == 2) {
+            eta.cycles = 0;
+          }
+
           eta.total_eta = eta.route_time + ((eta.cycles * 720) - eta.driver_sleep_time);
           eta.eta_minutes = Math.floor(eta.total_eta % 60);
           eta.eta_hours = Math.floor(eta.total_eta / 60);
           var today = new Date();
           eta.date = new Date(today.getTime() + eta.total_eta * 60000);
           eta.date = eta.date.toLocaleString("en-US");
+
           $('#eta_time').html(eta.eta_hours + " Hours, " + eta.eta_minutes + " Minutes.");
           $('#eta_date').html(eta.date);
           console.log(eta);
