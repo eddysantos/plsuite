@@ -100,6 +100,7 @@ $(document).ready(function(){
 
             if (r.location.NDrivers == 2) {
               eta.cycles = 0;
+              eta.driver_sleep_time = 0;
             }
 
             eta.total_eta = eta.route_time + ((eta.cycles * 720) - eta.driver_sleep_time);
