@@ -20,8 +20,9 @@ $zip = $_POST['zip'];
 $country = $_POST['country'];
 $id = $_POST['id'];
 $default_truck = $_POST['default_truck'];
+$omni_login = $_POST['omni_login'];
 
-$query = "UPDATE ct_drivers SET nameFirst = ?, namelast = ?, phoneNumber = ?, email = ?, isOwner = ?, isDriver = ?, addrStNumber = ?, addrStName = ?, addrLine2 = ?, addrCity = ?, addrState = ?, addrZipCode = ?, addrCountry = ?, default_truck = ? WHERE pkid_driver = ?";
+$query = "UPDATE ct_drivers SET nameFirst = ?, namelast = ?, phoneNumber = ?, email = ?, isOwner = ?, isDriver = ?, addrStNumber = ?, addrStName = ?, addrLine2 = ?, addrCity = ?, addrState = ?, addrZipCode = ?, addrCountry = ?, default_truck = ?, omni_login = ? WHERE pkid_driver = ?";
 
 $stmt = $db->prepare($query);
 if (!($stmt)) {
@@ -32,7 +33,7 @@ if (!($stmt)) {
 }
 
 
-$stmt->bind_param('sssssssssssssss', $fName, $lName, $phone, $email, $owner, $driver, $stNumber, $stName, $addrLine2, $city, $state, $zip, $country, $default_truck, $id);
+$stmt->bind_param('ssssssssssssssss', $fName, $lName, $phone, $email, $owner, $driver, $stNumber, $stName, $addrLine2, $city, $state, $zip, $country, $default_truck, $omni_login, $id);
 if (!($stmt)) {
   $system_callback['code'] = "500";
   $system_callback['query'] = $query;

@@ -124,6 +124,7 @@ $(document).ready(function(){
     driver.zip = $('#dZipCode').val();
     driver.country = $('#dCountry').val();
     driver.default_truck = $('#defaultTruck').val();
+    driver.omni_login = $('#omnilogin').val();
 
     $('#actionToConfirm').html("modify the data for " + $('#dFirstName').attr('value') + " " + $('#dLastName').attr('value'));
     $('#confirmationModal').modal('show');
