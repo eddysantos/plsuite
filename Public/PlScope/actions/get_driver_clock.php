@@ -68,14 +68,12 @@ $params = array('request'=>array(
 
 try {
   $driver_clock = $omni->ExportDriver($params);
+  $driver_clock = $driver_clock->ExportDriverResult->DriverExport->DriverExportData;
 } catch (SoapFault $e) {
-  var_dump($e);
-  $lastRequest = $omni->__getLastRequest();
-  var_dump($lastRequest);
-  die();
+  $driver_clock = $e;
+  // $driver_clock = $omni->__getLastRequest();
 }
 
-$driver_clock = $driver_clock->ExportDriverResult->DriverExport->DriverExportData;
 // $response = $ping->getVehicleInformationReturn;
 // // var_dump($response);
 // echo "Vehicle ID: " . $response->vehicle->id . "\n";

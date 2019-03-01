@@ -52,16 +52,14 @@ $vehicle = array('vehicle'=>array(
 
 try {
   $gps_response = $omni->getVehicleInformation($vehicle);
+  $gps_response = $gps_response->getVehicleInformationReturn;
 } catch (SoapFault $e) {
-  var_dump($e);
-  $lastRequest = $omni->__getLastRequest();
-  var_dump($lastRequest);
-  die();
+  $gps_response = $e->faultString;
+  // $gps_response = $omni->__getLastRequest();
 }
 
 
 
-$gps_response = $gps_response->getVehicleInformationReturn;
 // // var_dump($response);
 // echo "Vehicle ID: " . $response->vehicle->id . "\n";
 // echo "Latitude: " . $response->latitude . "\n";

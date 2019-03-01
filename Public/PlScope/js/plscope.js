@@ -80,38 +80,45 @@ $(document).ready(function(){
           $('#current_location').html(address);
         });
 
-        distanceMatrix.getDistanceMatrix({
-          origins: [latlng],
-          destinations: ['zip' + r.data.dzip],
-          travelMode: 'DRIVING',
-          avoidHighways: false,
-          avoidTolls: true,
-        }, function(r_dm, s){
-          eta.route_time = r_dm.rows[0].elements[0].duration.value / 60;
-          if (eta.route_time > eta.driver_remaining_driving) {
-            eta.cycles = Math.floor(eta.route_time / 660);
-            if (eta.cycles == 0) {
-              eta.cycles = 1;
+        if (!r.clock.v_status) {
+          distanceMatrix.getDistanceMatrix({
+            origins: [latlng],
+            destinations: ['zip' + r.data.dzip],
+            travelMode: 'DRIVING',
+            avoidHighways: false,
+            avoidTolls: true,
+          }, function(r_dm, s){
+            eta.route_time = r_dm.rows[0].elements[0].duration.value / 60;
+            if (eta.route_time > eta.driver_remaining_driving) {
+              eta.cycles = Math.floor(eta.route_time / 660);
+              if (eta.cycles == 0) {
+                eta.cycles = 1;
+              }
+            } else {
+              eta.cycles = 0;
             }
-          } else {
-            eta.cycles = 0;
-          }
 
-          if (r.location.NDrivers == 2) {
-            eta.cycles = 0;
-          }
+            if (r.location.NDrivers == 2) {
+              eta.cycles = 0;
+            }
 
-          eta.total_eta = eta.route_time + ((eta.cycles * 720) - eta.driver_sleep_time);
-          eta.eta_minutes = Math.floor(eta.total_eta % 60);
-          eta.eta_hours = Math.floor(eta.total_eta / 60);
-          var today = new Date();
-          eta.date = new Date(today.getTime() + eta.total_eta * 60000);
-          eta.date = eta.date.toLocaleString("en-US");
+            eta.total_eta = eta.route_time + ((eta.cycles * 720) - eta.driver_sleep_time);
+            eta.eta_minutes = Math.floor(eta.total_eta % 60);
+            eta.eta_hours = Math.floor(eta.total_eta / 60);
+            var today = new Date();
+            eta.date = new Date(today.getTime() + eta.total_eta * 60000);
+            eta.date = eta.date.toLocaleString("en-US");
 
-          $('#eta_time').html(eta.eta_hours + " Hours, " + eta.eta_minutes + " Minutes.");
-          $('#eta_date').html(eta.date);
-          console.log(eta);
-        })
+            $('#eta_time').html(eta.eta_hours + " Hours, " + eta.eta_minutes + " Minutes.");
+            $('#eta_date').html(eta.date);
+            console.log(eta);
+          })
+
+        } else {
+          $('#eta_time').html("ETA Clock not available. Please report to dispatch.");
+          $('#eta_date').html("");
+        }
+
 
         directionsService.route({
           origin: latlng,
