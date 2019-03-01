@@ -66,15 +66,15 @@ $(document).ready(function(){
           console.log(r[0].geometry.location);
         });
 
-        dm.getDistanceMatrix({
-          origins: [latlng],
-          destinations: ['zip ' + r.data.dzip],
-          travelMode: 'DRIVING',
-          avoidHighways: true,
-          avoidTolls: true,
-        }, function(r, s){
-          console.log(r);
-        });
+        // dm.getDistanceMatrix({
+        //   origins: [latlng],
+        //   destinations: ['zip ' + r.data.dzip],
+        //   travelMode: 'DRIVING',
+        //   avoidHighways: true,
+        //   avoidTolls: true,
+        // }, function(r, s){
+        //   console.log(r);
+        // });
 
         var marker = new google.maps.Marker({
           map: fleetMap,
