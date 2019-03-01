@@ -82,14 +82,19 @@ $data = $_GET;
       <input type="text" id="linehaul_reference" name="" value="<?php echo $data['lh_reference'] ?>" hidden>
       <div class="d-flex justify-content-between mb-1">
         <div class="">
-          Current Location: <span id="current_location" class="text-secondary"></span>
+          <div class="">
+            Current Location: <span id="current_location" class="text-secondary"></span>
+          </div>
+          <div class="">
+            Destination: <span class="text-secondary"><span id="dcity"></span>, <span id="dstate"></span> <span id="dzip"></span></span>
+          </div>
         </div>
         <div class="">
           <div class="">
             <small>Last Update: <span class="text-secondary" id="location_last_ping"></span></small>
             <button type="button" class="btn btn-outline-primary btn-sm" name="button" id="refresh_map"><i class="fas fa-sync-alt" role="button"></i></button>
           </div>
-          <small class="text-secondary">Map will refresh automatically every minute</small>
+          <small class="text-secondary">Map will refresh automatically every 5 minutes.</small>
         </div>
       </div>
       <div class="border rounded flex-grow-1 p-1" id="plscope_map">
@@ -114,4 +119,4 @@ $data = $_GET;
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDuBCFwHZCWMgyeTJ1MI32sXlGnJtIIsUA" async defer></script>
 <script src="/plsuite/Resources/gmapslibs/markerclusterer/src/markerclusterer.js" async defer></script>
 <script src="/plsuite/Resources/jquery_ui_1_12_1/jquery-ui.min.js" charset="utf-8"></script>
-<script src="js/plscope.js" charset="utf-8"></script>
+<script src="js/plscope.js?1" charset="utf-8"></script>

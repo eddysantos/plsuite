@@ -39,7 +39,7 @@ $key =hash('sha256', "ewgdhfjjluo3pip4l");
 $iv = substr(hash('sha256', "sdfkljsadf567890saf"), 0, 16);
 $lh_id = openssl_decrypt(base64_decode($valor1),$cipher, $key, 0, $iv);
 
-$get_trip_info = "SELECT tl.lh_number lh_number , b.brokerName broker_name, tl.linehaul_status lh_status, broker_reference broker_reference FROM ct_trip_linehaul tl LEFT JOIN ct_brokers b ON tl.fkid_broker = b.pkid_broker WHERE tl.pk_idlinehaul = ?";
+$get_trip_info = "SELECT tl.lh_number lh_number , b.brokerName broker_name, tl.linehaul_status lh_status, broker_reference broker_reference, destination_zip dzip, destination_city dcity, destination_state dstate FROM ct_trip_linehaul tl LEFT JOIN ct_brokers b ON tl.fkid_broker = b.pkid_broker WHERE tl.pk_idlinehaul = ?";
 
 $get_trip_info = $db->prepare($get_trip_info);
 if (!($get_trip_info)) {
