@@ -18,6 +18,8 @@ $(document).ready(function(){
     var linehaul_reference = $('#linehaul_reference').val();
     var location = {};
     var geocoder = new google.maps.Geocoder;
+    var directionsService = new google.maps.DirectionsService;
+    var directionsDisplay = new google.maps.DirectionsRenderer;
 
     var pull_location = $.ajax({
       method: 'POST',
@@ -48,16 +50,31 @@ $(document).ready(function(){
         }
 
         var map_e = $('#plscope_map')[0];
+        directionsDisplay.setMap(map_e);
         var fleetMap = new google.maps.Map(map_e,{
           zoom: 8,
           center: latlng
         });
 
-        geocoder.geocode({'location': latlng}, function(r, s){
+        geocoder.geocode({'location': latlng}, function(r, s){ //This is the origin
           var address = r[1].formatted_address;
           $('#current_location').html(address);
         })
 
+        geocoder.geocode({'address': 'zip' + r.data.dzip}, function(r,s){
+          console.log(r);
+          console.log(r[0].geometry.location);
+        });
+
+        dm.getDistanceMatrix({
+          origins: [latlng],
+          destinations: ['zip ' + r.data.dzip],
+          travelMode: 'DRIVING',
+          avoidHighways: true,
+          avoidTolls: true,
+        }, function(r, s){
+          console.log(r);
+        });
 
         var marker = new google.maps.Marker({
           map: fleetMap,
@@ -76,6 +93,8 @@ $(document).ready(function(){
             rotation: r.location.rotation
           }
         })
+
+        setTimeout(function(){$('#plscope_map').trigger('refresh_map')}, 300000);
       } else if (r.code == 2) {
         $('#status-message-container').find('.status-message-body').html(r.message);
       }
@@ -87,7 +106,5 @@ $(document).ready(function(){
   $('#refresh_map').click(function(){
     $('#plscope_map').trigger('refresh_map');
   });
-
-  setInterval(function(){$('#plscope_map').trigger('refresh_map')}, 60000);
 
 });
