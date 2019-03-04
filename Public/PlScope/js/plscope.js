@@ -43,13 +43,6 @@ $(document).ready(function(){
       r = JSON.parse(r);
       console.log(r);
 
-      //setup the driver clock times for furhter eta calculation.
-      eta.driver_status = r.clock.v_status;
-      eta.driver_remaining_driving = r.clock.DayDrive;
-      if (eta.driver_status == 'Sleeper Berth' || eta.driver_status == 'Off Duty') {
-        eta.driver_sleep_time = r.clock.ContiguousActivityDuration;
-      }
-
 
 
       if (r.code == 1) {
@@ -81,6 +74,13 @@ $(document).ready(function(){
         });
 
         if (!r.clock.faultstring) {
+          //setup the driver clock times for furhter eta calculation.
+          eta.driver_status = r.clock.v_status;
+          eta.driver_remaining_driving = r.clock.DayDrive;
+          if (eta.driver_status == 'Sleeper Berth' || eta.driver_status == 'Off Duty') {
+            eta.driver_sleep_time = r.clock.ContiguousActivityDuration;
+          }
+
           distanceMatrix.getDistanceMatrix({
             origins: [latlng],
             destinations: ['zip' + r.data.dzip],
