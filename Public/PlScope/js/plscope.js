@@ -123,7 +123,7 @@ $(document).ready(function(){
 
         directionsService.route({
           origin: latlng,
-          destination: 'zip' + r.data.dzip,
+          destination: 'zip ' + r.data.dzip,
           travelMode: 'DRIVING'
         }, function(r_ds,s){
           // console.log(r);
