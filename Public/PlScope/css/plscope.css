@@ -1,0 +1,14 @@
+.status-message{
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.4);
+  z-index: 9999;
+}
+
+.status-message-body{
+  background-color: rgba(255, 255, 255, 0.74);
+  border: solid 1px rgb(167, 167, 167);
+  border-radius: 5px;
+  padding: 2rem;
+}

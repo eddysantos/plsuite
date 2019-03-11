@@ -25,18 +25,14 @@ function __construct($user, $pass, $ns = null) {
 }
 
 $username = "PROLOGAPI@PROLOGTRAN";
-$password = "api5ecurE1";
+$password = "apiSecure1";
 
 $wsse_header = new WsseAuthHeader($username, $password);
 
-$omni_wsdl = "https://hos.omnitracs.com/QHOSWSNA/driver.asmx?WSDL";
-// $omni_wsdl = "https://intinfo.omnitracs.com/download/attachments/26610480/driver.asmx?version=1";
+$omni_wsdl = "https://services.omnitracs.com/qtracsWebWS/services/QTWebSvcs/wsdl/QTWebSvcs.wsdl";
 $omni = new soapClient($omni_wsdl, ['trace'=>true]);
 // $functions = $omni->__getFunctions();
-// var_dump($functions);
-// $functions = $omni->__getTypes();
-// var_dump($functions);
-// die();
+
 $omni->__setSoapHeaders(array($wsse_header));
 
 // var_dump($functions);
@@ -46,37 +42,24 @@ $omni->__setSoapHeaders(array($wsse_header));
 //   'scac'=>''
 // ));
 
-// $params = array('ExportDriverClock'=>array(
-//   'request'=>array(
-//     'drivers'=>array(
-//       'GLARRANAGA'
-//     ),
-//     'timeResolutionInSeconds'=>0
-//   )
-// ));
-$params = array('request'=>array(
-  'Drivers'=>array(
-    'HERIBERTOG'
-  ),
-  'RuleSet'=>'USA',
-  'TimeResolutionInSeconds'=>false
+$vehicle = array('vehicle'=>array(
+  'id'=>$system_callback['data']['truck_number'],
+  'scac'=>''
 ));
 
 // $id = new SoapParam('T049', 'id');
 // $scac = new SoapParam('', 'scac');
 
 try {
-  $ping = $omni->ExportDriver($params);
+  $gps_response = $omni->getVehicleInformation($vehicle);
+  $gps_response = $gps_response->getVehicleInformationReturn;
 } catch (SoapFault $e) {
-  var_dump($e);
-  $lastRequest = $omni->__getLastRequest();
-  var_dump($lastRequest);
-  die();
+  $gps_response = $e->faultString;
+  // $gps_response = $omni->__getLastRequest();
 }
 
-var_dump($ping->ExportDriverResult->DriverExport->DriverExportData);
 
-// $response = $ping->getVehicleInformationReturn;
+
 // // var_dump($response);
 // echo "Vehicle ID: " . $response->vehicle->id . "\n";
 // echo "Latitude: " . $response->latitude . "\n";

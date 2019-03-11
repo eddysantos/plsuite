@@ -153,7 +153,7 @@ function parseDate($datestamp){
             </tr>
           </thead>
           <tbody id="movement-details">
-            <tr id="tr-1">
+            <tr id="tr-1" data-mov-order="1">
               <td><i class="fas fa-sort"></i></td>
               <td>
                 <span class="origin-destination-flag text-danger">Origin</span>
@@ -239,7 +239,7 @@ function parseDate($datestamp){
               </td>
               <td><i class="fas fa-times text-danger remove-row"></i></td>
             </tr>
-            <tr id="tr-2">
+            <tr id="tr-2" data-mov-order="2">
               <td><i class="fas fa-sort"></i></td>
               <td>
                 <span class="origin-destination-flag text-success">Destination</span>
@@ -438,7 +438,7 @@ function parseDate($datestamp){
             <button type="button" class="btn btn-primary next-pane">Next</button>
           </div>
           <div class="add-trip-buttons" style="display: none">
-            <button type="button" class="btn btn-primary add-trip next-pane">Add Trip</button>
+            <button type="button" id="add-trip-button" class="btn btn-primary add-trip next-pane">Add Trip</button>
           </div>
           <button type="button" class="btn btn-secondary ml-2" data-dismiss="modal">Close</button>
         </div>

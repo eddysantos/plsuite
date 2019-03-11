@@ -408,6 +408,11 @@ $(document).ready(function(){
       var first = table.find('tr').first();
       var last = table.find('tr').last();
 
+      $('#movement-details').find('tr').each(function(i){
+        $(this).data('mov-order', i + 1);
+        console.log($(this).data('mov-order'));
+      });
+
       table.find('.origin-destination-flag').removeClass('text-danger text-success').html('');
       first.find('.origin-destination-flag').removeClass('text-danger text-success').addClass('text-danger').html('Origin');
       last.find('.origin-destination-flag').removeClass('text-danger text-success').addClass('text-success').html('Destination');
@@ -696,8 +701,8 @@ $(document).ready(function(){
     var broker = tripDet.find('.selected-broker');
     var reference = tripDet.find('.broker-reference');
     lhDet.find('#movement-details').find('tr').each(function(i){
-      var origin_flag = $(this).find('[name=origin-flag]').prop('checked');
-      var destination_flag = $(this).find('[name=destination-flag]').prop('checked');
+      var mov_order = $(this).data('mov-order');
+      var mov_class = $(this).find('.origin-destination-flag').html();
       var id = this.id;
       var loc = $(this).find('.google-location-input');
       var location = {
@@ -722,8 +727,8 @@ $(document).ready(function(){
       var miles = $(this).find('.distance').val();
 
       route[i] = {
-        is_origin: origin_flag,
-        is_dest: destination_flag,
+        mov_order: mov_order,
+        mov_class: mov_class,
         location: location,
         type: emptyLoaded,
         eal: eal,
@@ -762,18 +767,24 @@ $(document).ready(function(){
     for (var r in route) {
       if (route.hasOwnProperty(r)) {
           var this_route = $('<div class="row movement"></div>');
+          this_route.data('mov-order', route[r].mov_order);
+          this_route.data('mov-class', route[r].mov_class);
+          this_route.data('eal', route[r].eal);
           this_route.append('<div class="col-md-6 address"></div>');
-          this_route.append('<div class="col-md-3 appt"></div>');
+          this_route.append('<div class="col-md-3 appt"><span class="date"></span> <span class="from"></span> - <span class="to"></span></div>');
 
           this_route.find('.address').html(route[r].location.formatted);
           if (!route[r].appt.isna) {
-            this_route.find('.appt').html(
-              route[r].appt.date + " " +
-              route[r].appt.from_hour + ":" +
-              route[r].appt.from_min + " - " +
-              route[r].appt.to_hour + ":" +
-              route[r].appt.to_min
-            );
+            this_route.find('.appt .date').html(route[r].appt.date);
+            this_route.find('.appt .from').html(route[r].appt.from_hour + ":" + route[r].appt.from_min);
+            this_route.find('.appt .to').html(route[r].appt.to_hour + ":" + route[r].appt.to_min);
+            // this_route.find('.appt').html(
+            //   route[r].appt.date + " " +
+            //   route[r].appt.from_hour + ":" +
+            //   route[r].appt.from_min + " - " +
+            //   route[r].appt.to_hour + ":" +
+            //   route[r].appt.to_min
+            // );
           } else {
             this_route.find('.appt').html("No appointment");
           }
@@ -786,8 +797,9 @@ $(document).ready(function(){
             this_route.attr('mov-nature', 'destination');
           }
 
-          this_route.append('<div class="col-md-2"><span class="miles"></span> Miles</div>');
+          this_route.append('<div class="col-md-2"><span class="miles"></span> <span class="miles-type"></span> Miles</div>');
           this_route.find('.miles').html(route[r].miles);
+          this_route.find('.miles-type').html(route[r].type);
           this_route.appendTo($this.find('#movement-confirmation'));
 
           //Add all the address elements to the row.
@@ -843,6 +855,73 @@ $(document).ready(function(){
   });
   $('#add_trip_progress').on('shown.bs.tab', '[data-toggle="tab"]', function(){
     $('#addLinehaulModal').find('.tab-pane.fade.active.show').find('input').first().focus();
+  });
+  $('#add-trip-button').click(function(){
+    var data = {
+      trailer:{
+        id: "",
+        number: "",
+        plates: ""
+      },
+      truck: {
+        id:"",
+        number: "",
+        plates: "",
+      },
+      linehaul: {
+        origin_city: "",
+        origin_state: "",
+        origin_zip: "",
+        destination_city: "",
+        destination_state: "",
+        destination_zip: "",
+        broker_reference: "",
+        routes:{} //each mov should include origin, destination (complete), formatted_address, miles, type, class, eal,
+      }
+    }
+
+    var tc = $('#trip-confirmation-pane');
+    var movs = $('#movement-confirmation .movement');
+    var truck = {
+      truck_number: tc.find('.confirm-trailer-number').html(),
+      truck_plates: tc.find('.confirm-trailer-plates').html()
+    };
+
+    data.trailer.id = tc.find('.confirm-trailer-number').attr('db-id');
+    data.trailer.number = tc.find('.confirm-trailer-number').html();
+    data.trailer.plates = tc.find('.confirm-trailer-plates').html();
+
+    data.truck.id = tc.find('.confirm-truck-number').attr('db-id');
+    data.truck.number = tc.find('.confirm-truck-number').html();
+    data.truck.plates = tc.find('.confirm-truck-plates').html();
+
+    movs.each(function(i){
+      var row = $(this);
+      mov = data.linehaul.routes[row.data('mov-order')] = {};
+      mov.location = $(this).find('.address').html();
+
+      var appt  = mov.appt = {};
+      appt.date = $(this).find('.appt .date').html();
+      appt.from = $(this).find('.appt .from').html();
+      appt.to   = $(this).find('.appt .to').html();
+
+      mov.class = row.data('mov-class');
+      mov.eal = row.data('eal');
+      mov.type = $(this).find('.miles-type').html();
+      mov.miles = $(this).find('.miles').html();
+
+      var addr_components = mov.addr_components = {};
+      addr_components.city = row.attr('city');
+      addr_components.state = row.attr('state');
+      addr_components.country = row.attr('country');
+      addr_components.street_number = row.attr('street_number');
+      addr_components.street = row.attr('street');
+      addr_components.zip = row.attr('zip');
+
+    });
+
+    console.log(data);
+
   });
   $('.add-linehaul').click(function(){
     var source = $('#trip-confirmation-pane');
