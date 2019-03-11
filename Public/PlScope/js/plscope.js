@@ -83,7 +83,7 @@ $(document).ready(function(){
 
           distanceMatrix.getDistanceMatrix({
             origins: [latlng],
-            destinations: ['zip' + r.data.dzip],
+            destinations: ['zip ' + r.data.dzip],
             travelMode: 'DRIVING',
             avoidHighways: false,
             avoidTolls: true,
