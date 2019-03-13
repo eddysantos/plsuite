@@ -254,6 +254,7 @@ $(document).ready(function(){
     items: "> tr",
     stop: function(){
       $('#movement-details').trigger('calculate-distances');
+      $('#movement-details').trigger('flag-od');
     }
   });
   })
@@ -296,7 +297,7 @@ $(document).ready(function(){
 
   });
   $('#add-location').click(function(){
-      var tr = '<tr id="ui-id-1" class="ui-sortable-handle"><td><i class="" data-fa-i2svg=""><svg class="svg-inline--fa fa-sort fa-w-10" aria-hidden="true" data-prefix="fas" data-icon="sort" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512" data-fa-i2svg=""><path fill="currentColor" d="M41 288h238c21.4 0 32.1 25.9 17 41L177 448c-9.4 9.4-24.6 9.4-33.9 0L24 329c-15.1-15.1-4.4-41 17-41zm255-105L177 64c-9.4-9.4-24.6-9.4-33.9 0L24 183c-15.1 15.1-4.4 41 17 41h238c21.4 0 32.1-25.9 17-41z"></path></svg></i></td><td><div class="form-check"><input class="form-check-input position-static" type="radio" name="origin-flag" value="1"></div></td><td><div class="form-check"><input class="form-check-input position-static" type="radio" name="destination-flag" value="1"></div></td><td> <input type="text" class="form-control form-control-sm google-location-input" name="" value="" placeholder="Enter a location" autocomplete="off"> </td><td class="mov-type-td"><div class="form-check form-check-inline"><input class="form-check-input" type="radio" name="mov-type-ui-id-1" value="E"><label class="form-check-label" for="inlineRadio1">E</label></div><div class="form-check form-check-inline"><input class="form-check-input" type="radio" name="mov-type-ui-id-1" value="L"><label class="form-check-label" for="inlineRadio1">L</label></div></td><td><select class="form-control form-control-sm" name="eal"><option value="Yes">Yes</option><option value="No" selected="">No</option></select></td><td class="appt-td"><div class="form-group m-0 form-inline"><div class="form-check form-check-inline"><input class="form-check-input" type="checkbox" name="na-appt" value="NA"><label class="form-check-label" for="na-appt">N/A</label></div><input type="date" class="form-control form-control-sm appt" name="appt-date" value=""><div class=""><select class="form-control form-control-sm ml-1 appt" name="appt-from-hour"><option value="">Hrs</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8</option><option value="9">9</option><option value="10">10</option><option value="11">11</option><option value="12">12</option><option value="13">13</option><option value="14">14</option><option value="15">15</option><option value="16">16</option><option value="17">17</option><option value="18">18</option><option value="19">19</option><option value="20">20</option><option value="21">21</option><option value="22">22</option><option value="23">23</option><option value="24">24</option></select> : <select class="form-control form-control-sm appt" name="appt-from-min"><option value="">Mins</option><option value="00">00</option><option value="05">05</option><option value="10">10</option><option value="15">15</option><option value="20">20</option><option value="25">25</option><option value="30">30</option><option value="35">35</option><option value="40">40</option><option value="45">45</option><option value="50">50</option><option value="55">55</option></select> - <select class="form-control form-control-sm appt" name="appt-to-hour"><option value="">Hrs</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8</option><option value="9">9</option><option value="10">10</option><option value="11">11</option><option value="12">12</option><option value="13">13</option><option value="14">14</option><option value="15">15</option><option value="16">16</option><option value="17">17</option><option value="18">18</option><option value="19">19</option><option value="20">20</option><option value="21">21</option><option value="22">22</option><option value="23">23</option><option value="24">24</option></select> : <select class="form-control form-control-sm appt" name="appt-to-min"><option value="">Mins</option><option value="00">00</option><option value="5">5</option><option value="10">10</option><option value="15">15</option><option value="20">20</option><option value="25">25</option><option value="30">30</option><option value="35">35</option><option value="40">40</option><option value="45">45</option><option value="50">50</option><option value="55">55</option></select></div></div></td><td><div class="form-control form-control-sm readonly distance" value=""></div></td><td><i class="text-danger remove-row" data-fa-i2svg=""><svg class="svg-inline--fa fa-times fa-w-11" aria-hidden="true" data-prefix="fas" data-icon="times" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 352 512" data-fa-i2svg=""><path fill="currentColor" d="M242.72 256l100.07-100.07c12.28-12.28 12.28-32.19 0-44.48l-22.24-22.24c-12.28-12.28-32.19-12.28-44.48 0L176 189.28 75.93 89.21c-12.28-12.28-32.19-12.28-44.48 0L9.21 111.45c-12.28 12.28-12.28 32.19 0 44.48L109.28 256 9.21 356.07c-12.28 12.28-12.28 32.19 0 44.48l22.24 22.24c12.28 12.28 32.2 12.28 44.48 0L176 322.72l100.07 100.07c12.28 12.28 32.2 12.28 44.48 0l22.24-22.24c12.28-12.28 12.28-32.19 0-44.48L242.72 256z"></path></svg></i></td></tr>'
+      var tr = '<tr id="ui-id-1" class="ui-sortable-handle"><td><i class="" data-fa-i2svg=""><svg class="svg-inline--fa fa-sort fa-w-10" aria-hidden="true" data-prefix="fas" data-icon="sort" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512" data-fa-i2svg=""><path fill="currentColor" d="M41 288h238c21.4 0 32.1 25.9 17 41L177 448c-9.4 9.4-24.6 9.4-33.9 0L24 329c-15.1-15.1-4.4-41 17-41zm255-105L177 64c-9.4-9.4-24.6-9.4-33.9 0L24 183c-15.1 15.1-4.4 41 17 41h238c21.4 0 32.1-25.9 17-41z"></path></svg></i></td><td><span class="origin-destination-flag"><span></td><td> <input type="text" class="form-control form-control-sm google-location-input" name="" value="" placeholder="Enter a location" autocomplete="off"> </td><td class="mov-type-td"><div class="form-check form-check-inline"><input class="form-check-input" type="radio" name="mov-type-ui-id-1" value="E"><label class="form-check-label" for="inlineRadio1">E</label></div><div class="form-check form-check-inline"><input class="form-check-input" type="radio" name="mov-type-ui-id-1" value="L"><label class="form-check-label" for="inlineRadio1">L</label></div></td><td><select class="form-control form-control-sm" name="eal"><option value="Yes">Yes</option><option value="No" selected="">No</option></select></td><td class="appt-td"><div class="form-group m-0 form-inline"><div class="form-check form-check-inline"><input class="form-check-input" type="checkbox" name="na-appt" value="NA"><label class="form-check-label" for="na-appt">N/A</label></div><input type="date" class="form-control form-control-sm appt" name="appt-date" value=""><div class=""><select class="form-control form-control-sm ml-1 appt" name="appt-from-hour"><option value="">Hrs</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8</option><option value="9">9</option><option value="10">10</option><option value="11">11</option><option value="12">12</option><option value="13">13</option><option value="14">14</option><option value="15">15</option><option value="16">16</option><option value="17">17</option><option value="18">18</option><option value="19">19</option><option value="20">20</option><option value="21">21</option><option value="22">22</option><option value="23">23</option><option value="24">24</option></select> : <select class="form-control form-control-sm appt" name="appt-from-min"><option value="">Mins</option><option value="00">00</option><option value="05">05</option><option value="10">10</option><option value="15">15</option><option value="20">20</option><option value="25">25</option><option value="30">30</option><option value="35">35</option><option value="40">40</option><option value="45">45</option><option value="50">50</option><option value="55">55</option></select> - <select class="form-control form-control-sm appt" name="appt-to-hour"><option value="">Hrs</option><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option><option value="6">6</option><option value="7">7</option><option value="8">8</option><option value="9">9</option><option value="10">10</option><option value="11">11</option><option value="12">12</option><option value="13">13</option><option value="14">14</option><option value="15">15</option><option value="16">16</option><option value="17">17</option><option value="18">18</option><option value="19">19</option><option value="20">20</option><option value="21">21</option><option value="22">22</option><option value="23">23</option><option value="24">24</option></select> : <select class="form-control form-control-sm appt" name="appt-to-min"><option value="">Mins</option><option value="00">00</option><option value="5">5</option><option value="10">10</option><option value="15">15</option><option value="20">20</option><option value="25">25</option><option value="30">30</option><option value="35">35</option><option value="40">40</option><option value="45">45</option><option value="50">50</option><option value="55">55</option></select></div></div></td><td><div class="form-control form-control-sm readonly distance" value=""></div></td><td><i class="text-danger remove-row" data-fa-i2svg=""><svg class="svg-inline--fa fa-times fa-w-11" aria-hidden="true" data-prefix="fas" data-icon="times" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 352 512" data-fa-i2svg=""><path fill="currentColor" d="M242.72 256l100.07-100.07c12.28-12.28 12.28-32.19 0-44.48l-22.24-22.24c-12.28-12.28-32.19-12.28-44.48 0L176 189.28 75.93 89.21c-12.28-12.28-32.19-12.28-44.48 0L9.21 111.45c-12.28 12.28-12.28 32.19 0 44.48L109.28 256 9.21 356.07c-12.28 12.28-12.28 32.19 0 44.48l22.24 22.24c12.28 12.28 32.2 12.28 44.48 0L176 322.72l100.07 100.07c12.28 12.28 32.2 12.28 44.48 0l22.24-22.24c12.28-12.28 12.28-32.19 0-44.48L242.72 256z"></path></svg></i></td></tr>'
 
       tr = $(tr);
 
@@ -317,6 +318,7 @@ $(document).ready(function(){
       google.maps.event.addListener(google_autocompletes[gi.attr('id')].goo_ac, 'place_changed', function(){catchLocation(gi.attr('id'))});
 
       tr.appendTo('#movement-details');
+      $('#movement-details').trigger('flag-od');
 
   });
   $('#movement-details').on('click', '.remove-row', function(){
@@ -400,7 +402,21 @@ $(document).ready(function(){
 
 
 
-  })
+  });
+  $('#movement-details').on('flag-od', function(){
+      var table = $(this);
+      var first = table.find('tr').first();
+      var last = table.find('tr').last();
+
+      $('#movement-details').find('tr').each(function(i){
+        $(this).data('mov-order', i + 1);
+        console.log($(this).data('mov-order'));
+      });
+
+      table.find('.origin-destination-flag').removeClass('text-danger text-success').html('');
+      first.find('.origin-destination-flag').removeClass('text-danger text-success').addClass('text-danger').html('Origin');
+      last.find('.origin-destination-flag').removeClass('text-danger text-success').addClass('text-success').html('Destination');
+  });
 
 
   $('#trip--details--content').on('change', 'input, select', function(e){
@@ -495,8 +511,8 @@ $(document).ready(function(){
   //Pane validations.
   $('#lh-details-pane').on('validate', function(){
 
-    var origin_flag = $('[name="origin-flag"]');
-    var destination_flag = $('[name="destination-flag"]');
+    // var origin_flag = $('[name="origin-flag"]');
+    // var destination_flag = $('[name="destination-flag"]');
     var movement_type_tds = $('.mov-type-td');
     var locations = $('.google-location-input');
     var appts = $('.appt-td');
@@ -508,36 +524,36 @@ $(document).ready(function(){
     var appt_validation = true;
 
     //Validate origination bullets being selected.
-    origin_flag.each(function(){
-      // console.log("Value: " + this.value);
-      if (this.checked) {
-        of_validation = true;
-      }
-    });
-
-    if (of_validation) {
-      origin_flag.parents('td').removeClass('table-danger');
-    } else {
-      origin_flag.parents('td').addClass('table-danger');
-    }
+    // origin_flag.each(function(){
+    //   // console.log("Value: " + this.value);
+    //   if (this.checked) {
+    //     of_validation = true;
+    //   }
+    // });
+    //
+    // if (of_validation) {
+    //   origin_flag.parents('td').removeClass('table-danger');
+    // } else {
+    //   origin_flag.parents('td').addClass('table-danger');
+    // }
 
 
     //Validate destination bullets being selected.
-    destination_flag.each(function(){
-      // console.log("Value: " + this.value);
-      if (this.checked) {
-        df_validation = true;
-      }
-    });
-    if (df_validation) {
-        destination_flag.each(function(){
-          $(this).parents('td').removeClass('table-danger');
-        });
-    } else {
-        destination_flag.each(function(){
-          $(this).parents('td').addClass('table-danger');
-        });
-    }
+    // destination_flag.each(function(){
+    //   // console.log("Value: " + this.value);
+    //   if (this.checked) {
+    //     df_validation = true;
+    //   }
+    // });
+    // if (df_validation) {
+    //     destination_flag.each(function(){
+    //       $(this).parents('td').removeClass('table-danger');
+    //     });
+    // } else {
+    //     destination_flag.each(function(){
+    //       $(this).parents('td').addClass('table-danger');
+    //     });
+    // }
 
     //Validate locations inputs being filled out properly.
     locations.each(function(){
@@ -600,7 +616,7 @@ $(document).ready(function(){
 
     });
 
-    if (of_validation && df_validation && loc_validation && movement_type_validation && appt_validation) {
+    if (loc_validation && movement_type_validation && appt_validation) {
       // console.log(true);
       validation.status = true;
     } else {
@@ -685,8 +701,8 @@ $(document).ready(function(){
     var broker = tripDet.find('.selected-broker');
     var reference = tripDet.find('.broker-reference');
     lhDet.find('#movement-details').find('tr').each(function(i){
-      var origin_flag = $(this).find('[name=origin-flag]').prop('checked');
-      var destination_flag = $(this).find('[name=destination-flag]').prop('checked');
+      var mov_order = $(this).data('mov-order');
+      var mov_class = $(this).find('.origin-destination-flag').html();
       var id = this.id;
       var loc = $(this).find('.google-location-input');
       var location = {
@@ -711,8 +727,8 @@ $(document).ready(function(){
       var miles = $(this).find('.distance').val();
 
       route[i] = {
-        is_origin: origin_flag,
-        is_dest: destination_flag,
+        mov_order: mov_order,
+        mov_class: mov_class,
         location: location,
         type: emptyLoaded,
         eal: eal,
@@ -751,18 +767,24 @@ $(document).ready(function(){
     for (var r in route) {
       if (route.hasOwnProperty(r)) {
           var this_route = $('<div class="row movement"></div>');
+          this_route.data('mov-order', route[r].mov_order);
+          this_route.data('mov-class', route[r].mov_class);
+          this_route.data('eal', route[r].eal);
           this_route.append('<div class="col-md-6 address"></div>');
-          this_route.append('<div class="col-md-3 appt"></div>');
+          this_route.append('<div class="col-md-3 appt"><span class="date"></span> <span class="from"></span> - <span class="to"></span></div>');
 
           this_route.find('.address').html(route[r].location.formatted);
           if (!route[r].appt.isna) {
-            this_route.find('.appt').html(
-              route[r].appt.date + " " +
-              route[r].appt.from_hour + ":" +
-              route[r].appt.from_min + " - " +
-              route[r].appt.to_hour + ":" +
-              route[r].appt.to_min
-            );
+            this_route.find('.appt .date').html(route[r].appt.date);
+            this_route.find('.appt .from').html(route[r].appt.from_hour + ":" + route[r].appt.from_min);
+            this_route.find('.appt .to').html(route[r].appt.to_hour + ":" + route[r].appt.to_min);
+            // this_route.find('.appt').html(
+            //   route[r].appt.date + " " +
+            //   route[r].appt.from_hour + ":" +
+            //   route[r].appt.from_min + " - " +
+            //   route[r].appt.to_hour + ":" +
+            //   route[r].appt.to_min
+            // );
           } else {
             this_route.find('.appt').html("No appointment");
           }
@@ -775,8 +797,9 @@ $(document).ready(function(){
             this_route.attr('mov-nature', 'destination');
           }
 
-          this_route.append('<div class="col-md-2"><span class="miles"></span> Miles</div>');
+          this_route.append('<div class="col-md-2"><span class="miles"></span> <span class="miles-type"></span> Miles</div>');
           this_route.find('.miles').html(route[r].miles);
+          this_route.find('.miles-type').html(route[r].type);
           this_route.appendTo($this.find('#movement-confirmation'));
 
           //Add all the address elements to the row.
@@ -832,6 +855,73 @@ $(document).ready(function(){
   });
   $('#add_trip_progress').on('shown.bs.tab', '[data-toggle="tab"]', function(){
     $('#addLinehaulModal').find('.tab-pane.fade.active.show').find('input').first().focus();
+  });
+  $('#add-trip-button').click(function(){
+    var data = {
+      trailer:{
+        id: "",
+        number: "",
+        plates: ""
+      },
+      truck: {
+        id:"",
+        number: "",
+        plates: "",
+      },
+      linehaul: {
+        origin_city: "",
+        origin_state: "",
+        origin_zip: "",
+        destination_city: "",
+        destination_state: "",
+        destination_zip: "",
+        broker_reference: "",
+        routes:{} //each mov should include origin, destination (complete), formatted_address, miles, type, class, eal,
+      }
+    }
+
+    var tc = $('#trip-confirmation-pane');
+    var movs = $('#movement-confirmation .movement');
+    var truck = {
+      truck_number: tc.find('.confirm-trailer-number').html(),
+      truck_plates: tc.find('.confirm-trailer-plates').html()
+    };
+
+    data.trailer.id = tc.find('.confirm-trailer-number').attr('db-id');
+    data.trailer.number = tc.find('.confirm-trailer-number').html();
+    data.trailer.plates = tc.find('.confirm-trailer-plates').html();
+
+    data.truck.id = tc.find('.confirm-truck-number').attr('db-id');
+    data.truck.number = tc.find('.confirm-truck-number').html();
+    data.truck.plates = tc.find('.confirm-truck-plates').html();
+
+    movs.each(function(i){
+      var row = $(this);
+      mov = data.linehaul.routes[row.data('mov-order')] = {};
+      mov.location = $(this).find('.address').html();
+
+      var appt  = mov.appt = {};
+      appt.date = $(this).find('.appt .date').html();
+      appt.from = $(this).find('.appt .from').html();
+      appt.to   = $(this).find('.appt .to').html();
+
+      mov.class = row.data('mov-class');
+      mov.eal = row.data('eal');
+      mov.type = $(this).find('.miles-type').html();
+      mov.miles = $(this).find('.miles').html();
+
+      var addr_components = mov.addr_components = {};
+      addr_components.city = row.attr('city');
+      addr_components.state = row.attr('state');
+      addr_components.country = row.attr('country');
+      addr_components.street_number = row.attr('street_number');
+      addr_components.street = row.attr('street');
+      addr_components.zip = row.attr('zip');
+
+    });
+
+    console.log(data);
+
   });
   $('.add-linehaul').click(function(){
     var source = $('#trip-confirmation-pane');
