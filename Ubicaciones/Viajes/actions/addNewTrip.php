@@ -53,16 +53,29 @@ try {
   /* ADD TRIP LINEHAUL */
 // NOTE: Always declare variables $origin, $destination, $pk_trip when not preceded by createTrip.php
   $origin = array(
-    'city'=>$trip['linehaul']['routes'][0]['ocity'],
-    'state'=>$trip['linehaul']['routes'][0]['ostate'],
-    'zip'=>$trip['linehaul']['routes'][0]['ozip']
+    'city'=>"",
+    'state'=>"",
+    'zip'=>""
+  );
+  $destination = array(
+    'city'=>"",
+    'state'=>"",
+    'zip'=>""
   );
 
-  $destination = array(
-    'city'=>end($trip['linehaul']['routes'])['dcity'],
-    'state'=>end($trip['linehaul']['routes'])['dstate'],
-    'zip'=>end($trip['linehaul']['routes'])['dzip']
-  );
+  foreach ($trip['linehaul']['routes'] as $key => $route) { //Set origin and destination, to maintain compatibility with depercated O-D method.
+    if ($route['class'] == "Origin") {
+      $origin['city'] = $route['address_components']['city'];
+      $origin['state'] = $route['address_components']['state'];
+      $origin['zip'] = $route['address_components']['zip'];
+    }
+    if ($route['class'] == "Destination") {
+      $destination['city'] = $route['address_components']['city'];
+      $destination['state'] = $route['address_components']['state'];
+      $destination['zip'] = $route['address_components']['zip'];
+    }
+  }
+
   require 'createLinehaul.php';
 
   /* ADD MOVEMENTS */
