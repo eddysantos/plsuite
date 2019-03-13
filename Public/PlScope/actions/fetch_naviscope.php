@@ -64,7 +64,7 @@ $key =hash('sha256', "ewgdhfjjluo3pip4l");
 $iv = substr(hash('sha256', "sdfkljsadf567890saf"), 0, 16);
 $lh_id = openssl_decrypt(base64_decode($valor1),$cipher, $key, 0, $iv);
 
-$get_trip_info = "SELECT tl.lh_number lh_number , b.brokerName broker_name, tl.linehaul_status lh_status, broker_reference broker_reference, destination_zip dzip, destination_city dcity, destination_state dstate FROM ct_trip_linehaul tl LEFT JOIN ct_brokers b ON tl.fkid_broker = b.pkid_broker WHERE tl.pk_idlinehaul = ?";
+$get_trip_info = "SELECT tl.lh_number lh_number , b.brokerName broker_name, tl.linehaul_status lh_status, broker_reference broker_reference, destination_zip dzip, destination_city dcity, destination_state dstate, date_arrival, date_delivery FROM ct_trip_linehaul tl LEFT JOIN ct_brokers b ON tl.fkid_broker = b.pkid_broker WHERE tl.pk_idlinehaul = ?";
 
 $get_trip_info = $db->prepare($get_trip_info);
 if (!($get_trip_info)) {
@@ -110,6 +110,18 @@ if ($trip_info['lh_status'] == 'Cancelled') {
 if ($trip_info['lh_status'] == 'Closed') {
   $system_callback['code'] = 2;
   $system_callback['message'] = "This trip has already been closed. Please contact dispatch for more information.";
+  exit_script($system_callback);
+}
+
+if ($trip_info['date_arrival'] != "" && $trip_info['date_delivery'] == "") {
+  $system_callback['code'] = 2;
+  $system_callback['message'] = "Your load has already arrived to $trip_info[dcity] $trip_info[dstate], but there's still no delivery information. Please contact dispatch for more details.";
+  exit_script($system_callback);
+}
+
+if ($trip_info['date_delivery'] != "") {
+  $system_callback['code'] = 2;
+  $system_callback['message'] = "Your load was delivered on $trip_info[date_delivery].";
   exit_script($system_callback);
 }
 
