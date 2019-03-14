@@ -876,7 +876,11 @@ $(document).ready(function(){
         destination_state: "",
         destination_zip: "",
         broker_reference: "",
+        rate: "",
         routes:{} //each mov should include origin, destination (complete), formatted_address, miles, type, class, eal,
+      },
+      broker: {
+        id : ""
       }
     }
 
@@ -894,6 +898,8 @@ $(document).ready(function(){
     data.truck.id = tc.find('.confirm-truck-number').attr('db-id');
     data.truck.number = tc.find('.confirm-truck-number').html();
     data.truck.plates = tc.find('.confirm-truck-plates').html();
+
+    data.broker.id = tc.find('.brokerid-confirmation').attr('db-id');
 
     movs.each(function(i){
       var row = $(this);
@@ -919,6 +925,8 @@ $(document).ready(function(){
       addr_components.zip = row.attr('zip');
 
     });
+    data.linehaul.rate = tc.find('.trip-rate-confirmation').html();
+    data.linehaul.reference = tc.find('.broker-reference-confirmation').html();
 
     console.log(data);
 
