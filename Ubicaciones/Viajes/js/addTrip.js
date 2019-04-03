@@ -99,7 +99,11 @@ function add_driver(driver, dbid){
   $('#listed-drivers').append("<p class='d-flex justify-content-between'><span db-id='" + dbid + "'>" + driver + "</span><span class='remove-driver' role='button'><i class='fas fa-user-times text-danger'></i></span></p>");
   $('.popup-list').slideUp();
   $('#driver-popup-list-modal').html('');
-  $("[id-display='#driver-popup-list-modal']").val("").attr('value', "").prop('value', "").change();
+  $("[id-display='#driver-popup-list-modal']").val("").attr('value', "").prop('value', "");
+
+  var drivers = $('#listed-drivers p').length;
+
+  return drivers;
 }
 
 function catchLocation(id = 'testvalue', change_place = true){
@@ -228,8 +232,12 @@ $(document).ready(function(){
     var inputTarget = $(this).parent().attr('id');
     var name = $(this).html();
     if (inputTarget == "driver-popup-list-modal") {
-        add_driver(name, dbid);
-        return false;
+      if (add_driver(name, dbid) == 2){
+        $("[id-display='#" + inputTarget+ "']").addClass('disabled').attr('disabled', true);
+      } else {
+        $("[id-display='#" + inputTarget+ "']").removeClass('disabled').attr('disabled', false);
+      }
+      return false;
     }
 
     if (inputTarget == "trailer-popup-list") {
@@ -417,6 +425,13 @@ $(document).ready(function(){
       first.find('.origin-destination-flag').removeClass('text-danger text-success').addClass('text-danger').html('Origin');
       last.find('.origin-destination-flag').removeClass('text-danger text-success').addClass('text-success').html('Destination');
   });
+
+  $('#listed-drivers').on('click', '.remove-driver', function(e){
+    console.log(e.delegateTarget);
+    $(this).parent('p').remove();
+
+  });
+
 
 
   $('#trip--details--content').on('change', 'input, select', function(e){
