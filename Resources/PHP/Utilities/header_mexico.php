@@ -81,10 +81,10 @@ if (!$_SESSION['user_info']['cred_mexican_portal']) {
               <!-- <a class="dropdown-item" href="/plsuite/Ubicaciones/Reports">Reports</a> -->
               <div class="dropdown-divider"></div>
               <?php if ($_SESSION['user_info']['cred_is_admin']): ?>
-                <a class="dropdown-item" href="/plsuite/Ubicaciones/Users">Users</a>
+                <a class="dropdown-item" href="/plsuite/Ubicaciones/Users">Usuarios</a>
               <?php endif; ?>
               <?php if ($_SESSION['user_info']['cred_american_portal']): ?>
-                <a class="dropdown-item" href="/Ubicaciones">Portal Americano</a>
+                <a class="dropdown-item" href="/plsuite/Ubicaciones">Portal Americano</a>
               <?php endif; ?>
             </div>
           </li>
