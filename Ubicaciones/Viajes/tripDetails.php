@@ -33,6 +33,17 @@ function parseDate($datestamp){
   return $return;
 }
 
+function encrypt($string){
+  $cipher = "AES-256-CBC";
+  $key =hash('sha256', "ewgdhfjjluo3pip4l");
+  $iv = substr(hash('sha256', "sdfkljsadf567890saf"), 0, 16);
+  $token = openssl_encrypt($string, $cipher, $key, 0, $iv);
+  $token = base64_encode($token);
+
+  return $token;
+  // $token = openssl_decrypt(base64_decode("UmhaN284bEUxeStZWXF0eTJ3ODhNQT09"),$cipher, $key, 0, $iv);
+}
+
 $query = "SELECT t.pkid_trip pkidtrip , t.trip_year tripyear, t.trip_number trip_number, t.trip_status trip_status , t.trailer_number trailer_number, t.trailer_plates trailer_plates, t.date_open date_open , t.date_close date_close , tl.pk_idlinehaul idlh, t.first_movement first_movement, t.last_movement last_movement, sum(( SELECT sum(miles_google) FROM ct_trip_linehaul_movement tlm WHERE tl.pk_idlinehaul = tlm.fkid_linehaul AND tl.linehaul_status <> 'Cancelled')) total_miles , sum(( SELECT sum(miles_google) FROM ct_trip_linehaul_movement tlm WHERE tlm.fkid_linehaul = tl.pk_idlinehaul AND tlm.movement_type = 'L' AND tl.linehaul_status <> 'Cancelled')) loaded_miles , sum(( SELECT sum(miles_google) FROM ct_trip_linehaul_movement tlm WHERE tlm.fkid_linehaul = tl.pk_idlinehaul AND tlm.movement_type = 'E' AND tl.linehaul_status <> 'Cancelled')) empty_miles , SUM( IF( tl.linehaul_status <> 'Cancelled' , tl.trip_rate , 0)) total_rate FROM ct_trip t LEFT JOIN ct_trip_linehaul tl ON t.pkid_trip = tl.fk_idtrip WHERE pkid_trip = ? GROUP BY pkid_trip ORDER BY t.pkid_trip DESC";
 
 $stmt = $db->prepare($query);
@@ -146,6 +157,7 @@ if ($trip['last_movement']) {
    <head>
      <meta charset="utf-8">
      <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+     <link rel="icon" href="/plsuite/Resources/images/icono.png">
 
      <!-- Bootstrap CSS -->
      <link rel="stylesheet" href="/plsuite/Resources/Bootstrap_4_1_1/css/bootstrap.min.css">
@@ -153,7 +165,7 @@ if ($trip['last_movement']) {
      <link rel="stylesheet" media="screen and (min-device-width: 701px)" href="/plsuite/Resources/CSS/trips.css">
      <link rel="stylesheet" href="/plsuite/Resources/alertify/css/alertify.min.css">
      <link rel="stylesheet" href="/plsuite/Resources/alertify/css/themes/bootstrap.min.css">
-     <script src="/plsuite/Resources/fa_5/js/fontawesome-all.js"></script>
+     <script src="/plsuite/Resources/fa_5/js/fontawesome-all.min.js" data-auto-replace-svg="nest" charset="utf-8"></script>
      <link rel="stylesheet" media="screen and (max-device-width: 700px)" href="/plsuite/Resources/CSS/mainMobile.css">
      <title>Prolog Transportation Inc</title>
    </head>
@@ -285,6 +297,9 @@ if ($trip['last_movement']) {
              </a>
              <a class="nav-link dash side-panel" id="lh-movs-tab" data-toggle="tab" role="tab" aria-selected="false" aria-controls="lh-movs-dash" href="#lh-movs-pane">
                Movements
+             </a>
+             <a class="nav-link dash side-panel" id="lh-e-documents-tab" data-toggle="tab" role="tab" aria-selected="false" aria-controls="lh-e-documents-dash" href="#lh-e-documents-pane">
+               E-Documents
              </a>
              <a class="nav-link disabled dash side-panel" id="lh-expenses-tab" data-toggle="tab" role="tab" aria-selected="false" aria-controls="lh-expenses-dash" href="#lh-expenses-pane">
                Expenses
@@ -628,6 +643,14 @@ if ($trip['last_movement']) {
                          </div>
                        </div>
                      </div>
+
+                     <div class="row">
+                       <div class="col-12">
+                         <div class="form-group">
+                           <a role="button" class="btn btn-outline-secondary" target="_blank" name="plscope_anchor" href="" data-toggle="tooltip" data-placement="top" title="Open PL Scope"><i class="fas fa-map-marked-alt"></i></a>
+                         </div>
+                       </div>
+                     </div>
                    </div>
 
                    <div class="" id="lh-edit-disabled" style="display: none">
@@ -650,6 +673,43 @@ if ($trip['last_movement']) {
                <table class="table table-striped border text-dark">
                  <tbody id="mov-dash"></tbody>
                </table>
+             </div>
+             <div class="tab-pane fade" id="lh-e-documents-pane" role="tab-panel" aria-labelledby="lh-movs-tab">
+               <!-- <div class="clearfix mt-1 mb-1">
+                 <button type="button" class="btn btn-outline-success float-right" name="button"><i class="fa fa-plus"></i> Add Document</button>
+               </div> -->
+               <div class="container-fluid">
+                 <form class="form-inline justify-content-around" onsubmit="return false;">
+                   <div class="col-auto">
+                     <label for="" class="d-inline col-form-label">File Name</label>
+                     <span  class="" id="file-identifier" style="display: none">
+                       <input type="text" list="doc-names" class="form-control" name="" value="" placeholder="Enter File Name">
+                       <i class="far fa-times-circle text-danger" id="close-custom-identifier" role="button"></i>
+                     </span>
+                     <select class="form-control" name="" id="file-identifier-select">
+                       <option value="">Select identifier</option>
+                       <option value="Rate Confirmation">Rate Confirmation</option>
+                       <option value="Proof Of Delivery">Proof Of Delivery</option>
+                       <option value="Other">Other</option>
+                     </select>
+                   </div>
+                   <div class="custom-file col-md-4">
+                     <input type="file" class="custom-file-input" id="e-document-input">
+                     <label class="custom-file-label justify-content-start" for="e-document-input">Choose File</label>
+                   </div>
+                   <button type="button" class="btn btn-outline-primary" name="button" id="upload-file">Upload</button>
+                 </form>
+                 <table class="table table-striped mt-3">
+                   <thead>
+                     <th>Filename</th>
+                     <th>Date Uploaded</th>
+                     <th>Uploaded By</th>
+                     <th></th>
+                   </thead>
+                   <tbody id="document-table">
+                   </tbody>
+                 </table>
+               </div>
              </div>
            </div>
          </div>
@@ -1029,9 +1089,10 @@ if ($trip['last_movement']) {
 require 'modales/addLinehaul.php';
 require 'modales/addMovement.php';
 require 'modales/closeTripConfirmation.php';
+require 'modales/doc_viewer.php';
 require $root . '/plsuite/Resources/PHP/Utilities/footer.php';
  ?>
  <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script> -->
  <script src="/plsuite/Resources/jquery_ui_1_12_1/jquery-ui.min.js" charset="utf-8"></script>
- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDuBCFwHZCWMgyeTJ1MI32sXlGnJtIIsUA" async defer></script>
+ <!-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDuBCFwHZCWMgyeTJ1MI32sXlGnJtIIsUA" async defer></script> -->
  <script src="js/tripDetails.js" charset="utf-8"></script>

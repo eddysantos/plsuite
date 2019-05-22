@@ -68,6 +68,12 @@ while ($row = $rslt->fetch_assoc()) {
            </div>
          </div>
          <div class="form-group row">
+           <label for="omnilogin" class="col-2 col-form-label">Omni Login</label>
+           <div class="col-4">
+             <input class="form-control" type="text" name="omnilogin" id="omnilogin" value="<?php echo $driver['omni_login'] ?>">
+           </div>
+         </div>
+         <div class="form-group row">
            <label class="col-2 col-form-label" for="dPhone">Phone</label>
            <div class="col-10">
              <input class="form-control" type="text" name="dPhone" id="dPhone" value="<?php echo $driver['phoneNumber'] ?>">

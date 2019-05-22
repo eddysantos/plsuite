@@ -9,44 +9,47 @@ require $root . '/plsuite/Resources/PHP/Utilities/initialScript.php';
 
 
 $today = date('Y-m-d', strtotime('today'));
+$filter_45days = date('Y-m-d', strtotime('today - 45 days'));
 
  ?>
 <div class="container-fluid align-items-right d-flex align-content-center mb-3 position-sticky" style="margin-top: 65px">
   <h1 class="nb-id d-inline text-secondary">Invoice Control</h1>
-  <!-- <div class="ml-5">
-    <ul class="nav nav-pills" role="tablist">
-      <li class="nav-item">
-        <a class="nav-link active" id="pending-invoice-tab" data-toggle="tab" href="#pending-invoice-trips" role="tab">Pending Invoice</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link"id="pending-payment-tab" data-toggle="tab" href="#pending-payment-trips" role="tab">Pending Payment</a>
-      </li>
-    </ul>
-  </div> -->
 </div>
 
 <div class="container-fluid" style="overflow-y: scroll; height: calc(100vh - 190px);">
   <div class="h-100 w-100">
     <div class="tab-display" style="color: black !important; " id="pending-invoice-trips" role="tabpanel">
+
       <form class="form-inline justify-content-between" onsubmit="return false;">
-        <div class="form-inline">
-          <label class="form-control-label mr-3">To begin, type a trip or trailer number:</label>
-          <input type="text" class="form-control" autocomplete="off" id="pending-invoice-trip-search" name="" value="">
+        <div class="">
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text" id="basic-addon1"><i class="fas fa-search"></i></span>
+            </div>
+            <input type="text" class="form-control" autocomplete="off" id="table-search" name="" value="" aria-describedby="basic-addon1"  aria-label="search-term">
+          </div>
+          <small id="searchExplanation" class="form-text text-muted">
+            To search through the table type on this box.
+          </small>
         </div>
-        <!-- <div class="form-group ml-2">
-          <input type="checkbox" class="mr-2" name="" value="">
-          <label for="">Check to show only pending payment</label>
-        </div> -->
-        <button type="button" class="btn btn-outline-secondary" id="pending-payments-toggle" active="0" name="button">Show pending payment only</button>
+        <div class="">
+          <!-- <button type="button" class="btn btn-outline-secondary" id="pending-payments-toggle" active="0" name="button">Show pending payment only</button> -->
+          <button type="button" class="btn btn-outline-secondary show-filter" name="button"><i class="fas fa-filter"></i></button>
+        </div>
       </form>
-      <table class="table table-hover">
+      <table class="table table-sm">
         <thead>
           <tr>
             <th>Trip Number</th>
+            <th>Trip Date</th>
             <th>Trailer</th>
             <th>From - To</th>
+            <th>Driver</th>
+            <th>Client</th>
             <th>Rate</th>
             <th>Invoice</th>
+            <th>Invoice Date</th>
+            <th>Payment Date</th>
           </tr>
         </thead>
         <tbody id="trip-invoice-search">
@@ -225,6 +228,79 @@ $today = date('Y-m-d', strtotime('today'));
     <tbody id="tripDashTable">
     </tbody>
   </table> -->
+</div>
+
+<div class="filter-tab" id="filter" style="z-index: 9999">
+  <div class="custom-flex">
+    <div class="cf-row cf-header border-bottom">
+      <button type="button" class="close hide-filter" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+      <h5>Filter Invoice View</h5>
+    </div>
+    <div class="cf-row cf-content">
+      <form class="form-inline" id="filter-form">
+        <div class="w-100 border-bottom">
+          <div class=""><b>Trip Information</b></div>
+          <!-- <i>Departure Date</i> -->
+          <div class="d-flex justify-content-between mb-1">
+            <label for="" class="mr-2">From</label>
+            <input type="date" class="form-control form-control-sm" name="trip-from" value="<?php echo $filter_45days ?>">
+          </div>
+          <div class="d-flex justify-content-between mb-1">
+            <label for="" class="mr-2">To</label>
+            <input type="date" class="form-control form-control-sm" name="trip-to" value="<?php echo $today ?>">
+          </div>
+          <div class="d-flex justify-content-between mb-1">
+            <label for="" class="mr-2">Trailer</label>
+            <input type="text" class="form-control popup-input form-control-sm" id-display="#trailer-popup-list" aria-describedby="addTrailerotf" id="trailerNumber" type="text" autocomplete="new-password" db-id="" name="trailer-number" value="" placeholder="Type Trailer Number">
+            <div id="trailer-popup-list" class="popup-list mt-3" style="display: none; z-index: 9999"></div>
+          </div>
+          <div class="d-flex justify-content-between mb-1">
+            <label for="" class="mr-2">Client</label>
+            <input type="text" class="form-control popup-input form-control-sm" id-display="#broker-popup-list" aria-describedby="addTrailerotf" id="brokerNumber" type="text" autocomplete="new-password" db-id="" name="client-name" value="" placeholder="Type Broker Name">
+            <div id="broker-popup-list" class="popup-list mt-3" style="display: none; z-index: 9999"></div>
+          </div>
+        </div>
+        <div class="w-100 border-bottom">
+          <b>Invoice Information</b>
+          <div class="d-flex justify-content-between mb-1">
+            <label for="" class="mr-2">From</label>
+            <input type="date" class="form-control form-control-sm" name="invoice-from" value="">
+          </div>
+          <div class="d-flex justify-content-between mb-1">
+            <label for="" class="mr-2">To</label>
+            <input type="date" class="form-control form-control-sm" name="invoice-to" value="">
+          </div>
+          <div class="d-flex mb-1">
+            <label for="" class="mr-2">Without Invoice</label>
+            <input type="checkbox" class="form-control form-control-sm" name="no-invoice" value="true">
+          </div>
+        </div>
+        <!-- <div class="w-100">
+          <b></b>
+        </div> -->
+        <div class="w-100">
+          <b>Payment Due</b>
+          <div class="d-flex justify-content-between mb-1">
+            <label for="" class="mr-2">From</label>
+            <input type="date" class="form-control form-control-sm" name="payment-from" value="">
+          </div>
+          <div class="d-flex justify-content-between mb-1">
+            <label for="" class="mr-2">To</label>
+            <input type="date" class="form-control form-control-sm" name="payment-to" value="">
+          </div>
+          <div class="d-flex mb-1">
+            <label for="" class="mr-2">Without payment</label>
+            <input type="checkbox" class="form-control form-control-sm" name="no-payment" value="true">
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="cf-row cf-footer">
+      <button type="button" class="btn btn-primary w-100" name="button" id="apply-filter">Apply</button>
+    </div>
+  </div>
 </div>
 
 <?php

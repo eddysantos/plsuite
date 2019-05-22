@@ -10,7 +10,7 @@ $pwd = 'f4Tnps.03';
 
 /** TEST DATABASE **/
 // $datab = 'plsuite';
-// $host = 'localhost';
+// $host = '127.0.0.1';
 // $port = 8889;
 // $usr = 'root';
 // $pwd = 'root';

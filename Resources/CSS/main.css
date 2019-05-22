@@ -255,3 +255,7 @@ input[type=number]::-webkit-outer-spin-button {
 .black-font{
   color: black !important;
 }
+
+.fw-item:hover{
+  background-color: rgba(124, 124, 124, 0.44)
+}

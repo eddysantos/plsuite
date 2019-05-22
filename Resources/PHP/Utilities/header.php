@@ -3,6 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="icon" href="/plsuite/Resources/images/icono.png">
 
 
     <!-- Bootstrap CSS -->
@@ -15,7 +16,7 @@
     <link rel="stylesheet" media="screen and (max-device-width: 700px)" href="/plsuite/Resources/CSS/mainMobile.css">
     <script src="/plsuite/Resources/JQuery/jquery-3.2.1.min.js" charset="utf-8"></script>
     <!-- <script defer src="https://use.fontawesome.com/releases/v5.0.7/js/all.js"></script> -->
-    <script src="/plsuite/Resources/fa_5/js/fontawesome-all.js" charset="utf-8"></script>
+    <script src="/plsuite/Resources/fa_5/js/fontawesome-all.min.js" data-auto-replace-svg="nest" charset="utf-8"></script>
 
     <!-- <link href="https://fonts.googleapis.com/css?family=Sansita" rel="stylesheet"> -->
     <title>Prolog Transportation Inc</title>
