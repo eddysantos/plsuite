@@ -4,6 +4,8 @@ session_start();
 // $root = $_SERVER['DOCUMENT_ROOT'];
 // require $root . '/plsuite/Resources/PHP/Utilities/initialScript.php';
 
+$url = "";
+
 function detectDevice(){
 	$userAgent = $_SERVER["HTTP_USER_AGENT"];
 	$devicesTypes = array(
@@ -33,9 +35,9 @@ if (isset($_POST['login'])) {
 
     // include('Resources/PHP/loginDatabase.php');
 
-    $loginQry = "SELECT u.pkIdUsers , u.Nombre , u.Apellido , u.NombreUsuario , u.TipoUsuario , u.Status , u.NombreUsuario , up.invoice_control_save ic_save FROM Users u LEFT JOIN users_permisos up ON u.pkIdUsers = up.fkid_user WHERE NombreUsuario = ? AND Contrasena = ?";
+    $loginQry = "SELECT *, u.pkIdUsers , u.Nombre , u.Apellido , u.NombreUsuario , u.TipoUsuario , u.Status , u.NombreUsuario , up.invoice_control_save ic_save FROM Users u LEFT JOIN users_permisos up ON u.pkIdUsers = up.fkid_user WHERE NombreUsuario = ? AND Contrasena = ?";
 
-    $stmt = $db->prepare($loginQry) or die ('Error Login('.$login->errno.'): '.$login->error);
+    $stmt = $db->prepare($loginQry) or die ('Error Login('.$db->errno.'): '.$db->error);
     $stmt->bind_param('ss',$usuario, $pass);
     $stmt->execute();
     $results = $stmt->get_result();
@@ -44,6 +46,16 @@ if (isset($_POST['login'])) {
     $validador = $results->num_rows;
 
     if ($validador == 1) {
+			if ($row['cred_american_portal']) {
+			 $url = "location:Ubicaciones/";
+			 $_SESSION['current_portal'] = "us";
+		 } elseif ($row['cred_mexican_portal']) {
+		 	$url = "location:mxportal/";
+			$_SESSION['current_portal'] = "mx";
+		} else {
+			$url = "/access_denied.php";
+		}
+
       $_SESSION['user_info'] = $row;
       setcookie('Nombre',$row['Nombre']);
       setcookie('Apellido',$row['Apellido']);
@@ -54,7 +66,7 @@ if (isset($_POST['login'])) {
       if (detectDevice() == "Mobile") {
         header('location:Ubicaciones/registroHoras.php');
       } else {
-        header('location:Ubicaciones/');
+        header($url);
       }
 
       exit();

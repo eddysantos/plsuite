@@ -1,10 +1,11 @@
 <?php
 
-if (!$_SESSION['user_info']['cred_american_portal']) {
+if (!$_SESSION['user_info']['cred_mexican_portal']) {
   header("location:/plsuite/access_denied.php");
 } else {
-  $_SESSION['current_portal'] = "us";
+  $_SESSION['current_portal'] = "mx";
 }
+
 
  ?>
 
@@ -17,15 +18,13 @@ if (!$_SESSION['user_info']['cred_american_portal']) {
 
 
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="/plsuite/Resources/Bootstrap_4_1_1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/plsuite/Resources/Bootstrap_4_3/css/bootstrap.min.css">
     <link rel="stylesheet" href="/plsuite/Resources/alertify/css/alertify.min.css">
     <link rel="stylesheet" href="/plsuite/Resources/alertify/css/themes/default.min.css">
-    <link rel="stylesheet" href="/plsuite/Resources/alertify/css/themes/bootsrap.min.css">
+    <link rel="stylesheet" href="/plsuite/Resources/alertify/css/themes/bootstrap.min.css">
     <link rel="stylesheet" media="screen and (min-device-width: 701px)" href="/plsuite/Resources/CSS/main.css">
-    <!-- <link rel="stylesheet" media="screen and (min-device-width: 701px)" href="/plsuite/Resources/fontAwesome/css/font-awesome.min.css"> -->
     <link rel="stylesheet" media="screen and (max-device-width: 700px)" href="/plsuite/Resources/CSS/mainMobile.css">
     <script src="/plsuite/Resources/JQuery/jquery-3.2.1.min.js" charset="utf-8"></script>
-    <!-- <script defer src="https://use.fontawesome.com/releases/v5.0.7/js/all.js"></script> -->
     <script src="/plsuite/Resources/fa_5/js/fontawesome-all.min.js" data-auto-replace-svg="nest" charset="utf-8"></script>
 
     <!-- <link href="https://fonts.googleapis.com/css?family=Sansita" rel="stylesheet"> -->
@@ -44,28 +43,19 @@ if (!$_SESSION['user_info']['cred_american_portal']) {
       <div class="collapse navbar-collapse" id="contenidoenblanco">
         <ul class="navbar-nav mr-auto">
           <li class="nav-item">
-            <a class="nav-link custom <?php echo $dash_active?>" href="/plsuite/Ubicaciones/dashboard.php">Dashboard</a>
-          </li>
-          <li class="nav-item dropdown">
-            <a class="nav-link custom dropdown-toggle <?php echo $viajes_active?>" href="#" id="tripDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded='false'>Trips</a>
-            <div class="dropdown-menu" aria-lablledby="tripDropdown">
-              <a class="dropdown-item" href="/plsuite/Ubicaciones/Viajes/dashboard.php">Active Trips</a>
-              <a class="dropdown-item" href="/plsuite/Ubicaciones/Viajes/tripSearch.php" href="#">Trip Search</a>
-              <div class="dropdown-divider"></div>
-              <a class="dropdown-item" href="/plsuite/Ubicaciones/Viajes/invoice_control" href="">Invoice Control</a>
-            </div>
+            <a class="nav-link custom <?php echo $viajes_active?>" href="/plsuite/mxportal/operaciones">Viajes</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link custom <?php echo $operadores_active?>" href="/plsuite/Ubicaciones/Drivers/dashboard.php">Drivers</a>
+            <a class="nav-link custom <?php echo $operadores_active?>" href="/plsuite/mxportal/operadores/">Operadores</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link custom <?php echo $tractores_active?>" href="/plsuite/Ubicaciones/Trucks/dashboard.php">Trucks</a>
+            <a class="nav-link custom <?php echo $tractores_active?>" href="/plsuite/mxportal/camiones/">Camiones</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link custom <?php echo $cajas_active?>" href="/plsuite/Ubicaciones/Trailers/dashboard.php">Trailers</a>
+            <a class="nav-link custom <?php echo $cajas_active?>" href="#">Cajas</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link custom <?php echo $brokers_active?>" href="/plsuite/Ubicaciones/Brokers/dashboard.php">Brokers</a>
+            <a class="nav-link custom <?php echo $clientes_active?>" href="/plsuite/mxportal/clientes/">Clientes</a>
           </li>
           <!--li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -80,27 +70,26 @@ if (!$_SESSION['user_info']['cred_american_portal']) {
           </li> -->
         </ul>
         <ul class="navbar-nav">
-          <li class="nav-item">
+          <!-- <li class="nav-item">
             <a href="/plsuite/Ubicaciones/Reports" class="nav-link">Reports</a>
-          </li>
+          </li> -->
           <li class="nav-item dropdown mr-3">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              Options
+              Opciones
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <a class="dropdown-item" disabled href="/plsuite/Ubicaciones/Config">Configuration</a>
+              <!-- <a class="dropdown-item" href="/plsuite/Ubicaciones/Reports">Reports</a> -->
+              <div class="dropdown-divider"></div>
               <?php if ($_SESSION['user_info']['cred_is_admin']): ?>
                 <a class="dropdown-item" href="/plsuite/Ubicaciones/Users">Users</a>
               <?php endif; ?>
-              <!-- <a class="dropdown-item" href="/plsuite/Ubicaciones/Reports">Reports</a> -->
-              <div class="dropdown-divider"></div>
-              <?php if ($_SESSION['user_info']['cred_mexican_portal']): ?>
-                <a class="dropdown-item" href="/plsuite/mxportal">Mexican Portal</a>
+              <?php if ($_SESSION['user_info']['cred_american_portal']): ?>
+                <a class="dropdown-item" href="/Ubicaciones">Portal Americano</a>
               <?php endif; ?>
             </div>
           </li>
           <li class="nav-item">
-            <a class="nav-link" data-toggle="modal" data-target="#signOutModal" role="button">Sign Out</a>
+            <a class="nav-link" data-toggle="modal" data-target="#signOutModal" role="button">Cerrar Sesión</a>
           </li>
         </ul>
       </div>

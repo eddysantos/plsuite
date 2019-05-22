@@ -1,0 +1,142 @@
+.custom-header{
+  height: 60px;
+  border-bottom: .5pt solid rgba(102, 102, 102, .4)
+}
+
+.custom-header-bar{
+  /*height: 100%;*/
+  width: 20px;
+  float: left;
+  background-color: rgb(75,139, 15);
+}
+
+.custom-header div{
+  height: 100%;
+  display: -webkit-flex; /* Safari */
+  -webkit-align-items: center; /* Safari 7.0+ */
+  display: flex;
+  align-items: center;
+  font-size: 25pt;
+  color: rgb(102, 102, 102);
+}
+
+.custom-header div a{
+  /*font-size: 25pt;*/
+  color: rgb(75,139, 15) !important;
+}
+
+.custom-header * input{
+  border: none;
+  width: 100%
+}
+
+.active{
+  color: rgb(74, 139, 15) !important;
+}
+
+.grey-font{
+  color: rgb(102, 102, 102);
+}
+
+aside{
+  height: 100%;
+  width: 20%;
+  /*border-right: solid 1pt rgb(102, 102, 102);*/
+  position: fixed;
+  margin-top: 30px;
+}
+
+aside:after{
+  content: "";
+  height: 80%;
+  top: 3%;
+  width: .5%;
+  background: rgba(102, 102, 102, .4);
+  position: absolute;
+  right: -1px;
+}
+
+.di-label{
+  font-weight: bold;
+}
+
+.trip-info{
+  font-size: 15pt;
+}
+
+.lh-dash{
+  width: 80%;
+  float: right;
+}
+
+.lt-container-6{
+  overflow-y: scroll;
+  height: 350px;
+}
+
+.driver-details{
+  height: 75%;
+  overflow: hidden;
+}
+
+.right-side-border{
+  border-right: solid 1pt rgba(102, 102, 102, .4);
+}
+
+.bottom-side-border{
+  border-bottom: solid 1pt rgba(102, 102, 102, .4);
+}
+
+.driver-details-child{
+  width: 50%;
+  height: 100%
+}
+
+.popup-list{
+  position: absolute;
+  width: -webkit-fill-available;
+  border-radius: 5px;
+  border: 1px solid rgb(020, 020, 020);
+  background-color: white;
+  margin-right: 30px;
+  margin-top: -10px;
+  padding: 10px;
+}
+
+.popup-list p{
+  padding: 10px;
+  margin-bottom: 0px;
+}
+
+.popup-list p.hovered{
+  background-color: rgba(0, 0, 0, .2);
+  cursor: pointer;
+}
+
+.popup-list p.hovered{
+  background-color: rgba(0, 0, 0, .2);
+  cursor: pointer;
+}
+
+.popup-list p:not(:last-child){
+  border-bottom: 1px solid rgb(1,1,1);
+}
+
+.popup-list p:last-child{
+  margin-bottom: 0px;
+}
+
+.section-header{
+  width: 100%;
+  color: grey;
+  border-bottom: solid grey .5pt;
+}
+
+.section-header i{
+  font-size: xx-large;
+}
+
+/*.driver-details-last{
+  width: 50;
+  height: 100%
+}*/
