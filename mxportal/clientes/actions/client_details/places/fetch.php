@@ -4,13 +4,22 @@ if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
 
+
 $root = $_SERVER['DOCUMENT_ROOT'];
 require $root . '/plsuite/Resources/PHP/Utilities/initialScript.php';
 
-$system_callback = [];
-$txt = "%$_POST[txt]%";
+if ($_POST['text'] == "") {
+  $search_term = "%%";
+} else {
+  $search_term = "%$_POST[text]%";
+}
 
-$query = "SELECT * FROM ct_truck WHERE deletedTruck IS NULL AND truckNumber LIKE ? AND portal_assignment = ?";
+$id = $_POST['id'];
+
+$system_callback = [];
+$query = "SELECT * FROM mx_places WHERE place_name LIKE ? AND fk_mx_client = ?";
+
+$system_callback['post'] = $_POST;
 
 $stmt = $db->prepare($query);
 if (!($stmt)) {
@@ -20,7 +29,7 @@ if (!($stmt)) {
   exit_script($system_callback);
 }
 
-$stmt->bind_param('ss', $txt, $_SESSION['current_portal']);
+$stmt->bind_param('ss', $search_term, $id);
 if (!($stmt)) {
   $system_callback['code'] = "500";
   $system_callback['query'] = $query;
@@ -39,17 +48,32 @@ $rslt = $stmt->get_result();
 
 if ($rslt->num_rows == 0) {
   $system_callback['code'] = 2;
-  $system_callback['message'] = "Script called successfully but there are no rows to display.";
-  //$system_callback['data'] .= $row;
+  $system_callback['message'] = "Este cliente no tiene destinos establecidos";
   exit_script($system_callback);
 }
 
 while ($row = $rslt->fetch_assoc()) {
+  if ($row['address_int_number'] == "") {
+    $interior = "";
+  } else {
+    $interior = " , $row[address_int_number]";
+  }
   $system_callback['data'] .=
-  "<p db-id='$row[pkid_truck]' plates='$row[truckPlates]'>$row[truckNumber]</p>";
+  "<tr>
+    <td class='d-flex justify-content-between'>
+      <div class='''>
+        <b>$row[place_name]</b> - $row[place_alias]
+        <div class='''>$row[address_street] $row[address_ext_number]$interior, $row[address_locality]</div>
+        <div class='''>$row[address_city], $row[address_state], $row[address_zip_code]</div>
+      </div>
+    </td>
+  </tr>";
 }
 
 $system_callback['code'] = 1;
 $system_callback['message'] = "Script called successfully!";
 exit_script($system_callback);
+
+
+
  ?>

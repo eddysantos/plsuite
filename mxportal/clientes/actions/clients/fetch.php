@@ -4,13 +4,20 @@ if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
 
+
 $root = $_SERVER['DOCUMENT_ROOT'];
 require $root . '/plsuite/Resources/PHP/Utilities/initialScript.php';
 
-$system_callback = [];
-$txt = "%$_POST[txt]%";
+if ($_POST == []) {
+  $search_term = "%%";
+} else {
+  $search_term = "%$_POST[text]%";
+}
 
-$query = "SELECT * FROM ct_truck WHERE deletedTruck IS NULL AND truckNumber LIKE ? AND portal_assignment = ?";
+$system_callback = [];
+$query = "SELECT * FROM mx_clients WHERE client_name LIKE ?";
+
+$system_callback['post'] = $_POST;
 
 $stmt = $db->prepare($query);
 if (!($stmt)) {
@@ -20,7 +27,7 @@ if (!($stmt)) {
   exit_script($system_callback);
 }
 
-$stmt->bind_param('ss', $txt, $_SESSION['current_portal']);
+$stmt->bind_param('s', $search_term);
 if (!($stmt)) {
   $system_callback['code'] = "500";
   $system_callback['query'] = $query;
@@ -39,17 +46,33 @@ $rslt = $stmt->get_result();
 
 if ($rslt->num_rows == 0) {
   $system_callback['code'] = 2;
-  $system_callback['message'] = "Script called successfully but there are no rows to display.";
-  //$system_callback['data'] .= $row;
+  $system_callback['message'] = "No existen clientes registrados.";
   exit_script($system_callback);
 }
 
 while ($row = $rslt->fetch_assoc()) {
+  if ($row['address_int_number'] == "") {
+    $interior = "";
+  } else {
+    $interior = " , $row[address_int_number]";
+  }
   $system_callback['data'] .=
-  "<p db-id='$row[pkid_truck]' plates='$row[truckPlates]'>$row[truckNumber]</p>";
+  "<tr data-id='$row[pk_mx_client]' role='button'>
+    <td class='d-flex justify-content-between align-items-center'>
+      <div class=''>
+        <b>$row[client_alias]</b> [<i>$row[client_name]</i>]
+        <p class='m-0 p-0'>$row[address_state] $row[address_ext_number]$interior, $row[address_locality]</p>
+        <p clas='m-0 p-0'>$row[address_city], $row[address_state], $row[address_zip_code]</p>
+      </div>
+      <!--i class='far fa-arrow-alt-circle-right' style='font-size: xx-large'></i-->
+    </td>
+  </tr>";
 }
 
 $system_callback['code'] = 1;
 $system_callback['message'] = "Script called successfully!";
 exit_script($system_callback);
+
+
+
  ?>
