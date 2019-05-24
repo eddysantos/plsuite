@@ -43,7 +43,7 @@ if (!$_SESSION['user_info']['cred_mexican_portal']) {
       <div class="collapse navbar-collapse" id="contenidoenblanco">
         <ul class="navbar-nav mr-auto">
           <li class="nav-item">
-            <a class="nav-link custom <?php echo $viajes_active?>" href="/plsuite/mxportal/operaciones">Viajes</a>
+            <a class="nav-link custom <?php echo $viajes_active?>" href="/plsuite/mxportal/operaciones">Operaciones</a>
           </li>
           <li class="nav-item">
             <a class="nav-link custom <?php echo $operadores_active?>" href="/plsuite/mxportal/operadores/">Operadores</a>

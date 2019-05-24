@@ -25,7 +25,7 @@ foreach ($_POST as $key => $value) {
 
 extract($_POST);
 
-$query = "INSERT INTO mx_clients(client_name, tax_id, client_alias, address_street, address_ext_number, address_int_number, address_locality, address_city, address_state, address_zip_code) VALUES (?,?,?,?,?,?,?,?,? ,?)";
+$query = "INSERT INTO mx_clients(client_name, tax_id, client_alias, address_street, address_ext_number, address_int_number, address_locality, address_city, address_state, address_zip_code, address_country) VALUES (?,?,?,?,?,?,?,?,?,?,?)";
 
 $stmt = $db->prepare($query);
 if (!($stmt)) {
@@ -36,7 +36,7 @@ if (!($stmt)) {
 }
 
 
-$stmt->bind_param('ssssssssss', $client_razonsocial, $client_rfc, $client_alias, $client_street_name, $client_street_ext_number, $client_street_int_number, $client_locality, $client_city, $client_state, $client_zip_code);
+$stmt->bind_param('sssssssssss', $client_razonsocial, $client_rfc, $client_alias, $client_street_name, $client_street_ext_number, $client_street_int_number, $client_locality, $client_city, $client_state, $client_zip_code, $client_country);
 if (!($stmt)) {
   $system_callback['code'] = "500";
   $system_callback['query'] = $query;

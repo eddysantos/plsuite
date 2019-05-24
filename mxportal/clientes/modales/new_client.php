@@ -15,7 +15,7 @@
           </div>
           <div class="form-group">
             <label for="cliente_rfc">RFC<sup>*</sup></label>
-            <input type="text" class="form-control" id="client_rfc" required>
+            <input type="text" class="form-control" id="client_rfc" value="XAXX010101000" required>
           </div>
           <div class="form-group">
             <label for="cliente_alias">Alias<sup>*</sup></label>
@@ -33,10 +33,13 @@
             <div class="form-group">
               <input type="text" class="form-control" id="client_locality" placeholder="Colonia" name="" value="" required>
             </div>
+            <div class="form-inline justify-content-between mb-1">
+              <input type="text" class="form-control flex-grow-1 mr-1" id="client_city" placeholder="Ciudad" name="" value="" autocomplete="new-password" required>
+              <input type="text" class="form-control flex-grow-1 ml-1" id="client_state" placeholder="Estado" name="" value="" autocomplete="new-password" required>
+            </div>
             <div class="form-inline justify-content-between">
-              <input type="text" class="form-control" id="client_city" placeholder="Ciudad" name="" value="" autocomplete="new-password" required>
-              <input type="text" class="form-control" id="client_state" placeholder="Estado" name="" value="" autocomplete="new-password" required>
-              <input type="text" class="form-control" id="client_zip_code" placeholder="Codigo Postal" name="" value="" autocomplete="new-password" required>
+              <input type="text" class="form-control flex-grow-1 mr-1" id="client_zip_code" placeholder="Codigo Postal" name="" value="" autocomplete="new-password" required>
+              <input type="text" class="form-control flex-grow-1 ml-1" id="client_country" placeholder="Pais" name="" value="" autocomplete="new-password" required>
             </div>
           </div>
         </form>

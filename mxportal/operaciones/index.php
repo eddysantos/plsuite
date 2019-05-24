@@ -11,7 +11,14 @@ $cajas_active = "";
 echo "<link rel='stylesheet' href='/plsuite/Resources/CSS/trips.css'>";
 require $root . '/plsuite/Resources/PHP/Utilities/header_mexico.php';
 require $root . '/plsuite/Resources/PHP/Utilities/initialScript.php';
+require $root . '/plsuite/mxportal/resources/php/client_list.php';
+require $root . '/plsuite/mxportal/resources/php/driver_list.php';
+require $root . '/plsuite/mxportal/resources/php/truck_list.php';
 
+
+$clientes = client_list(); //Obtained from client_list.php
+$operadores = driver_list(); //Obtained from driver_list.php
+$tractores = truck_list(); //Obtained from truck_list.php
 
 
  ?>
@@ -21,17 +28,20 @@ require $root . '/plsuite/Resources/PHP/Utilities/initialScript.php';
       <a class="nav-link active" href="#" data-toggle="tab" role="tab" aria-selected="true">Todos</a>
     </li>
     <li class="nav-item">
-      <a class="nav-link" href="#" data-toggle="tab" role="tab" aria-selected="false">Viajes</a>
+      <a class="nav-link" href="#" data-toggle="tab" role="tab" aria-selected="false">Abiertos</a>
     </li>
     <li class="nav-item">
-      <a class="nav-link" href="#" data-toggle="tab" role="tab" aria-selected="false">Cruces</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" href="#" data-toggle="tab" role="tab" aria-selected="false">Arrastres</a>
+      <a class="nav-link" href="#" data-toggle="tab" role="tab" aria-selected="false">Cerrados</a>
     </li>
   </ul>
-  <div class="">
-    <button type="button" class="btn btn-outline-primary" name="button">Nuevo</button>
+  <div class="d-flex">
+    <div class="input-group mx-2">
+      <input type="text" class="form-control h-100" id="tripSearch_box" placeholder="" aria-label="search field" aria-describedby="basic-addon2">
+      <div class="input-group-append">
+        <span class="input-group-text" id="basic-addon2"><i class="fas fa-search"></i></span>
+      </div>
+    </div>
+    <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#nuevaOperacion_modal" name="button">Nuevo</button>
   </div>
 </div>
 
@@ -43,8 +53,9 @@ require $root . '/plsuite/Resources/PHP/Utilities/initialScript.php';
 </div>
 
 <?php
-require 'modales/addTrip.php';
+require 'modales/nueva_operacion.php';
 require $root . '/plsuite/Resources/PHP/Utilities/footer.php';
  ?>
 
-<script src="/plsuite/Ubicaciones/Viajes/js/trips.js" charset="utf-8"></script>
+<script src="/plsuite/mxportal/resources/js/client_popup.js" charset="utf-8"></script>
+<script src="js/operaciones.js" charset="utf-8"></script>
