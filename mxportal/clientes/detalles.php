@@ -71,9 +71,13 @@ $row = $rslt->fetch_assoc();
      <div class="row">
        <div class="col-md-6">
          <h5 class="section-header d-flex justify-content-between pb-1">
-           Datos Generales <i class="far fa-edit text-primary edit-client-info" role="button"></i>
+           Datos Generales
          </h5>
-
+         <div class="mb-1">
+           <button type="button" class="btn btn-outline-primary" name="button">
+             <i class="far fa-edit edit-client-info" role="button"></i>
+           </button>
+         </div>
          <form class="uneditable-form" id="client-general-info">
            <input type="text" name="" id="pk_mx_client" value="<?php echo $row['pk_mx_client'] ?>" hidden>
            <div class="form-group">
@@ -107,8 +111,11 @@ $row = $rslt->fetch_assoc();
        </div>
        <div class="col-md-6">
          <h5 class="section-header d-flex justify-content-between pb-1">
-           Destinos <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#agregarDestino_modal" name="button">Agregar Destino</button>
+           Destinos
          </h5>
+         <div class="mb-1">
+           <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#agregarDestino_modal" name="button">Agregar Destino</button>
+         </div>
          <table class="table table-striped">
            <tbody id="table_mx_places"></tbody>
          </table>

@@ -43,7 +43,7 @@ if (!$_SESSION['user_info']['cred_mexican_portal']) {
       <div class="collapse navbar-collapse" id="contenidoenblanco">
         <ul class="navbar-nav mr-auto">
           <li class="nav-item">
-            <a class="nav-link custom <?php echo $viajes_active?>" href="/plsuite/mxportal/operaciones">Viajes</a>
+            <a class="nav-link custom <?php echo $viajes_active?>" href="/plsuite/mxportal/operaciones">Operaciones</a>
           </li>
           <li class="nav-item">
             <a class="nav-link custom <?php echo $operadores_active?>" href="/plsuite/mxportal/operadores/">Operadores</a>
@@ -81,10 +81,10 @@ if (!$_SESSION['user_info']['cred_mexican_portal']) {
               <!-- <a class="dropdown-item" href="/plsuite/Ubicaciones/Reports">Reports</a> -->
               <div class="dropdown-divider"></div>
               <?php if ($_SESSION['user_info']['cred_is_admin']): ?>
-                <a class="dropdown-item" href="/plsuite/Ubicaciones/Users">Users</a>
+                <a class="dropdown-item" href="/plsuite/Ubicaciones/Users">Usuarios</a>
               <?php endif; ?>
               <?php if ($_SESSION['user_info']['cred_american_portal']): ?>
-                <a class="dropdown-item" href="/Ubicaciones">Portal Americano</a>
+                <a class="dropdown-item" href="/plsuite/Ubicaciones">Portal Americano</a>
               <?php endif; ?>
             </div>
           </li>
