@@ -1,10 +1,15 @@
 <?php
 
-if (!$_SESSION['user_info']['cred_american_portal']) {
-  header("location:/plsuite/access_denied.php");
+if (isset($_SESSION['user_info'])) {
+  if (!$_SESSION['user_info']['cred_american_portal']) {
+    header("location:/plsuite/access_denied.php");
+  } else {
+    $_SESSION['current_portal'] = "us";
+  }
 } else {
-  $_SESSION['current_portal'] = "us";
+  header("location:/plsuite/");
 }
+
 
  ?>
 

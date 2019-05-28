@@ -1,9 +1,13 @@
 <?php
 
-if (!$_SESSION['user_info']['cred_mexican_portal']) {
-  header("location:/plsuite/access_denied.php");
+if (isset($_SESSION['user_info'])) {
+  if (!$_SESSION['user_info']['cred_mexican_portal']) {
+    header("location:/plsuite/access_denied.php");
+  } else {
+    $_SESSION['current_portal'] = "us";
+  }
 } else {
-  $_SESSION['current_portal'] = "mx";
+  header("location:/plsuite/");
 }
 
 
