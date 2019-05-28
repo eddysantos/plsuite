@@ -79,7 +79,7 @@ if ($rows == 0) {
 
 
 
-$query = "SELECT tl.lh_number linehaul , t.trailer_number trailer, tl.trip_rate rate , date(tl.date_delivery) date_end , datediff(date(curdate()) , tl.date_delivery) days, b.brokerName broker, t.pkid_trip pkid_trip FROM ct_trip_linehaul tl LEFT JOIN ct_trip t ON t.pkid_trip = tl.fk_idtrip LEFT JOIN ct_brokers b ON tl.fkid_broker = b.pkid_broker WHERE tl.fk_idtrip <> '' AND (tl.linehaul_status = 'Closed' OR (tl.date_delivery <> '' AND tl.linehaul_status <> 'Cancelled')) AND tl.invoice_number IS NULL ORDER BY days DESC, linehaul ASC";
+$query = "SELECT tl.lh_number linehaul , t.trailer_number trailer, tl.trip_rate rate , date(tl.date_delivery) date_end , datediff(date(curdate()) , tl.date_delivery) days, b.brokerName broker, t.pkid_trip pkid_trip FROM ct_trip_linehaul tl LEFT JOIN ct_trip t ON t.pkid_trip = tl.fk_idtrip LEFT JOIN ct_brokers b ON tl.fkid_broker = b.pkid_broker WHERE tl.fk_idtrip <> '' AND (tl.linehaul_status = 'Closed' OR (tl.date_delivery <> '' AND tl.linehaul_status <> 'Cancelled')) AND (tl.invoice_number IS NULL OR tl.invoice_number = '')  ORDER BY days DESC, linehaul ASC";
 
 $stmt = $db->prepare($query);
 $stmt->execute();
@@ -102,7 +102,7 @@ if ($rows == 0) {
 $sc['data']['pi_trips']['amount'] = number_format($sc['data']['pi_trips']['amount'], 2);
 
 
-$query = "SELECT tl.lh_number linehaul , t.trailer_number trailer , tl.trip_rate rate , tl.invoice_payment_due payment_due , datediff( date(curdate()) , tl.invoice_payment_due) days, tl.invoice_number invoice_number, b.brokerName broker, tl.invoice_number invoice, tl.broker_reference br_reference, t.pkid_trip pkid_trip FROM ct_trip_linehaul tl LEFT JOIN ct_trip t ON t.pkid_trip = tl.fk_idtrip LEFT JOIN ct_brokers b ON tl.fkid_broker = b.pkid_broker WHERE tl.fk_idtrip <> '' AND tl.linehaul_status = 'Closed' AND tl.invoice_payment_due < curdate() AND tl.invoice_payment_date IS NULL ORDER BY days DESC, linehaul ASC";
+$query = "SELECT tl.lh_number linehaul , t.trailer_number trailer , tl.trip_rate rate , tl.invoice_payment_due payment_due , datediff( date(curdate()) , tl.invoice_payment_due) days, tl.invoice_number invoice_number, b.brokerName broker, tl.invoice_number invoice, tl.broker_reference br_reference, t.pkid_trip pkid_trip FROM ct_trip_linehaul tl LEFT JOIN ct_trip t ON t.pkid_trip = tl.fk_idtrip LEFT JOIN ct_brokers b ON tl.fkid_broker = b.pkid_broker WHERE tl.fk_idtrip <> '' AND tl.linehaul_status = 'Closed' AND tl.invoice_payment_due < curdate() AND (tl.invoice_number <> '' AND tl.invoice_number IS NOT NULL) AND tl.invoice_payment_date IS NULL ORDER BY days DESC, linehaul ASC";
 
 $stmt = $db->prepare($query);
 $stmt->execute();

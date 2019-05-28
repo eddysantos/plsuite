@@ -8,29 +8,146 @@ $(document).ready(function(){
 
   // Nueva Operacion modal
   $('#addMovement_btn').click(function(){
-    var movement_line = $(`<div class="form-inline justify-content-end mb-1">
-    <select class="custom-select mr-1" name="">
-      <option value="">Tipo</option>
-      <option value="Viaje">Viaje</option>
-      <option value="Arrastre">Arrastre</option>
-    </select>
-    <input type="text" class="form-control mr-1" placeholder="Origen" name="" value="">
-    <input type="text" class="form-control mr-1" placeholder="Destino" name="" value="">
-    <input type="text" class="form-control mr-1" placeholder="Remolque" name="" value="">
-    <select class="custom-select" name="">
-      <option value="">Clase</option>
-      <option value="Trompo">Trompo</option>
-      <option value="Vacio">Vacio</option>
-      <option value="Cargado">Cargado</option>
-    </select>
+    var movement_line = $(`<div class="form-inline mb-1 justify-content-end">
+      <select class="custom-select mr-1" name="movimiento_tipo" required>
+        <option value="">Tipo</option>
+        <option value="Viaje">Viaje</option>
+        <option value="Arrastre">Arrastre</option>
+        <option value="Cruce">Cruce</option>
+      </select>
+      <select class="custom-select mr-1" data-content="places" name="movimiento_origen" required disabled>
+        <option value="">Origenes no Cargados</option>
+      </select>
+      <select class="custom-select mr-1" data-content="places" name="movimiento_destino" required disabled>
+        <option value="">Destinos no Cargados</option>
+      </select>
+
+      <select class="custom-select" name="movimiento_clase" required>
+        <option value="">Clase</option>
+        <option value="Trompo">Trompo</option>
+        <option value="Vacio">Vacio</option>
+        <option value="Cargado">Cargado</option>
+      </select>
       <i class="far fa-times-circle ml-2 text-danger remove-movement"></i>
     </div>`);
+    var remolques = $('#select_remolques').clone();
+    remolques.val('');
+    movement_line.find('[data-content=places]').last().after(remolques);
     movement_line.appendTo($('#movements_div'));
-  });
+    $('#movements_div').trigger('load_places', movement_line);
+  }); //Agrega un movimiento nuevo al modal.
   $('#movements_div').on('click', '.remove-movement', function(){
     var line = $(this).parents('.form-inline');
     line.remove();
+  }) //Elimina un movimiento del modal - solo existe en movimientos agregados (no en el original)
+  $('#movements_div').on('load_places', function(e, select_targets = ""){
+    if (select_targets == "") {
+      var select_targets = $(this).find('[data-content=places]');
+    } else {
+      select_targets = $(select_targets).find('[data-content=places]');
+    }
+
+
+    data = {
+      id: $(this).data('client')
+    }
+
+    if (data.id == "" || typeof data.id === 'undefined') {
+      return false;
+    }
+
+    var fetch_places = $.ajax({
+      method: 'POST',
+      url: 'actions/places/fetch_places.php',
+      data: data
+    });
+
+    fetch_places.done(function(r){
+      r = JSON.parse(r);
+
+      if (r.code == 1) {
+        select_targets.each(function(){
+          $(this).html(r.data);
+          $(this).attr('disabled', false);
+        });
+      } else {
+        alertify.message(r.message);
+      }
+    }).fail(function(x, y, z){
+      alertify.error('Hubo un error al obtener mx_places, porfavor contacte a Soporte Técnico');
+      console.warn(x);
+      console.warn(y);
+    });
+  }) // Evento para cargar lista de lugares en los dropdowns del modal.
+  $('#viaje_cliente').on('change', function(){
+    alertify.message('Cambió el cliente!');
+    console.log(this.value);
+    if (this.value != "") {
+      data = {
+        id: this.value
+      }
+      $('#movements_div').data('client', data.id);
+      $('#movements_div').trigger('load_places',);
+    }
+  }) //Ejecutar 'load_places' al cambiar/seleccionar el cliente.
+  $('#addOperation_btn').click(function(){
+
+    var inputs = $('#nuevaOperacion_modal').find('select');
+    var validate = true;
+    var movimientos = $('#movements_div').children();
+
+
+    inputs.each(function(){
+
+      if (this.required) {
+        if (this.value == "") {
+          $(this).addClass('is-invalid');
+          validate = false;
+        } else {
+          $(this).removeClass('is-invalid');
+        }
+      }
+    })
+
+    if (!validate) {
+      alertify.warning('Todos los campos deben estar llenos.');
+      return false;
+    }
+
+    var data = {
+      generales: {
+        cliente: $('#viaje_cliente').val(),
+        operador: $('#viaje_operador').val(),
+        tractor: $('#viaje_tractor').val()
+      },
+      movimientos: {}
+    }
+
+    movimientos.each(function(i){
+      data.movimientos[i] = {};
+      $(this).children().each(function(){
+        var key = this.name;
+        var value = this.value;
+        data.movimientos[i][key] = value;
+      })
+    })
+
+    var add_trip = $.ajax({
+      method: 'POST',
+      url: 'actions/operations/add.php',
+      data: data
+    });
+
+    add_trip.done(function(r){
+      r = JSON.parse(r);
+      if (r.code == 1) {
+        alertify.success('Viaje agregado exitosamente.');
+      } else {
+        alertify.warning(r.message)
+      }
+    }).fail(function(x, y, z){
+      console.warn(y);
+    });
+
   })
-
-
 })

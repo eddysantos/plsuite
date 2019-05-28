@@ -14,11 +14,13 @@ require $root . '/plsuite/Resources/PHP/Utilities/initialScript.php';
 require $root . '/plsuite/mxportal/resources/php/client_list.php';
 require $root . '/plsuite/mxportal/resources/php/driver_list.php';
 require $root . '/plsuite/mxportal/resources/php/truck_list.php';
+require $root . '/plsuite/mxportal/resources/php/trailer_list.php';
 
 
 $clientes = client_list(); //Obtained from client_list.php
 $operadores = driver_list(); //Obtained from driver_list.php
 $tractores = truck_list(); //Obtained from truck_list.php
+$remolques = trailer_list(); //Obtained from trailer_list.php
 
 
  ?>
