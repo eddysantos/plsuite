@@ -106,11 +106,6 @@ $(document).ready(function(){
       console.error(y);
       alertify.error("Hubo un error al guardar la información, favor de notificar a soporte técnico.");
     });
-
-
-
-
-
   });
 
   //Edit movement events

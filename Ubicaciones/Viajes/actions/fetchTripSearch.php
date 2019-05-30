@@ -111,7 +111,7 @@ if ($system_callback['code'] == 2) {
     $system_callback['data'] .= "<tr class='inline-table-row' role='button' ty='$trip[TripYear]' db-id='$trip[idTrip]'>
       <td style='width: 40px'><p class='text-right $trip[status] trip'> <i class='fa fa-circle'></i> </p></td>
       <td>
-        <p class='font-weight-bold'>$trp_number<span class='font-weight-light'> | $trip[trailer_number]</span> </p>";
+        <p class='font-weight-bold'>$trip[linehaul_number]<span class='font-weight-light'> | $trip[trailer_number]</span> </p>";
     foreach ($trip as $t_key => $t_value) {
       if ($t_key == 'trailer_number'||$t_key == 'TripYear'||$t_key == 'idTrip'||$t_key == 'status') {
         continue;
