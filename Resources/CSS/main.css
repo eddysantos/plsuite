@@ -300,3 +300,10 @@ input[type=number]::-webkit-outer-spin-button {
 .popup-list p:last-child{
   margin-bottom: 0px;
 }
+
+.saved-record{
+  background-color: rgba(28, 138, 0, 0.1) !important;
+  border-color: rgba(28, 138, 0) !important;
+  transition-property: all;
+  transition-duration: 1.5s;
+}

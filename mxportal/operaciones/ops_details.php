@@ -50,7 +50,7 @@ function encrypt($string){
      <link rel="icon" href="/plsuite/Resources/images/icono.png">
 
      <!-- Bootstrap CSS -->
-     <link rel="stylesheet" href="/plsuite/Resources/Bootstrap_4_1_1/css/bootstrap.min.css">
+     <link rel="stylesheet" href="/plsuite/Resources/Bootstrap_4_3/css/bootstrap.min.css">
      <link rel="stylesheet" media="screen and (min-device-width: 701px)" href="/plsuite/Resources/CSS/main.css">
      <link rel="stylesheet" media="screen and (min-device-width: 701px)" href="/plsuite/Resources/CSS/trips.css">
      <link rel="stylesheet" href="/plsuite/Resources/alertify/css/alertify.min.css">

@@ -68,32 +68,33 @@ while ($row = $rslt->fetch_assoc()) {
       <div class='d-flex justify-content-end mb-1'>
         <div class='btn-group' role='group' aria-label='Basic example'>
           <button type='button' class='btn btn-sm btn-outline-dark' data-toggle='modal' data-target='#editarMovimiento_modal' data-cp-number='$row[cpNumber]' data-cp-id='$row[pkCartaPorte]' data-action-type='edit'>Editar Movimiento</button>
-          <button type='button' class='btn btn-sm btn-outline-dark'>Ver CP</button>
+          <button data-cp-id='$row[pkCartaPorte]' type='button' class='btn btn-sm btn-outline-dark'>Ver CP</button>
+          <button data-cp-id='$row[pkCartaPorte]' type='button' class='btn btn-sm btn-outline-danger'>Cancelar CP</button>
         </div>
       </div>
-      <div class='w-100 border rounded p-3 bg-white'>
+      <div class='w-100 border mov-details-box rounded p-3 bg-white'>
         <div class='d-flex justify-content-between'>
           <div class='justify-content-between'>
             <div class='form-inline justify-content-between'>
               Fecha Inicio:
-              <input type='date' class='form-control form-control-sm ml-1' name='' value='$row[startDate]'>
+              <input type='date' class='form-control form-control-sm custom-input ml-1' name='date_start' value='$row[startDate]'>
             </div>
             <div class='form-inline justify-content-between mt-1'>
-              Fecha Final:
-              <input type='date' class='form-control form-control-sm ml-1' name='' value='$row[endDate]'>
+              Fecha Cierre:
+              <input type='date' class='form-control form-control-sm custom-input ml-1' name='date_end' value='$row[endDate]'>
             </div>
           </div>
           <div class='justify-content-between'>
             <div class='form-inline justify-content-between'>
               Odómetro Inicio:
-              <input type='number' class='form-control form-control-sm ml-1' name='' value='$row[odoStart]'>
+              <input type='number' class='form-control form-control-sm custom-input ml-1' name='odometer_start' value='$row[odoStart]'>
             </div>
             <div class='form-inline justify-content-between mt-1'>
               Odómetro Final:
-              <input type='number' class='form-control form-control-sm ml-1' name='' value='$row[odoEnd]'>
+              <input type='number' class='form-control form-control-sm custom-input ml-1' name='odometer_end' value='$row[odoEnd]'>
             </div>
           </div>
-          <button type='button' class='btn btn-sm btn-outline-primary' name='button'>Guardar Detalle</button>
+          <button type='button' class='btn btn-sm btn-outline-primary' data-cp-id='$row[pkCartaPorte]' name='saveDetails_btn'>Guardar Detalle</button>
         </div>
       </div>
     </td>
