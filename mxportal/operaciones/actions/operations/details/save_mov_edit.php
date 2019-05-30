@@ -47,13 +47,13 @@ $trailer = $trailer->fetch_assoc();
 
 
 $system_callback = [];
-$update_movement = "UPDATE mx_carta_porte SET (movement_type = ?, fk_mx_place_origin = ?, fk_mx_place_destination = ?, fk_trailer = ?, trailer_number = ?, trailer_plates = ?, movement_class = ?) WHERE pk_mx_carta_porte = ?";
+$update_movement = "UPDATE mx_carta_porte SET movement_type = ?, fk_mx_place_origin = ?, fk_mx_place_destination = ?, fk_trailer = ?, trailer_number = ?, trailer_plates = ?, movement_class = ? WHERE pk_carta_porte = ?";
 
 $update_movement = $db->prepare($update_movement);
 if (!($update_movement)) {
   $system_callback['code'] = "500";
   $system_callback['query'] = $query;
-  $system_callback['message'] = "Error during query prepare [$update_movement->errno]: $update_movement->error";
+  $system_callback['message'] = "Error during query prepare [$db->errno]: $db->error";
   exit_script($system_callback);
 }
 
@@ -72,10 +72,9 @@ if (!($update_movement->execute())) {
   exit_script($system_callback);
 }
 
-$rslt = $update_movement->get_result();
-
-if ($rslt->affected_rows == 0) {
+if ($db->affected_rows == 0) {
   $system_callback['code'] = 2;
+  $system_callback['rslt'] = $rslt;
   $system_callback['message'] = "No se detecto ningún cambio al registro.";
   exit_script($system_callback);
 }

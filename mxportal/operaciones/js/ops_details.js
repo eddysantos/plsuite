@@ -39,6 +39,8 @@ $(document).ready(function(){
       console.error(y);
     })
   })
+
+  //#opsDetails_movs based events
   $('#opsDetails_movs').on('fetch', function(){
     var data = {
       mx_trip: $('#mx_trip').val()
@@ -62,6 +64,52 @@ $(document).ready(function(){
     }).fail(function(x, y, z){
       console.log(z);
     })
+
+  });
+  $('#opsDetails_movs').on('click', '[name=saveDetails_btn]', function(){
+    var pk_carta_porte = $(this).data('cp-id');
+    var this_tr = $(this).parents('.mov-details-box');
+    var data = {
+      pk_carta_porte: pk_carta_porte
+    }
+
+    this_tr.find('.custom-input').each(function(){
+      if (this.value == "") {
+        data[this.name] = "";
+      } else {
+        data[this.name] = this.value
+      }
+    });
+
+    console.log(data);
+    var save_edits = $.ajax({
+      method: 'POST',
+      data: data,
+      url: 'actions/operations/details/save_mov_details.php'
+    });
+
+
+    save_edits.done(function(r){
+      r = JSON.parse(r);
+      if (r.code == 1) {
+        this_tr.addClass('saved-record');
+        setTimeout(function () {
+          $('#opsDetails_movs').trigger('fetch');
+        }, 750);
+        $('.modal').modal('hide');
+        alertify.success('Changes saved successfully.');
+      } else {
+        alertify.message(r.message);
+        console.warn(r.message);
+      }
+    }).fail(function(x, y, z){
+      console.error(y);
+      alertify.error("Hubo un error al guardar la información, favor de notificar a soporte técnico.");
+    });
+
+
+
+
 
   });
 
