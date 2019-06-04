@@ -107,6 +107,106 @@ $(document).ready(function(){
       alertify.error("Hubo un error al guardar la información, favor de notificar a soporte técnico.");
     });
   });
+  $('#opsDetails_movs').on('click', '[data-toggle=document]', function(e){
+    var cp = $(this).data('cp');
+    var url = "/plsuite/mxportal/operaciones/actions/operations/details/print_cp.php?pk_carta_porte=" + cp
+
+    $('#docs_viewer').find('iframe').attr('src', url);
+    $('#docs_viewer').modal('show');
+  });
+  $('#opsDetails_movs').on('click', '[data-toggle=cancel-cp]', function(){
+    var data = {
+      pk_mx_carta_porte: $(this).data('cp')
+    }
+
+    Swal.fire({
+      title: '¿Seguro que deseas cancelar la Carta Porte?',
+      text: "Este cambio no se puede deshacer!",
+      type: 'warning',
+      showCancelButton: true,
+      cancelButtonText: "No, Regresar",
+      confirmButtonColor: '#d33',
+      cancelButtonColor: '#3085d6',
+      confirmButtonText: 'Si, cancélalo!'
+    }).then((result) => {
+      if (result.value) {
+        var cancel_cp = $.ajax({
+          method: 'POST',
+          url: 'actions/operations/details/cancel_mov.php',
+          data: data
+        });
+
+        cancel_cp.done(function(r){
+          r = JSON.parse(r);
+          if (r.code == 1) {
+            alertify.success('El viaje fue cancelado exitosamente.')
+            $('#opsDetails_movs').trigger('fetch');
+          } else {
+            alertify.message('El viaje no pudo ser cancelado, favor de reportarlo a Soporte Tecnico');
+            alertify.message(r.message);
+          }
+        }).fail(function(x, y, z){
+          alertify.error('Hubo un error crítico al procesar la solicitud, favor de reportarlo a Sistemas.')
+          console.error(z);
+        });
+      }
+    })
+
+  });
+
+  //Add movement modal events
+  $('#agregarMovimiento_modal').on('show.bs.modal', function(e){
+
+    var data_places = {
+      id: $('#pk_mx_client').html()
+    }
+    var modal_element = $(this);
+
+    var load_places = $.ajax({
+      method: 'POST',
+      data: data_places,
+      url: 'actions/places/fetch_places.php'
+    });
+
+    load_places.done(function(r){
+      var r = JSON.parse(r);
+      modal_element.find('[data-content=places]').html(r.data);
+    }).fail(function(x,y,z){
+      alertify.error('Hubo un error de sistema. Favor de notificar a soporte técnico.');
+      console.log(y);
+    });
+  });
+  $('#addNewMov_btn').on('click', function(){
+    var open_modal = $(this).parents('.modal');
+    var data = {
+      pk_mx_trip: $('#mx_trip').val()
+    }
+
+    open_modal.find('.custom-input').each(function(e){
+      data[this.id] = this.value;
+    })
+
+    var save_edits = $.ajax({
+      method: 'POST',
+      data: data,
+      url: 'actions/operations/details/add_mov.php'
+    });
+
+    save_edits.done(function(r){
+      r = JSON.parse(r);
+      if (r.code == 1) {
+        $('#opsDetails_movs').trigger('fetch');
+        $('.modal').modal('hide');
+        alertify.success('Se agrego el movimiento correctamente');
+      } else {
+        alertify.message(r.message);
+        console.warn(r.message);
+      }
+      }).fail(function(x, y, z){
+      console.error(y);
+      alertify.error("Hubo un error al guardar la información, favor de notificar a soporte técnico.");
+    });
+  });
 
   //Edit movement events
   $('#editarMovimiento_modal').on('show.bs.modal', function(e){

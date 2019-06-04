@@ -50,7 +50,7 @@
               <select class="custom-select mr-1" data-content="places" name="movimiento_destino" disabled required>
                 <option value="">Destinos no Cargados</option>
               </select>
-              <select class="custom-select mr-1" name="movimiento_remolque" id="select_remolques" required>
+              <select class="custom-select mr-1" name="movimiento_remolque" id="select_remolques">
                 <option value="">Selecciona un remolque</option>
                 <?php foreach ($remolques['list'] as $remolque): ?>
                   <option value="<?php echo $remolque['pkid_trailer'] ?>"><?php echo $remolque['trailerNumber'] ?></option>

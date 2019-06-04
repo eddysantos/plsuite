@@ -9,17 +9,12 @@ $root = $_SERVER['DOCUMENT_ROOT'];
 require $root . '/plsuite/Resources/PHP/Utilities/initialScript.php';
 
 $id = $_POST['pk_mx_carta_porte'];
+$status = "Cancelada";
 
 extract($_POST);
 
-$date_start = $date_start == "" ? NULL : $date_start;
-$date_end = $date_end ==  "" ? NULL : $date_end;
-$odometer_start = $odometer_start ==  "" ? NULL : $odometer_start;
-$odometer_end = $odometer_end ==  "" ? NULL : $odometer_end;
-
-
 $system_callback = [];
-$update_movement = "UPDATE mx_carta_porte SET date_start = ?, date_end = ?, odometer_start = ?, odometer_end = ?, comentarios = ? WHERE pk_carta_porte = ?";
+$update_movement = "UPDATE mx_carta_porte SET cp_status = ? WHERE pk_carta_porte = ?";
 
 $update_movement = $db->prepare($update_movement);
 if (!($update_movement)) {
@@ -29,7 +24,7 @@ if (!($update_movement)) {
   exit_script($system_callback);
 }
 
-$update_movement->bind_param('ssssss', $date_start, $date_end, $odometer_start, $odometer_end, $comments, $pk_carta_porte);
+$update_movement->bind_param('ss', $status, $pk_mx_carta_porte);
 if (!($update_movement)) {
   $system_callback['code'] = "500";
   $system_callback['query'] = $query;
@@ -51,7 +46,6 @@ if ($db->affected_rows == 0) {
   exit_script($system_callback);
 }
 
-include "update_mov_status.php";
 
 $system_callback['code'] = 1;
 $system_callback['message'] = "Script called successfully!";

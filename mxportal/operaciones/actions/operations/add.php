@@ -103,7 +103,6 @@ try {
   $insert_movement = "INSERT INTO mx_carta_porte(pk_carta_porte_number, fk_mx_trip, fk_mx_place_origin, fk_mx_place_destination, fk_trailer, trailer_number, trailer_plates, movement_type, movement_class) VALUES (?,?,?,?,?,?,?,?,?)";
 
   //Query to get trailer details for plates and econ number.
-  $get_trailer = "SELECT pkid_trailer id, trailerNumber number, trailerPlates plates FROM ct_trailer WHERE pkid_trailer = ?";
 
   $insert_movement = $db->prepare($insert_movement);
   if (!($insert_movement)) {
@@ -112,11 +111,14 @@ try {
     exit_script($system_callback);
   }
 
-  $get_trailer = $db->prepare($get_trailer);
-  if (!($insert_movement)) {
-    $system_callback['code'] = "500";
-    $system_callback['message'] = "Error during trailer query prepare [$db->errno]: $db->error";
-    exit_script($system_callback);
+  if ($fk_trailer != "") {
+    $get_trailer = "SELECT pkid_trailer id, trailerNumber number, trailerPlates plates FROM ct_trailer WHERE pkid_trailer = ?";
+    $get_trailer = $db->prepare($get_trailer);
+    if (!($insert_movement)) {
+      $system_callback['code'] = "500";
+      $system_callback['message'] = "Error during trailer query prepare [$db->errno]: $db->error";
+      exit_script($system_callback);
+    }
   }
 
   foreach ($movimientos as $k => $movimiento) {
@@ -128,33 +130,29 @@ try {
 
     $cp_number = $tripno . $cp_number_i;
 
-
-    $get_trailer->bind_param('s', $movimiento['movimiento_remolque']);
-    if (!($get_trailer)) {
-      $system_callback['code'] = "500";
-      $system_callback['message'] = "Error during variables binding [$get_trailer->errno]: $get_trailer->error";
-      exit_script($system_callback);
+    if ($movimiento['movimiento_remolque'] != "") {
+      $get_trailer->bind_param('s', $movimiento['movimiento_remolque']);
+      if (!($get_trailer)) {
+        $system_callback['code'] = "500";
+        $system_callback['message'] = "Error during variables binding [$get_trailer->errno]: $get_trailer->error";
+        exit_script($system_callback);
+      }
+      if (!($get_trailer->execute())) {
+        $system_callback['code'] = "500";
+        $system_callback['message'] = "Error during query execution [$get_trailer->errno]: $get_trailer->error";
+        exit_script($system_callback);
+      }
+      $trailer = $get_trailer->get_result();
+      if ($trailer->num_rows > 0) {
+        $system_callback['code'] = 1;
+        $system_callback['message'] = "Info del trailer extraida exitosamente";
+      } else {
+        $system_callback['code'] = "600";
+        $system_callback['message'] = "No se encontraron los datos de la caja en el movimiento $k:[$db->errno]: $db->error.";
+        exit_script($system_callback);
+      }
+      $trailer = $trailer->fetch_assoc();
     }
-
-
-    if (!($get_trailer->execute())) {
-      $system_callback['code'] = "500";
-      $system_callback['message'] = "Error during query execution [$get_trailer->errno]: $get_trailer->error";
-      exit_script($system_callback);
-    }
-
-    $trailer = $get_trailer->get_result();
-
-    if ($trailer->num_rows > 0) {
-      $system_callback['code'] = 1;
-      $system_callback['message'] = "Info del trailer extraida exitosamente";
-    } else {
-      $system_callback['code'] = "600";
-      $system_callback['message'] = "No se encontraron los datos de la caja en el movimiento $k:[$db->errno]: $db->error.";
-      exit_script($system_callback);
-    }
-
-    $trailer = $trailer->fetch_assoc();
 
     //Query to add movement data.
 
@@ -183,6 +181,7 @@ try {
   }
 
   $system_callback['code'] = 1;
+  $system_callback['tripid'] = $pk_mx_trip;
   $system_callback['message'] = "Viaje agregado exitosamente.";
   $db->commit();
   $db->query('UNLOCK TABLES;');

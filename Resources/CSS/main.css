@@ -154,15 +154,26 @@ footer{
   padding: 0px 20px 0px 20px;
 }
 
-.Pending{
+.Pending,
+.Pendiente{
   color: #F53636;
   /* text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black; */
 }
+.badge.Pendiente{
+  background-color: #F53636;
+  color: white;
+}
 
-.Open{
+.Open,
+.Abierto{
   color: #F3A72A;
   /* text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black; */
 }
+.badge.Abierto{
+  background-color: #F3A72A;
+  color: white;
+}
+
 
 .Open.trip{
   color: #E1D661;
@@ -179,12 +190,19 @@ footer{
   /* text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black; */
 }
 
-.Pending.Closure{
+.Pending.Closure,
+.Terminado,{
   color: #0A60FE;
   /* text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black; */
 }
 
-.Closed{
+.badge.Terminado{
+  background-color: #0A60FE;
+  color: white;
+}
+
+.Closed,
+.Cerrado{
   color: #3D7B0F;
   /* text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black; */
 }
@@ -192,6 +210,11 @@ footer{
 .Cancelled{
   color: #F53636;
   text-shadow: -1px 0 red, 0 1px red, 1px 0 red, 0 -1px red;
+}
+
+.badge.Cancelada{
+  color: #F53636;
+  background-color: transparent;
 }
 
 .overlay {

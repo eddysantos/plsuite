@@ -10,18 +10,18 @@ require $root . '/plsuite/Resources/PHP/Utilities/initialScript.php';
 
 $system_callback = [];
 
-foreach ($_POST as $key => $value) {
-  $system_callback['data'] = $_POST;
-  if ($key == "client_street_int_number") {
-    continue;
-  }
-
-  if ($value == "") {
-    $system_callback['code'] = 3;
-    $system_callback['message'] = "Todos los campos deben estar llenos antes de continuar";
-    exit_script($system_callback);
-  }
-}
+// foreach ($_POST as $key => $value) {
+//   $system_callback['data'] = $_POST;
+//   if ($key == "client_street_int_number") {
+//     continue;
+//   }
+//
+//   if ($value == "") {
+//     $system_callback['code'] = 3;
+//     $system_callback['message'] = "Todos los campos deben estar llenos antes de continuar";
+//     exit_script($system_callback);
+//   }
+// }
 
 extract($_POST);
 

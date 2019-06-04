@@ -70,11 +70,11 @@ function encrypt($string){
            <a class="ml-3 mr-5" role="button" id="backToDash" href="javascript:history.back()"><i class="fa fa-chevron-left"></i></a>
            <div class="w-100 d-flex align-items-center justify-content-between">
              <div class="pr-5">
-               <span class="trip-status" id="trip_status">Aqui va el status</span>
+               <span class="trip-status" id="tripStatus">Aqui va el status</span>
              </div>
-             <div class="">
-               <i class="fa fa-circle mr-2 trip" id="set-trip-status-button"></i> <!-- Agregar clase para status.-->
-             </div>
+             <!-- <div class="">
+               <i class="fa fa-circle mr-2 trip " id="set-trip-status-button"></i> Agregar clase para status
+             </div> -->
            </div>
          </div>
        </div>
@@ -141,111 +141,11 @@ function encrypt($string){
        <div class="col-lg-9">
          <div class="tab-content" id="tripTabsContent">
            <div class="tab-pane fade show active pt-2" id="movimientos-pane" role="tabpanel" aria-labelledby="movimientos-tab">
+             <div class="d-flex justify-content-end mb-2">
+               <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#agregarMovimiento_modal" name="button">Agregar</button>
+             </div>
              <table class="table table-striped" >
-               <tbody id="opsDetails_movs">
-
-               </tbody>
-               <!-- <tr class="border">
-                 <td>
-                   <div class="d-flex">
-                     <div class="align-self-center">
-                       <span class="badge badge-pill badge-primary">Cruce</span>
-                     </div>
-                     <div class="flex-grow-1 ml-3">
-                       <div class="">
-                         <span class="text-secondary">190001-01</span> <span class="text-info">[Vacio]</span>
-                       </div>
-                       <div class="">
-                         Patio PLAA - Motores Planta 1
-                       </div>
-                     </div>
-                     <div class="">
-                       <span>NONZ977988</span>
-                       <span class="text-secondary">[Z17289390]</span>
-                     </div>
-                   </div>
-                   <div class="d-flex justify-content-end mb-1">
-                     <div class="btn-group" role="group" aria-label="Basic example">
-                       <button type="button" class="btn btn-sm btn-outline-secondary" data-toggle="modal" data-target="#editarMovimiento_modal">Editar Movimiento</button>
-                       <button type="button" class="btn btn-sm btn-outline-secondary">Ver CP</button>
-                     </div>
-                   </div>
-                   <div class="w-100 border rounded p-3 bg-white">
-                     <div class="d-flex justify-content-between">
-                       <div class="justify-content-between">
-                         <div class="form-inline justify-content-between">
-                           Fecha Inicio:
-                           <input type="date" class="form-control form-control-sm ml-1" name="" value="">
-                         </div>
-                         <div class="form-inline justify-content-between mt-1">
-                           Fecha Final:
-                           <input type="date" class="form-control form-control-sm ml-1" name="" value="">
-                         </div>
-                       </div>
-                       <div class="justify-content-between">
-                         <div class="form-inline justify-content-between">
-                           Odómetro Inicio:
-                           <input type="number" class="form-control form-control-sm ml-1" name="" value="">
-                         </div>
-                         <div class="form-inline justify-content-between mt-1">
-                           Odómetro Final:
-                           <input type="number" class="form-control form-control-sm ml-1" name="" value="">
-                         </div>
-                       </div>
-                       <button type="button" class="btn btn-sm btn-outline-primary" name="button">Guardar Detalle</button>
-                     </div>
-                   </div>
-                 </td>
-               </tr>
-               <tr class="border">
-                 <td>
-                   <div class="d-flex">
-                     <div class="align-self-center">
-                       <span class="badge badge-pill badge-danger">Viaje</span>
-                     </div>
-                     <div class="flex-grow-1 ml-3">
-                       <div class="">
-                         <span class="text-secondary">190001-01</span> <span class="text-info">[Vacio]</span>
-                       </div>
-                       <div class="">
-                         Patio PLAA - Motores Planta 1
-                       </div>
-                     </div>
-                     <div class="">
-                       <span>NONZ977988</span>
-                       <span class="text-secondary">[Z17289390]</span>
-                     </div>
-                   </div>
-                   <div class="d-flex justify-content-end mb-1">
-                     <button type="button" class="btn btn-sm btn-outline-secondary" name="button">Editar Viaje</button>
-                   </div>
-                   <div class="w-100 border rounded p-3 bg-white">
-                     <div class="d-flex justify-content-between">
-                       <div class="justify-content-between">
-                         <div class="form-inline justify-content-between">
-                           Fecha Inicio:
-                           <input type="date" class="form-control form-control-sm ml-1" name="" value="">
-                         </div>
-                         <div class="form-inline justify-content-between mt-1">
-                           Fecha Final:
-                           <input type="date" class="form-control form-control-sm ml-1" name="" value="">
-                         </div>
-                       </div>
-                       <div class="justify-content-between">
-                         <div class="form-inline justify-content-between">
-                           Odómetro Inicio:
-                           <input type="number" class="form-control form-control-sm ml-1" name="" value="">
-                         </div>
-                         <div class="form-inline justify-content-between mt-1">
-                           Odómetro Final:
-                           <input type="number" class="form-control form-control-sm ml-1" name="" value="">
-                         </div>
-                       </div>
-                       <button type="button" class="btn btn-sm btn-outline-primary" name="button">Guardar Detalle</button>
-                     </div>
-                   </div>
-                 </td>
-               </tr> -->
+               <tbody id="opsDetails_movs"></tbody>
              </table>
            </div>
            <div class="tab-pane fade" id="gastos-pane" role="tabpanel" aria-labelledby="gastos-tab">
@@ -264,6 +164,8 @@ function encrypt($string){
  </html>
 <?php
 require 'modales/editar_movimiento.php';
+require 'modales/agregar_movimiento.php';
+require 'modales/doc_viewer.php';
 require $root . '/plsuite/Resources/PHP/Utilities/footer.php';
  ?>
  <script src="js/ops_details.js" charset="utf-8"></script>
