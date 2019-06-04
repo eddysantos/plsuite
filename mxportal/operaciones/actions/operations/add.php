@@ -111,14 +111,12 @@ try {
     exit_script($system_callback);
   }
 
-  if ($fk_trailer != "") {
-    $get_trailer = "SELECT pkid_trailer id, trailerNumber number, trailerPlates plates FROM ct_trailer WHERE pkid_trailer = ?";
-    $get_trailer = $db->prepare($get_trailer);
-    if (!($insert_movement)) {
-      $system_callback['code'] = "500";
-      $system_callback['message'] = "Error during trailer query prepare [$db->errno]: $db->error";
-      exit_script($system_callback);
-    }
+  $get_trailer = "SELECT pkid_trailer id, trailerNumber number, trailerPlates plates FROM ct_trailer WHERE pkid_trailer = ?";
+  $get_trailer = $db->prepare($get_trailer);
+  if (!($insert_movement)) {
+    $system_callback['code'] = "500";
+    $system_callback['message'] = "Error during trailer query prepare [$db->errno]: $db->error";
+    exit_script($system_callback);
   }
 
   foreach ($movimientos as $k => $movimiento) {
