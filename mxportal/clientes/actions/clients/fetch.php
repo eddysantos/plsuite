@@ -61,7 +61,7 @@ while ($row = $rslt->fetch_assoc()) {
     <td class='d-flex justify-content-between align-items-center'>
       <div class=''>
         <b>$row[client_alias]</b> [<i>$row[client_name]</i>]
-        <p class='m-0 p-0'>$row[address_state] $row[address_ext_number]$interior, $row[address_locality]</p>
+        <p class='m-0 p-0'>$row[address_street] $row[address_ext_number]$interior, $row[address_locality]</p>
         <p clas='m-0 p-0'>$row[address_city], $row[address_state], $row[address_zip_code]</p>
       </div>
       <!--i class='far fa-arrow-alt-circle-right' style='font-size: xx-large'></i-->
