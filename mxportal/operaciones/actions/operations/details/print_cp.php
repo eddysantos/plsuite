@@ -1,5 +1,6 @@
 <?php
 
+
 function build_address($name, $street, $int, $ext, $locality, $city, $state, $zip, $country = "México"){
   $full_address = "";
 
@@ -225,7 +226,13 @@ $carta_porte->Cell((($width - $x_margins) * .20), 0, "", 0, 0, "R", 1, 0, 0, fal
 $carta_porte->Cell((($width - $x_margins) * .40), 0, "Recibió: Nombre y Firma", "T", 1, "C", 1, 0, 0, false, "T", "B");
 
 
-$carta_porte->Output("CP_$info_cp[cpNumber].php");
+// header('Content-type: application/pdf');
+// header('Content-Disposition: inline; filename="' . $filename . '"');
+// header('Content-Transfer-Encoding: binary');
+// header('Content-Length: ' . filesize($file));
+// header('Accept-Ranges: bytes');
+
+$carta_porte->Output("CP_$info_cp[cpNumber].pdf");
 
 
 
