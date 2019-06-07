@@ -119,7 +119,7 @@ $(document).ready(function(){
       pk_mx_carta_porte: $(this).data('cp')
     }
 
-    Swal.fire({
+    Swal8.fire({
       title: '¿Seguro que deseas cancelar la Carta Porte?',
       text: "Este cambio no se puede deshacer!",
       type: 'warning',
