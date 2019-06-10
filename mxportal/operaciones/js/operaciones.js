@@ -42,15 +42,31 @@ $(document).ready(function(){
     window.location.href = "ops_details.php?id=" + tripid
   });
   $('#tripSearch_box').keyup(function(){
-    var fields = $('#table_mx_operations').find('*');
-    console.log(fields);
-    return false;
+    var $rows = $('#table_mx_operations tr');
     var val = $.trim($(this).val()).replace(/ +/g, ' ').toLowerCase();
 
-    $rows.parents('tr').show().filter(function() {
+    $rows.hide();
+    $filtered = $rows.filter(function() {
       var text = $(this).text().replace(/\s+/g, ' ').toLowerCase();
+      // console.log(text);
+      // console.log(val + " -> " +  !~text.indexOf(val));
       return !~text.indexOf(val);
-    }).hide();
+    })
+
+    console.log($filtered);
+    $filtered.each(function(){
+      $(this).hide();
+    });
+
+    $rows.addClass('d-flex').show().filter(function() {
+      var text = $(this).text().replace(/\s+/g, ' ').toLowerCase();
+      // console.log(text);
+      // console.log(val + " -> " +  !~text.indexOf(val));
+      return !~text.indexOf(val);
+    }).hide().removeClass('d-flex');
+
+
+
   });
 
   //Eventos de filtrado
