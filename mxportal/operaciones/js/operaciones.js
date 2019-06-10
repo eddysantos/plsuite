@@ -42,7 +42,9 @@ $(document).ready(function(){
     window.location.href = "ops_details.php?id=" + tripid
   });
   $('#tripSearch_box').keyup(function(){
-    var $rows = $('#table_mx_operations tr');
+    var fields = $('#table_mx_operations').find('*');
+    console.log(fields);
+    return false;
     var val = $.trim($(this).val()).replace(/ +/g, ' ').toLowerCase();
 
     $rows.parents('tr').show().filter(function() {

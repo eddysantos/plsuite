@@ -22,7 +22,6 @@ $(document).ready(function(){
 
     load_trip.done(function(r){
       r = JSON.parse(r);
-
       if (r.code == 1) {
         for (var key in r.data) {
           if (r.data.hasOwnProperty(key)) {
@@ -39,6 +38,28 @@ $(document).ready(function(){
       console.error(y);
     })
   })
+  $('#close_trip').click(function(){
+    var data = {
+      mx_trip: $('#mx_trip').val()
+    }
+
+    var close_trip = $.ajax({
+      method: 'POST',
+      url: 'actions/operations/details/close_trip.php',
+      data: data
+    });
+
+    close_trip.done(function(r){
+      r = JSON.parse(r);
+      if (r.code == 1) {
+        alertify.success("El viaje fue cerrado correctamente.");
+        location.reload();
+      } else {
+        alertify.message("No se pudo cerrar el viaje, porfavor reportarlo a Soporte Técnico.");
+        alertify.error(r.message)
+      }
+    });
+  });
 
   //#opsDetails_movs based events
   $('#opsDetails_movs').on('fetch', function(){
@@ -57,6 +78,11 @@ $(document).ready(function(){
       r = JSON.parse(r);
       if (r.code == 1) {
         tbody.html(r.data);
+        if (r.closeable) {
+          $('#close_trip').attr('disabled', false);
+        } else {
+          $('#close_trip').attr('disabled', true);
+        }
       } else {
         console.warn(r.message);
         alertify.message(r.message);

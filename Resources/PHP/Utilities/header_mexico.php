@@ -61,6 +61,9 @@ if (isset($_SESSION['user_info'])) {
           <li class="nav-item">
             <a class="nav-link custom <?php echo $clientes_active?>" href="/plsuite/mxportal/clientes/">Clientes</a>
           </li>
+          <li class="nav-item">
+            <a class="nav-link custom <?php echo $contabilidad_active?>" href="/plsuite/mxportal/contabilidad">Contabilidad</a>
+          </li>
           <!--li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               Operadores

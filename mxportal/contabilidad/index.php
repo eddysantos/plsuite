@@ -2,25 +2,12 @@
 $root = $_SERVER['DOCUMENT_ROOT'];
 require $root . '/plsuite/Resources/PHP/Utilities/session.php';
 
-$dash_active = "";
-$viajes_active = "active";
-$operadores_active = "";
-$tractores_active = "";
-$cajas_active = "";
+$contabilidad_active = "active";
 
 echo "<link rel='stylesheet' href='/plsuite/Resources/CSS/trips.css'>";
 require $root . '/plsuite/Resources/PHP/Utilities/header_mexico.php';
 require $root . '/plsuite/Resources/PHP/Utilities/initialScript.php';
-require $root . '/plsuite/mxportal/resources/php/client_list.php';
-require $root . '/plsuite/mxportal/resources/php/driver_list.php';
-require $root . '/plsuite/mxportal/resources/php/truck_list.php';
-require $root . '/plsuite/mxportal/resources/php/trailer_list.php';
 
-
-$clientes = client_list(); //Obtained from client_list.php
-$operadores = driver_list(); //Obtained from driver_list.php
-$tractores = truck_list(); //Obtained from truck_list.php
-$remolques = trailer_list(); //Obtained from trailer_list.php
 
 $date_from = date('Y-m-d', strtotime('today -7 days'));
 $date_to = date('Y-m-d', strtotime('today'));
@@ -29,9 +16,9 @@ $date_to = date('Y-m-d', strtotime('today'));
  ?>
 <div class="container-fluid align-items-right d-flex justify-content-between align-content-center mb-3 position-sticky" style="margin-top: 65px">
   <div class="btn-group btn-group-sm" id="status-filter-btns" role="group" aria-label="Trip Status">
-    <!-- <button type="button" class="btn btn-outline-primary active" data-status-filter="Pendiente">Pendientes</button> -->
-    <button type="button" class="btn btn-outline-primary active" data-status-filter="Abierto">Abiertos</button>
-    <!-- <button type="button" class="btn btn-outline-primary" data-status-filter="Terminado">Terminados</button> -->
+    <button type="button" class="btn btn-outline-primary" data-status-filter="Pendiente">Pendientes</button>
+    <button type="button" class="btn btn-outline-primary" data-status-filter="Abierto">Abiertos</button>
+    <button type="button" class="btn btn-outline-primary active" data-status-filter="Terminado">Terminados</button>
     <button type="button" class="btn btn-outline-primary" data-status-filter="Cerrado">Cerrados</button>
     <button type="button" class="btn btn-outline-primary" data-status-filter="Todos">Todos</button>
   </div>
@@ -50,24 +37,53 @@ $date_to = date('Y-m-d', strtotime('today'));
         <span class="input-group-text" id="basic-addon2"><i class="fas fa-search"></i></span>
       </div>
     </div>
-    <button type="button" class="btn btn-sm btn-outline-primary" data-toggle="modal" data-target="#nuevaOperacion_modal" name="button">Nuevo</button>
   </div>
 </div>
 
 <div class="container-fluid" style="overflow-y: scroll; max-height: 80vh">
-  <table class="table table-striped">
-    <tbody id="table_mx_operations">
-      <td>
-        No se encontraron viajes
-      </td>
+  <table class="table table-striped table-sm">
+    <thead>
+      <tr>
+        <th>Carta Porte</th>
+        <th>Cliente</th>
+        <th>Inicio</th>
+        <th>Fin</th>
+        <th>Ruta</th>
+        <th>Remolque</th>
+        <th>Tipo</th>
+        <th>Clase</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody id="table_mx_cartas_porte">
+      <tr>
+        <td>MX1900011</td>
+        <td>CH Robinson</td>
+        <td>26/12/1990</td>
+        <td>27/12/1990</td>
+        <td>Patio PLAA - Motores Planta 1</td>
+        <td>NONZ977976</td>
+        <td>Viaje</td>
+        <td>Cargado</td>
+        <td data-toggle="slide-panel" data-target="#cpDetail_slidePanel"><i class="fas fa-chevron-right"></i></td>
+      </tr>
+      <!-- <tr>
+
+      </tr>
+      <tr>
+        <td>
+          No se encontraron cartas porte
+        </td>
+      </tr> -->
     </tbody>
   </table>
 </div>
 
 <?php
-require 'modales/nueva_operacion.php';
+
+require 'modales/cpDetail.php';
 require $root . '/plsuite/Resources/PHP/Utilities/footer.php';
  ?>
 
 <script src="/plsuite/mxportal/resources/js/client_popup.js" charset="utf-8"></script>
-<script src="js/operaciones.js" charset="utf-8"></script>
+<script src="js/contabilidad.js" charset="utf-8"></script>

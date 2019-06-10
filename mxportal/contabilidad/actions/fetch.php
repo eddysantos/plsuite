@@ -24,8 +24,6 @@ function parseDate($datestamp){
   return $return;
 }
 
-$closeable = true;
-
 $root = $_SERVER['DOCUMENT_ROOT'];
 require $root . '/plsuite/Resources/PHP/Utilities/initialScript.php';
 
@@ -36,19 +34,19 @@ extract($_POST);
 
 switch ($status) {
   case 'Pendiente':
-    $status = "AND t.trip_status = 'Pendiente'";
+    $status = "AND cp.cp_status = 'Pendiente'";
     break;
 
   case 'Abierto':
-    $status = "AND t.trip_status = 'Abierto'";
+    $status = "AND cp.cp_status = 'Abierto'";
     break;
 
   case 'Terminado':
-    $status = "AND t.trip_status = 'Terminado'";
+    $status = "AND cp.cp_status = 'Terminado'";
     break;
 
   case 'Cerrado':
-    $status = "AND t.trip_status = 'Cerrado'";
+    $status = "AND cp.cp_status = 'Cerrado'";
     break;
 
   case 'Todos':
@@ -96,9 +94,6 @@ if ($rslt->num_rows == 0) {
 }
 
 while ($row = $rslt->fetch_assoc()) {
-  if ($row['cp_status'] == 'Terminado') {
-    $closeable = true;
-  }
   $trips[$row['id']] = array(
     'trip_number'=>$row['tripNumber'],
     'tractor'=>$row['tractorNumber'],
@@ -146,7 +141,6 @@ foreach ($trips as $id => $trip) {
   </tr>";
 }
 
-$system_callback['closeable'] = $closeable;
 $system_callback['trips'] = $trips;
 $system_callback['cps'] = $cps;
 

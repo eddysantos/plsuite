@@ -330,3 +330,43 @@ input[type=number]::-webkit-outer-spin-button {
   transition-property: all;
   transition-duration: 1.5s;
 }
+
+.left-slide-panel{
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  height: 100%;
+  background-color: rgb(115, 115, 115, .5);
+  z-index: 9999;
+  opacity: 1;
+      -webkit-transition: opacity .5s ease-in;
+         -moz-transition: opacity .5s ease-in;
+          -ms-transition: opacity .5s ease-in;
+           -o-transition: opacity .5s ease-in;
+              transition: opacity .5s ease-in;
+}
+
+.left-slide-panel:not(.show){
+  display: none;
+  opacity: 0;
+}
+
+.left-slide-panel > .slide-panel{
+  margin-left: 25%;
+  width: 75%;
+  background-color: white;
+  height: 100%;
+  right: 0;
+  -webkit-transition: margin-left .5s ease-in;
+     -moz-transition: margin-left .5s ease-in;
+      -ms-transition: margin-left .5s ease-in;
+       -o-transition: margin-left .5s ease-in;
+          transition: margin-left .5s ease-in;
+
+}
+
+.left-slide-panel:not(.show) > .slide-panel{
+  margin-left: 100%;
+}
