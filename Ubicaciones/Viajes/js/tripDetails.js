@@ -564,10 +564,19 @@ $(document).ready(function(){
         }
       },
       appt: {
-        date: $(parent_form).find('.appointment.date').val(),
-        time: {
-          hour: $(parent_form).find('.appointment.hour').val(),
-          minute: $(parent_form).find('.appointment.minute').val()
+        from:{
+          date: $(parent_form).find('.appointment.date.from').val(),
+          time: {
+            hour: $(parent_form).find('.appointment.hour.from').val(),
+            minute: $(parent_form).find('.appointment.minute.from').val()
+          }
+        },
+        to:{
+          date: $(parent_form).find('.appointment.date.to').val(),
+          time: {
+            hour: $(parent_form).find('.appointment.hour.to').val(),
+            minute: $(parent_form).find('.appointment.minute.to').val()
+          }
         }
       }
     }
@@ -997,9 +1006,12 @@ $(document).ready(function(){
     var broker = source.find('.selected-broker');
     var reference = source.find('.broker-reference');
     var movs = {};
-    var appointment_date = source.find('.appointment.date').val();
-    var appointment_hour = source.find('.appointment.hour').val();
-    var appointment_minute = source.find('.appointment.minute').val();
+    var appointment_from_date = source.find('.appointment.date.from').val();
+    var appointment_from_hour = source.find('.appointment.hour.from').val();
+    var appointment_from_minute = source.find('.appointment.minute.from').val();
+    var appointment_to_date = source.find('.appointment.date.to').val();
+    var appointment_to_hour = source.find('.appointment.hour.to').val();
+    var appointment_to_minute = source.find('.appointment.minute.to').val();
     var tripno = source.find('.tripid').val();
     var tripid = source.find('.tripid').attr('db-id');
 
@@ -1048,9 +1060,12 @@ $(document).ready(function(){
     destination.find('.rpm-confirmation').html(rpm);
     destination.find('.brokerid-confirmation').html(broker.val()).attr('db-id', broker.attr('db-id'));
     destination.find('.broker-reference-confirmation').html(reference.val());
-    $('#linehaul-appointment').find('.date').html(appointment_date);
-    $('#linehaul-appointment').find('.hour').html(appointment_hour);
-    $('#linehaul-appointment').find('.minutes').html(appointment_minute);
+    $('#linehaul-appointment-from').find('.date').html(appointment_from_date);
+    $('#linehaul-appointment-from').find('.hour').html(appointment_from_hour);
+    $('#linehaul-appointment-from').find('.minutes').html(appointment_from_minute);
+    $('#linehaul-appointment-to').find('.date').html(appointment_to_date);
+    $('#linehaul-appointment-to').find('.hour').html(appointment_to_hour);
+    $('#linehaul-appointment-to').find('.minutes').html(appointment_to_minute);
     destination.find('.confirm-trip-info').html(tripno).attr('db-id', tripid);
 
 
@@ -1094,9 +1109,16 @@ $(document).ready(function(){
         reference: source.find('.broker-reference-confirmation').html(),
         rate: source.find('.trip-rate-confirmation').html(),
         appt: {
-          date: $('#linehaul-appointment').find('.date').html(),
-          hour: $('#linehaul-appointment').find('.hour').html(),
-          minute: $('#linehaul-appointment').find('.minutes').html(),
+          from:{
+            date: $('#linehaul-appointment-from').find('.date').html(),
+            hour: $('#linehaul-appointment-from').find('.hour').html(),
+            minute: $('#linehaul-appointment-from').find('.minutes').html(),
+          },
+          to:{
+            date: $('#linehaul-appointment-to').find('.date').html(),
+            hour: $('#linehaul-appointment-to').find('.hour').html(),
+            minute: $('#linehaul-appointment-to').find('.minutes').html(),
+          }
         },
         origin:{
           zip: source.find('.ozip[kind="origin"]').html(),

@@ -258,9 +258,16 @@ $(document).ready(function(){
       },
       rate: $('#tRate').val(),
       appt: {
-        date: $('#appointment_date_add').val(),
-        hour: $('#appointment_time_hour_add').val(),
-        min: $('#appointment_time_minute_add').val()
+        from:{
+          date: $('#appointment_from_date_add').val(),
+          hour: $('#appointment_from_time_hour_add').val(),
+          min: $('#appointment_from_time_minute_add').val()
+        },
+        to:{
+          date: $('#appointment_to_date_add').val(),
+          hour: $('#appointment_to_time_hour_add').val(),
+          min: $('#appointment_to_time_minute_add').val()
+        }
       },
       conveyance: {
         driver: $('.driverid').attr('db-id'),
@@ -527,9 +534,12 @@ $(document).ready(function(){
     var broker = source.find('.selected-broker');
     var reference = source.find('.broker-reference');
     var mov_types = {};
-    var appointment_date = source.find('.appointment.date').val();
-    var appointment_hour = source.find('.appointment.hour').val();
-    var appointment_minute = source.find('.appointment.minute').val();
+    var appointment_from_date = source.find('.appointment.date.from').val();
+    var appointment_from_hour = source.find('.appointment.hour.from').val();
+    var appointment_from_minute = source.find('.appointment.minute.from').val();
+    var appointment_to_date = source.find('.appointment.date.to').val();
+    var appointment_to_hour = source.find('.appointment.hour.to').val();
+    var appointment_to_minute = source.find('.appointment.minute.to').val();
 
     $('#lh-details-pane').find('.movement').each(function(){
       var zip = $(this).find('.zipInput').val();
@@ -558,9 +568,12 @@ $(document).ready(function(){
     destination.find('.rpm-confirmation').html(rpm);
     destination.find('.brokerid-confirmation').html(broker.val()).attr('db-id', broker.attr('db-id'));
     destination.find('.broker-reference-confirmation').html(reference.val());
-    $('#linehaul-appointment').find('.date').html(appointment_date);
-    $('#linehaul-appointment').find('.hour').html(appointment_hour);
-    $('#linehaul-appointment').find('.minutes').html(appointment_minute);
+    $('#linehaul-appointment-from').find('.date').html(appointment_from_date);
+    $('#linehaul-appointment-from').find('.hour').html(appointment_from_hour);
+    $('#linehaul-appointment-from').find('.minutes').html(appointment_from_minute);
+    $('#linehaul-appointment-to').find('.date').html(appointment_to_date);
+    $('#linehaul-appointment-to').find('.hour').html(appointment_to_hour);
+    $('#linehaul-appointment-to').find('.minutes').html(appointment_to_minute);
 
 
     $('.next-pane-buttons').hide();
@@ -647,9 +660,16 @@ $(document).ready(function(){
         reference: source.find('.broker-reference-confirmation').html(),
         rate: source.find('.trip-rate-confirmation').html(),
         appt: {
-          date: $('#linehaul-appointment').find('.date').html(),
-          hour: $('#linehaul-appointment').find('.hour').html(),
-          minute: $('#linehaul-appointment').find('.minutes').html(),
+          from:{
+            date: $('#linehaul-appointment-from').find('.date').html(),
+            hour: $('#linehaul-appointment-from').find('.hour').html(),
+            minute: $('#linehaul-appointment-from').find('.minutes').html(),
+          },
+          to:{
+            date: $('#linehaul-appointment-to').find('.date').html(),
+            hour: $('#linehaul-appointment-to').find('.hour').html(),
+            minute: $('#linehaul-appointment-to').find('.minutes').html(),
+          }
         },
         routes: {},
         drivers:{}
