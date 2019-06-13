@@ -212,8 +212,7 @@
               </div>
               <div class="form-group row">
                 <label for="" class="col-sm-2 col-form-label text-right">Appointment To</label>
-                <div class="col-lg-5">
-                  <input type="date" class="form-control appointment date to" id="date-field" name="" value="">
+                <div class="col-lg-5 invisible">
                 </div>
                 <div class="col-lg-2">
                   <select class="form-control appointment hour to" id="appointment_time_hour_add" name="appointment_time_hour">
@@ -348,7 +347,7 @@
                   </div>
                   <div class="col-sm-9 grey-font" id="linehaul-appointment-to">
                     <p>
-                      <span class="date"></span>
+                      <span class="date invisible"></span>
                       <span class="hour"></span>:<span class="minutes"></span>
                     </p>
                   </div>
