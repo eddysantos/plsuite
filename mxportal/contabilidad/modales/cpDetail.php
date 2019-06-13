@@ -6,5 +6,8 @@
         <span aria-hidden="true">&times;</span>
       </button>
     </div>
+    <div class="modal-body">
+      The body goes here bitch.
+    </div>
   </div>
 </div>

@@ -16,11 +16,10 @@ $date_to = date('Y-m-d', strtotime('today'));
  ?>
 <div class="container-fluid align-items-right d-flex justify-content-between align-content-center mb-3 position-sticky" style="margin-top: 65px">
   <div class="btn-group btn-group-sm" id="status-filter-btns" role="group" aria-label="Trip Status">
-    <button type="button" class="btn btn-outline-primary" data-status-filter="Pendiente">Pendientes</button>
-    <button type="button" class="btn btn-outline-primary" data-status-filter="Abierto">Abiertos</button>
-    <button type="button" class="btn btn-outline-primary active" data-status-filter="Terminado">Terminados</button>
-    <button type="button" class="btn btn-outline-primary" data-status-filter="Cerrado">Cerrados</button>
-    <button type="button" class="btn btn-outline-primary" data-status-filter="Todos">Todos</button>
+    <button type="button" class="btn btn-outline-primary active" data-status-filter="Pendiente">Pendientes</button>
+    <button type="button" class="btn btn-outline-primary" data-status-filter="Abierto">Vigentes</button>
+    <button type="button" class="btn btn-outline-primary" data-status-filter="Terminado">Vencidas</button>
+    <button type="button" class="btn btn-outline-primary" data-status-filter="Cerrado">Todas</button>
   </div>
   <div class="input-group input-group-sm w-auto">
     <div class="input-group-prepend" id="date_selection">
