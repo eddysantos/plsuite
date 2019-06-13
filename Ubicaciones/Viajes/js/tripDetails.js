@@ -158,13 +158,22 @@ function show_lh_details(lhid = undefined){
     }
 
     if (r.data.appointment) {
-      $('.appointment.date').val(r.data.appointment.date);
-      $('.appointment.hour').val(r.data.appointment.time.hour);
-      $('.appointment.minute').val(r.data.appointment.time.minute);
+      $('.appointment.date.from').val(r.data.appointment.date);
+      $('.appointment.hour.from').val(r.data.appointment.time.hour);
+      $('.appointment.minute.from').val(r.data.appointment.time.minute);
     } else {
-      $('.appointment.date').val('');
-      $('.appointment.hour').find('option').attr('selected', false);
-      $('.appointment.minute').find('option').attr('selected', false);
+      $('.appointment.date.from').val('');
+      $('.appointment.hour.from').find('option').attr('selected', false);
+      $('.appointment.minute.from').find('option').attr('selected', false);
+    }
+    if (r.data.appointment_to) {
+      $('.appointment.date.to').val(r.data.appointment_to.date);
+      $('.appointment.hour.to').val(r.data.appointment_to.time.hour);
+      $('.appointment.minute.to').val(r.data.appointment_to.time.minute);
+    } else {
+      $('.appointment.date.to').val('');
+      $('.appointment.hour.to').find('option').attr('selected', false);
+      $('.appointment.minute.to').find('option').attr('selected', false);
     }
     if (r.data.departure) {
       $('.departure.date').val(r.data.departure.date);
@@ -427,7 +436,7 @@ $(document).ready(function(){
     var dep = new Date($(parent_form).find('.departure.date').val());
     var arriv = new Date($(parent_form).find('.arrival.date').val());
     var delivery = new Date($(parent_form).find('.delivery.date').val());
-    var appt = new Date($(parent_form).find('#appt').val());
+    var appt = new Date($(parent_form).find('.appointment.date').val());
 
     if (dep != 'Invalid Date') {
       if ($('#departure_time_hour').val() == "" || $('#departure_time_minute').val() == "") {

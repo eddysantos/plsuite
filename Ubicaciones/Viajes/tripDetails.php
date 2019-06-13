@@ -379,10 +379,10 @@ if ($trip['last_movement']) {
                        <div class="form-row">
                          <label for="" class="col-form-label col-md-2">Appointment</label>
                          <div class="form-group col-md-4">
-                           <input type="date" class="form-control appointment date" name="" value="">
+                           <input type="date" class="form-control appointment date from" name="" value="">
                          </div>
                          <div class="form-group col-md-1">
-                           <select class="form-control appointment hour" id="appointment_time_hour" name="appointment_time_hour">
+                           <select class="form-control appointment hour from" id="appointment_time_hour" name="appointment_time_hour">
                              <option value="">Hr</option>
                              <option value="01">01</option>
                              <option value="02">02</option>
@@ -411,7 +411,7 @@ if ($trip['last_movement']) {
                            </select>
                          </div>
                          <div class="form-group col-md-1 pl-0">
-                           <select class="form-control appointment minute" id="appointment_time_minute" name="appointment_time_minute">
+                           <select class="form-control appointment minute from" id="appointment_time_minute" name="appointment_time_minute">
                              <option value="">Min</option>
                              <option value="00">00</option>
                              <option value="05">05</option>
@@ -430,6 +430,63 @@ if ($trip['last_movement']) {
                          <label for="" class="col-form-label col-md-2 text-right ">Loaded Miles</label>
                          <div class="form-group col-md-2">
                            <input type="text" class="form-control loaded_miles disabled" name="" value="" readonly>
+                         </div>
+                       </div>
+
+                       <div class="form-row">
+                         <label for="" class="col-form-label col-md-2"></label>
+                         <div class="form-group col-md-4 invisible">
+                           <input type="date" class="form-control appointment date to" name="" value="">
+                         </div>
+                         <div class="form-group col-md-1">
+                           <select class="form-control appointment hour to" id="appointment_time_hour" name="appointment_time_hour">
+                             <option value="">Hr</option>
+                             <option value="01">01</option>
+                             <option value="02">02</option>
+                             <option value="03">03</option>
+                             <option value="04">04</option>
+                             <option value="05">05</option>
+                             <option value="06">06</option>
+                             <option value="07">07</option>
+                             <option value="08">08</option>
+                             <option value="09">09</option>
+                             <option value="10">10</option>
+                             <option value="11">11</option>
+                             <option value="12">12</option>
+                             <option value="13">13</option>
+                             <option value="14">14</option>
+                             <option value="15">15</option>
+                             <option value="16">16</option>
+                             <option value="17">17</option>
+                             <option value="18">18</option>
+                             <option value="19">19</option>
+                             <option value="20">20</option>
+                             <option value="21">21</option>
+                             <option value="22">22</option>
+                             <option value="23">23</option>
+                             <option value="24">24</option>
+                           </select>
+                         </div>
+                         <div class="form-group col-md-1 pl-0">
+                           <select class="form-control appointment minute to" id="appointment_time_minute" name="appointment_time_minute">
+                             <option value="">Min</option>
+                             <option value="00">00</option>
+                             <option value="05">05</option>
+                             <option value="10">10</option>
+                             <option value="15">15</option>
+                             <option value="20">20</option>
+                             <option value="25">25</option>
+                             <option value="30">30</option>
+                             <option value="35">35</option>
+                             <option value="40">40</option>
+                             <option value="45">45</option>
+                             <option value="50">50</option>
+                             <option value="55">55</option>
+                           </select>
+                         </div>
+                         <label for="" class="col-form-label col-md-2 text-right ">Total Miles</label>
+                         <div class="form-group col-md-2">
+                           <input type="text" class="form-control total_miles disabled" name="" value="" readonly>
                          </div>
                        </div>
 
@@ -484,9 +541,14 @@ if ($trip['last_movement']) {
                              <option value="55">55</option>
                            </select>
                          </div>
-                         <label for="" class="col-form-label col-md-2 text-right ">Total Miles</label>
+                         <label for="" class="col-form-label col-md-2 text-right">RPM</label>
                          <div class="form-group col-md-2">
-                           <input type="text" class="form-control total_miles disabled" name="" value="" readonly>
+                           <div class="input-group">
+                             <div class="input-group-addon p-0">
+                               <span class="input-group-text">$</span>
+                             </div>
+                             <input type="text" class="form-control rpm disabled" name="" value="" readonly>
+                           </div>
                          </div>
                        </div>
 
@@ -541,15 +603,7 @@ if ($trip['last_movement']) {
                              <option value="55">55</option>
                            </select>
                          </div>
-                         <label for="" class="col-form-label col-md-2 text-right">RPM</label>
-                         <div class="form-group col-md-2">
-                           <div class="input-group">
-                             <div class="input-group-addon p-0">
-                               <span class="input-group-text">$</span>
-                             </div>
-                             <input type="text" class="form-control rpm disabled" name="" value="" readonly>
-                           </div>
-                         </div>
+
                        </div>
 
 
