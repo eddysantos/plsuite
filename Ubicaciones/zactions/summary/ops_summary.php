@@ -126,7 +126,7 @@ if ($rows == 0) {
 $sc['data']['pp_trips']['amount'] = number_format($sc['data']['pp_trips']['amount'], 2);
 
 
-$query = "SELECT tl.lh_number linehaul , t.trailer_number trailer , trk.truckNumber tractor , tl.date_appointment appointment , b.brokerName broker , tl.broker_reference br_reference, tl.origin_city o_city, tl.origin_state o_state, datediff(date(curdate()) , tl.date_appointment) days, d.nameFirst first_name, d.nameLast last_name, t.pkid_trip pkid_trip FROM ct_trip_linehaul tl LEFT JOIN ct_trip t ON t.pkid_trip = tl.fk_idtrip LEFT JOIN ct_brokers b ON tl.fkid_broker = b.pkid_broker LEFT JOIN ct_trip_linehaul_movement tlm ON tlm.pkid_movement = t.last_movement LEFT JOIN ct_drivers d ON tlm.fkid_driver = d.pkid_driver LEFT JOIN ct_truck trk ON tlm.fkid_tractor = trk.pkid_truck WHERE tl.date_delivery IS NULL AND tl.fk_idtrip <> '' AND tl.linehaul_status NOT IN('Closed' , 'Cancelled') AND( tl.origin_zip <> '78041' AND tl.origin_zip <> '78045') ORDER BY appointment ASC";
+$query = "SELECT tl.lh_number linehaul , t.trailer_number trailer , trk.truckNumber tractor , tl.date_appointment appointment , b.brokerName broker , tl.broker_reference br_reference, tl.origin_city o_city, tl.origin_state o_state, datediff(date(curdate()) , tl.date_appointment) days, tl.date_appointment_to appt_to, d.nameFirst first_name, d.nameLast last_name, t.pkid_trip pkid_trip FROM ct_trip_linehaul tl LEFT JOIN ct_trip t ON t.pkid_trip = tl.fk_idtrip LEFT JOIN ct_brokers b ON tl.fkid_broker = b.pkid_broker LEFT JOIN ct_trip_linehaul_movement tlm ON tlm.pkid_movement = t.last_movement LEFT JOIN ct_drivers d ON tlm.fkid_driver = d.pkid_driver LEFT JOIN ct_truck trk ON tlm.fkid_tractor = trk.pkid_truck WHERE tl.date_delivery IS NULL AND tl.fk_idtrip <> '' AND tl.linehaul_status NOT IN('Closed' , 'Cancelled') AND( tl.origin_zip <> '78041' AND tl.origin_zip <> '78045') ORDER BY appointment ASC";
 
 $stmt = $db->prepare($query);
 $stmt->execute();
@@ -143,16 +143,22 @@ if ($rows == 0) {
       $sc['data']['pd_trips']['count']++;
     }
 
-    $appt = date('Y-m-d H:i',strtotime($row['appointment']));
+    $appt_date = date('Y-m-d',strtotime($row['appointment']));
+    $appt_from = date('H:i',strtotime($row['appointment']));
+    $appt_to = date('H:i',strtotime($row['appt_to']));
     $sc['data']['pd_trips']['table'] .= "<tr class='linehaul' db-id='$row[pkid_trip]' role='button'>
     <td style='width: 80px'>$row[linehaul]</td>
-    <td style='width: 160px'>$row[trailer]</td>
-    <td style='width: 80px'>$row[tractor]</td>
-    <td>$row[first_name] $row[last_name]</td>
-    <td>$row[broker]</td>
-    <td>$row[o_city], $row[o_state]</td>
-    <td>$appt ($row[days])</td>
-    <td style='width: 80px'><button class='btn btn-sm btn-outline-success disabled' disabled>Deliver</button></td>
+    <td style=''>
+      <div>$row[first_name] $row[last_name]</div>
+      <div class='d-flex justify-content-between'>
+      <span>[<b>$row[tractor]</b>]$row[trailer]</span>
+      </div>
+    </td>
+    <td>
+      <div><b>$row[broker]</b></div>
+      <div>$row[o_city], $row[o_state]</div>
+    </td>
+    <td>$appt_date ($appt_from - $appt_to)</td>
     </tr>";
   }
 }
