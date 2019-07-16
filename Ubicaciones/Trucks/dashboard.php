@@ -8,6 +8,7 @@ $cajas_active = "";
 
 $root = $_SERVER['DOCUMENT_ROOT'];
 require $root . '/plsuite/Resources/PHP/Utilities/session.php';
+require $root . '/plsuite/Resources/PHP/Utilities/initialScript.php';
 require $root . '/plsuite/Resources/PHP/Utilities/header.php';
  ?>
 <div class="container-fluid align-items-center justify-content-between d-flex mb-3" style="margin-top: 70px">
