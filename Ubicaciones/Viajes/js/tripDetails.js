@@ -727,10 +727,12 @@ $(document).ready(function(){
         }
 
         var distanceService = new google.maps.DistanceMatrixService();
+        var geocodeService = new google.maps.Geocoder();
+
 
         for (var i = 0; i < zips.length - 1; i++) {
-          origin = "Zip " + zips[i];
-          destination = "Zip " + zips[i + 1];
+          origin = zips[i] + ", USA";
+          destination = zips[i + 1] + ", USA";
           if (origin == destination) {
             continue;
           }
@@ -745,6 +747,10 @@ $(document).ready(function(){
             if (route_details.destinations.hasOwnProperty(destination)) {
               var origin_element = $('[zip="' + route_details.origins[destination].match(parse_zip)[0] + '"]');
               var destination_element = $('[zip="' + route_details.destinations[destination].match(parse_zip)[0] + '"]');
+
+              if (typeof r.rows[destination].elements[destination].distance.value == 'undefined') {
+
+              }
 
               distances[destination] = {
                 origin: {
