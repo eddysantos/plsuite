@@ -449,8 +449,8 @@ $(document).ready(function(){
         var distanceService = new google.maps.DistanceMatrixService();
 
         for (var i = 0; i < zips.length - 1; i++) {
-          origin = "Zip " + zips[i];
-          destination = "Zip " + zips[i + 1];
+          origin = zips[i] + ", USA";
+          destination = zips[i + 1] + ", USA";
           if (origin == destination) {
             continue;
           }
