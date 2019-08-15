@@ -75,7 +75,9 @@ $row = $rslt->fetch_assoc();
            <div class="col-9">
              <select class="form-control" name="tOwnedBy" id="tOwnedBy">
                <option value="0" <?php echo $row['trailerOwnedBy'] == 0 ? "Selected" : ""?> >Prolog</option>
-               <option value="1" <?php echo $row['trailerOwnedBy'] <> 0 ? "Selected" : ""?> >Someone Else</option>
+               <option value="1" <?php echo $row['trailerOwnedBy'] == 1 ? "Selected" : ""?> >IM International</option>
+               <option value="2" <?php echo $row['trailerOwnedBy'] == 2 ? "Selected" : ""?> >Xtra Lease</option>
+               <option value="3" <?php echo $row['trailerOwnedBy'] == 3 ? "Selected" : ""?> >Mega</option>
              </select>
            </div>
          </div>
