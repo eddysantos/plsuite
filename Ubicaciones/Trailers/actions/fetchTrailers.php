@@ -41,8 +41,8 @@ while ($row = $rslt->fetch_assoc()) {
     <td>" . date('Y-m-d', strtotime($row['date_added'])) . "</td>
     <td>$row[trailerPlates]</td>
     <td class='text-right'>
-      <button type='button' class='btn btn-outline-secondary' z-index=9999 name='button' driverid='$row[pkid_trailer]'> <i class='fa fa-pencil'></i> </button>
-      <button type='button' class='btn btn-outline-danger deleteTrailer' z-index=9999 name='button' trailerid='$row[pkid_trailer]'> <i class='fa fa-trash-o'></i> </button>
+      <button type='button' class='btn btn-outline-secondary' z-index=9999 name='button' driverid='$row[pkid_trailer]'> <i class='fas fa-pencil-alt'></i> </button>
+      <button type='button' class='btn btn-outline-danger deleteTrailer' z-index=9999 name='button' trailerid='$row[pkid_trailer]'> <i class='far fa-trash-alt'></i> </button>
     </td>
   </tr>";
 }
