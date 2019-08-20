@@ -83,7 +83,7 @@ $(document).ready(function(){
 
           distanceMatrix.getDistanceMatrix({
             origins: [latlng],
-            destinations: ['zip ' + r.data.dzip],
+            destinations: [r.data.dzip + ' USA'],
             travelMode: 'DRIVING',
             avoidHighways: false,
             avoidTolls: true,
@@ -123,7 +123,7 @@ $(document).ready(function(){
 
         directionsService.route({
           origin: latlng,
-          destination: 'zip ' + r.data.dzip, //This line should have a space after zip...
+          destination: r.data.dzip + ' USA', //This line should have a space after zip...
           travelMode: 'DRIVING'
         }, function(r_ds,s){
           // console.log(r);
