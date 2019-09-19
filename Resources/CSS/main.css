@@ -370,3 +370,7 @@ input[type=number]::-webkit-outer-spin-button {
 .left-slide-panel:not(.show) > .slide-panel{
   margin-left: 100%;
 }
+
+.overflow-scroll{
+  overflow: scroll;
+}

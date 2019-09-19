@@ -1,5 +1,10 @@
 $(document).ready(function(){
 
+  //Init Functions
+  $(function(){
+    $('#table_mx_cartas_porte').trigger('fetch');
+  })
+
   //Eventos principales
   $('#table_mx_cartas_porte').on('fetch', function(e, data){
     var tbody = $(this);
@@ -9,11 +14,11 @@ $(document).ready(function(){
       date_to: $('#date-filter-to').val()
     }
     console.log(data);
-    return false;
+    // return false;
     var fetch_trips = $.ajax({
       method: 'POST',
       data: data,
-      url: 'actions/operations/fetch.php'
+      url: 'actions/fetch.php'
     });
 
     fetch_trips.done(function(r){
@@ -22,7 +27,7 @@ $(document).ready(function(){
       if (r.code == 1) {
         tbody.html(r.data);
       } else {
-        tbody.html('<tr><td>No se encontraron viajes</td></tr>');
+        tbody.html('<tr class="bg-transparent"><td>No se encontraron viajes</td></tr>');
         alertify.message('No se encontraron viajes!');
         // alertify.message(r.message);
       }
@@ -31,6 +36,14 @@ $(document).ready(function(){
       console.error(y);
       console.error(z);
     })
+  });
+  $('#table_mx_cartas_porte').on('click', '[data-toggle="slide-panel"]', function(){
+    $($(this).data('target')).addClass('show').css('display', 'block');
+  });
+  $('#table_mx_cartas_porte').on('click', '[data-dismiss="slide-panel"]', function(){
+    var slide_panel = $('.left-slide-panel.show');
+    slide_panel.removeClass('show');
+    slide_panel.css('display', 'none')
   });
   $('#tripSearch_box').keyup(function(){
     var $rows = $('#table_mx_cartas_porte tr');
@@ -92,6 +105,8 @@ $(document).ready(function(){
     $('#date-filter-to').val(lastDay);
 
     $('#table_mx_cartas_porte').trigger('fetch');
-  })
+  });
+
+  //
 
 });

@@ -2,7 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="c82c7a8e-7d02-4436-9c12-5eb33a3f3465" name="Default Changelist" comment="Fixed origin-destination tag.">
-      <change afterPath="$PROJECT_DIR$/Public/NavViewer.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Resources/CSS/main.css" beforeDir="false" afterPath="$PROJECT_DIR$/Resources/CSS/main.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Resources/PHP/loginDatabase.php" beforeDir="false" afterPath="$PROJECT_DIR$/Resources/PHP/loginDatabase.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mxportal/contabilidad/actions/fetch.php" beforeDir="false" afterPath="$PROJECT_DIR$/mxportal/contabilidad/actions/fetch.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mxportal/contabilidad/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/mxportal/contabilidad/index.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mxportal/contabilidad/js/contabilidad.js" beforeDir="false" afterPath="$PROJECT_DIR$/mxportal/contabilidad/js/contabilidad.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mxportal/contabilidad/modales/cpDetail.php" beforeDir="false" afterPath="$PROJECT_DIR$/mxportal/contabilidad/modales/cpDetail.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -10,7 +15,7 @@
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="ComposerSettings" synchronizationState="SYNCHRONIZE">
+  <component name="ComposerSettings" doNotAsk="true" synchronizationState="SYNCHRONIZE">
     <pharConfigPath>$PROJECT_DIR$/Resources/composer.json</pharConfigPath>
   </component>
   <component name="DatabaseView">
@@ -44,26 +49,7 @@
     <select />
   </component>
   <component name="FileEditorManager">
-    <leaf>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/Public/NavViewer.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state>
-              <caret lean-forward="true" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/index.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="352">
-              <caret line="84" column="86" lean-forward="true" selection-start-line="84" selection-start-column="20" selection-end-line="84" selection-end-column="86" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-    </leaf>
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300" />
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
@@ -108,32 +94,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="ProjectPane">
-        <subPane>
-          <expand>
-            <path>
-              <item name="plsuite" type="b2602c69:ProjectViewProjectNode" />
-              <item name="plsuite" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="plsuite" type="b2602c69:ProjectViewProjectNode" />
-              <item name="plsuite" type="462c0819:PsiDirectoryNode" />
-              <item name="Ubicaciones" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="plsuite" type="b2602c69:ProjectViewProjectNode" />
-              <item name="plsuite" type="462c0819:PsiDirectoryNode" />
-              <item name="Ubicaciones" type="462c0819:PsiDirectoryNode" />
-              <item name="Viajes" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="plsuite" type="b2602c69:ProjectViewProjectNode" />
-              <item name="External Libraries" type="bcb0276e:PhpExternalLibrariesNodePatcher$PatchedExternalLibrariesNode" />
-            </path>
-          </expand>
-          <select />
-        </subPane>
-      </pane>
+      <pane id="ProjectPane" />
       <pane id="Scope" />
     </panes>
   </component>
@@ -165,6 +126,7 @@
       <option name="presentableId" value="Default" />
       <updated>1551127514095</updated>
       <workItem from="1551127516094" duration="6456000" />
+      <workItem from="1565715582738" duration="133000" />
     </task>
     <task id="LOCAL-00001" summary="Fixed origin-destination tag.">
       <created>1551286424008</created>
@@ -177,7 +139,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="6456000" />
+    <option name="totallyTimeSpent" value="6589000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -191,14 +153,9 @@
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1440" height="877" extended-state="6" />
     <layout>
-      <window_info id="Favorites" side_tool="true" />
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.24248926" />
+      <window_info content_ui="combo" id="Project" order="0" weight="0.24606581" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
-      <window_info anchor="bottom" id="Docker" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Database Changes" weight="0.32953367" />
-      <window_info anchor="bottom" id="Version Control" weight="0.3299363" />
-      <window_info anchor="bottom" id="Terminal" />
-      <window_info anchor="bottom" id="Event Log" side_tool="true" />
+      <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
       <window_info anchor="bottom" id="Run" order="2" />
@@ -206,10 +163,15 @@
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" weight="0.32953367" />
-      <window_info anchor="right" id="Database" weight="0.3297568" />
+      <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Database Changes" order="8" weight="0.32953367" />
+      <window_info anchor="bottom" id="Version Control" order="9" weight="0.3299363" />
+      <window_info anchor="bottom" id="Terminal" order="10" />
+      <window_info anchor="bottom" id="Event Log" order="11" side_tool="true" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="right" id="Database" order="3" weight="0.3297568" />
     </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -223,13 +185,7 @@
     <entry file="file://$APPLICATION_CONFIG_DIR$/consoles/db/8c5687f3-a0d1-4268-ae3a-cd6b12ea159f/console.sql">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/Ubicaciones/Viajes/addTrip.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="129">
-          <caret line="158" column="64" selection-start-line="158" selection-start-column="64" selection-end-line="158" selection-end-column="64" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/Ubicaciones/Viajes/addTrip.php" />
     <entry file="file://$PROJECT_DIR$/Ubicaciones/Viajes/actions/addTrip.php">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
@@ -389,17 +345,17 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/index.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="352">
-          <caret line="84" column="86" lean-forward="true" selection-start-line="84" selection-start-column="20" selection-end-line="84" selection-end-column="86" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Public/NavViewer.php">
       <provider selected="true" editor-type-id="text-editor">
         <state>
           <caret lean-forward="true" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/index.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="352">
+          <caret line="96" column="86" selection-start-line="96" selection-start-column="20" selection-end-line="96" selection-end-column="86" />
         </state>
       </provider>
     </entry>

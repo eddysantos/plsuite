@@ -6,6 +6,7 @@ $contabilidad_active = "active";
 
 echo "<link rel='stylesheet' href='/plsuite/Resources/CSS/trips.css'>";
 require $root . '/plsuite/Resources/PHP/Utilities/header_mexico.php';
+echo "<link rel='stylesheet' href='/plsuite/mxportal/resources/css/contabilidad.css'>";
 require $root . '/plsuite/Resources/PHP/Utilities/initialScript.php';
 
 
@@ -17,9 +18,9 @@ $date_to = date('Y-m-d', strtotime('today'));
 <div class="container-fluid align-items-right d-flex justify-content-between align-content-center mb-3 position-sticky" style="margin-top: 65px">
   <div class="btn-group btn-group-sm" id="status-filter-btns" role="group" aria-label="Trip Status">
     <button type="button" class="btn btn-outline-primary active" data-status-filter="Pendiente">Pendientes</button>
-    <button type="button" class="btn btn-outline-primary" data-status-filter="Abierto">Vigentes</button>
-    <button type="button" class="btn btn-outline-primary" data-status-filter="Terminado">Vencidas</button>
-    <button type="button" class="btn btn-outline-primary" data-status-filter="Cerrado">Todas</button>
+    <button type="button" class="btn btn-outline-primary" data-status-filter="Vigentes">Vigentes</button>
+    <button type="button" class="btn btn-outline-primary" data-status-filter="Vencidas">Vencidas</button>
+    <button type="button" class="btn btn-outline-primary" data-status-filter="Todas">Todas</button>
   </div>
   <div class="input-group input-group-sm w-auto">
     <div class="input-group-prepend" id="date_selection">
@@ -43,6 +44,7 @@ $date_to = date('Y-m-d', strtotime('today'));
   <table class="table table-striped table-sm">
     <thead>
       <tr>
+        <th></th>
         <th>Carta Porte</th>
         <th>Cliente</th>
         <th>Inicio</th>
@@ -56,15 +58,7 @@ $date_to = date('Y-m-d', strtotime('today'));
     </thead>
     <tbody id="table_mx_cartas_porte">
       <tr>
-        <td>MX1900011</td>
-        <td>CH Robinson</td>
-        <td>26/12/1990</td>
-        <td>27/12/1990</td>
-        <td>Patio PLAA - Motores Planta 1</td>
-        <td>NONZ977976</td>
-        <td>Viaje</td>
-        <td>Cargado</td>
-        <td data-toggle="slide-panel" data-target="#cpDetail_slidePanel"><i class="fas fa-chevron-right"></i></td>
+        <td>No se encontraron resultados</td>
       </tr>
       <!-- <tr>
 

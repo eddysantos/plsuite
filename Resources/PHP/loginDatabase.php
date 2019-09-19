@@ -23,4 +23,4 @@ $pwd = 'f4Tnps.03';
 
 $db = new mysqli($host, $usr, $pwd, $datab, $port) or die ('Could not connect to the database server ' . $login->error );
 
- ?>
+?>
