@@ -105,7 +105,7 @@ $sunday_5weeks = date('m/d/Y', strtotime('sunday 5 weeks ago'));
         <div class="tab-pane fade show active" id="nb-en-route-pane">
           <section class="">
             <h6 class="mb-0">Northbound En Route: <span class="text-secondary nb-count"></span></h6>
-            <div class="table-container">
+            <div class="h-100">
               <table class="table table-striped table-sm dash-table" id="northbound-trips">
                 <thead>
                   <tr>

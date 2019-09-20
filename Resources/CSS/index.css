@@ -5,7 +5,7 @@
 }
 
 .dash-table{
-  max-height: -webkit-fill-available;
+  height: -webkit-fill-available;
   overflow: scroll;
 	position: relative;
 }
