@@ -34,7 +34,6 @@
             <label for="movimiento_remolque">Remolque</label>
             <select class="custom-select custom-input mr-1" name="movimiento_remolque" id="fk_trailer" required>
               <option value="">Selecciona un remolque</option>
-              <option value="0">Viaje Trompo</option>
               <?php foreach ($remolques['list'] as $remolque): ?>
                 <option value="<?php echo $remolque['pkid_trailer'] ?>"><?php echo $remolque['trailerNumber'] ?></option>
               <?php endforeach; ?>
