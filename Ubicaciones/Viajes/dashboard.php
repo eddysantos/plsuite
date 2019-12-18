@@ -88,7 +88,7 @@ if ($rslt->num_rows == 0) {
             <td>
               <p class="font-weight-bold"><?php echo "$trip[trip_number]<span class='font-weight-light'> | $trip[rate] / $trip[miles] | $trip[trailer_number]</span>" ?></p>
               <?php foreach ($trip as $t_key => $t_value): ?>
-                <?php if ($t_key == 'trailer_number'||$t_key == 'TripYear'||$t_key == 'idTrip'||$t_key == 'status'||$t_key == 'trip_number'): ?>
+                <?php if ($t_key == 'trailer_number'||$t_key == 'TripYear'||$t_key == 'idTrip'||$t_key == 'status'||$t_key == 'trip_number'||$t_key == 'rate'||$t_key == 'miles'): ?>
                   <?php continue; ?>
                 <?php endif; ?>
                 <div class="mb-1">
