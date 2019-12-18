@@ -43,7 +43,7 @@ if ($rslt->num_rows == 0) {
     $system_callback['rows'][$row['idTrip']]['miles'] += $row['empty_miles'];
     $system_callback['rows'][$row['idTrip']]['miles'] += $row['loaded_miles'];
     $system_callback['rows'][$row['idTrip']]['rate'] += $row['rate'];
-    $system_callback['rows'][$row['idTrip']]['rpm'] = round($system_callback['rows'][$row['idTrip']]['rate']/$system_callback['rows'][$row['idTrip']]['miles'], 2);
+    $system_callback['rows'][$row['idTrip']]['rpm'] = number_format(round($system_callback['rows'][$row['idTrip']]['rate']/$system_callback['rows'][$row['idTrip']]['miles'], 2),2);
     foreach ($row as $key => $value) {
       $system_callback['rows'][$row['idTrip']][$row['linehaulid']][$key] = $value;
       $system_callback['rows'][$row['idTrip']]['trailer_number'] = $row['TrailerNumber'];
