@@ -40,8 +40,10 @@ if ($rslt->num_rows == 0) {
     $system_callback['query']['code'] = 1;
   while ($row = $rslt->fetch_assoc()) {
     //$system_callback['trips'][] = $row;
-    $system_callback['rows'][$row['idTrip']]['miles'] += $row['empty_miles'];
-    $system_callback['rows'][$row['idTrip']]['miles'] += $row['loaded_miles'];
+    if ($row['lh_status'] != "cancelled") {
+      $system_callback['rows'][$row['idTrip']]['miles'] += $row['empty_miles'];
+      $system_callback['rows'][$row['idTrip']]['miles'] += $row['loaded_miles'];
+    }
     $system_callback['rows'][$row['idTrip']]['rate'] += $row['rate'];
     $system_callback['rows'][$row['idTrip']]['rpm'] = number_format(round($system_callback['rows'][$row['idTrip']]['rate']/$system_callback['rows'][$row['idTrip']]['miles'], 2),2);
     foreach ($row as $key => $value) {
