@@ -40,7 +40,7 @@ if ($rslt->num_rows == 0) {
     $system_callback['query']['code'] = 1;
   while ($row = $rslt->fetch_assoc()) {
     //$system_callback['trips'][] = $row;
-    if ($row['lh_status'] != "cancelled") {
+    if ($row['lh_status'] != "Cancelled") {
       $system_callback['rows'][$row['idTrip']]['miles'] += $row['empty_miles'];
       $system_callback['rows'][$row['idTrip']]['miles'] += $row['loaded_miles'];
     }
