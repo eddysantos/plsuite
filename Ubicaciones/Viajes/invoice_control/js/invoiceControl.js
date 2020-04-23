@@ -515,6 +515,45 @@ $(document).ready(function(){
     $(this).attr('class', '')
   });
 
+  //Collections-Related events
+  $('.open-collections-notes').click(function(){
+    $('#collections-notes').modal('show');
+  });
+
+  $('#collection-note-text').on('add-note', function(){
+    alertify.message("Sending note!!!");
+    return false;
+    var data = {
+      note_text: $('#collection-note-text').val()
+    }
+
+    var add_note = $.ajax({
+      method: 'POST',
+      data: data,
+      url: 'actions/add_collection_note.php'
+    });
+
+    add_note.done(function(r){
+      r = JSON.parse(r);
+      if (r.code == 1) {
+        //Correr evento para jalar notas de collecciones.
+        alertify.success('Comentario agregado con exito.');
+      } else {
+        alertify.error('There was an error adding the collection note. Talk to Awesome Tech Support');
+      }
+    }).fail(function(x,y,z){
+      console.error(`${x}:${y}`);
+    });
+  });
+  $('#collection-note-text').keydown(function(e){
+    if(e.keyCode == 13) {
+      $(this).trigger('add_note');
+    }
+  });
+  $('#add-note-button').click(function(){
+    $('#collection-note-text').trigger('add_note');
+  });
+
   $(document).keydown(function(e){
     if (e.keyCode == 38 || e.keyCode == 40){
       if ($(document.activeElement).attr('id-display') !== undefined) {

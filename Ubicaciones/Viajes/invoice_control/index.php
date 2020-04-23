@@ -59,8 +59,11 @@ $filter_45days = date('Y-m-d', strtotime('today - 45 days'));
     </div>
 
     <div class="tab-display" style="color: black !important; display: none" id="pending-invoice-trip-details" role="tabpanel">
-      <div class="sub-section-header mb-5">
-        <a class="ml-1 mr-3 active tab-change" href="#pending-invoice-trips" role="button"><i class="fa fa-chevron-left"></i></a><span id="trip-number"><span>
+      <div class="sub-section-header mb-5 d-flex justify-content-between">
+        <div class="">
+          <a class="ml-1 mr-3 active tab-change" href="#pending-invoice-trips" role="button"><i class="fa fa-chevron-left"></i></a><span id="trip-number"></span>
+        </div>
+        <button type="button" class="btn btn-outline-secondary open-collections-notes" name="button">Collections Notes</button>
       </div>
       <div class="row">
         <div class="col-lg-6">
@@ -305,6 +308,7 @@ $filter_45days = date('Y-m-d', strtotime('today - 45 days'));
 
 <?php
 require $root . '/plsuite/Resources/PHP/Utilities/footer.php';
+require 'modales/collection_comments.php';
  ?>
 <script src="js/invoiceControl.js" charset="utf-8"></script>
 <!-- <script src="/plsuite/Ubicaciones/Viajes/js/trips.js" charset="utf-8"></script> -->
