@@ -7,6 +7,8 @@ $sc = array();
 
 $query = "SELECT tl.lh_number linehaul , tl.origin_city o_city , tl.origin_state o_state, t.trailer_number trailer_number, t.pkid_trip fkid_trip, d.nameFirst first_name, d.nameLast last_name, tl.destination_city d_city , tl.destination_state d_state , trk.truckNumber truck, b.brokerName broker, tl.date_appointment appt FROM ct_trip_linehaul tl LEFT JOIN ct_brokers b ON b.pkid_broker = tl.fkid_broker LEFT JOIN ct_trip t ON t.pkid_trip = tl.fk_idtrip LEFT JOIN ct_trip_linehaul_movement tlm ON tlm.pkid_movement = t.last_movement LEFT JOIN ct_drivers d ON tlm.fkid_driver = d.pkid_driver LEFT JOIN ct_truck trk ON trk.pkid_truck = tlm.fkid_tractor WHERE tl.date_arrival IS NULL AND tl.fk_idtrip <> '' AND tl.linehaul_status NOT IN('Closed' , 'Cancelled') AND tl.origin_zip = '78041'";
 
+//S1 - S2 - NM -
+
 $stmt = $db->prepare($query);
 $stmt->execute();
 $rslt = $stmt->get_result();
