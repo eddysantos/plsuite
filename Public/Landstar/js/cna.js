@@ -135,7 +135,7 @@ $(document).ready(function(){
 
     $('#POTable').trigger('fetch');
   });
-  $('#date-filter-from, #date-filter-from').change(function(){
+  $('#date-filter-from, #date-filter-to').change(function(){
     var dFrom = new Date($('#date-filter-from').val());
     var dTo = new Date($('#date-filter-to').val());
 
