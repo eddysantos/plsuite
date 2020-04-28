@@ -66,7 +66,7 @@ if (!$pos) {
       <div class="input-group input-group-sm w-auto">
         <div class="input-group-prepend" id="date_selection">
           <button class="btn btn-outline-dark active" type="button" data-date-filter="week">7 Days</button>
-          <button class="btn btn-outline-dark" type="button" data-date-filter="month">MTD</button>
+          <button class="btn btn-outline-dark" type="button" data-date-filter="month">Month</button>
         </div>
         <input type="date" class="form-control border-dark" id="date-filter-from" placeholder="" value="<?php echo $sevenDays ?>" aria-label="date-from">
         <input type="date" class="form-control border-dark" id="date-filter-to" placeholder="" value="<?php echo $today ?>" aria-label="date-to">
