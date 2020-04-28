@@ -20,8 +20,6 @@ $callback['data'] = "";
 
 $data = $_POST;
 
-error_log(json_encode($data));
-
 $tripHandle = new Trip();
 $pos = $tripHandle->getPOs($data['date_from'], $data['date_to'], $data['status']);
 

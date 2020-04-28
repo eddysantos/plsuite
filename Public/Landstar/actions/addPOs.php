@@ -8,7 +8,7 @@ $po_lines = [];
 
 $callback = [
   "code"=>500,
-  "error"=>"No error specified"
+  "message"=>"No error specified"
 ];
 
 foreach($_POST as $post_po){
