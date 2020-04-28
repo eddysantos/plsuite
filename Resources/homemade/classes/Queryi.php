@@ -45,7 +45,7 @@ class Queryi extends mysqli
 
     $bind_params = [$s];
     foreach ($data as $field => $value) {
-      $bind_params[] =& $value;
+      $bind_params[] =& $data[$field];
       // array_push($bind_params, $value);
     }
     // error_log("2 $table");
