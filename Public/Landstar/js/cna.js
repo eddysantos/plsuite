@@ -83,7 +83,12 @@ $(document).ready(function(){
 
     insertPOs.done(function(r){
       r = JSON.parse(r);
-      console.log(r);
+      if (r.code == 1) {
+        $('.modal.show').find('.po-line.has-data').remove();
+        $('.modal.show').modal('hide');
+        alertify.message("POs Added successfuly!");
+        $('#POTable').trigger('fetch');
+      }
     }).fail(function(x,y,z){
       console.error(z);
     })
