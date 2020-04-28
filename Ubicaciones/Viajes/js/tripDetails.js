@@ -551,6 +551,7 @@ $(document).ready(function(){
       rpm: $(parent_form).find('.rpm').val(),
       status: $(parent_form).find('.lh_status').val(),
       comments: $(parent_form).find('.lh_comment').val(),
+      po_number: $(parent_form).find('.po_number').val(),
       departure: {
         date: $(parent_form).find('.departure.date').val(),
         time: {

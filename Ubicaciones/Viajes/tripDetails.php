@@ -323,6 +323,10 @@ if ($trip['last_movement']) {
                          <div class="form-group col-md-6">
                            <input type="text" class="form-control trailer_number readonly" readonly name="" value="">
                          </div>
+                         <label for="" class="col-form-label col-md-2 text-right">PO #</label>
+                         <div class="form-group col-md-2">
+                           <input type="text" class="form-control po_number" name="" value="">
+                         </div>
                        </div>
                        <div class="form-row">
                          <label for="" class="col-form-label col-md-2">Broker</label>

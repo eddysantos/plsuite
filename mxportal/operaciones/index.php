@@ -44,7 +44,7 @@ $date_to = date('Y-m-d', strtotime('today'));
     <input type="date" class="form-control border-primary" id="date-filter-to" placeholder="" value="<?php echo $date_to ?>" aria-label="date-to">
   </div>
   <div class="d-flex">
-    <div class="input-group mx-2">
+    <div class="input-group input-group-sm mx-2">
       <input type="text" class="form-control form-control-sm h-100" id="tripSearch_box" placeholder="" aria-label="search field" aria-describedby="basic-addon2">
       <div class="input-group-append">
         <span class="input-group-text" id="basic-addon2"><i class="fas fa-search"></i></span>

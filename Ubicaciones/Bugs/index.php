@@ -39,7 +39,7 @@ require $root . '/plsuite/Resources/PHP/Utilities/initialScript.php';
    </header>
 
    <div class="container-fluid mt-3 mb-3 text-right">
-     <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#bugReportModal" name="button">Add New</button>
+     <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#addBugReport" name="button">Add New</button>
    </div>
 
    <table class="table table-hover">
@@ -116,6 +116,7 @@ require $root . '/plsuite/Resources/PHP/Utilities/initialScript.php';
 <?php
 require $root . '/plsuite/Resources/PHP/Utilities/footer.php';
 require 'modales/bugDetails.php';
+require 'modales/addBug.php';
  ?>
  <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script> -->
  <script src="/plsuite/Resources/jquery_ui_1_12_1/jquery-ui.min.js" charset="utf-8"></script>

@@ -37,7 +37,7 @@ if ($data['appt']['to']['date'] != "") {
 }
 
 
-$query = "UPDATE ct_trip_linehaul SET fkid_broker = ?, trip_rate = ?, origin_zip = ?, origin_state = ?, origin_city = ?, destination_zip = ?, destination_state = ?, destination_city = ?, date_departure = ?, date_arrival = ?, date_appointment = ?, date_appointment_to = ?, linehaul_status = ?, date_delivery = ?, broker_reference = ?, lh_comment = ? WHERE pk_idlinehaul = ? ";
+$query = "UPDATE ct_trip_linehaul SET fkid_broker = ?, trip_rate = ?, origin_zip = ?, origin_state = ?, origin_city = ?, destination_zip = ?, destination_state = ?, destination_city = ?, date_departure = ?, date_arrival = ?, date_appointment = ?, date_appointment_to = ?, linehaul_status = ?, date_delivery = ?, broker_reference = ?, lh_comment = ?, po_number = ? WHERE pk_idlinehaul = ? ";
 
 $stmt = $db->prepare($query);
 if (!($stmt)) {
@@ -47,7 +47,7 @@ if (!($stmt)) {
   exit_script($system_callback);
 }
 
-$stmt->bind_param('sssssssssssssssss',
+$stmt->bind_param('ssssssssssssssssss',
   $data['broker'],
   floatval(preg_replace('/[^\d.]/', '', $data['triprate'])),
   $data['ozip'],
@@ -64,6 +64,7 @@ $stmt->bind_param('sssssssssssssssss',
   $delivery,
   $data['broker_reference'],
   $data['comments'],
+  $data['po_number'],
   $data['lid']
 );
 
