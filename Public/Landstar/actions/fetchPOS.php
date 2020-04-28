@@ -29,8 +29,9 @@ if (!$pos) {
   exit_script($callback);
 } else {
   foreach ($pos as $key => $po) {
+    $encrypted_lh = encrypt($po['idLinehaul']);
     if ($po['idLinehaul']) {
-      $plscope = "<a href='/plsuite/public/PlScope/plscope.php?lh_reference=<?php echo encrypt($po[idLinehaul]) ?>' target='_blank' class='btn btn-outline-dark btn-sm'><i class='fas fa-map-marked-alt'></i></a>";
+      $plscope = "<a href='/plsuite/public/PlScope/plscope.php?lh_reference=$encrypted_lh' target='_blank' class='btn btn-outline-dark btn-sm'><i class='fas fa-map-marked-alt'></i></a>";
     }
 
     $appt_date = date('m/d H:i', strtotime($po['po_pickup_date'] . ' ' . $po['po_pickup_time']));
