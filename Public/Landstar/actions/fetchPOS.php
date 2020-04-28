@@ -29,8 +29,9 @@ if (!$pos) {
   exit_script($callback);
 } else {
   foreach ($pos as $key => $po) {
-    $encrypted_lh = encrypt($po['idLinehaul']);
+    $plscope = "";
     if ($po['idLinehaul']) {
+      $encrypted_lh = encrypt($po['idLinehaul']);
       $plscope = "<a href='/plsuite/public/PlScope/plscope.php?lh_reference=$encrypted_lh' target='_blank' class='btn btn-outline-dark btn-sm'><i class='fas fa-map-marked-alt'></i></a>";
     }
 
