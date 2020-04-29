@@ -67,7 +67,7 @@ class Trip
       return $this->data;
     }
   }
-  function getOpenPOs(){
+  function getUnassignedPOs(){
     $db = new Queryi();
 
     $query = "SELECT po.po_number po_number , po.po_pickup_date po_pickup_date , po.po_pickup_time po_pickup_time,tl.pk_idlinehaul idLinehaul, tl.lh_number lhNumber, t.trailer_number trailer , SUBSTRING_INDEX( GROUP_CONCAT( CONCAT(d.nameFirst , ' ' , d.nameLast)) , ',' , 1) driver , SUBSTRING_INDEX( GROUP_CONCAT(trk.truckNumber) , ',' , 1) tractor, tl.date_appointment date_appointment, tl.date_departure date_departure, tl.date_arrival date_arrival, tl.date_delivery date_delivery FROM client_po po LEFT JOIN ct_trip_linehaul tl ON po.po_number = tl.po_number LEFT JOIN ct_trip t ON tl.fk_idtrip = t.pkid_trip LEFT JOIN ct_trip_linehaul_movement tlm ON tl.pk_idlinehaul = tlm.fkid_linehaul LEFT JOIN ct_drivers d ON tlm.fkid_driver = d.pkid_driver LEFT JOIN ct_truck trk ON trk.pkid_truck = tlm.fkid_tractor WHERE tl.pk_idlinehaul IS NULL GROUP BY po_number";

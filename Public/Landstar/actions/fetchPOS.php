@@ -21,7 +21,7 @@ $callback['data'] = "";
 $data = $_POST;
 
 $tripHandle = new Trip();
-if ($data['status'] == "Open") {
+if ($data['status'] == "Unassigned") {
   $pos = $tripHandle->getOpenPOs();
 } else {
   $pos = $tripHandle->getPOs($data['date_from'], $data['date_to'], $data['status']);

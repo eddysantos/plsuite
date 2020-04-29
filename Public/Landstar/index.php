@@ -20,7 +20,7 @@ function encrypt($string){
 
 $tripHandle = new Trip();
 
-$pos = $tripHandle->getOpenPOs();
+$pos = $tripHandle->getUnassignedPOs();
 
 if (!$pos) {
   $error = $tripHandle->last_error;
@@ -59,7 +59,8 @@ if (!$pos) {
     </header>
     <div class="d-flex container-fluid justify-content-between my-2 align-content-center">
       <div class="btn-group btn-group-sm" id="status-filter-btns" role="group" aria-label="Trip Status">
-        <button type="button" class="btn btn-outline-dark active" data-status-filter="Open">Open</button>
+        <button type="button" class="btn btn-outline-dark active" data-status-filter="Unassigned">Unassigned</button>
+        <button type="button" class="btn btn-outline-dark" data-status-filter="Open">Open</button>
         <button type="button" class="btn btn-outline-dark" data-status-filter="Closed">Closed</button>
         <button type="button" class="btn btn-outline-dark" data-status-filter="All">All</button>
       </div>

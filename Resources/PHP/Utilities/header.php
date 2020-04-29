@@ -12,7 +12,7 @@ if (isset($_SESSION['user_info'])) {
 
 require $root . '/plsuite/Resources/vendor/autoload.php';
 $tripHandle = new Trip();
-$LandstarPOs = $tripHandle->getOpenPOs();
+$LandstarPOs = $tripHandle->getUnassignedPOs();
 
 
  ?>
