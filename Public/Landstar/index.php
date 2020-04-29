@@ -20,7 +20,7 @@ function encrypt($string){
 
 $tripHandle = new Trip();
 
-$pos = $tripHandle->getPOs($sevenDays, $today);
+$pos = $tripHandle->getOpenPOs();
 
 if (!$pos) {
   $error = $tripHandle->last_error;

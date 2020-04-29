@@ -21,7 +21,11 @@ $callback['data'] = "";
 $data = $_POST;
 
 $tripHandle = new Trip();
-$pos = $tripHandle->getPOs($data['date_from'], $data['date_to'], $data['status']);
+if ($data['status'] == "Open") {
+  $pos = $tripHandle->getOpenPOs();
+} else {
+  $pos = $tripHandle->getPOs($data['date_from'], $data['date_to'], $data['status']);
+}
 
 if (!$pos) {
   $callback['message'] = $tripHandle->last_error;
