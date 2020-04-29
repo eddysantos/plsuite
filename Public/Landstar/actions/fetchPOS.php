@@ -22,7 +22,7 @@ $data = $_POST;
 
 $tripHandle = new Trip();
 if ($data['status'] == "Unassigned") {
-  $pos = $tripHandle->getOpenPOs();
+  $pos = $tripHandle->getUnassignedPOs();
 } else {
   $pos = $tripHandle->getPOs($data['date_from'], $data['date_to'], $data['status']);
 }
