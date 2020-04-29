@@ -136,4 +136,4 @@ if (!$pos) {
 <script src="/plsuite/Resources/gmapslibs/markerclusterer/src/markerclusterer.js" defer></script>
 <script src="/plsuite/Resources/jquery_ui_1_12_1/jquery-ui.min.js" charset="utf-8"></script>
 
-<script src="js/cna.js" charset="utf-8"></script>
+<script src="js/cna.js?1" charset="utf-8"></script>

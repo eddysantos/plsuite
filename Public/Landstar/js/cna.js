@@ -139,7 +139,7 @@ $(document).ready(function(){
     var dFrom = new Date($('#date-filter-from').val());
     var dTo = new Date($('#date-filter-to').val());
 
-    if (dFrom < dTo) {
+    if (dFrom <= dTo) {
       $("#POTable").trigger('fetch');
     }
   });
