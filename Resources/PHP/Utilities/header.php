@@ -10,6 +10,10 @@ if (isset($_SESSION['user_info'])) {
   header("location:/plsuite/");
 }
 
+require $root . '/plsuite/Resources/vendor/autoload.php';
+$tripHandle = new Trip();
+$LandstarPOs = $tripHandle->getOpenPOs();
+
 
  ?>
 
@@ -54,7 +58,11 @@ if (isset($_SESSION['user_info'])) {
             <a class="nav-link custom dropdown-toggle <?php echo $viajes_active?>" href="#" id="tripDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded='false'>Trips</a>
             <div class="dropdown-menu" aria-lablledby="tripDropdown">
               <a class="dropdown-item" href="/plsuite/Ubicaciones/Viajes/dashboard.php">Active Trips</a>
-              <a class="dropdown-item" href="/plsuite/Ubicaciones/Viajes/tripSearch.php" href="#">Trip Search</a>
+              <a class="dropdown-item" href="/plsuite/Ubicaciones/Viajes/tripSearch.php">Trip Search</a>
+              <a class="dropdown-item" href="/plsuite/Public/Landstar" target="_blank">
+                Landstar POs
+                <span class="badge badge-pill badge-info"><?php echo count($LandstarPOs) ?></span>
+              </a>
               <div class="dropdown-divider"></div>
               <a class="dropdown-item" href="/plsuite/Ubicaciones/Viajes/invoice_control" href="">Invoice Control</a>
             </div>

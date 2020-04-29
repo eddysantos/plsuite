@@ -35,7 +35,7 @@ if (isset($_POST['login'])) {
 
     // include('Resources/PHP/loginDatabase.php');
 
-    $loginQry = "SELECT *, u.pkIdUsers , u.Nombre , u.Apellido , u.NombreUsuario , u.TipoUsuario , u.Status , u.NombreUsuario , up.invoice_control_save ic_save FROM users u LEFT JOIN users_permisos up ON u.pkIdUsers = up.fkid_user WHERE NombreUsuario = ? AND Contrasena = ?";
+    $loginQry = "SELECT *, u.pkIdUsers idUser , u.Nombre , u.Apellido , u.NombreUsuario , u.TipoUsuario , u.Status , u.NombreUsuario , up.invoice_control_save ic_save FROM users u LEFT JOIN users_permisos up ON u.pkIdUsers = up.fkid_user WHERE NombreUsuario = ? AND Contrasena = ?";
 
     $stmt = $db->prepare($loginQry) or die ('Error Login('.$db->errno.'): '.$db->error);
     $stmt->bind_param('ss',$usuario, $pass);
@@ -54,6 +54,10 @@ if (isset($_POST['login'])) {
 			$_SESSION['current_portal'] = "mx";
 		} else {
 			$url = "/access_denied.php";
+		}
+
+		if ($row['idUser'] == 23) {
+			$url = "location:Public/Landstar/";
 		}
 
       $_SESSION['user_info'] = $row;
