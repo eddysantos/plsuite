@@ -1,0 +1,5 @@
+.file-missing {
+  border-color: rgb(236, 142, 0) !important;
+  background-color: rgba(236, 142, 0, 0.63);
+  color: rgb(162, 84, 0);
+}

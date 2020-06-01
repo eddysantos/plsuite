@@ -5,7 +5,7 @@ require $root . '/plsuite/Resources/PHP/Utilities/initialScript.php';
 
 $system_callback = [];
 
-$query = "SELECT d.pkid_driver pkid_driver, d.nameFirst nameFirst, d.nameLast nameLast, d.isOwner isOwner, d.isDriver isDriver, d.dateAdded dateAdded, t.truckNumber truck FROM ct_drivers d LEFT JOIN ct_truck t ON t.pkid_truck = d.default_truck WHERE deletedDriver IS NULL";
+$query = "SELECT d.pkid_driver pkid_driver, d.nameFirst nameFirst, d.nameLast nameLast, d.isOwner isOwner, d.isDriver isDriver, d.dateAdded dateAdded, t.truckNumber truck FROM ct_drivers d LEFT JOIN ct_truck t ON t.pkid_truck = d.default_truck WHERE deletedDriver IS NULL and d.portal_assignment = 'us'";
 
 $stmt = $db->prepare($query);
 if (!($stmt)) {

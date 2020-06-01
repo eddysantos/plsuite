@@ -40,10 +40,11 @@ $new_lid += 1;
 
 /* Insert Linehaul in database */
 
-$query = "INSERT INTO ct_trip_linehaul(fk_idtrip, origin_state, origin_city, origin_zip, destination_state, destination_city, destination_zip, trip_rate, fkid_broker, pk_linehaul_number, broker_reference, lh_number, added_by, date_appointment) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+$query = "INSERT INTO ct_trip_linehaul(fk_idtrip, origin_state, origin_city, origin_zip, destination_state, destination_city, destination_zip, trip_rate, fkid_broker, pk_linehaul_number, broker_reference, lh_number, added_by, date_appointment, date_appointment_to) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
 
-$appt = date('Y-m-d H:i', strtotime($trip['linehaul']['appt']['date'] . " " . $trip['linehaul']['appt']['hour'] . ":" . $trip['linehaul']['appt']['minute']));
+$appt = date('Y-m-d H:i', strtotime($trip['linehaul']['appt']['from']['date'] . " " . $trip['linehaul']['appt']['from']['hour'] . ":" . $trip['linehaul']['appt']['from']['minute']));
+$appt_to = date('Y-m-d H:i', strtotime($trip['linehaul']['appt']['to']['date'] . " " . $trip['linehaul']['appt']['to']['hour'] . ":" . $trip['linehaul']['appt']['to']['minute']));
 
 $stmt = $db->prepare($query);
 if (!($stmt)) {
@@ -53,7 +54,7 @@ if (!($stmt)) {
   exit_script($system_callback);
 }
 
-$stmt->bind_param('ssssssssssssss',
+$stmt->bind_param('sssssssssssssss',
   $pk_trip,
   $origin['state'],
   $origin['city'],
@@ -67,7 +68,8 @@ $stmt->bind_param('ssssssssssssss',
   $trip['linehaul']['reference'],
   $lh_number = $tripno.$new_lid,
   $user,
-  $appt
+  $appt,
+  $appt_to
 );
 if (!($stmt)) {
   $system_callback['code'] = "500";

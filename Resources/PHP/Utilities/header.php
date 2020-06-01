@@ -1,3 +1,22 @@
+<?php
+
+if (isset($_SESSION['user_info'])) {
+  if (!$_SESSION['user_info']['cred_american_portal']) {
+    header("location:/plsuite/access_denied.php");
+  } else {
+    $_SESSION['current_portal'] = "us";
+  }
+} else {
+  header("location:/plsuite/");
+}
+
+require $root . '/plsuite/Resources/vendor/autoload.php';
+$tripHandle = new Trip();
+$LandstarPOs = $tripHandle->getUnassignedPOs();
+
+
+ ?>
+
 <!DOCTYPE html>
 <html>
   <head>
@@ -12,7 +31,6 @@
     <link rel="stylesheet" href="/plsuite/Resources/alertify/css/themes/default.min.css">
     <link rel="stylesheet" href="/plsuite/Resources/alertify/css/themes/bootsrap.min.css">
     <link rel="stylesheet" media="screen and (min-device-width: 701px)" href="/plsuite/Resources/CSS/main.css">
-    <!-- <link rel="stylesheet" media="screen and (min-device-width: 701px)" href="/plsuite/Resources/fontAwesome/css/font-awesome.min.css"> -->
     <link rel="stylesheet" media="screen and (max-device-width: 700px)" href="/plsuite/Resources/CSS/mainMobile.css">
     <script src="/plsuite/Resources/JQuery/jquery-3.2.1.min.js" charset="utf-8"></script>
     <!-- <script defer src="https://use.fontawesome.com/releases/v5.0.7/js/all.js"></script> -->
@@ -40,7 +58,11 @@
             <a class="nav-link custom dropdown-toggle <?php echo $viajes_active?>" href="#" id="tripDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded='false'>Trips</a>
             <div class="dropdown-menu" aria-lablledby="tripDropdown">
               <a class="dropdown-item" href="/plsuite/Ubicaciones/Viajes/dashboard.php">Active Trips</a>
-              <a class="dropdown-item" href="/plsuite/Ubicaciones/Viajes/tripSearch.php" href="#">Trip Search</a>
+              <a class="dropdown-item" href="/plsuite/Ubicaciones/Viajes/tripSearch.php">Trip Search</a>
+              <a class="dropdown-item" href="/plsuite/Public/Landstar" target="_blank">
+                Landstar POs
+                <span class="badge badge-pill badge-info"><?php echo count($LandstarPOs) ?></span>
+              </a>
               <div class="dropdown-divider"></div>
               <a class="dropdown-item" href="/plsuite/Ubicaciones/Viajes/invoice_control" href="">Invoice Control</a>
             </div>
@@ -79,10 +101,14 @@
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
               <a class="dropdown-item" disabled href="/plsuite/Ubicaciones/Config">Configuration</a>
-              <a class="dropdown-item" href="/plsuite/Ubicaciones/Users">Users</a>
+              <?php if ($_SESSION['user_info']['cred_is_admin']): ?>
+                <a class="dropdown-item" href="/plsuite/Ubicaciones/Users">Users</a>
+              <?php endif; ?>
               <!-- <a class="dropdown-item" href="/plsuite/Ubicaciones/Reports">Reports</a> -->
               <div class="dropdown-divider"></div>
-              <a class="dropdown-item disabled" href="" disabled>Mexican Portal</a>
+              <?php if ($_SESSION['user_info']['cred_mexican_portal']): ?>
+                <a class="dropdown-item" href="/plsuite/mxportal">Mexican Portal</a>
+              <?php endif; ?>
             </div>
           </li>
           <li class="nav-item">

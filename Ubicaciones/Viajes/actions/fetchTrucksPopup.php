@@ -1,12 +1,16 @@
 <?php
 
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
+
 $root = $_SERVER['DOCUMENT_ROOT'];
 require $root . '/plsuite/Resources/PHP/Utilities/initialScript.php';
 
 $system_callback = [];
 $txt = "%$_POST[txt]%";
 
-$query = "SELECT * FROM ct_truck WHERE deletedTruck IS NULL AND truckNumber LIKE ?";
+$query = "SELECT * FROM ct_truck WHERE deletedTruck IS NULL AND truckNumber LIKE ? AND portal_assignment = ?";
 
 $stmt = $db->prepare($query);
 if (!($stmt)) {
@@ -16,7 +20,7 @@ if (!($stmt)) {
   exit_script($system_callback);
 }
 
-$stmt->bind_param('s', $txt);
+$stmt->bind_param('ss', $txt, $_SESSION['current_portal']);
 if (!($stmt)) {
   $system_callback['code'] = "500";
   $system_callback['query'] = $query;

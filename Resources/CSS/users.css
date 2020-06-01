@@ -1,5 +1,6 @@
 .content-div{
   height: calc(100vh - 110px);
+  overflow: scroll;
 }
 
 .custom-control-input:checked~.custom-control-label::before{

@@ -5,15 +5,15 @@ require $root . '/plsuite/Resources/PHP/Utilities/initialScript.php';
 
 $system_callback = [];
 
-$owner = (int)$_POST['owner'];
+$owner = $_POST['owner'];
 $vin = $_POST['vin'];
 $brand = $_POST['brand'];
 $year = $_POST['year'];
 $plates = $_POST['plates'];
 $number = $_POST['number'];
-$tId = $_POST['truck_id'];
+$tId = $_POST['trailer_id'];
 
-$query = "UPDATE ct_truck SET truckOwnedBy = ?, truckVIN = ?, truckBrand = ?, truckYear = ?, truckNumber = ?, truckPlates = ? WHERE pkid_truck = ?";
+$query = "UPDATE ct_trailer SET trailerOwnedBy = ?, trailerVIN = ?, trailerBrand = ?, trailerYear = ?, trailerNumber = ?, trailerPlates = ? WHERE pkid_trailer = ?";
 
 $stmt = $db->prepare($query);
 if (!($stmt)) {

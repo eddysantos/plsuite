@@ -24,14 +24,20 @@ if ($data['delivery']['date'] != "") {
   $delivery = NULL;
 }
 
-if ($data['appt']['date'] != "") {
-  $appt = date('Y-m-d H:i', strtotime($data['appt']['date'] . " " . $data['appt']['time']['hour'] . ":" . $data['appt']['time']['minute']));
+if ($data['appt']['from']['date'] != "") {
+  $appt_from = date('Y-m-d H:i', strtotime($data['appt']['from']['date'] . " " . $data['appt']['from']['time']['hour'] . ":" . $data['appt']['from']['time']['minute']));
 } else {
-  $appt = NULL;
+  $appt_from = NULL;
+}
+
+if ($data['appt']['to']['date'] != "") {
+  $appt_to = date('Y-m-d H:i', strtotime($data['appt']['to']['date'] . " " . $data['appt']['to']['time']['hour'] . ":" . $data['appt']['to']['time']['minute']));
+} else {
+  $appt_to = NULL;
 }
 
 
-$query = "UPDATE ct_trip_linehaul SET fkid_broker = ?, trip_rate = ?, origin_zip = ?, origin_state = ?, origin_city = ?, destination_zip = ?, destination_state = ?, destination_city = ?, date_departure = ?, date_arrival = ?, date_appointment = ?, linehaul_status = ?, date_delivery = ?, broker_reference = ?, lh_comment = ? WHERE pk_idlinehaul = ? ";
+$query = "UPDATE ct_trip_linehaul SET fkid_broker = ?, trip_rate = ?, origin_zip = ?, origin_state = ?, origin_city = ?, destination_zip = ?, destination_state = ?, destination_city = ?, date_departure = ?, date_arrival = ?, date_appointment = ?, date_appointment_to = ?, linehaul_status = ?, date_delivery = ?, broker_reference = ?, lh_comment = ?, po_number = ? WHERE pk_idlinehaul = ? ";
 
 $stmt = $db->prepare($query);
 if (!($stmt)) {
@@ -41,7 +47,7 @@ if (!($stmt)) {
   exit_script($system_callback);
 }
 
-$stmt->bind_param('ssssssssssssssss',
+$stmt->bind_param('ssssssssssssssssss',
   $data['broker'],
   floatval(preg_replace('/[^\d.]/', '', $data['triprate'])),
   $data['ozip'],
@@ -52,11 +58,13 @@ $stmt->bind_param('ssssssssssssssss',
   $data['dcity'],
   $depart,
   $arriv,
-  $appt,
+  $appt_from,
+  $appt_to,
   $data['status'],
   $delivery,
   $data['broker_reference'],
   $data['comments'],
+  $data['po_number'],
   $data['lid']
 );
 

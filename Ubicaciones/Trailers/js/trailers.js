@@ -122,52 +122,29 @@ $(document).ready(function(){
 
   $('#saveTrailerDetails').click(function(){
 
-    // console.log("Val() is -> " + $('#tBrand').val());
-    // console.log("().prop('value') is -> " + $('#tBrand').attr('value'));
-    // return false;
-
     var inputs = {};
-    // inputs.brand = $('#tBrand').val();
-    // inputs.vin = $('#tVIN').val();
-    // inputs.year = $('#tYear').val();
-    // inputs.plates = $('#tPlates').val();
-    // inputs.number = $('#newTrailerNumber').val();
-    // inputs.owner = $('#tOwnedBy').val();
-    // inputs.trailer_id = $('#trailer_id').val();
 
-    inputs.brand = $('#tBrand');
-    inputs.vin = $('#tVIN');
-    inputs.year = $('#tYear');
-    inputs.plates = $('#tPlates');
-    inputs.number = $('#newTrailerNumber');
-    inputs.owner = $('#tOwnedBy');
-    inputs.trailer_id = $('#trailer_id');
+    inputs.brand = $('#tBrand').val();
+    inputs.vin = $('#tVIN').val();
+    inputs.year = $('#tYear').val();
+    inputs.plates = $('#tPlates').val();
+    inputs.number = $('#newTrailerNumber').val();
+    inputs.owner = $('#tOwnedBy').val();
+    inputs.trailer_id = $('#trailer_id').val();
 
     var cont = true;
 
     for (var key in inputs) {
-      if (inputs[key].val() == "" || inputs[key].val() == undefined) {
+      if (inputs[key] == "" || inputs[key] == undefined) {
         alert("Es necesario agregar todos los campos.");
         return false;
       }
 
-      if (inputs[key].val() == inputs[key].attr('value')) {
-        cont * true
+      if (inputs[key] == inputs[key]) {
+        cont = true
       } else {
-        cont * false
+        cont = false
       }
-
-      // if (cont) {
-      //   console.log("Cont es: " + cont);
-      //   for (var key in inputs) {
-      //     console.log(key + ": " + inputs[key].val() + '->' + inputs[key].attr('value'));
-      //   }
-      // } else {
-      //   console.log("Cont es: " + cont);
-      //   for (var key in inputs) {
-      //     console.log(key + ": " + inputs[key].val() + '->' + inputs[key].attr('value'));
-      //   }
-      // }
 
     }
 

@@ -4,8 +4,8 @@
         "tecnickcom/tcpdf": "^6.2"
     },
     "autoload":{
-      "psr-4":{
-        "Homemade\\":"src/" 
-      }
+      "classmap":[
+        "homemade/classes"
+      ]
     }
 }

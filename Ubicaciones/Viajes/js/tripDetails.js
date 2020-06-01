@@ -158,13 +158,22 @@ function show_lh_details(lhid = undefined){
     }
 
     if (r.data.appointment) {
-      $('.appointment.date').val(r.data.appointment.date);
-      $('.appointment.hour').val(r.data.appointment.time.hour);
-      $('.appointment.minute').val(r.data.appointment.time.minute);
+      $('.appointment.date.from').val(r.data.appointment.date);
+      $('.appointment.hour.from').val(r.data.appointment.time.hour);
+      $('.appointment.minute.from').val(r.data.appointment.time.minute);
     } else {
-      $('.appointment.date').val('');
-      $('.appointment.hour').find('option').attr('selected', false);
-      $('.appointment.minute').find('option').attr('selected', false);
+      $('.appointment.date.from').val('');
+      $('.appointment.hour.from').find('option').attr('selected', false);
+      $('.appointment.minute.from').find('option').attr('selected', false);
+    }
+    if (r.data.appointment_to) {
+      $('.appointment.date.to').val(r.data.appointment_to.date);
+      $('.appointment.hour.to').val(r.data.appointment_to.time.hour);
+      $('.appointment.minute.to').val(r.data.appointment_to.time.minute);
+    } else {
+      $('.appointment.date.to').val('');
+      $('.appointment.hour.to').find('option').attr('selected', false);
+      $('.appointment.minute.to').find('option').attr('selected', false);
     }
     if (r.data.departure) {
       $('.departure.date').val(r.data.departure.date);
@@ -427,7 +436,7 @@ $(document).ready(function(){
     var dep = new Date($(parent_form).find('.departure.date').val());
     var arriv = new Date($(parent_form).find('.arrival.date').val());
     var delivery = new Date($(parent_form).find('.delivery.date').val());
-    var appt = new Date($(parent_form).find('#appt').val());
+    var appt = new Date($(parent_form).find('.appointment.date').val());
 
     if (dep != 'Invalid Date') {
       if ($('#departure_time_hour').val() == "" || $('#departure_time_minute').val() == "") {
@@ -542,6 +551,7 @@ $(document).ready(function(){
       rpm: $(parent_form).find('.rpm').val(),
       status: $(parent_form).find('.lh_status').val(),
       comments: $(parent_form).find('.lh_comment').val(),
+      po_number: $(parent_form).find('.po_number').val(),
       departure: {
         date: $(parent_form).find('.departure.date').val(),
         time: {
@@ -564,10 +574,19 @@ $(document).ready(function(){
         }
       },
       appt: {
-        date: $(parent_form).find('.appointment.date').val(),
-        time: {
-          hour: $(parent_form).find('.appointment.hour').val(),
-          minute: $(parent_form).find('.appointment.minute').val()
+        from:{
+          date: $(parent_form).find('.appointment.date.from').val(),
+          time: {
+            hour: $(parent_form).find('.appointment.hour.from').val(),
+            minute: $(parent_form).find('.appointment.minute.from').val()
+          }
+        },
+        to:{
+          date: $(parent_form).find('.appointment.date.to').val(),
+          time: {
+            hour: $(parent_form).find('.appointment.hour.to').val(),
+            minute: $(parent_form).find('.appointment.minute.to').val()
+          }
         }
       }
     }
@@ -709,10 +728,12 @@ $(document).ready(function(){
         }
 
         var distanceService = new google.maps.DistanceMatrixService();
+        var geocodeService = new google.maps.Geocoder();
+
 
         for (var i = 0; i < zips.length - 1; i++) {
-          origin = "Zip " + zips[i];
-          destination = "Zip " + zips[i + 1];
+          origin = zips[i] + ", USA";
+          destination = zips[i + 1] + ", USA";
           if (origin == destination) {
             continue;
           }
@@ -727,6 +748,10 @@ $(document).ready(function(){
             if (route_details.destinations.hasOwnProperty(destination)) {
               var origin_element = $('[zip="' + route_details.origins[destination].match(parse_zip)[0] + '"]');
               var destination_element = $('[zip="' + route_details.destinations[destination].match(parse_zip)[0] + '"]');
+
+              if (typeof r.rows[destination].elements[destination].distance.value == 'undefined') {
+
+              }
 
               distances[destination] = {
                 origin: {
@@ -997,9 +1022,12 @@ $(document).ready(function(){
     var broker = source.find('.selected-broker');
     var reference = source.find('.broker-reference');
     var movs = {};
-    var appointment_date = source.find('.appointment.date').val();
-    var appointment_hour = source.find('.appointment.hour').val();
-    var appointment_minute = source.find('.appointment.minute').val();
+    var appointment_from_date = source.find('.appointment.date.from').val();
+    var appointment_from_hour = source.find('.appointment.hour.from').val();
+    var appointment_from_minute = source.find('.appointment.minute.from').val();
+    var appointment_to_date = source.find('.appointment.date.to').val();
+    var appointment_to_hour = source.find('.appointment.hour.to').val();
+    var appointment_to_minute = source.find('.appointment.minute.to').val();
     var tripno = source.find('.tripid').val();
     var tripid = source.find('.tripid').attr('db-id');
 
@@ -1048,9 +1076,12 @@ $(document).ready(function(){
     destination.find('.rpm-confirmation').html(rpm);
     destination.find('.brokerid-confirmation').html(broker.val()).attr('db-id', broker.attr('db-id'));
     destination.find('.broker-reference-confirmation').html(reference.val());
-    $('#linehaul-appointment').find('.date').html(appointment_date);
-    $('#linehaul-appointment').find('.hour').html(appointment_hour);
-    $('#linehaul-appointment').find('.minutes').html(appointment_minute);
+    $('#linehaul-appointment-from').find('.date').html(appointment_from_date);
+    $('#linehaul-appointment-from').find('.hour').html(appointment_from_hour);
+    $('#linehaul-appointment-from').find('.minutes').html(appointment_from_minute);
+    $('#linehaul-appointment-to').find('.date').html(appointment_to_date);
+    $('#linehaul-appointment-to').find('.hour').html(appointment_to_hour);
+    $('#linehaul-appointment-to').find('.minutes').html(appointment_to_minute);
     destination.find('.confirm-trip-info').html(tripno).attr('db-id', tripid);
 
 
@@ -1094,9 +1125,16 @@ $(document).ready(function(){
         reference: source.find('.broker-reference-confirmation').html(),
         rate: source.find('.trip-rate-confirmation').html(),
         appt: {
-          date: $('#linehaul-appointment').find('.date').html(),
-          hour: $('#linehaul-appointment').find('.hour').html(),
-          minute: $('#linehaul-appointment').find('.minutes').html(),
+          from:{
+            date: $('#linehaul-appointment-from').find('.date').html(),
+            hour: $('#linehaul-appointment-from').find('.hour').html(),
+            minute: $('#linehaul-appointment-from').find('.minutes').html(),
+          },
+          to:{
+            date: $('#linehaul-appointment-to').find('.date').html(),
+            hour: $('#linehaul-appointment-to').find('.hour').html(),
+            minute: $('#linehaul-appointment-to').find('.minutes').html(),
+          }
         },
         origin:{
           zip: source.find('.ozip[kind="origin"]').html(),

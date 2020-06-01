@@ -154,15 +154,26 @@ footer{
   padding: 0px 20px 0px 20px;
 }
 
-.Pending{
+.Pending,
+.Pendiente{
   color: #F53636;
   /* text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black; */
 }
+.badge.Pendiente{
+  background-color: #F53636;
+  color: white;
+}
 
-.Open{
+.Open,
+.Abierto{
   color: #F3A72A;
   /* text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black; */
 }
+.badge.Abierto{
+  background-color: #F3A72A;
+  color: white;
+}
+
 
 .Open.trip{
   color: #E1D661;
@@ -179,12 +190,19 @@ footer{
   /* text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black; */
 }
 
-.Pending.Closure{
+.Pending.Closure,
+.Terminado,{
   color: #0A60FE;
   /* text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black; */
 }
 
-.Closed{
+.badge.Terminado{
+  background-color: #0A60FE;
+  color: white;
+}
+
+.Closed,
+.Cerrado{
   color: #3D7B0F;
   /* text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black; */
 }
@@ -192,6 +210,11 @@ footer{
 .Cancelled{
   color: #F53636;
   text-shadow: -1px 0 red, 0 1px red, 1px 0 red, 0 -1px red;
+}
+
+.badge.Cancelada{
+  color: #F53636;
+  background-color: transparent;
 }
 
 .overlay {
@@ -258,4 +281,96 @@ input[type=number]::-webkit-outer-spin-button {
 
 .fw-item:hover{
   background-color: rgba(124, 124, 124, 0.44)
+}
+
+.uneditable-form * input,
+.uneditable-form * select
+{
+  pointer-events: none;
+  background-color: rgba(228, 230, 227, 0.74)
+}
+
+.popup-list{
+  position: absolute;
+  width: -webkit-fill-available;
+  border-radius: 5px;
+  border: 1px solid rgb(020, 020, 020);
+  background-color: white;
+  margin-right: 30px;
+  margin-top: -10px;
+  padding: 10px;
+}
+
+.popup-list p{
+  padding: 10px;
+  margin-bottom: 0px;
+}
+
+.popup-list p.hovered{
+  background-color: rgba(0, 0, 0, .2);
+  cursor: pointer;
+}
+
+.popup-list p.hovered{
+  background-color: rgba(0, 0, 0, .2);
+  cursor: pointer;
+}
+
+.popup-list p:not(:last-child){
+  border-bottom: 1px solid rgb(1,1,1);
+}
+
+.popup-list p:last-child{
+  margin-bottom: 0px;
+}
+
+.saved-record{
+  background-color: rgba(28, 138, 0, 0.1) !important;
+  border-color: rgba(28, 138, 0) !important;
+  transition-property: all;
+  transition-duration: 1.5s;
+}
+
+.left-slide-panel{
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  height: 100%;
+  background-color: rgb(115, 115, 115, .5);
+  z-index: 9999;
+  opacity: 1;
+      -webkit-transition: opacity .5s ease-in;
+         -moz-transition: opacity .5s ease-in;
+          -ms-transition: opacity .5s ease-in;
+           -o-transition: opacity .5s ease-in;
+              transition: opacity .5s ease-in;
+}
+
+.left-slide-panel:not(.show){
+  display: none;
+  opacity: 0;
+}
+
+.left-slide-panel > .slide-panel{
+  margin-left: 25%;
+  width: 75%;
+  background-color: white;
+  height: 100%;
+  right: 0;
+  -webkit-transition: margin-left .5s ease-in;
+     -moz-transition: margin-left .5s ease-in;
+      -ms-transition: margin-left .5s ease-in;
+       -o-transition: margin-left .5s ease-in;
+          transition: margin-left .5s ease-in;
+
+}
+
+.left-slide-panel:not(.show) > .slide-panel{
+  margin-left: 100%;
+}
+
+.overflow-scroll{
+  overflow: scroll;
 }
