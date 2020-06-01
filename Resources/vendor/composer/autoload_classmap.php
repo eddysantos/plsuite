@@ -7,6 +7,7 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'Datamatrix' => $vendorDir . '/tecnickcom/tcpdf/include/barcodes/datamatrix.php',
+    'GoogleMaps' => $baseDir . '/homemade/classes/GoogleMaps.php',
     'PDF417' => $vendorDir . '/tecnickcom/tcpdf/include/barcodes/pdf417.php',
     'QRcode' => $vendorDir . '/tecnickcom/tcpdf/include/barcodes/qrcode.php',
     'Queryi' => $baseDir . '/homemade/classes/Queryi.php',

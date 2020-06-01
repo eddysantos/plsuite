@@ -77,9 +77,9 @@ if (isset($_SESSION['user_info'])) {
           </li> -->
         </ul>
         <ul class="navbar-nav">
-          <!-- <li class="nav-item">
-            <a href="/plsuite/Ubicaciones/Reports" class="nav-link">Reports</a>
-          </li> -->
+          <li class="nav-item">
+            <a href="/plsuite/mxportal/Reports" class="nav-link">Reportes</a>
+          </li>
           <li class="nav-item dropdown mr-3">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               Opciones
