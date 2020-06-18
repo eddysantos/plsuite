@@ -60,7 +60,7 @@
                     <div class="input-group-prepend" id="btnQuickAddBroker" role="button" data-container="body" data-toggle="popover">
                       <span class="input-group-text" id="addBrokerotf" ><i class="fas fa-plus"></i></span>
                     </div>
-                    <input type="text" class="form-control popup-input selected-broker" id-display="#broker-popup-list" aria-describedby="addBrokerotf" id="brokerName" type="text" autocomplete="new-password" db-id="" name="" value="" placeholder="Broker Name">
+                    <input type="text" class="form-control popup-input selected-broker" id-display="#broker-popup-list" aria-describedby="addBrokerotf" id="brokerName" type="text" autocomplete="off" db-id="" name="" value="" placeholder="Broker Name">
                   </div>
                   <div id="broker-popup-list" class="popup-list mt-3" style="display: none; z-index: 9999"></div>
                   <small class="invalid-feedback">This field cannot be empty.</small>
