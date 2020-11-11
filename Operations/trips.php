@@ -33,7 +33,7 @@ $root = $_SERVER['DOCUMENT_ROOT'] . "/plsuite";
             <input type="text" data-role="input" data-search-button="true">
           </form>
         </div>
-        <div class="">
+        <div class=""> <!-- TRIP LIST CONTAINER -->
           <div class="border bd-grayBlue p-1 mb-1 border-radius">
             <div class="w-100 d-flex flex-justify-between">
               <div class="">
@@ -44,7 +44,7 @@ $root = $_SERVER['DOCUMENT_ROOT'] . "/plsuite";
                 <div class="">
                   Laredo, TX - Atlanta, GA
                 </div>
-                <div class="">
+                <div class="fg-darkGray">
                   <span class="">1008 Miles</span>|<span>$2.25</span> RPM
                 </div>
               </div>
@@ -69,7 +69,7 @@ $root = $_SERVER['DOCUMENT_ROOT'] . "/plsuite";
                 <div class="">
                   Laredo, TX - Atlanta, GA
                 </div>
-                <div class="">
+                <div class="fg-darkGray">
                   <span class="">1008 Miles</span>|<span>$2.25</span> RPM
                 </div>
               </div>
@@ -94,7 +94,7 @@ $root = $_SERVER['DOCUMENT_ROOT'] . "/plsuite";
                 <div class="">
                   Laredo, TX - Atlanta, GA
                 </div>
-                <div class="">
+                <div class="fg-darkGray">
                   <span class="">1008 Miles</span>|<span>$2.25</span> RPM
                 </div>
               </div>
@@ -109,7 +109,8 @@ $root = $_SERVER['DOCUMENT_ROOT'] . "/plsuite";
               </div>
             </div>
           </div>
-        </div>
+
+        </div> <!-- TRIP LIST CONTAINER -->
         <!-- <div class="">
           <table class="table subcompact">
             <thead>
