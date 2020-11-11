@@ -34,7 +34,57 @@ $root = $_SERVER['DOCUMENT_ROOT'] . "/plsuite";
           </form>
         </div>
         <div class="">
-          <div class="border bd-grayBlue p-1 border-radius">
+          <div class="border bd-grayBlue p-1 mb-1 border-radius">
+            <div class="w-100 d-flex flex-justify-between">
+              <div class="">
+                <div class="">
+                  <b>2000013</b>
+                  <span class="fg-red">(<i>CH Robinson</i>)</span>
+                </div>
+                <div class="">
+                  Laredo, TX - Atlanta, GA
+                </div>
+                <div class="">
+                  <span class="">1008 Miles</span>|<span>$2.25</span> RPM
+                </div>
+              </div>
+              <div class="">
+                <div class=""><b>Start Date:</b> 2020-01-01</div>
+                <div class=""><b>Appt Time:</b> 2020-01-01</div>
+              </div>
+              <div class="text-right">
+                <div class="">Miguel Velez</div>
+                <div class="">T015</div>
+                <div class="">NONZ976976</div>
+              </div>
+            </div>
+          </div>
+          <div class="border bd-grayBlue p-1 mb-1 border-radius">
+            <div class="w-100 d-flex flex-justify-between">
+              <div class="">
+                <div class="">
+                  <b>2000013</b>
+                  <span class="fg-red">(<i>CH Robinson</i>)</span>
+                </div>
+                <div class="">
+                  Laredo, TX - Atlanta, GA
+                </div>
+                <div class="">
+                  <span class="">1008 Miles</span>|<span>$2.25</span> RPM
+                </div>
+              </div>
+              <div class="">
+                <div class=""><b>Start Date:</b> 2020-01-01</div>
+                <div class=""><b>Appt Time:</b> 2020-01-01</div>
+              </div>
+              <div class="text-right">
+                <div class="">Miguel Velez</div>
+                <div class="">T015</div>
+                <div class="">NONZ976976</div>
+              </div>
+            </div>
+          </div>
+          <div class="border bd-grayBlue p-1 mb-1 border-radius">
             <div class="w-100 d-flex flex-justify-between">
               <div class="">
                 <div class="">
