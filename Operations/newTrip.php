@@ -133,8 +133,12 @@ $root = $_SERVER['DOCUMENT_ROOT'] . "/plsuite";
             </div>
         </div>
     </div>
+    <button type="button" class="button large primary mt-2 float-right" name="button">Confirm Info</button>
   </div>
 
+  <div class="p-2" data-role="window">
+      Drag this window on the caption.
+  </div>
 
     <script src="/plsuite/Resources/JQuery/jquery-3.2.1.min.js" charset="utf-8"></script>
     <script src="/plsuite/Resources/Metro/build/js/metro.min.js"></script>
