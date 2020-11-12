@@ -29930,7 +29930,7 @@ input.input-small:-ms-input-placeholder {
   text-decoration: none;
   color: inherit;
   white-space: nowrap;
-  border: 2px solid transparent;
+  /* border: 2px solid transparent; */
   height: 48px;
 }
 .navview .navview-menu li a:hover {

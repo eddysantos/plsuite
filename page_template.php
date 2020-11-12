@@ -26,7 +26,8 @@ $root = $_SERVER['DOCUMENT_ROOT'] . "/plsuite";
 
 
 
-    <!-- Metro 4 -->
+    <script src="/plsuite/Resources/JQuery/jquery-3.2.1.min.js" charset="utf-8"></script>
     <script src="/plsuite/Resources/Metro/build/js/metro.min.js"></script>
+    <script src="/plsuite/Resources/fa_5/js/fontawesome-all.min.js" data-auto-replace-svg="nest" charset="utf-8"></script>
 </body>
 </html>

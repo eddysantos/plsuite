@@ -22,10 +22,17 @@ $root = $_SERVER['DOCUMENT_ROOT'] . "/plsuite";
     <div class="navview-content pt-2">
       <div class="container-fluid">
         <div class="d-flex flex-justify-between mb-2">
-          <div data-role="buttongroup">
+          <div data-role="buttongroup" date-mode="one">
             <button class="button active">All</button>
-            <button class="button">Open</button>
-            <button class="button">Closed</button>
+            <button class="button">Pending</button>
+            <button class="button">Scheduled</button>
+            <button class="button">In Transit</button>
+            <button class="button">Delivered</button>
+          </div>
+          <div class="" data-role="buttongroup" data-mode="one">
+            <button class="button active">All</button>
+            <button class="button">Northbound</button>
+            <button class="button">Southbound</button>
           </div>
           <form class="" style="max-width: 450px">
             <input type="text" data-role="input" data-search-button="true">
@@ -37,34 +44,24 @@ $root = $_SERVER['DOCUMENT_ROOT'] . "/plsuite";
             <div class="w-100 d-flex flex-justify-between">
               <div class="">
                 <div class="">
-                  <b>200096</b> -
-                  <span>NONZ976976</span>
+                  <b>2000013</b>
+                  <span class="fg-red">(<i>CH Robinson</i>)</span>
                 </div>
-                <div class="pl-4">
-                  <span class="fas fa-circle fg-yellow"></span>
-                  <span>1<span>|
-                  <span>Laredo, TX - Atlanta, GA</span>
-                  <span class="fg-darkRed">[CH Robinson]</span>
-                  <span class="fg-darkGray"><span>1008 Miles</span>|<span>$2.25</span> RPM</span>
+                <div class="">
+                  Laredo, TX - Atlanta, GA
                 </div>
-                <div class="pl-4">
-                  <span class="fas fa-circle fg-yellow"></span>
-                  <span>2<span>|
-                  <span>Atlanta GA - Somewhere, PA</span>
-                  <span class="fg-darkRed">[Royal Transportation]</span>
-                  <span class="fg-darkGray"><span>1008 Miles</span>|<span>$2.25</span> RPM</span>
-                </div>
-                <div class="pl-4">
-                  <span class="fas fa-circle fg-yellow"></span>
-                  <span>3<span>|
-                  <span>Somewhere, PA - Anywhere, TX</span>
-                  <span class="fg-darkRed">[EPES Logistics]</span>
-                  <span class="fg-darkGray"><span>1008 Miles</span>|<span>$2.25</span> RPM</span>
+                <div class="fg-darkGray">
+                  <span class="">1008 Miles</span>|<span>$2.25</span> RPM
                 </div>
               </div>
+              <div class="">
+                <div class=""><b>Start Date:</b> 2020-01-01</div>
+                <div class=""><b>Appt Time:</b> 2020-01-01</div>
+              </div>
               <div class="text-right">
-                <div class="">3024 Miles</div>
-                <div class="">$2.25 RPM</div>
+                <div class="">Miguel Velez</div>
+                <div class="">T015</div>
+                <div class="">NONZ976976</div>
               </div>
             </div>
 
@@ -173,8 +170,6 @@ $root = $_SERVER['DOCUMENT_ROOT'] . "/plsuite";
 
 
     <!-- Metro 4 -->
-    <script src="/plsuite/Resources/JQuery/jquery-3.2.1.min.js" charset="utf-8"></script>
     <script src="/plsuite/Resources/Metro/build/js/metro.min.js"></script>
-    <script src="/plsuite/Resources/fa_5/js/fontawesome-all.min.js" data-auto-replace-svg="nest" charset="utf-8"></script>
 </body>
 </html>

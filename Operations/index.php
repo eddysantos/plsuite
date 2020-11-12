@@ -20,7 +20,7 @@ $root = $_SERVER['DOCUMENT_ROOT'] . "/plsuite";
   <div class="compacted" data-role="navview" data-compact="md" style="flex-grow: 1">
     <?php require "OperationsMenu.html" ?>
     <div class="navview-content" style="overflow: scroll">
-
+      
     </div>
   </div>
 
