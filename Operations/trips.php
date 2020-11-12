@@ -33,7 +33,7 @@ $root = $_SERVER['DOCUMENT_ROOT'] . "/plsuite";
         </div>
         <div class=""> <!-- TRIP LIST CONTAINER -->
 
-          <div class="border bd-grayBlue p-1 mb-1 border-radius">
+          <div class="bg-lightGray bd-grayBlue p-3 mb-1 border-radius">
             <div class="w-100 d-flex flex-justify-between">
               <div class="">
                 <div class="">

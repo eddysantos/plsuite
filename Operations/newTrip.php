@@ -63,7 +63,7 @@ $root = $_SERVER['DOCUMENT_ROOT'] . "/plsuite";
             <div class="heading">Trip Information</div>
             <div class="content p-6">
               <div class="mb-2">
-                <div class="border rounded p-2 mb-1">
+                <div class="border p-2 mb-1">
                   <h5>Pickup</h5>
                   <div class="row">
                     <div class="cell-md-6">
