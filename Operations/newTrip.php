@@ -113,6 +113,15 @@ $root = $_SERVER['DOCUMENT_ROOT'] . "/plsuite";
                       </div>
                     </div>
                   </div>
+                  <div class="row">
+                    <div class="cell-3 offset-9">
+                      <select class="input input-small" name="">
+                        <option value="L">Loaded</option>
+                        <option value="E">Empty</option>
+                        <!-- <option value="EAL">Emtpy As Loaded</option> -->
+                      </select>
+                    </div>
+                  </div>
                 </div>
 
               </div>
@@ -122,12 +131,14 @@ $root = $_SERVER['DOCUMENT_ROOT'] . "/plsuite";
             </div>
         </div>
     </div>
-    <button type="button" class="button large primary mt-2 float-right" name="button">Confirm Info</button>
+    <button type="button" class="button large primary mt-2 float-right" id="confirmInfoBtn" name="button">Confirm Info</button>
   </div>
 
 
     <script src="/plsuite/Resources/JQuery/jquery-3.2.1.min.js" charset="utf-8"></script>
     <script src="/plsuite/Resources/Metro/build/js/metro.min.js"></script>
     <script src="/plsuite/Resources/fa_5/js/fontawesome-all.min.js" data-auto-replace-svg="nest" charset="utf-8"></script>
+
+    <script src="js/newTrip.js" charset="utf-8"></script>
 </body>
 </html>
