@@ -75,7 +75,7 @@ $root = $_SERVER['DOCUMENT_ROOT'] . "/plsuite";
           </div>
 
         </div> <!-- TRIP LIST CONTAINER -->
-        <!-- <div class="">
+        <div class="">
           <table class="table subcompact">
             <thead>
               <tr>
@@ -178,7 +178,7 @@ $root = $_SERVER['DOCUMENT_ROOT'] . "/plsuite";
               </tr>
             </tbody>
           </table>
-        </div> -->
+        </div>
       </div>
     </div>
   </div>
