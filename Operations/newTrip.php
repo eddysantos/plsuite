@@ -19,7 +19,7 @@ $root = $_SERVER['DOCUMENT_ROOT'] . "/plsuite";
   <div class="container">
     <h1>Add New Trip</h1>
     <div data-role="accordion" >
-        <div class="frame active">
+        <div class="frame">
             <div class="heading">Client Information</div>
             <div class="content p-6">
                 <form>
@@ -59,77 +59,82 @@ $root = $_SERVER['DOCUMENT_ROOT'] . "/plsuite";
               </div>
             </div>
         </div>
-        <div class="frame">
+        <div class="frame active">
             <div class="heading">Trip Information</div>
             <div class="content p-6">
-              <div class="row">
-                <div class="cell-md-6">
-                  <label for="">Pickup</label>
-                  <input type="text" class="metro-input" name="" value="">
-                </div>
-                <div class="cell-md-3">
-                  <label for="">Appt Date</label>
-                  <input type="date" class="metro-input" name="" value="">
-                </div>
-                <div class="cell-md-3">
-                  <label for="">Appt Time</label>
-                  <div class="d-flex">
-                    <input type="text" class="metro-input mr-1" name="" value="">
-                    <input type="text" class="metro-input ml-1" name="" value="">
+              <div class="mb-2">
+                <div class="border rounded p-2 mb-1">
+                  <h5>Pickup</h5>
+                  <div class="row">
+                    <div class="cell-md-6">
+                      <label for="">Location</label>
+                      <input type="text" class="metro-input" name="" value="">
+                    </div>
+                    <div class="cell-md-3">
+                      <label for="">Appt Date From</label>
+                      <input type="date" class="metro-input" name="" value="">
+                    </div>
+                    <div class="cell-md-3">
+                      <label for="">Appt Time From</label>
+                      <div class="d-flex">
+                        <input type="text" class="metro-input mr-1" name="" value="">
+                        <input type="text" class="metro-input ml-1" name="" value="">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="cell-md-3 offset-6">
+                      <label for="">Appt Date To</label>
+                      <input type="date" class="metro-input" name="" value="">
+                    </div>
+                    <div class="cell-md-3">
+                      <label for="">Appt Date To</label>
+                      <div class="d-flex">
+                        <input type="text" class="metro-input mr-1" name="" value="">
+                        <input type="text" class="metro-input ml-1" name="" value="">
+                      </div>
+                    </div>
                   </div>
                 </div>
-              </div>
-              <div class="row">
-                <div class="cell-md-6">
-                  <label for="">Stop 1</label>
-                  <input type="text" class="metro-input" name="" value="">
-                </div>
-                <div class="cell-md-3">
-                  <label for="">Appt Date</label>
-                  <input type="date" class="metro-input" name="" value="">
-                </div>
-                <div class="cell-md-3">
-                  <label for="">Appt Time</label>
-                  <div class="d-flex">
-                    <input type="text" class="metro-input mr-1" name="" value="">
-                    <input type="text" class="metro-input ml-1" name="" value="">
+
+                <div class="border rounded p-2">
+                  <h5>Stop 1</h5>
+                  <div class="row">
+                    <div class="cell-md-6">
+                      <label for="">Location</label>
+                      <input type="text" class="metro-input" name="" value="">
+                    </div>
+                    <div class="cell-md-3">
+                      <label for="">Appt Date From</label>
+                      <input type="date" class="metro-input" name="" value="">
+                    </div>
+                    <div class="cell-md-3">
+                      <label for="">Appt Time From</label>
+                      <div class="d-flex">
+                        <input type="text" class="metro-input mr-1" name="" value="">
+                        <input type="text" class="metro-input ml-1" name="" value="">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="cell-md-3 offset-6">
+                      <label for="">Appt Date To</label>
+                      <input type="date" class="metro-input" name="" value="">
+                    </div>
+                    <div class="cell-md-3">
+                      <label for="">Appt Date To</label>
+                      <div class="d-flex">
+                        <input type="text" class="metro-input mr-1" name="" value="">
+                        <input type="text" class="metro-input ml-1" name="" value="">
+                      </div>
+                    </div>
                   </div>
                 </div>
+
               </div>
-              <div class="row">
-                <div class="cell-md-6">
-                  <label for="">Stop 2</label>
-                  <input type="text" class="metro-input" name="" value="">
-                </div>
-                <div class="cell-md-3">
-                  <label for="">Appt Date</label>
-                  <input type="date" class="metro-input" name="" value="">
-                </div>
-                <div class="cell-md-3">
-                  <label for="">Appt Time</label>
-                  <div class="d-flex">
-                    <input type="text" class="metro-input mr-1" name="" value="">
-                    <input type="text" class="metro-input ml-1" name="" value="">
-                  </div>
-                </div>
-              </div>
-              <div class="row">
-                <div class="cell-md-6">
-                  <label for="">Stop 3</label>
-                  <input type="text" class="metro-input" name="" value="">
-                </div>
-                <div class="cell-md-3">
-                  <label for="">Appt Date</label>
-                  <input type="date" class="metro-input" name="" value="">
-                </div>
-                <div class="cell-md-3">
-                  <label for="">Appt Time</label>
-                  <div class="d-flex">
-                    <input type="text" class="metro-input mr-1" name="" value="">
-                    <input type="text" class="metro-input ml-1" name="" value="">
-                  </div>
-                </div>
-              </div>
+              <button type="button" class="button secondary" name="button">Add Stop</button>
+
+
             </div>
         </div>
     </div>

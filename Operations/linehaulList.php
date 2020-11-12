@@ -23,19 +23,23 @@ $root = $_SERVER['DOCUMENT_ROOT'] . "/plsuite";
       <div class="container-fluid">
         <div class="d-flex flex-justify-between mb-2">
           <div data-role="buttongroup" date-mode="one">
-            <button class="button active">All</button>
-            <button class="button">Pending</button>
-            <button class="button">Scheduled</button>
-            <button class="button">In Transit</button>
-            <button class="button">Delivered</button>
+            <button class="button active small">All</button>
+            <button class="button small">Pending</button>
+            <button class="button small">Scheduled</button>
+            <button class="button small">In Transit</button>
+            <button class="button small">Delivered</button>
           </div>
           <div class="" data-role="buttongroup" data-mode="one">
-            <button class="button active">All</button>
-            <button class="button">Northbound</button>
-            <button class="button">Southbound</button>
+            <button class="button small active">All</button>
+            <button class="button small">Northbound</button>
+            <button class="button small">Southbound</button>
+          </div>
+          <div class="" data-role="buttongroup" data-mode="one">
+            <button class="button small active" name="button"><span class="mif-list"></span></button>
+            <button class="button small" name="button"><span class="mif-stack"></span></button>
           </div>
           <form class="" style="max-width: 450px">
-            <input type="text" data-role="input" data-search-button="true">
+            <input type="text" data-role="input" class="input-small" data-search-button="true">
           </form>
         </div>
         <div class=""> <!-- TRIP LIST CONTAINER -->
@@ -95,10 +99,22 @@ $root = $_SERVER['DOCUMENT_ROOT'] . "/plsuite";
                 <td>Laredo, TX</td>
                 <td>Mechanicsburg, PA</td>
                 <td>$2.00</td>
-                <td>2020-11-01</td>
-                <td>2020-11-05</td>
+                <td>
+                  <span>2020-01-01</span>
+                  <button type="button" class="button mini light" name="button"><span class="mif-calendar"></span></button>
+                  <div data-role="calendar" data-picker-mode="true" class="compact pos-absolute" data-show-header="false" data-show-footer="false" style="display: none"></div>
+                </td>
+                <td>
+                  <span>2020-01-01</span>
+                  <button type="button" class="button mini light" name="button"><span class="mif-calendar"></span></button>
+                  <div data-role="calendar" data-picker-mode="true" class="compact pos-absolute" data-show-header="false" data-show-footer="false" style="display: none"></div>
+                </td>
                 <td>1:00</td>
-                <td>2020-11-05</td>
+                <td>
+                  <span>2020-01-01</span>
+                  <button type="button" class="button mini light" name="button"><span class="mif-calendar"></span></button>
+                  <div data-role="calendar" data-picker-mode="true" class="compact pos-absolute" data-show-header="false" data-show-footer="false" style="display: none"></div>
+                </td>
               </tr>
               <tr>
                 <td>2001101</td>
