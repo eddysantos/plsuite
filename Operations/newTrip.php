@@ -68,64 +68,48 @@ $root = $_SERVER['DOCUMENT_ROOT'] . "/plsuite";
                   <div class="row">
                     <div class="cell-md-6">
                       <label for="">Location</label>
-                      <input type="text" class="metro-input" name="" value="">
+                      <input type="text" class="input input-small" name="" value="">
                     </div>
                     <div class="cell-md-3">
-                      <label for="">Appt Date From</label>
-                      <input type="date" class="metro-input" name="" value="">
-                    </div>
-                    <div class="cell-md-3">
-                      <label for="">Appt Time From</label>
-                      <div class="d-flex">
-                        <input type="text" class="metro-input mr-1" name="" value="">
-                        <input type="text" class="metro-input ml-1" name="" value="">
+                      <label for="">Appt From</label>
+                      <input type="date" class="input input-small" name="" value="">
+                      <div class="d-flex mt-1">
+                        <input type="text" class="input input-small mr-1" name="" value="">
+                        <input type="text" class="input input-small ml-1" name="" value="">
                       </div>
                     </div>
-                  </div>
-                  <div class="row">
-                    <div class="cell-md-3 offset-6">
-                      <label for="">Appt Date To</label>
-                      <input type="date" class="metro-input" name="" value="">
-                    </div>
                     <div class="cell-md-3">
-                      <label for="">Appt Date To</label>
-                      <div class="d-flex">
-                        <input type="text" class="metro-input mr-1" name="" value="">
-                        <input type="text" class="metro-input ml-1" name="" value="">
+                      <label for="">Appt To</label>
+                      <input type="date" class="input input-small" name="" value="">
+                      <div class="d-flex mt-1">
+                        <input type="text" class="input input-small mr-1" name="" value="">
+                        <input type="text" class="input input-small ml-1" name="" value="">
                       </div>
                     </div>
                   </div>
                 </div>
 
-                <div class="border rounded p-2">
+                <div class="border p-2 mb-1">
                   <h5>Stop 1</h5>
                   <div class="row">
                     <div class="cell-md-6">
                       <label for="">Location</label>
-                      <input type="text" class="metro-input" name="" value="">
+                      <input type="text" class="input input-small" name="" value="">
                     </div>
                     <div class="cell-md-3">
-                      <label for="">Appt Date From</label>
-                      <input type="date" class="metro-input" name="" value="">
-                    </div>
-                    <div class="cell-md-3">
-                      <label for="">Appt Time From</label>
-                      <div class="d-flex">
-                        <input type="text" class="metro-input mr-1" name="" value="">
-                        <input type="text" class="metro-input ml-1" name="" value="">
+                      <label for="">Appt From</label>
+                      <input type="date" class="input input-small" name="" value="">
+                      <div class="d-flex mt-1">
+                        <input type="text" class="input input-small mr-1" name="" value="">
+                        <input type="text" class="input input-small ml-1" name="" value="">
                       </div>
                     </div>
-                  </div>
-                  <div class="row">
-                    <div class="cell-md-3 offset-6">
-                      <label for="">Appt Date To</label>
-                      <input type="date" class="metro-input" name="" value="">
-                    </div>
                     <div class="cell-md-3">
-                      <label for="">Appt Date To</label>
-                      <div class="d-flex">
-                        <input type="text" class="metro-input mr-1" name="" value="">
-                        <input type="text" class="metro-input ml-1" name="" value="">
+                      <label for="">Appt To</label>
+                      <input type="date" class="input input-small" name="" value="">
+                      <div class="d-flex mt-1">
+                        <input type="text" class="input input-small mr-1" name="" value="">
+                        <input type="text" class="input input-small ml-1" name="" value="">
                       </div>
                     </div>
                   </div>
