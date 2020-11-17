@@ -1,4 +1,4 @@
-<div class="navview-pane">
+<div class="navview-pane border-right bd-black bg-grayWhite">
   <div class="navview-container">
     <div class="d-flex flex-align-left">
       <button class="pull-button">
@@ -6,7 +6,7 @@
       </button>
     </div>
   </div>
-  <ul class="navview-menu">
+  <ul class="navview-menu bg-grayWhite">
     <li>
       <a href="#">
         <span class="icon"><span class="mif-dashboard"></span></span>
@@ -19,18 +19,30 @@
     <li>
       <a href="#" class="dropdown-toggle">
         <span class="icon"><span class="mif-list"></span></span>
-        <span class="caption">List View</span>
+        <span class="caption">Trips</span>
       </a>
-      <ul class="navview-menu" data-role="dropdown" data-role-dropdown="true" style="display: none">
-        <li>
-          <a href="#"></a>
-          <span class="icon"><span class="mif-dashboard"></span></span>
-          <span class="caption">Test</span>
-        </li>
+      <ul class="navview-menu border border-left-none bg-white bd-black" data-role="dropdown">
+          <li class="item-header bg-grayWhite">Trip Menu</li>
+          <li>
+              <a href="/plsuite/operations/trips.php">
+                  <span class="icon">
+                      <span class="mif-dashboard"></span>
+                  </span>
+                  <span class="caption">Trip View</span>
+              </a>
+          </li>
+          <li>
+              <a href="/plsuite/operations/linehaulList.php">
+                  <span class="icon">
+                      <span class="mif-dashboard"></span>
+                  </span>
+                  <span class="caption">Linehaul View</span>
+              </a>
+          </li>
       </ul>
     </li>
     <li>
-      <a href="#">
+      <a href="/plsuite/operations/newTrip.php">
         <span class="icon"><span class="mif-add"></span></span>
         <span class="caption">Add Trip</span>
         <span class="badges">

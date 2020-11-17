@@ -12,6 +12,7 @@ $root = $_SERVER['DOCUMENT_ROOT'] . "/plsuite";
 
     <!-- Metro 4 -->
     <link rel="stylesheet" href="/plsuite/Resources/Metro/build/css/metro-all.css">
+    <link rel="stylesheet" href="/plsuite/Resources/CSS/metrocustom.css">
     <!-- <link rel="stylesheet" href="https://cdn.metroui.org.ua/v4.3.2/css/metro-all.min.css"> -->
 
 </head>
