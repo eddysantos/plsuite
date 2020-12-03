@@ -31,7 +31,7 @@ $root = $_SERVER['DOCUMENT_ROOT'] . "/plsuite";
           <div class="content py-2">
             <div class="form-group">
               <label for="">Client Name</label>
-              <input type="text" name="client_name" class="input input-small" trip-input data-role="input" id="clientInput"  value="CH Robinson" data-dbid="1">
+              <input type="text" name="client_name" class="input input-small" trip-input data-role="input" id="clientInput"  value="" data-dbid="1">
             </div>
             <!-- <div class="form-group">
               <label for="">Client Contact</label>
@@ -41,13 +41,13 @@ $root = $_SERVER['DOCUMENT_ROOT'] . "/plsuite";
               <div class="cell-md-6">
                 <div class="form-group">
                   <label for="">Client Reference</label>
-                  <input type="text" class="input input-small" data-role="input" trip-input id="client_reference" placeholder="" name="client_reference" value="32527282635367">
+                  <input type="text" class="input input-small" data-role="input" trip-input id="client_reference" placeholder="" name="client_reference" value="">
                 </div>
               </div>
               <div class="cell-md-6">
                 <div class="form-group">
                   <label for="">Trip Rate</label>
-                  <input type="number" class="input input-small" trip-input data-role="input" data-prepend="<span class='mif-money'></span>" placeholder="" name="trip_rate" value="2500">
+                  <input type="number" class="input input-small" trip-input data-role="input" data-prepend="<span class='mif-money'></span>" placeholder="" name="trip_rate" value="">
                 </div>
               </div>
             </div>
@@ -73,7 +73,7 @@ $root = $_SERVER['DOCUMENT_ROOT'] . "/plsuite";
                   </div>
                   <div class="cell-md-3">
                     <label for="">Appt From</label>
-                    <input type="date" class="input input-small" stop-input data-role="input" name="appt_date_from" value="2020-11-22">
+                    <input type="date" class="input input-small" stop-input data-role="input" name="appt_date_from" value="">
                     <div class="d-flex mt-1">
                       <select class="input-small mr-1" stop-input data-role="select" data-filter="false"  name="appt_hour_from">
                           <option value="">Hour</option>
@@ -87,7 +87,7 @@ $root = $_SERVER['DOCUMENT_ROOT'] . "/plsuite";
                           <option value="7">7</option>
                           <option value="8">8</option>
                           <option value="9">9</option>
-                          <option value="10" selected>10</option>
+                          <option value="10">10</option>
                           <option value="11">11</option>
                           <option value="12">12</option>
                           <option value="13">13</option>
@@ -106,14 +106,14 @@ $root = $_SERVER['DOCUMENT_ROOT'] . "/plsuite";
                           <option value="">Minute</option>
                           <option value="00">00</option>
                           <option value="15">15</option>
-                          <option value="30" selected>30</option>
+                          <option value="30">30</option>
                           <option value="45">45</option>
                       </select>
                     </div>
                   </div>
                   <div class="cell-md-3">
                     <label for="">Appt To</label>
-                    <input type="date" class="input input-small" stop-input data-role="input" name="appt_date_to" value="2020-11-22">
+                    <input type="date" class="input input-small" stop-input data-role="input" name="appt_date_to" value="">
                     <div class="d-flex mt-1">
                       <select class="input-small mr-1" stop-input data-role="select" data-filter="false"  name="appt_hour_to">
                           <option value="">Hour</option>
@@ -134,7 +134,7 @@ $root = $_SERVER['DOCUMENT_ROOT'] . "/plsuite";
                           <option value="14">14</option>
                           <option value="15">15</option>
                           <option value="16">16</option>
-                          <option value="17" selected>17</option>
+                          <option value="17">17</option>
                           <option value="18">18</option>
                           <option value="19">19</option>
                           <option value="20">20</option>
@@ -147,7 +147,7 @@ $root = $_SERVER['DOCUMENT_ROOT'] . "/plsuite";
                           <option value="00">00</option>
                           <option value="15">15</option>
                           <option value="30">30</option>
-                          <option value="45" selected>45</option>
+                          <option value="45">45</option>
                       </select>
                     </div>
                   </div>
@@ -178,7 +178,7 @@ $root = $_SERVER['DOCUMENT_ROOT'] . "/plsuite";
                       </div>
                       <div class="cell-md-3">
                         <label for="">Appt From</label>
-                        <input type="date" class="input input-small" stop-input data-role="input" name="appt_date_from" value="2020-11-26">
+                        <input type="date" class="input input-small" stop-input data-role="input" name="appt_date_from" value="">
                         <div class="d-flex mt-1">
                           <select class="input-small mr-1" stop-input data-role="select" data-filter="false"  name="appt_hour_from">
                               <option value="">Hour</option>
@@ -191,7 +191,7 @@ $root = $_SERVER['DOCUMENT_ROOT'] . "/plsuite";
                               <option value="7">7</option>
                               <option value="8">8</option>
                               <option value="9">9</option>
-                              <option value="10" selected>10</option>
+                              <option value="10" >10</option>
                               <option value="11">11</option>
                               <option value="12">12</option>
                               <option value="13">13</option>
@@ -210,14 +210,14 @@ $root = $_SERVER['DOCUMENT_ROOT'] . "/plsuite";
                               <option value="">Minute</option>
                               <option value="00">00</option>
                               <option value="15">15</option>
-                              <option value="30" selected>30</option>
+                              <option value="30">30</option>
                               <option value="45">45</option>
                           </select>
                         </div>
                       </div>
                       <div class="cell-md-3">
                         <label for="">Appt To</label>
-                        <input type="date" class="input input-small" stop-input data-role="input" name="appt_date_to" value="2020-11-26">
+                        <input type="date" class="input input-small" stop-input data-role="input" name="appt_date_to" value="">
                         <div class="d-flex mt-1">
                           <select class="input-small mr-1" stop-input data-role="select" data-filter="false"  name="appt_hour_to">
                               <option value="">Hour</option>
@@ -234,7 +234,7 @@ $root = $_SERVER['DOCUMENT_ROOT'] . "/plsuite";
                               <option value="10">10</option>
                               <option value="11">11</option>
                               <option value="12">12</option>
-                              <option value="13" selected>13</option>
+                              <option value="13">13</option>
                               <option value="14">14</option>
                               <option value="15">15</option>
                               <option value="16">16</option>
@@ -250,7 +250,7 @@ $root = $_SERVER['DOCUMENT_ROOT'] . "/plsuite";
                               <option value="">Minute</option>
                               <option value="00">00</option>
                               <option value="15">15</option>
-                              <option value="30" selected>30</option>
+                              <option value="30">30</option>
                               <option value="45">45</option>
                           </select>
                         </div>
@@ -279,19 +279,19 @@ $root = $_SERVER['DOCUMENT_ROOT'] . "/plsuite";
           <div class="content py-2">
             <div class="form-group">
               <label for="">Trailer Number</label>
-              <input type="text" class="input input-small" data-role="input" trailer-input trip-input name="trailer" value="U90003">
+              <input type="text" class="input input-small" data-role="input" trailer-input trip-input name="trailer" value="">
             </div>
             <div class="form-group">
               <label for="">Conveyance</label>
               <div class="row">
                 <div class="col-lg-4">
-                  <input type="text" class="input input-small" truck-input data-role="input" trip-input name="tractor" data-prepend="Truck Number" value="T049">
+                  <input type="text" class="input input-small" truck-input data-role="input" trip-input name="tractor" data-prepend="Truck Number" value="">
                 </div>
                 <div class="col-lg-4">
-                  <input type="text" class="input input-small" driver-input data-role="input" trip-input name="driver" data-prepend="Main Driver" name="" value="Antonio Soto">
+                  <input type="text" class="input input-small" driver-input data-role="input" trip-input name="driver" data-prepend="Main Driver" name="" value="">
                 </div>
                 <div class="col-lg-4">
-                  <input type="text" class="input input-small" driver-input data-role="input" trip-input name="team_driver" data-prepend="Team Driver" value="Jorge Mancillas">
+                  <input type="text" class="input input-small" driver-input data-role="input" trip-input name="team_driver" data-prepend="Team Driver" value="">
                 </div>
               </div>
             </div>
