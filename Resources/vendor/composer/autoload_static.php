@@ -29,6 +29,7 @@ class ComposerStaticInita16f90be0803b00e59b765bc0fc6bc39
         'Datamatrix' => __DIR__ . '/..' . '/tecnickcom/tcpdf/include/barcodes/datamatrix.php',
         'GoogleMaps' => __DIR__ . '/../..' . '/homemade/classes/GoogleMaps.php',
         'PDF417' => __DIR__ . '/..' . '/tecnickcom/tcpdf/include/barcodes/pdf417.php',
+        'PlSuite' => __DIR__ . '/../..' . '/homemade/classes/PlSuite.php',
         'QRcode' => __DIR__ . '/..' . '/tecnickcom/tcpdf/include/barcodes/qrcode.php',
         'Queryi' => __DIR__ . '/../..' . '/homemade/classes/Queryi.php',
         'TCPDF' => __DIR__ . '/..' . '/tecnickcom/tcpdf/tcpdf.php',
