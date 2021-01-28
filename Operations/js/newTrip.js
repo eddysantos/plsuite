@@ -2,7 +2,7 @@ $(document).ready(function() {
 
     /***** Google Library (Places) Code *******/
     let input = $('[google-autocomplete]');
-    input.each(function(){
+    $('[google-autocomplete]').each(function(){
         thisInput = $(this);
         createGoogleAutocomplete(thisInput);
     });
@@ -18,7 +18,7 @@ $(document).ready(function() {
       $('[trip-input]').each(function(){
 
         if (typeof $(this).data('dbid') != 'undefined') {
-          tripData[this.name + '-id'] = $(this).data('dbid');
+          tripData['fkid_' + this.name] = $(this).data('dbid');
         }
         tripData[this.name] = this.value;
       });
@@ -35,6 +35,7 @@ $(document).ready(function() {
           }
         });
 
+        stopData.miles = parseInt(stopData.miles);
         tripData.stops[i] = stopData;
       });
 
@@ -84,8 +85,8 @@ $(document).ready(function() {
 
       let tripConfirmationData = `
         <div class="d-flex flex-column h-100">
-          <div><b>Client:</b> <span>${tripData.client_name}</span></div>
-          <div><b>Client Reference:</b> <span>${tripData.client_reference}</span></div>
+          <div><b>Client:</b> <span>${tripData.broker}</span></div>
+          <div><b>Client Reference:</b> <span>${tripData.broker_reference}</span></div>
           <div><b>Rate:</b>$ <span>${tripData.trip_rate}</span></div>
           <div><b>Miles:</b> <span class="miles">${totalDistance}</span></div>
           <div><b>RPM:</b>$ <span class="rpm">${tripData.rpm}</span></div>
@@ -95,7 +96,7 @@ $(document).ready(function() {
           <div class="border-top bd-gray mt-1 pt-1"><b>Trailer:</b> <span>${tripData.trailer}</span></div>
           <div class=""><b>Tractor:</b> <span>${tripData.tractor}</span></div>
           <div class=""><b>Driver:</b> <span>${tripData.driver}</span></div>
-          <div class=""><b>Team Driver:</b> <span>${tripData.team_driver}</span></div>
+          <div class=""><b>Team Driver:</b> <span>${tripData.driver_team}</span></div>
         </div>
       `
 
@@ -106,7 +107,24 @@ $(document).ready(function() {
           {
             caption: 'Add Trip',
             cls: 'js-dialog-close alert',
-            onclick: function(){alertify.message('Add trip.'); console.log(tripData);}
+            onclick: function(){
+              //Agregamos el viaje a la base de datos.
+
+              var addTrip = $.ajax({
+                method: "POST",
+                data: tripData,
+                url: 'actions/trips/addTrip.php'
+              });
+
+              addTrip.done(function(r){
+                r = JSON.parse(r);
+                console.log(r);
+              }).fail(function(x,y,z){
+                console.error(x);
+                console.error(y);
+                console.error(z);
+              });
+            }
           },
           {
             caption: 'Cancel',
@@ -147,6 +165,13 @@ $(document).ready(function() {
       type: 'POST',
       onSelect: function (suggestion) {
         $(this).data('dbid', suggestion.data);
+      }
+    });
+
+    $('#clientInput, [driver-input], [trailer-input], [truck-input]').change(function(){
+      var value = this.value;
+      if (value == "") {
+        $(this).data('dbid', '');
       }
     });
 
@@ -276,6 +301,37 @@ $(document).ready(function() {
         createGoogleAutocomplete(locationObject.find('[google-autocomplete]'));
         $('#stopList').trigger('reorderStops')
 
+    });
+
+    //Autocompletar el 'to' de las citas si estan vacíos.
+    $('#stopList').on('change', '[name=appt_date_from]', function(){
+      let value = $(this).val();
+      let row = $(this).parents('.row');
+      let target = row.find('[name=appt_date_to]');
+
+      if ($(target).val() == "") {
+        $(target).val(value);
+      }
+    });
+    $('#stopList').on('change', '[name=appt_hour_from]', function(){
+      let value = $(this).val();
+      let row = $(this).parents('.row');
+      let target = row.find('[name=appt_hour_to]');
+      let targetSelect = Metro.getPlugin(target, 'select');
+
+      if ($(target).val() == "") {
+        targetSelect.val(value);
+      }
+    });
+    $('#stopList').on('change', '[name=appt_minute_from]', function(){
+      let value = $(this).val();
+      let row = $(this).parents('.row');
+      let target = row.find('[name=appt_minute_to]');
+      let targetSelect = Metro.getPlugin(target, 'select');
+
+      if ($(target).val() == "") {
+        targetSelect.val(value);
+      }
     });
 
     //Volver a poner los stops de 1 - N cada que se hace una modificación.

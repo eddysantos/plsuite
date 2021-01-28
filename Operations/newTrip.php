@@ -1,6 +1,7 @@
 <?php
 
 $root = $_SERVER['DOCUMENT_ROOT'] . "/plsuite";
+$referer = $_SERVER['HTTP_REFERER'];
 
 ?>
 <!DOCTYPE html>
@@ -24,14 +25,17 @@ $root = $_SERVER['DOCUMENT_ROOT'] . "/plsuite";
 </head>
 <body class="d-flex flex-column h-vh-100">
   <div class="container pb-10" id="tripInfoContainer">
-    <h1>Add New Trip</h1>
+    <div class="d-flex flex-justify-between mt-4">
+      <a href="<?php echo $referer ?>"><i class="mif-chevron-thin-left mif-5x"></i></a>
+      <h1 class="m-0">Add New Trip</h1>
+    </div>
     <div data-role="accordion" >
       <div class="frame active">
           <div class="heading">Trip Information</div>
           <div class="content py-2">
             <div class="form-group">
               <label for="">Client Name</label>
-              <input type="text" name="client_name" class="input input-small" trip-input data-role="input" id="clientInput"  value="" data-dbid="1">
+              <input type="text" name="broker" trip-level="linehaul" class="input input-small" trip-input data-role="input" id="clientInput"  value="" data-dbid="1">
             </div>
             <!-- <div class="form-group">
               <label for="">Client Contact</label>
@@ -41,13 +45,13 @@ $root = $_SERVER['DOCUMENT_ROOT'] . "/plsuite";
               <div class="cell-md-6">
                 <div class="form-group">
                   <label for="">Client Reference</label>
-                  <input type="text" class="input input-small" data-role="input" trip-input id="client_reference" placeholder="" name="client_reference" value="">
+                  <input type="text" class="input input-small" trip-level="linehaul" data-role="input" trip-input id="client_reference" placeholder="" name="broker_reference" value="">
                 </div>
               </div>
               <div class="cell-md-6">
                 <div class="form-group">
                   <label for="">Trip Rate</label>
-                  <input type="number" class="input input-small" trip-input data-role="input" data-prepend="<span class='mif-money'></span>" placeholder="" name="trip_rate" value="">
+                  <input type="number" class="input input-small" trip-level="linehaul" trip-input data-role="input" data-prepend="<span class='mif-money'></span>" placeholder="" name="trip_rate" value="">
                 </div>
               </div>
             </div>
@@ -279,19 +283,19 @@ $root = $_SERVER['DOCUMENT_ROOT'] . "/plsuite";
           <div class="content py-2">
             <div class="form-group">
               <label for="">Trailer Number</label>
-              <input type="text" class="input input-small" data-role="input" trailer-input trip-input name="trailer" value="">
+              <input type="text" class="input input-small" trip-level="trip" data-role="input" trailer-input trip-input name="trailer" value="">
             </div>
             <div class="form-group">
               <label for="">Conveyance</label>
               <div class="row">
                 <div class="col-lg-4">
-                  <input type="text" class="input input-small" truck-input data-role="input" trip-input name="tractor" data-prepend="Truck Number" value="">
+                  <input type="text" class="input input-small" trip-level="movements" truck-input data-role="input" trip-input name="tractor" data-prepend="Truck Number" value="">
                 </div>
                 <div class="col-lg-4">
-                  <input type="text" class="input input-small" driver-input data-role="input" trip-input name="driver" data-prepend="Main Driver" name="" value="">
+                  <input type="text" class="input input-small" trip-level="movements" driver-input data-role="input" trip-input name="driver" data-prepend="Main Driver" name="" value="">
                 </div>
                 <div class="col-lg-4">
-                  <input type="text" class="input input-small" driver-input data-role="input" trip-input name="team_driver" data-prepend="Team Driver" value="">
+                  <input type="text" class="input input-small" trip-level="movements" driver-input data-role="input" trip-input name="driver_team" data-prepend="Team Driver" value="">
                 </div>
               </div>
             </div>
@@ -308,9 +312,10 @@ $root = $_SERVER['DOCUMENT_ROOT'] . "/plsuite";
     <script src="/plsuite/Resources/swal/swal.min.js" charset="utf-8"></script>
     <script src="/plsuite/Resources/swal8/swal8.min.js" charset="utf-8"></script>
     <script src="/plsuite/Resources/alertify/alertify.min.js" charset="utf-8"></script>
-
     <script src="/plsuite/Resources/Metro/build/js/metro.min.js"></script>
     <script src="/plsuite/Resources/fa_5/js/fontawesome-all.min.js" data-auto-replace-svg="nest" charset="utf-8"></script>
+
+    <script src="/plsuite/Resources/JS/plsuite.js" charset="utf-8"></script>
     <script src="js/newTrip.js" charset="utf-8"></script>
 
 </body>
