@@ -9,7 +9,7 @@ require $root . '/plsuite/Resources/PHP/Utilities/initialScript.php';
 
 
 $today = date('Y-m-d', strtotime('today'));
-$filter_45days = date('Y-m-d', strtotime('today - 45 days'));
+$filter_45days = date('Y-m-d', strtotime('today - 120 days'));
 
  ?>
 <div class="container-fluid align-items-right d-flex align-content-center mb-3 position-sticky" style="margin-top: 65px">
